@@ -71,7 +71,13 @@ header.top{display:flex;justify-content:space-between;align-items:center;padding
 .plato .dots{border-bottom:2px dotted var(--linea);transform:translateY(-6px)}
 .plato .p{font-weight:800;font-size:clamp(24px,3vw,32px);color:var(--carmin);font-variant-numeric:tabular-nums}
 .plato p{grid-column:1/-1;margin:0;color:var(--gris);max-width:62ch}
-.plato.rec h3::after{content:"La más pedida";font-size:13px;font-weight:600;letter-spacing:0;background:var(--tinta);color:#fff;padding:3px 9px;border-radius:999px;margin-left:12px;vertical-align:middle}
+.plato.rec h3::after{content:"La más pedida";display:inline-block;white-space:nowrap;font-size:13px;font-weight:600;letter-spacing:0;line-height:1.4;background:var(--tinta);color:#fff;padding:3px 9px;border-radius:999px;margin-left:12px;vertical-align:middle}
+.plato .p{white-space:nowrap}
+@media (max-width:560px){
+  .plato{grid-template-columns:1fr auto}
+  .plato .dots{display:none}
+  .plato.rec h3::after{display:table;margin:8px 0 0}
+}
 .extra{margin-top:24px;color:var(--gris);font-size:15px;max-width:62ch}
 
 /* how it works: a real sequence */
