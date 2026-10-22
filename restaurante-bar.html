@@ -1,0 +1,1049 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restaurante &amp; Bar · Cocina y barra en Madrid</title>
+<meta name="description" content="Restaurante y bar en el centro de Madrid. Desayunos, comidas, vermut, cenas y cócteles. Abierto todo el día.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noche:#141A2E;
+  --anil:#1F2A4D;
+  --anil-2:#2A3763;
+  --albero:#E3A93C;
+  --albero-deep:#B9801C;
+  --cal:#F4F2EC;
+  --cal-2:#E8E4D8;
+  --tinta:#141A2E;
+  --niebla:#A9B0C8;
+  --verde:#5FBF8A;
+  --rojo:#E07563;
+
+  --serif:"Gloock", Georgia, serif;
+  --sans:"Hanken Grotesk", system-ui, sans-serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:24px; --s5:40px; --s6:64px; --s7:104px;
+  --wrap:1240px;
+  --ease:cubic-bezier(.22,1.2,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow-float:0 1px 2px rgba(20,26,46,.12), 0 8px 24px rgba(20,26,46,.18), 0 24px 60px rgba(20,26,46,.22);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--noche);color:var(--cal);font:400 17px/1.7 var(--sans);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--albero);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--s4)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip:focus{position:fixed;top:12px;left:12px;z-index:100;width:auto;height:auto;clip:auto;overflow:visible;padding:10px 18px;border-radius:999px;background:var(--albero);color:var(--tinta);font-weight:600;text-decoration:none}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.02em;line-height:1.05}
+h2{font-size:clamp(40px,6vw,76px)}
+p{margin:0}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;border:1px solid transparent;font-weight:600;font-size:16px;text-decoration:none;cursor:pointer;transition:transform .35s var(--ease),background-color .25s,color .25s,border-color .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-sol{background:var(--albero);color:var(--tinta)}
+.btn-sol:hover{background:#EDB955}
+.btn-ghost{border-color:rgba(244,242,236,.45);color:var(--cal)}
+.btn-ghost:hover{border-color:var(--cal);background:rgba(244,242,236,.08)}
+.btn-ink{background:var(--tinta);color:var(--cal)}
+.btn-ink:hover{background:var(--anil)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* ---------- header ---------- */
+.top{position:fixed;inset:0 0 auto;z-index:50;transition:background-color .3s,box-shadow .3s}
+.top.scrolled{background:rgba(20,26,46,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(244,242,236,.08)}
+.top .wrap{display:flex;align-items:center;gap:var(--s4);height:76px}
+.logo{font-family:var(--serif);font-size:26px;text-decoration:none;letter-spacing:-.01em;white-space:nowrap}
+.nav{display:flex;gap:var(--s4);margin-left:auto}
+.nav a{text-decoration:none;font-size:15px;font-weight:500;opacity:.85;padding:6px 0;position:relative}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--albero);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-out)}
+.nav a:hover{opacity:1}
+.nav a:hover::after{transform:scaleX(1)}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:14px;white-space:nowrap;opacity:.9}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--rojo);flex:none}
+.status.open i{background:var(--verde);box-shadow:0 0 0 4px rgba(95,191,138,.18)}
+.lang{display:flex;border:1px solid rgba(244,242,236,.3);border-radius:999px;padding:2px}
+.lang button{background:none;border:0;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;opacity:.7}
+.lang button:hover{opacity:1}
+.lang button[aria-pressed="true"]{background:var(--cal);color:var(--tinta);opacity:1}
+.top .btn{padding:10px 20px;font-size:15px}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;margin-left:auto}
+.burger span{display:block;width:22px;height:2px;background:var(--cal);margin:5px auto;transition:transform .3s var(--ease-out),opacity .2s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
+.hero-img{position:absolute;inset:0;z-index:-2}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity 1.1s ease,transform 6s ease-out}
+.hero-img img.on{opacity:1;transform:scale(1)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(to top, rgba(20,26,46,.96) 0%, rgba(20,26,46,.7) 32%, rgba(20,26,46,.15) 62%, rgba(20,26,46,.55) 100%),
+  rgba(31,42,77,.25);mix-blend-mode:normal}
+.hero-body{padding-top:140px}
+.hero h1{font-size:clamp(54px,12vw,176px);line-height:.86;letter-spacing:-.045em;max-width:12ch}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em}
+.hero h1 .w span{display:inline-block;transform:translateY(105%);animation:rise 1.1s var(--ease-out) forwards}
+.hero h1 .w:nth-child(2) span{animation-delay:.12s}
+.hero h1 .w:nth-child(3) span{animation-delay:.24s}
+@keyframes rise{to{transform:none}}
+.hero-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--s4);margin-top:var(--s4)}
+.hero-lede{font-size:clamp(18px,1.8vw,22px);max-width:34ch;line-height:1.5;opacity:0;animation:fade .9s .5s ease forwards}
+.hero-ctas{display:flex;gap:var(--s3);flex-wrap:wrap;opacity:0;animation:fade .9s .65s ease forwards}
+@keyframes fade{to{opacity:1}}
+
+/* the day ruler */
+.day{margin-top:var(--s6);padding-bottom:var(--s5);opacity:0;animation:fade .9s .8s ease forwards}
+.day-moment{display:flex;align-items:baseline;gap:var(--s3);margin-bottom:var(--s5);min-height:28px}
+.day-moment strong{font-family:var(--serif);font-weight:400;font-size:22px}
+.day-moment span{color:var(--niebla);font-size:15px}
+.ruler{position:relative;display:flex;border-top:1px solid rgba(244,242,236,.35)}
+.ruler button{position:relative;flex:var(--w) 1 0;min-width:0;background:none;border:0;border-left:1px solid rgba(244,242,236,.35);padding:14px 12px 4px;text-align:left;cursor:pointer;color:var(--niebla);transition:color .25s}
+.ruler button:last-child{border-right:1px solid rgba(244,242,236,.35)}
+.ruler button::before{content:"";position:absolute;left:-1px;right:0;top:-1px;height:3px;background:var(--albero);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease-out)}
+.ruler button:hover{color:var(--cal)}
+.ruler button[aria-pressed="true"]{color:var(--cal)}
+.ruler button[aria-pressed="true"]::before{transform:scaleX(1)}
+.ruler b{display:block;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ruler small{display:block;font-size:13px;font-variant-numeric:tabular-nums;opacity:.8}
+.now{position:absolute;top:-7px;left:0;width:0;height:0;pointer-events:none;transition:left 1.4s 1s var(--ease-out)}
+.now::before{content:"";position:absolute;left:-6px;top:0;width:12px;height:12px;border-radius:50%;background:var(--albero);box-shadow:0 0 0 5px rgba(227,169,60,.25)}
+.now span{position:absolute;bottom:10px;left:0;transform:translateX(-50%);font-size:12px;font-weight:600;color:var(--albero);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- section shells ---------- */
+.sec{padding:var(--s7) 0}
+.sec-cal{background:var(--cal);color:var(--tinta)}
+.sec-sol{background:var(--albero);color:var(--tinta)}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:var(--s4);margin-bottom:var(--s6)}
+.sec-head p{max-width:42ch;font-size:18px;opacity:.8}
+
+/* ---------- intro strip ---------- */
+.intro{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--s6);align-items:center}
+.intro p.big{font-family:var(--serif);font-size:clamp(28px,3.2vw,42px);line-height:1.2;letter-spacing:-.015em}
+.intro .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5);border-top:1px solid rgba(244,242,236,.15);padding-top:var(--s4)}
+.facts strong{display:block;font-family:var(--serif);font-weight:400;font-size:30px;color:var(--albero);line-height:1.1}
+.facts span{display:block;font-size:15px;line-height:1.4;color:var(--niebla);margin-top:4px}
+.intro figure{margin:0;position:relative}
+.intro figure img{border-radius:220px 220px 6px 6px;aspect-ratio:4/5;object-fit:cover;width:100%;box-shadow:var(--shadow-float)}
+
+/* ---------- menu ---------- */
+.tabs{display:flex;gap:var(--s2);overflow-x:auto;scrollbar-width:none;margin-bottom:var(--s5);padding-bottom:4px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;background:none;border:1px solid rgba(20,26,46,.25);border-radius:999px;padding:10px 20px;cursor:pointer;font-weight:500;transition:background-color .25s,color .25s,border-color .25s}
+.tabs button:hover{border-color:var(--tinta)}
+.tabs button[aria-selected="true"]{background:var(--tinta);color:var(--cal);border-color:var(--tinta)}
+.tabs button small{opacity:.6;margin-left:6px;font-variant-numeric:tabular-nums}
+.menu-panel{display:grid;grid-template-columns:1fr 1.35fr;gap:var(--s6);align-items:start}
+.menu-panel figure{margin:0;position:sticky;top:110px}
+.menu-panel figure img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:6px;box-shadow:0 2px 6px rgba(20,26,46,.08),0 18px 40px rgba(20,26,46,.14)}
+.menu-panel figcaption{font-size:15px;margin-top:var(--s3);opacity:.7}
+.dishes{list-style:none;margin:0;padding:0}
+.dishes li{display:grid;grid-template-columns:1fr auto;gap:4px var(--s4);padding:var(--s4) 0;border-bottom:1px solid rgba(20,26,46,.14)}
+.dishes li:first-child{padding-top:0}
+.dishes h3{font-size:clamp(22px,2.2vw,27px);letter-spacing:-.01em}
+.dishes .price{font-family:var(--serif);font-size:22px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dishes p{grid-column:1/-1;font-size:16px;opacity:.72;max-width:52ch}
+.dishes .tag{display:inline-block;font-size:12px;font-weight:600;background:var(--albero);color:var(--tinta);border-radius:4px;padding:1px 7px;margin-left:10px;vertical-align:middle;letter-spacing:.01em}
+.menu-note{margin-top:var(--s4);font-size:15px;opacity:.7}
+.menu-anim{animation:menuIn .5s var(--ease-out)}
+@keyframes menuIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- gallery ---------- */
+.gallery{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:110px;gap:12px}
+.gallery button{position:relative;padding:0;border:0;cursor:zoom-in;overflow:hidden;border-radius:6px;background:var(--anil)}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-out),filter .5s}
+.gallery button:hover img{transform:scale(1.04)}
+.gallery button::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(20,26,46,.55),transparent 45%);opacity:.8;pointer-events:none}
+.gallery span{position:absolute;left:14px;bottom:10px;z-index:1;font-size:14px;font-weight:500;color:var(--cal);text-align:left}
+.g1{grid-column:1/6;grid-row:span 4}
+.g2{grid-column:6/10;grid-row:span 2}
+.g3{grid-column:10/13;grid-row:span 3}
+.g4{grid-column:6/10;grid-row:span 2}
+.g5{grid-column:10/13;grid-row:span 3}
+.g6{grid-column:1/4;grid-row:span 2}
+.g7{grid-column:4/10;grid-row:span 2}
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(1100px,92vw);max-height:90vh;overflow:visible}
+dialog.lb::backdrop{background:rgba(10,13,24,.92)}
+dialog.lb img{max-height:80vh;width:auto;max-width:100%;border-radius:6px;margin:0 auto}
+dialog.lb p{color:var(--cal);text-align:center;margin-top:12px;font-size:15px}
+.lb-btn{position:fixed;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;border:1px solid rgba(244,242,236,.4);background:rgba(20,26,46,.6);color:var(--cal);cursor:pointer;font-size:22px;transition:background-color .2s}
+.lb-btn:hover{background:var(--anil-2)}
+.lb-prev{left:20px}.lb-next{right:20px}
+.lb-close{position:fixed;top:20px;right:20px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(244,242,236,.4);background:rgba(20,26,46,.6);color:var(--cal);font-size:22px;cursor:pointer}
+
+/* ---------- reviews ---------- */
+.score{display:flex;align-items:center;gap:var(--s4)}
+.score strong{font-family:var(--serif);font-weight:400;font-size:84px;line-height:1}
+.stars{display:flex;gap:2px;color:var(--albero-deep)}
+.stars svg{width:18px;height:18px}
+.score small{display:block;font-size:15px;opacity:.7}
+.reviews{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(300px,1fr);gap:var(--s4);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:var(--s3);scrollbar-width:thin}
+.review{scroll-snap-align:start;background:#fff;border-radius:6px;padding:var(--s5) var(--s4) var(--s4);display:flex;flex-direction:column;gap:var(--s3);box-shadow:0 1px 2px rgba(20,26,46,.06),0 10px 30px rgba(20,26,46,.07)}
+.review blockquote{margin:0;font-family:var(--serif);font-size:21px;line-height:1.35;letter-spacing:-.005em;flex:1}
+.review footer{display:flex;justify-content:space-between;align-items:center;font-size:14px;opacity:.75}
+.reviews-foot{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);flex-wrap:wrap;margin-top:var(--s4)}
+.arrows{display:flex;gap:var(--s2)}
+.arrows button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(20,26,46,.3);background:none;cursor:pointer;font-size:20px;transition:background-color .2s,color .2s}
+.arrows button:hover{background:var(--tinta);color:var(--cal)}
+.link{font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.link:hover{text-decoration-thickness:2px}
+
+/* ---------- reservation ---------- */
+.resv{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--s6);align-items:start}
+.resv-side h2{max-width:9ch}
+.resv-side p{margin-top:var(--s4);font-size:18px;max-width:36ch}
+.resv-side ul{list-style:none;padding:0;margin:var(--s5) 0 0;display:grid;gap:var(--s3);font-size:16px}
+.resv-side li{display:flex;gap:12px;align-items:flex-start}
+.resv-side li svg{width:20px;height:20px;flex:none;margin-top:4px}
+.card{background:var(--cal);border-radius:10px;padding:var(--s5);box-shadow:0 2px 4px rgba(90,60,10,.08),0 20px 50px rgba(90,60,10,.22)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3) var(--s4)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:14px;font-weight:600}
+.field input,.field select,.field textarea{background:#fff;border:1px solid rgba(20,26,46,.2);border-radius:8px;padding:12px 14px;font-size:16px;transition:border-color .2s,box-shadow .2s;width:100%}
+.field textarea{resize:vertical;min-height:84px}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(20,26,46,.45)}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--tinta);box-shadow:0 0 0 3px rgba(227,169,60,.45)}
+.field .err{font-size:13px;color:#A33A27;min-height:0}
+.field.bad input,.field.bad select{border-color:#A33A27}
+.party{display:flex;gap:6px;flex-wrap:wrap}
+.party button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(20,26,46,.25);background:#fff;cursor:pointer;font-weight:600;transition:background-color .2s,color .2s,border-color .2s}
+.party button:hover{border-color:var(--tinta)}
+.party button[aria-pressed="true"]{background:var(--tinta);color:var(--cal);border-color:var(--tinta)}
+.party button.more{width:auto;padding:0 14px;border-radius:999px}
+.form-foot{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;gap:var(--s3);flex-wrap:wrap;margin-top:var(--s2)}
+.form-foot small{font-size:13px;opacity:.65;max-width:36ch}
+.done{text-align:left}
+.done h3{font-size:40px;margin-bottom:var(--s3)}
+.done dl{display:grid;grid-template-columns:auto 1fr;gap:6px var(--s4);margin:var(--s4) 0;font-size:16px}
+.done dt{opacity:.6}
+.done dd{margin:0;font-weight:600}
+.done .row{display:flex;gap:var(--s3);flex-wrap:wrap;margin-top:var(--s4)}
+.check{width:56px;height:56px;border-radius:50%;background:var(--tinta);color:var(--albero);display:grid;place-items:center;margin-bottom:var(--s4)}
+.check svg{width:26px;height:26px;stroke-dasharray:30;stroke-dashoffset:30;animation:draw .6s .2s var(--ease-out) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* ---------- visit ---------- */
+.visit{display:grid;grid-template-columns:1fr 1.2fr;gap:var(--s6)}
+.hours{list-style:none;padding:0;margin:var(--s4) 0 0}
+.hours li{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(244,242,236,.12);font-variant-numeric:tabular-nums;color:var(--niebla)}
+.hours li.today{color:var(--cal);font-weight:600}
+.hours li.today span:first-child::after{content:attr(data-today);margin-left:10px;font-size:12px;font-weight:600;background:var(--albero);color:var(--tinta);padding:2px 8px;border-radius:999px}
+.contact{margin-top:var(--s5);display:grid;gap:var(--s3)}
+.contact a,.contact p{display:flex;gap:14px;align-items:flex-start;text-decoration:none;font-size:17px}
+.contact a:hover{color:var(--albero)}
+.contact svg{width:20px;height:20px;flex:none;margin-top:5px;color:var(--albero)}
+.map{position:relative;border-radius:10px;overflow:hidden;min-height:460px;box-shadow:var(--shadow-float);background:var(--anil)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.35) contrast(1.05)}
+.map .btn{position:absolute;left:16px;bottom:16px;box-shadow:var(--shadow-float)}
+.private{margin-top:var(--s7);display:grid;grid-template-columns:1fr auto;gap:var(--s4);align-items:center;border-top:1px solid rgba(244,242,236,.15);padding-top:var(--s5)}
+.private h3{font-size:clamp(28px,3vw,40px)}
+.private p{color:var(--niebla);margin-top:8px;max-width:56ch}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid rgba(244,242,236,.1);padding:var(--s6) 0 calc(var(--s5) + 20px)}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s4);align-items:flex-end}
+.foot .logo{font-size:clamp(44px,8vw,104px);line-height:.95;letter-spacing:-.04em;white-space:normal}
+.foot nav{display:flex;gap:var(--s4);flex-wrap:wrap;font-size:15px;color:var(--niebla)}
+.foot nav a{text-decoration:none}
+.foot nav a:hover{color:var(--cal)}
+
+/* ---------- floating actions ---------- */
+.fab{position:fixed;right:24px;bottom:24px;z-index:40;display:flex;flex-direction:column;gap:12px}
+.fab a{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;box-shadow:var(--shadow-float);transition:transform .35s var(--ease)}
+.fab a:hover{transform:scale(1.08)}
+.fab a:active{transform:scale(.96)}
+.fab svg{width:26px;height:26px}
+.fab .wa{background:#25D366;color:#fff}
+.fab .tel{background:var(--albero);color:var(--tinta)}
+.bar{display:none}
+
+/* ---------- demo notice ---------- */
+.demo{position:fixed;left:24px;bottom:24px;z-index:60;display:flex;align-items:flex-start;gap:12px;max-width:380px;padding:14px 12px 14px 16px;background:#141A2E;color:var(--cal);border:1px solid rgba(227,169,60,.55);border-radius:10px;box-shadow:var(--shadow-float);font-size:14px;line-height:1.45;animation:demoIn .6s 1.2s var(--ease-out) both}
+@keyframes demoIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.demo[hidden]{display:none}
+.demo p::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#E3A93C;margin-right:8px;vertical-align:1px}
+.demo b{color:#E3A93C;font-weight:600}
+.demo-x{flex:none;width:32px;height:32px;margin:-4px -2px 0 0;border-radius:50%;border:1px solid rgba(244,242,236,.25);background:none;color:var(--cal);font-size:18px;line-height:1;cursor:pointer;transition:background-color .2s,border-color .2s}
+.demo-x:hover{background:rgba(244,242,236,.1);border-color:#E3A93C}
+.demo-x:active{transform:scale(.94)}
+body:has(.demo:not([hidden])) .foot{padding-bottom:140px}
+
+/* ---------- mobile ---------- */
+@media (max-width:1240px){
+  .top .status{display:none}
+}
+@media (max-width:1080px){
+  .nav{display:none}
+  .burger{display:block;margin-left:0}
+  .lang{margin-left:auto}
+  .top .wrap{gap:var(--s3)}
+  .nav.open{display:flex;position:fixed;inset:76px 0 auto;flex-direction:column;gap:0;background:var(--noche);padding:var(--s3) var(--s4) var(--s5);box-shadow:0 20px 40px rgba(0,0,0,.35)}
+  .nav.open a{font-family:var(--serif);font-size:30px;padding:10px 0;font-weight:400}
+}
+@media (max-width:900px){
+  .top .btn-sol{display:none}
+  .demo{left:12px;right:12px;max-width:none;bottom:calc(80px + env(safe-area-inset-bottom))}
+  .intro,.menu-panel,.resv,.visit{grid-template-columns:1fr}
+  .menu-panel figure{position:static;max-width:420px}
+  .menu-panel figure img{aspect-ratio:16/10}
+  .intro figure{order:-1;max-width:360px}
+  .gallery{grid-auto-rows:90px;gap:8px}
+  .g1{grid-column:1/-1;grid-row:span 4}
+  .g2,.g4,.g6{grid-column:span 6;grid-row:span 2}
+  .g3,.g5{grid-column:span 6;grid-row:span 3}
+  .g7{grid-column:1/-1;grid-row:span 3}
+  .private{grid-template-columns:1fr}
+  .fab{display:none}
+  .bar{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(20,26,46,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(244,242,236,.1)}
+  .bar a{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 8px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;border:1px solid rgba(244,242,236,.3)}
+  .bar a:active{transform:scale(.97)}
+  .bar a svg{width:18px;height:18px}
+  .bar .r{background:var(--albero);color:var(--tinta);border-color:var(--albero)}
+  .foot{padding-bottom:110px}
+  body:has(.demo:not([hidden])) .foot{padding-bottom:200px}
+}
+@media (max-width:600px){
+  .wrap{padding:0 var(--s3)}
+  .sec{padding:var(--s6) 0}
+  .logo{font-size:22px}
+  .ruler small{display:none}
+  .ruler button{padding:12px 6px 2px}
+  .ruler b{font-size:13px}
+  .day-moment{flex-direction:column;gap:2px;margin-bottom:var(--s5)}
+  .intro .facts{grid-template-columns:1fr 1fr 1fr;gap:var(--s3)}
+  .facts strong{font-size:24px}
+  .card{padding:var(--s4) var(--s3)}
+  .form{grid-template-columns:1fr}
+  .reviews{grid-auto-columns:86%}
+  .score strong{font-size:64px}
+  .map{min-height:340px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<a class="sr-only skip" href="#carta" data-en="Skip to menu">Ir a la carta</a>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#inicio">Restaurante &amp; Bar</a>
+    <nav class="nav" id="nav" aria-label="Principal" data-aria-en="Main">
+      <a href="#carta" data-en="Menu">Carta</a>
+      <a href="#galeria" data-en="Gallery">Galería</a>
+      <a href="#opiniones" data-en="Reviews">Opiniones</a>
+      <a href="#visitanos" data-en="Visit us">Visítanos</a>
+    </nav>
+    <span class="status" data-status><i></i><span></span></span>
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn-sol" href="#reservar" data-en="Book a table">Reservar mesa</a>
+    <button class="burger" type="button" aria-controls="nav" aria-expanded="false" aria-label="Menú" data-aria-en="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="hero-img" aria-hidden="true">
+    <img data-m="desayuno" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=2000&q=80&auto=format&fit=crop" alt="">
+    <img data-m="mediodia" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=2000&q=80&auto=format&fit=crop" alt="">
+    <img data-m="vermut" src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?w=2000&q=80&auto=format&fit=crop" alt="">
+    <img data-m="cena" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=2000&q=80&auto=format&fit=crop" alt="">
+    <img data-m="barra" src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=2000&q=80&auto=format&fit=crop" alt="">
+  </div>
+  <div class="wrap hero-body">
+    <h1 aria-label="Restaurante &amp; Bar"><span class="w" aria-hidden="true"><span>Restaurante</span></span> <span class="w" aria-hidden="true"><span>&amp;</span></span> <span class="w" aria-hidden="true"><span>Bar</span></span></h1>
+    <div class="hero-row">
+      <p class="hero-lede" data-en="Kitchen and bar in the heart of Madrid. From the first coffee to the last drink.">Cocina y barra en el centro de Madrid. Del primer café a la última copa.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-sol" href="#reservar" data-en="Book a table">Reservar mesa</a>
+        <a class="btn btn-ghost" href="#carta" data-en="See the menu">Ver la carta</a>
+      </div>
+    </div>
+
+    <div class="day" role="group" aria-label="Nuestro día" data-aria-en="Our day">
+      <p class="day-moment" aria-live="polite"><strong data-moment-title></strong><span data-moment-text></span></p>
+      <div class="ruler" id="ruler">
+        <span class="now" id="now" aria-hidden="true"><span></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTRO ================= -->
+<section class="sec">
+  <div class="wrap intro">
+    <div>
+      <p class="big" data-en="One place for the whole day. Coffee and churros in the morning, a set lunch at noon, vermouth on the terrace, dinner from the grill, and a bar that stays open late.">Un mismo sitio para todo el día. Café y churros por la mañana, menú a mediodía, vermut en la terraza, cena a la brasa y una barra que cierra tarde.</p>
+      <div class="facts">
+        <div><strong data-en="7 days">7 días</strong><span data-en="open every day of the week">abiertos toda la semana</span></div>
+        <div><strong>120</strong><span data-en="seats inside and on the terrace">plazas entre sala y terraza</span></div>
+        <div><strong data-en="4.8">4,8</strong><span data-en="average on Google">de media en Google</span></div>
+      </div>
+    </div>
+    <figure>
+      <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1000&q=80&auto=format&fit=crop" alt="La barra del restaurante con luz cálida" data-alt-en="The restaurant's bar in warm light" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+<!-- ================= MENU ================= -->
+<section class="sec sec-cal" id="carta">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-en="The menu">La carta</h2>
+      <p data-en="The kitchen changes with the time of day. Pick a moment to see what we serve.">La cocina cambia según la hora. Elige un momento para ver qué servimos.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Momentos del día" data-aria-en="Times of day" id="tabs"></div>
+    <div class="menu-panel" role="tabpanel" id="menuPanel" tabindex="0">
+      <figure><img id="menuImg" alt="" loading="lazy"><figcaption id="menuCap"></figcaption></figure>
+      <div>
+        <ul class="dishes" id="dishes"></ul>
+        <p class="menu-note" data-en="Tell us about any allergies and we will adapt your dish. Prices include VAT.">Avísanos de cualquier alergia y adaptamos el plato. Precios con IVA incluido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GALLERY ================= -->
+<section class="sec" id="galeria">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-en="Inside">Por dentro</h2>
+      <p data-en="The dining room, the bar and the terrace. Tap a photo to enlarge it.">La sala, la barra y la terraza. Pulsa una foto para verla en grande.</p>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+  <dialog class="lb" id="lb" aria-label="Galería" data-aria-en="Gallery">
+    <img id="lbImg" alt="">
+    <p id="lbCap"></p>
+    <button class="lb-btn lb-prev" type="button" data-step="-1" aria-label="Anterior" data-aria-en="Previous">&#8249;</button>
+    <button class="lb-btn lb-next" type="button" data-step="1" aria-label="Siguiente" data-aria-en="Next">&#8250;</button>
+    <button class="lb-close" type="button" aria-label="Cerrar" data-aria-en="Close">&times;</button>
+  </dialog>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section class="sec sec-cal" id="opiniones">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-en="What guests say">Lo que dicen</h2>
+      <div class="score">
+        <strong data-en="4.8">4,8</strong>
+        <div>
+          <div class="stars" role="img" aria-label="4,8 de 5" id="scoreStars"></div>
+          <small data-en="1,284 reviews on Google">1.284 opiniones en Google</small>
+        </div>
+      </div>
+    </div>
+    <div class="reviews" id="reviews" tabindex="0" role="region" aria-label="Opiniones" data-aria-en="Reviews"></div>
+    <div class="reviews-foot">
+      <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=Puerta+del+Sol,+Madrid" target="_blank" rel="noopener" data-en="Read all reviews on Google">Leer todas las opiniones en Google</a>
+      <div class="arrows">
+        <button type="button" data-scroll="-1" aria-label="Anteriores" data-aria-en="Previous reviews">&#8249;</button>
+        <button type="button" data-scroll="1" aria-label="Siguientes" data-aria-en="Next reviews">&#8250;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVATION ================= -->
+<section class="sec sec-sol" id="reservar">
+  <div class="wrap resv">
+    <div class="resv-side">
+      <h2 data-en="Book a table">Reserva tu mesa</h2>
+      <p data-en="Choose a day, a time and how many of you are coming. We confirm every booking by phone or WhatsApp within the hour.">Elige día, hora y cuántos venís. Confirmamos cada reserva por teléfono o WhatsApp en menos de una hora.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-en="We hold your table for 15 minutes.">Guardamos la mesa 15 minutos.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M12 4v16"/></svg><span data-en="Groups of 9 or more: call us and we will prepare a set menu.">Grupos de 9 o más: llámanos y preparamos un menú cerrado.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10l9-6 9 6v10H3z"/></svg><span data-en="The bar never takes bookings. Just come by.">La barra no se reserva. Pásate cuando quieras.</span></li>
+      </ul>
+    </div>
+
+    <div class="card" id="resvCard">
+      <form class="form" id="form" novalidate>
+        <div class="field">
+          <label for="f-date" data-en="Day">Día</label>
+          <input id="f-date" name="date" type="date" required>
+          <span class="err" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="f-time" data-en="Time">Hora</label>
+          <select id="f-time" name="time" required></select>
+          <span class="err" aria-live="polite"></span>
+        </div>
+        <div class="field full">
+          <span class="label" style="font-size:14px;font-weight:600" id="party-l" data-en="Guests">Personas</span>
+          <div class="party" role="group" aria-labelledby="party-l" id="party"></div>
+          <span class="err" aria-live="polite" id="party-err"></span>
+        </div>
+        <div class="field">
+          <label for="f-name" data-en="Name">Nombre</label>
+          <input id="f-name" name="name" autocomplete="name" required>
+          <span class="err" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="f-tel" data-en="Phone">Teléfono</label>
+          <input id="f-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required placeholder="+34 600 000 000">
+          <span class="err" aria-live="polite"></span>
+        </div>
+        <div class="field full">
+          <label for="f-mail" data-en="Email">Email</label>
+          <input id="f-mail" name="email" type="email" autocomplete="email" required>
+          <span class="err" aria-live="polite"></span>
+        </div>
+        <div class="field">
+          <label for="f-where" data-en="Seating">Zona</label>
+          <select id="f-where" name="where">
+            <option value="sala" data-en="Dining room">Sala</option>
+            <option value="terraza" data-en="Terrace">Terraza</option>
+            <option value="igual" data-en="No preference">Me da igual</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-occ" data-en="Occasion (optional)">Ocasión (opcional)</label>
+          <select id="f-occ" name="occasion">
+            <option value="" data-en="None">Ninguna</option>
+            <option value="cumple" data-en="Birthday">Cumpleaños</option>
+            <option value="aniversario" data-en="Anniversary">Aniversario</option>
+            <option value="negocios" data-en="Business">Negocios</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="f-notes" data-en="Notes (optional)">Notas (opcional)</label>
+          <textarea id="f-notes" name="notes" data-ph-en="Allergies, high chair, wheelchair access…" placeholder="Alergias, trona, acceso con silla de ruedas…"></textarea>
+        </div>
+        <div class="form-foot">
+          <small data-en="We only use your details to manage this booking.">Solo usamos tus datos para gestionar esta reserva.</small>
+          <button class="btn btn-ink" type="submit" data-en="Request booking">Solicitar reserva</button>
+        </div>
+      </form>
+      <div class="done" id="done" hidden tabindex="-1"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VISIT ================= -->
+<section class="sec" id="visitanos">
+  <div class="wrap">
+    <div class="visit">
+      <div>
+        <h2 data-en="Visit us">Visítanos</h2>
+        <p class="status" data-status style="margin-top:var(--s4);font-size:17px"><i></i><span></span></p>
+        <ul class="hours" id="hours"></ul>
+        <div class="contact">
+          <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Calle Ejemplo 1<br>28001 Madrid. Metro Sol (L1, L2, L3)</span></p>
+          <a href="tel:+34600000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>+34 600 000 000</a>
+          <a href="mailto:hola@tunegocio.es"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>hola@tunegocio.es</a>
+        </div>
+      </div>
+      <div class="map">
+        <iframe title="Mapa: Restaurante &amp; Bar, Puerta del Sol, Madrid" data-title-en="Map: Restaurante &amp; Bar, Puerta del Sol, Madrid" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Puerta+del+Sol,+Madrid&amp;z=16&amp;output=embed"></iframe>
+        <a class="btn btn-sol" href="https://www.google.com/maps/dir/?api=1&amp;destination=Puerta+del+Sol,+Madrid" target="_blank" rel="noopener" data-en="Get directions">Cómo llegar</a>
+      </div>
+    </div>
+
+    <div class="private">
+      <div>
+        <h3 data-en="Private events">Eventos privados</h3>
+        <p data-en="The back room seats up to 40 people. Birthdays, company dinners and presentations, with a set menu and your own bar.">El salón del fondo acoge hasta 40 personas. Cumpleaños, cenas de empresa y presentaciones, con menú cerrado y barra propia.</p>
+      </div>
+      <a class="btn btn-ghost" href="mailto:eventos@tunegocio.es?subject=Evento%20privado" data-href-en="mailto:eventos@tunegocio.es?subject=Private%20event" data-en="Ask about an event">Pedir información</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="logo" href="#inicio">Restaurante &amp; Bar</a>
+    <nav aria-label="Pie de página" data-aria-en="Footer">
+      <a href="#">Instagram</a>
+      <a href="#carta" data-en="Menu">Carta</a>
+      <a href="#reservar" data-en="Bookings">Reservas</a>
+      <a href="#visitanos" data-en="Hours and address">Horario y dirección</a>
+      <span>© 2026</span>
+    </nav>
+  </div>
+</footer>
+
+<!-- floating actions (desktop) -->
+<div class="fab">
+  <a class="wa" href="https://wa.me/34600000000?text=Hola%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3z"/></svg></a>
+  <a class="tel" href="tel:+34600000000" aria-label="Llamar" data-aria-en="Call us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></a>
+</div>
+
+<!-- sticky action bar (mobile) -->
+<nav class="bar" aria-label="Acciones rápidas" data-aria-en="Quick actions">
+  <a href="tel:+34600000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-en="Call">Llamar</span></a>
+  <a href="https://wa.me/34600000000?text=Hola%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">WhatsApp</a>
+  <a class="r" href="#reservar" data-en="Book a table">Reservar mesa</a>
+</nav>
+
+<!-- demo notice (remove for the real site) -->
+<aside class="demo" id="demo" aria-label="Aviso" data-aria-en="Notice">
+  <p data-en="&lt;b&gt;Sample design&lt;/b&gt; · This site can carry your business's name, menu and photos."><b>Diseño de ejemplo</b> · Este sitio puede llevar el nombre, la carta y las fotos de tu negocio.</p>
+  <button class="demo-x" type="button" aria-label="Cerrar aviso" data-aria-en="Close notice">&times;</button>
+</aside>
+
+<script>
+(() => {
+  const IMG = id => `https://images.unsplash.com/photo-${id}?w=1200&q=80&auto=format&fit=crop`;
+
+  /* ---------- opening hours (minutes from midnight; >1440 = after midnight) ---------- */
+  const HOURS = { // 0 = Sunday
+    0:[9*60, 18*60],
+    1:[8*60, 24*60],
+    2:[8*60, 25*60],
+    3:[8*60, 25*60],
+    4:[8*60, 25*60],
+    5:[8*60, 26.5*60],
+    6:[9*60, 26.5*60]
+  };
+  const DAY_ORDER = [1,2,3,4,5,6,0];
+
+  /* ---------- moments of the day ---------- */
+  const MOMENTS = [
+    {id:'desayuno', from:480,  to:750,  es:'Desayuno', en:'Breakfast',
+      tEs:'Café de especialidad, tostadas y churros recién hechos.', tEn:'Specialty coffee, toast and freshly made churros.',
+      img:'1495474472287-4d71bcdd2085'},
+    {id:'mediodia', from:750,  to:990,  es:'Mediodía', en:'Lunch',
+      tEs:'Menú del día y platos de cuchara, de lunes a viernes.', tEn:'Set lunch and slow-cooked dishes, Monday to Friday.',
+      img:'1504674900247-0877df9cc836'},
+    {id:'vermut',   from:990,  to:1200, es:'Vermut', en:'Vermouth',
+      tEs:'Vermut de grifo, conservas y raciones para compartir.', tEn:'Vermouth on tap, tinned fish and plates to share.',
+      img:'1528605248644-14dd04022da1'},
+    {id:'cena',     from:1200, to:1440, es:'Cena', en:'Dinner',
+      tEs:'Brasa, pescado del día y vinos por copa.', tEn:'Wood grill, fish of the day and wines by the glass.',
+      img:'1414235077428-338989a2e8c0'},
+    {id:'barra',    from:1440, to:1590, es:'Barra', en:'Bar',
+      tEs:'Cócteles de autor hasta el cierre.', tEn:'Signature cocktails until closing.',
+      img:'1572116469696-31de0f17cc34'}
+  ];
+  const RULER_START = 480, RULER_END = 1590;
+
+  const MENU = {
+    desayuno:[
+      ['Pan con tomate y aceite de oliva','Toast with tomato and olive oil','Pan de masa madre, tomate rallado y AOVE picual.','Sourdough, grated tomato and picual extra virgin olive oil.','3,80'],
+      ['Churros con chocolate','Churros with chocolate','Seis churros hechos al momento y chocolate espeso.','Six churros made to order with thick hot chocolate.','5,50','fav'],
+      ['Pincho de tortilla','Spanish omelette','Jugosa, con cebolla pochada. Sale cada media hora.','Soft, with slow-cooked onion. Fresh every half hour.','4,50'],
+      ['Huevos rotos con jamón','Fried eggs with ham','Patata confitada, huevos de corral y jamón ibérico.','Confit potatoes, free-range eggs and Iberian ham.','12,00'],
+      ['Yogur con miel y granola','Yogurt, honey and granola','Yogur de oveja, miel de romero y fruta de temporada.','Sheep\'s milk yogurt, rosemary honey and seasonal fruit.','7,00'],
+      ['Café de especialidad','Specialty coffee','Espresso, cortado o con leche. Bebidas vegetales sin coste.','Espresso, cortado or latte. Plant milks at no extra cost.','2,20']
+    ],
+    mediodia:[
+      ['Menú del día','Set lunch','Primero, segundo, postre, pan y bebida. Cambia cada día.','Starter, main, dessert, bread and a drink. Changes daily.','18,00','fav'],
+      ['Ensalada de tomate y ventresca','Tomato and tuna belly salad','Tomate de temporada, ventresca de bonito y cebolleta.','Seasonal tomatoes, bonito tuna belly and spring onion.','14,00'],
+      ['Arroz meloso de carrillera','Creamy rice with pork cheek','Carrillera ibérica guisada al vino tinto.','Iberian pork cheek braised in red wine.','19,00'],
+      ['Merluza a la bilbaína','Hake Bilbao style','Lomo de merluza, ajos fritos y guindilla.','Hake loin with fried garlic and chilli.','22,00'],
+      ['Pollo de corral al ajillo','Free-range garlic chicken','Con patatas panaderas y vino blanco.','With baker\'s potatoes and white wine.','17,00']
+    ],
+    vermut:[
+      ['Vermut de grifo','Vermouth on tap','Rojo o blanco, con naranja y aceituna.','Red or white, with orange and an olive.','3,50','fav'],
+      ['Gilda clásica','Classic Gilda','Anchoa, piparra y aceituna manzanilla.','Anchovy, guindilla pepper and manzanilla olive.','2,80'],
+      ['Anchoas del Cantábrico','Cantabrian anchovies','Ocho lomos en aceite con pan tostado.','Eight fillets in oil with toasted bread.','12,00'],
+      ['Croquetas de jamón','Ham croquettes','Seis unidades, cremosas por dentro.','Six pieces, creamy inside.','9,00'],
+      ['Patatas bravas','Patatas bravas','Nuestra salsa brava ahumada y alioli.','Our smoked brava sauce and aioli.','7,50'],
+      ['Mejillones en escabeche','Pickled mussels','Escabeche casero de pimentón.','House paprika escabeche.','8,00']
+    ],
+    cena:[
+      ['Steak tartar','Steak tartare','Solomillo cortado a cuchillo, yema curada y patatas suflé.','Hand-cut tenderloin, cured yolk and soufflé potatoes.','21,00'],
+      ['Pulpo a la brasa','Grilled octopus','Con parmentier de patata y pimentón de la Vera.','With potato parmentier and La Vera paprika.','24,00','fav'],
+      ['Chuletón madurado','Dry-aged rib steak','Vaca madurada 45 días, 1 kg, para dos.','45-day aged beef, 1 kg, for two.','68,00'],
+      ['Lubina salvaje a la sal','Salt-baked wild sea bass','Según lonja, con verduras a la brasa.','Subject to the day\'s catch, with grilled vegetables.','28,00'],
+      ['Canelón de rabo de toro','Oxtail cannelloni','Bechamel de setas y queso curado.','Mushroom béchamel and aged cheese.','18,00'],
+      ['Torrija caramelizada','Caramelised torrija','Con helado de leche merengada.','With cinnamon milk ice cream.','8,00']
+    ],
+    barra:[
+      ['Sol y Sombra','Sol y Sombra','El clásico madrileño: brandy de Jerez y anís, servido frío.','The Madrid classic: sherry brandy and anise, served cold.','9,00','fav'],
+      ['Negroni de la casa','House negroni','Ginebra, vermut rojo y bitter, macerado en barrica.','Gin, red vermouth and bitter, rested in oak.','12,00'],
+      ['Gin tonic de cítricos','Citrus gin and tonic','Ginebra mediterránea, pomelo y romero.','Mediterranean gin, grapefruit and rosemary.','11,00'],
+      ['Margarita de pomelo','Grapefruit margarita','Tequila, pomelo rosa y sal de chile.','Tequila, pink grapefruit and chilli salt.','12,00'],
+      ['Vino por copa','Wine by the glass','Doce referencias que rotan cada semana.','Twelve wines that change every week.','desde 4,50','','from 4,50'],
+      ['Tónica de romero','Rosemary tonic','Sin alcohol: tónica, romero y limón.','Alcohol-free: tonic, rosemary and lemon.','6,00']
+    ]
+  };
+
+  const GALLERY = [
+    ['1517248135467-4c7edcad34c4','La sala','The dining room','g1'],
+    ['1551024709-8f23befc6f87','Cócteles de la casa','House cocktails','g2'],
+    ['1546171753-97d7676e4602','Mojito de hierbabuena','Mint mojito','g3'],
+    ['1551218808-94e220e084d2','En la cocina','In the kitchen','g4'],
+    ['1514933651103-005eec06c04b','La barra','The bar','g5'],
+    ['1470337458703-46ad1756a187','Old fashioned','Old fashioned','g6'],
+    ['1555396273-367ea4eb4db5','El salón del fondo, para eventos','The back room, for events','g7']
+  ];
+
+  const REVIEWS = [
+    ['Fuimos a desayunar y acabamos quedándonos al vermut. Los churros, de los mejores de Madrid.','We came for breakfast and stayed for vermouth. Some of the best churros in Madrid.','Lucía M.',5,'hace 1 semana','1 week ago'],
+    ['El pulpo a la brasa y el servicio, impecables. La sala tiene una luz preciosa por la noche.','The grilled octopus and the service were spot on. The room has beautiful light at night.','James R.',5,'hace 2 semanas','2 weeks ago'],
+    ['Menú del día honesto y muy bien hecho. Rápidos sin que se note la prisa.','An honest, well-made set lunch. Fast without feeling rushed.','Carlos P.',5,'hace 3 semanas','3 weeks ago'],
+    ['Celebramos un cumpleaños en el salón del fondo. Lo organizaron todo y la comida estuvo a la altura.','We held a birthday in the back room. They organised everything and the food delivered.','Marta G.',5,'hace 1 mes','1 month ago'],
+    ['Cócteles buenísimos y buena música, sin estar demasiado alta. Volveremos a por el negroni.','Great cocktails and good music that is not too loud. We will be back for the negroni.','Sophie L.',4,'hace 1 mes','1 month ago'],
+    ['Reservé por la web y me confirmaron por WhatsApp en diez minutos. Muy cómodo.','I booked online and they confirmed on WhatsApp within ten minutes. So easy.','Andrés V.',5,'hace 2 meses','2 months ago']
+  ];
+
+  const T = {
+    es:{open:'Abierto ahora, cierra a las', open1:'Abierto ahora, cierra a la', closed:'Cerrado, abre hoy a las', closedT:'Cerrado, abre mañana a las',
+        days:['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'], today:'hoy', now:'ahora',
+        req:'Este campo es obligatorio.', mail:'Revisa el email, falta algo.', tel:'Escribe un teléfono de al menos 9 cifras.', party:'Elige cuántos venís.',
+        past:'Elige hoy o un día posterior.', noslots:'Ese día ya no quedan horas. Prueba otro.', more:'9 o más',
+        bigGroup:'Para 9 personas o más, llámanos al +34 600 000 000.',
+        doneT:'Reserva solicitada', doneP:'Te confirmamos en menos de una hora por teléfono o WhatsApp. Si no te llega nada, llámanos.',
+        dDay:'Día', dTime:'Hora', dParty:'Personas', dName:'Nombre', wa:'Confirmar por WhatsApp', another:'Hacer otra reserva',
+        zone:{sala:'Sala',terraza:'Terraza',igual:'Me da igual'}, popular:'Favorito', photo:'Foto', ofDay:'Carta de',
+        stars:'de 5', score:'4,8', title:'Restaurante & Bar · Cocina y barra en Madrid'},
+    en:{open:'Open now, closes at', open1:'Open now, closes at', closed:'Closed, opens today at', closedT:'Closed, opens tomorrow at',
+        days:['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], today:'today', now:'now',
+        req:'This field is required.', mail:'Check the email address.', tel:'Enter a phone number with at least 9 digits.', party:'Choose how many guests.',
+        past:'Choose today or a later day.', noslots:'No times left that day. Try another day.', more:'9 or more',
+        bigGroup:'For 9 or more guests, call us on +34 600 000 000.',
+        doneT:'Booking requested', doneP:'We will confirm within the hour by phone or WhatsApp. If you hear nothing, give us a call.',
+        dDay:'Day', dTime:'Time', dParty:'Guests', dName:'Name', wa:'Confirm on WhatsApp', another:'Make another booking',
+        zone:{sala:'Dining room',terraza:'Terrace',igual:'No preference'}, popular:'Favourite', photo:'Photo', ofDay:'Menu:',
+        stars:'out of 5', score:'4.8', title:'Restaurante & Bar · Kitchen and bar in Madrid'}
+  };
+
+  let lang = 'es';
+  try { const s = localStorage.getItem('rb-lang'); if (s === 'en' || s === 'es') lang = s; } catch(e){}
+  const t = k => T[lang][k];
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+  const fmt = m => { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m/60)).padStart(2,'0') + ':' + String(m%60).padStart(2,'0'); };
+  const STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7.1L12 17.3 5.8 21l1.6-7.1L2 9.2l7.1-.6z"/></svg>';
+
+  /* ---------- static text translation ---------- */
+  function applyLang(){
+    document.documentElement.lang = lang;
+    $$('[data-en]').forEach(el => {
+      if (el.dataset.es === undefined) el.dataset.es = el.innerHTML;
+      el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.es;
+    });
+    $$('[data-ph-en]').forEach(el => {
+      if (el.dataset.phEs === undefined) el.dataset.phEs = el.placeholder;
+      el.placeholder = lang === 'en' ? el.dataset.phEn : el.dataset.phEs;
+    });
+    $$('[data-alt-en]').forEach(el => {
+      if (el.dataset.altEs === undefined) el.dataset.altEs = el.alt;
+      el.alt = lang === 'en' ? el.dataset.altEn : el.dataset.altEs;
+    });
+    $$('[data-aria-en]').forEach(el => {
+      if (el.dataset.ariaEs === undefined) el.dataset.ariaEs = el.getAttribute('aria-label');
+      el.setAttribute('aria-label', lang === 'en' ? el.dataset.ariaEn : el.dataset.ariaEs);
+    });
+    $$('[data-title-en]').forEach(el => {
+      if (el.dataset.titleEs === undefined) el.dataset.titleEs = el.title;
+      el.title = lang === 'en' ? el.dataset.titleEn : el.dataset.titleEs;
+    });
+    $$('[data-href-en]').forEach(el => {
+      if (el.dataset.hrefEs === undefined) el.dataset.hrefEs = el.getAttribute('href');
+      el.setAttribute('href', lang === 'en' ? el.dataset.hrefEn : el.dataset.hrefEs);
+    });
+    document.title = t('title');
+    $$('.lang button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === lang));
+    renderAll();
+    // re-translate any visible validation messages
+    $$('.field.bad input, .field.bad select').forEach(validate);
+    if (party === 9 && $('#party-err').textContent) $('#party-err').textContent = t('bigGroup');
+    if (booking) renderDone(false);
+  }
+  /* buttons are re-rendered on every change: remember which one had focus */
+  const focusedId = box => { const a = document.activeElement; return a && box.contains(a) ? a.dataset.id : null; };
+  const refocus = (box, id) => { if (id) { const b = box.querySelector(`[data-id="${id}"]`); if (b) b.focus(); } };
+
+  /* ---------- time helpers ---------- */
+  const nowMin = () => { const d = new Date(); return d.getHours()*60 + d.getMinutes(); };
+  function openState(){
+    const d = new Date(), day = d.getDay(), m = nowMin();
+    const prev = (day + 6) % 7, [po, pc] = HOURS[prev];
+    if (pc > 1440 && m < pc - 1440) return {open:true, close:pc};
+    const [o, c] = HOURS[day];
+    if (m >= o && m < c) return {open:true, close:c};
+    if (m < o) return {open:false, at:o, tomorrow:false};
+    return {open:false, at:HOURS[(day+1)%7][0], tomorrow:true};
+  }
+  function currentMoment(){
+    let m = nowMin(); if (m < 300) m += 1440;
+    if (m < RULER_START || m >= RULER_END) return MOMENTS[0]; // between closing and opening: show what comes next
+    return MOMENTS.find(x => m >= x.from && m < x.to) || MOMENTS[MOMENTS.length-1];
+  }
+
+  function renderStatus(){
+    const s = openState();
+    let txt;
+    if (s.open) { const c = fmt(s.close); txt = (c.startsWith('01') ? t('open1') : t('open')) + ' ' + c; }
+    else txt = (s.tomorrow ? t('closedT') : t('closed')) + ' ' + fmt(s.at);
+    $$('[data-status]').forEach(el => { el.classList.toggle('open', s.open); el.querySelector('span').textContent = txt; });
+  }
+
+  /* ---------- hero day ruler ---------- */
+  let active = currentMoment().id;
+  function renderRuler(){
+    const r = $('#ruler'), now = $('#now'), f = focusedId(r);
+    r.querySelectorAll('button').forEach(b => b.remove());
+    MOMENTS.forEach(mo => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.dataset.id = mo.id;
+      b.style.setProperty('--w', mo.to - mo.from);
+      b.setAttribute('aria-pressed', mo.id === active);
+      b.innerHTML = `<b>${mo[lang]}</b><small>${fmt(mo.from)}</small>`;
+      b.addEventListener('click', () => setMoment(mo.id, true));
+      r.appendChild(b);
+    });
+    refocus(r, f);
+    let m = nowMin(); if (m < 300) m += 1440;
+    const pct = Math.min(1, Math.max(0, (m - RULER_START) / (RULER_END - RULER_START)));
+    now.style.left = (pct*100) + '%';
+    now.style.display = (m < RULER_START || m > RULER_END) ? 'none' : '';
+    now.querySelector('span').textContent = t('now') + ' ' + fmt(nowMin());
+    const mo = MOMENTS.find(x => x.id === active);
+    $('[data-moment-title]').textContent = mo[lang];
+    $('[data-moment-text]').textContent = lang === 'en' ? mo.tEn : mo.tEs;
+  }
+  function setMoment(id, fromUser){
+    active = id;
+    $$('.hero-img img').forEach(i => i.classList.toggle('on', i.dataset.m === id));
+    renderRuler(); renderMenu();
+  }
+
+  /* ---------- menu ---------- */
+  const euro = p => lang === 'en' ? p.replace(',', '.') : p;
+  function renderMenu(){
+    const tabs = $('#tabs'), f = focusedId(tabs);
+    tabs.innerHTML = '';
+    MOMENTS.forEach(mo => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('role', 'tab'); b.id = 'tab-' + mo.id; b.dataset.id = mo.id;
+      b.setAttribute('aria-selected', mo.id === active);
+      b.setAttribute('aria-controls', 'menuPanel');
+      b.tabIndex = mo.id === active ? 0 : -1;
+      b.innerHTML = `${mo[lang]}<small>${fmt(mo.from)}</small>`;
+      b.addEventListener('click', () => { setMoment(mo.id); animateMenu(); });
+      tabs.appendChild(b);
+    });
+    refocus(tabs, f);
+    const mo = MOMENTS.find(x => x.id === active);
+    $('#menuPanel').setAttribute('aria-labelledby', 'tab-' + mo.id);
+    if ($('#menuImg').getAttribute('src') !== IMG(mo.img)) $('#menuImg').src = IMG(mo.img);
+    $('#menuImg').alt = t('ofDay') + ' ' + mo[lang].toLowerCase();
+    $('#menuCap').textContent = lang === 'en' ? mo.tEn : mo.tEs;
+    $('#dishes').innerHTML = MENU[mo.id].map(d => {
+      const [nEs,nEn,dEs,dEn,p,fav,pEn] = d;
+      const price = euro(lang === 'en' && pEn ? pEn : p);
+      return `<li><h3>${lang==='en'?nEn:nEs}${fav?`<span class="tag">${t('popular')}</span>`:''}</h3><span class="price">${price} €</span><p>${lang==='en'?dEn:dEs}</p></li>`;
+    }).join('');
+  }
+  function animateMenu(){
+    const p = $('#menuPanel'); p.classList.remove('menu-anim'); void p.offsetWidth; p.classList.add('menu-anim');
+  }
+  $('#tabs').addEventListener('keydown', e => {
+    if (!['ArrowRight','ArrowLeft','Home','End'].includes(e.key)) return;
+    e.preventDefault();
+    const i = MOMENTS.findIndex(x => x.id === active);
+    const n = e.key === 'Home' ? 0 : e.key === 'End' ? MOMENTS.length - 1
+      : (i + (e.key === 'ArrowRight' ? 1 : -1) + MOMENTS.length) % MOMENTS.length;
+    setMoment(MOMENTS[n].id); animateMenu();
+    $('#tab-' + MOMENTS[n].id).focus();
+  });
+
+  /* ---------- gallery + lightbox ---------- */
+  let lbIndex = 0;
+  function renderGallery(){
+    $('#gallery').innerHTML = GALLERY.map((g,i) =>
+      `<button type="button" class="${g[3]}" data-i="${i}" aria-label="${t('photo')}: ${lang==='en'?g[2]:g[1]}"><img src="${IMG(g[0])}" alt="" loading="lazy"><span>${lang==='en'?g[2]:g[1]}</span></button>`).join('');
+  }
+  function showLb(i){
+    lbIndex = (i + GALLERY.length) % GALLERY.length;
+    const g = GALLERY[lbIndex];
+    $('#lbImg').src = `https://images.unsplash.com/photo-${g[0]}?w=1800&q=85&auto=format`;
+    $('#lbImg').alt = lang==='en'?g[2]:g[1];
+    $('#lbCap').textContent = `${lang==='en'?g[2]:g[1]}  (${lbIndex+1}/${GALLERY.length})`;
+  }
+  $('#gallery').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    showLb(+b.dataset.i); $('#lb').showModal();
+  });
+  $('#lb').addEventListener('click', e => {
+    if (e.target.dataset.step) showLb(lbIndex + +e.target.dataset.step);
+    else if (e.target.classList.contains('lb-close') || e.target === $('#lb')) $('#lb').close();
+  });
+  $('#lb').addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') showLb(lbIndex+1);
+    if (e.key === 'ArrowLeft') showLb(lbIndex-1);
+  });
+
+  /* ---------- reviews ---------- */
+  function renderReviews(){
+    $('#scoreStars').innerHTML = STAR.repeat(5);
+    $('#scoreStars').setAttribute('aria-label', t('score') + ' ' + t('stars'));
+    $('#reviews').innerHTML = REVIEWS.map(r =>
+      `<article class="review"><div class="stars" role="img" aria-label="${r[3]} ${t('stars')}">${STAR.repeat(r[3])}</div><blockquote>“${lang==='en'?r[1]:r[0]}”</blockquote><footer><span>${r[2]}</span><span>Google, ${lang==='en'?r[5]:r[4]}</span></footer></article>`).join('');
+  }
+  $$('[data-scroll]').forEach(b => b.addEventListener('click', () => {
+    const el = $('#reviews'); el.scrollBy({left: +b.dataset.scroll * el.clientWidth * .8, behavior:'smooth'});
+  }));
+
+  /* ---------- hours list ---------- */
+  function renderHours(){
+    const today = new Date().getDay();
+    $('#hours').innerHTML = DAY_ORDER.map(d => {
+      const [o,c] = HOURS[d];
+      return `<li class="${d===today?'today':''}"><span data-today="${t('today')}">${t('days')[d]}</span><span>${fmt(o)} – ${fmt(c)}</span></li>`;
+    }).join('');
+  }
+
+  /* ---------- reservation form ---------- */
+  const form = $('#form');
+  let party = 2;
+  const isoDate = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const dateInput = $('#f-date');
+  let booking = null;
+  dateInput.min = isoDate(new Date());
+  dateInput.value = isoDate(new Date());
+
+  function renderParty(){
+    const p = $('#party');
+    p.innerHTML = '';
+    for (let i = 1; i <= 9; i++) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = i === 9 ? t('more') : i;
+      if (i === 9) b.className = 'more';
+      b.setAttribute('aria-pressed', party === i);
+      b.addEventListener('click', () => { party = i; renderParty(); $('#party-err').textContent = i === 9 ? t('bigGroup') : ''; });
+      p.appendChild(b);
+    }
+  }
+  function renderSlots(){
+    const sel = $('#f-time'), keep = sel.value;
+    const v = dateInput.value; sel.innerHTML = '';
+    if (!v) return;
+    const d = new Date(v + 'T00:00');
+    const [o, c] = HOURS[d.getDay()];
+    const isToday = v === isoDate(new Date());
+    const earliest = isToday ? Math.ceil((nowMin() + 30) / 30) * 30 : 0;
+    // tables are booked for meals: 13:00–16:00 and 20:00–23:00, within opening hours
+    const slots = [];
+    [[780, 960], [1200, 1380]].forEach(([a, b]) => { for (let m = a; m <= b; m += 30) if (m >= o && m <= c - 90 && m >= earliest) slots.push(m); });
+    if (!slots.length) { sel.innerHTML = `<option value="">—</option>`; return; }
+    sel.innerHTML = slots.map(m => `<option ${fmt(m)===keep?'selected':''}>${fmt(m)}</option>`).join('');
+  }
+  // late in the day there may be no slots left today: start the form on tomorrow instead
+  function defaultDate(){
+    const d = new Date();
+    dateInput.value = isoDate(d); renderSlots();
+    if (!$('#f-time').value) { d.setDate(d.getDate() + 1); dateInput.value = isoDate(d); renderSlots(); }
+  }
+  defaultDate();
+  dateInput.addEventListener('change', () => {
+    renderSlots();
+    if (validate(dateInput)) validate($('#f-time')); else setErr($('#f-time'), '');
+  });
+  $('#f-time').addEventListener('change', e => validate(e.target));
+
+  function setErr(el, msg){
+    const f = el.closest('.field'); f.classList.toggle('bad', !!msg);
+    f.querySelector('.err').textContent = msg || '';
+    el.setAttribute('aria-invalid', !!msg);
+  }
+  function validate(el){
+    const v = el.value.trim(); let msg = '';
+    if (el.id === 'f-time' && !v) msg = dateInput.value ? t('noslots') : t('req');
+    else if (el.required && !v) msg = t('req');
+    else if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) msg = t('mail');
+    else if (el.type === 'tel' && v.replace(/\D/g,'').length < 9) msg = t('tel');
+    else if (el.type === 'date' && v < dateInput.min) msg = t('past');
+    setErr(el, msg); return !msg;
+  }
+  form.querySelectorAll('input[required]').forEach(el => el.addEventListener('blur', () => validate(el)));
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const els = [...form.querySelectorAll('[required]')];
+    const ok = els.map(validate).every(Boolean);
+    if (party === 9) { $('#party-err').textContent = t('bigGroup'); }
+    if (!ok || party === 9) { (els.find(x => x.getAttribute('aria-invalid') === 'true') || $('#party button')).focus(); return; }
+    booking = Object.fromEntries(new FormData(form));
+    booking.party = party;
+    booking.name = booking.name.trim().replace(/[<>&"]/g,'');
+    // TODO: send `booking` to your booking backend (Formspree, email service, CoverManager…)
+    renderDone(true);
+  });
+
+  function renderDone(focus){
+    const data = booking, done = $('#done');
+    const d = new Date(data.date + 'T00:00');
+    const dayTxt = d.toLocaleDateString(lang === 'en' ? 'en-GB' : 'es-ES', {weekday:'long', day:'numeric', month:'long'});
+    const msg = (lang === 'en'
+      ? `Hello, I have requested a table for ${data.party} on ${dayTxt} at ${data.time} (${t('zone')[data.where]}). Name: ${data.name}.`
+      : `Hola, he solicitado una mesa para ${data.party} el ${dayTxt} a las ${data.time} (${t('zone')[data.where]}). Nombre: ${data.name}.`);
+    done.innerHTML = `<div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <h3>${t('doneT')}</h3><p>${t('doneP')}</p>
+      <dl><dt>${t('dDay')}</dt><dd>${dayTxt}</dd><dt>${t('dTime')}</dt><dd>${data.time}</dd><dt>${t('dParty')}</dt><dd>${data.party}</dd><dt>${t('dName')}</dt><dd>${data.name}</dd></dl>
+      <div class="row"><a class="btn btn-ink" target="_blank" rel="noopener" href="https://wa.me/34600000000?text=${encodeURIComponent(msg)}">${t('wa')}</a>
+      <button class="btn btn-ghost" style="color:var(--tinta);border-color:rgba(20,26,46,.35)" type="button" id="again">${t('another')}</button></div>`;
+    form.hidden = true; done.hidden = false;
+    if (focus) done.focus();
+    $('#again').addEventListener('click', () => {
+      booking = null; form.reset(); party = 2; renderParty(); defaultDate();
+      $$('#form .field').forEach(f => f.classList.remove('bad'));
+      $$('#form .err').forEach(e => e.textContent = '');
+      $$('#form [aria-invalid]').forEach(e => e.removeAttribute('aria-invalid'));
+      done.hidden = true; done.innerHTML = ''; form.hidden = false; dateInput.focus();
+    });
+  }
+
+  /* ---------- header, nav, language ---------- */
+  const top = $('#top');
+  const onScroll = () => top.classList.toggle('scrolled', scrollY > 40);
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  const burger = $('.burger'), nav = $('#nav');
+  burger.addEventListener('click', () => {
+    const o = burger.getAttribute('aria-expanded') !== 'true';
+    burger.setAttribute('aria-expanded', o); nav.classList.toggle('open', o);
+  });
+  const closeNav = () => { burger.setAttribute('aria-expanded', false); nav.classList.remove('open'); };
+  nav.addEventListener('click', e => { if (e.target.closest('a')) closeNav(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { closeNav(); burger.focus(); } });
+  matchMedia('(min-width:1081px)').addEventListener('change', e => { if (e.matches) closeNav(); });
+  $$('.lang button').forEach(b => b.addEventListener('click', () => {
+    lang = b.dataset.lang;
+    try { localStorage.setItem('rb-lang', lang); } catch(e){}
+    applyLang();
+  }));
+
+  /* ---------- demo notice ---------- */
+  const demo = $('#demo');
+  try { if (sessionStorage.getItem('rb-demo-closed')) demo.hidden = true; } catch(e){}
+  demo.querySelector('.demo-x').addEventListener('click', () => {
+    demo.hidden = true;
+    try { sessionStorage.setItem('rb-demo-closed', '1'); } catch(e){}
+  });
+
+  function renderAll(){
+    renderStatus(); renderRuler(); renderMenu(); renderGallery(); renderReviews(); renderHours(); renderParty(); renderSlots();
+  }
+
+  setMoment(active);
+  applyLang();
+  setInterval(() => { renderStatus(); renderRuler(); }, 60000);
+})();
+</script>
+</body>
+</html>

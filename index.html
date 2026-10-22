@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamyar · Webs para bares y restaurantes de Madrid</title>
+<meta name="description" content="Diseño páginas web para bares, restaurantes y cafeterías de Madrid. Diseño cuidado a precio de estudiante, desde 150 €.">
+<meta property="og:title" content="Webs para bares y restaurantes de Madrid">
+<meta property="og:description" content="Diseño cuidado a precio de estudiante, desde 150 €. Mira los ejemplos.">
+<meta property="og:image" content="img/restaurante-bar.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --papel:#FFFFFF;
+  --mantel:#F1F3F6;
+  --tinta:#16181D;
+  --gris:#5B6170;
+  --carmin:#C8102E;
+  --linea:#DDE1E7;
+  --s:clamp(16px,4vw,40px);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);font:400 17px/1.6 "Bricolage Grotesque",system-ui,sans-serif}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--carmin);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--s)}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.03em;line-height:1}
+
+header.top{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.me{font-weight:600;text-decoration:none}
+.ig{display:inline-flex;align-items:center;gap:8px;font-weight:600;text-decoration:none;padding:10px 18px;border:1.5px solid var(--tinta);border-radius:999px;transition:background-color .2s,color .2s}
+.ig:hover{background:var(--tinta);color:var(--papel)}
+.ig svg{width:18px;height:18px}
+
+.hero{padding:clamp(40px,8vw,96px) 0 clamp(40px,6vw,72px)}
+.hero h1{font-size:clamp(46px,9vw,124px);max-width:11ch}
+.hero p{font-size:clamp(18px,2vw,22px);color:var(--gris);max-width:44ch;margin-top:28px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;padding:15px 26px;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .3s cubic-bezier(.22,1.2,.36,1),background-color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:none}
+.btn-r{background:var(--carmin);color:#fff}
+.btn-r:hover{background:#A60D26}
+.btn-l{background:var(--mantel)}
+.btn-l:hover{background:var(--linea)}
+
+/* demos */
+.demos{padding:clamp(40px,6vw,80px) 0;background:var(--mantel)}
+.demos header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:36px}
+.demos h2,.precios h2,.como h2{font-size:clamp(34px,5vw,60px)}
+.demos header p{color:var(--gris);max-width:40ch;margin:0}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px}
+.demo{grid-column:span 2;text-decoration:none;display:flex;flex-direction:column;gap:14px}
+.demo.big{grid-column:span 3}
+.shot{position:relative;border-radius:10px;overflow:hidden;background:#fff;aspect-ratio:16/10;box-shadow:0 1px 2px rgba(22,24,29,.06),0 12px 32px rgba(22,24,29,.10)}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.demo:hover .shot img{transform:scale(1.03)}
+.demo h3{font-size:24px;letter-spacing:-.02em}
+.demo p{margin:2px 0 0;color:var(--gris);font-size:15px}
+.demo .go{font-weight:600;font-size:15px;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.demo:hover .go{text-decoration-thickness:2px}
+
+/* prices as a menu */
+.precios{padding:clamp(56px,8vw,112px) 0}
+.carta{margin-top:40px;max-width:820px}
+.plato{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:14px;padding:22px 0;border-bottom:1px solid var(--linea)}
+.plato h3{font-size:clamp(24px,3vw,32px);letter-spacing:-.02em}
+.plato .dots{border-bottom:2px dotted var(--linea);transform:translateY(-6px)}
+.plato .p{font-weight:800;font-size:clamp(24px,3vw,32px);color:var(--carmin);font-variant-numeric:tabular-nums}
+.plato p{grid-column:1/-1;margin:0;color:var(--gris);max-width:62ch}
+.plato.rec h3::after{content:"La más pedida";font-size:13px;font-weight:600;letter-spacing:0;background:var(--tinta);color:#fff;padding:3px 9px;border-radius:999px;margin-left:12px;vertical-align:middle}
+.extra{margin-top:24px;color:var(--gris);font-size:15px;max-width:62ch}
+
+/* how it works: a real sequence */
+.como{padding:0 0 clamp(56px,8vw,112px)}
+.pasos{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;counter-reset:p}
+.pasos li{counter-increment:p;border-top:2px solid var(--tinta);padding-top:18px}
+.pasos li::before{content:counter(p);display:block;font-weight:800;font-size:44px;color:var(--carmin);line-height:1;margin-bottom:12px}
+.pasos h3{font-size:22px;letter-spacing:-.02em;margin-bottom:6px}
+.pasos p{margin:0;color:var(--gris)}
+
+.final{background:var(--tinta);color:#fff;padding:clamp(56px,8vw,104px) 0}
+.final h2{font-size:clamp(38px,6vw,76px);max-width:14ch}
+.final p{color:#B8BDC8;max-width:46ch;margin:20px 0 28px;font-size:18px}
+.final .ig{border-color:#fff}
+.final .ig:hover{background:#fff;color:var(--tinta)}
+footer{padding:28px 0;font-size:14px;color:var(--gris)}
+
+@media (max-width:860px){
+  .demo,.demo.big{grid-column:span 6}
+  .pasos{grid-template-columns:1fr;gap:24px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="me" href="#">Kamyar · Webs</a>
+    <a class="ig" href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Escríbeme</a>
+  </header>
+
+  <section class="hero">
+    <h1>Webs para bares y restaurantes de Madrid</h1>
+    <p>Soy Kamyar, estudiante en Madrid. Diseño páginas web cuidadas para negocios del barrio: carta, horario, reservas y mapa, listas para el móvil. A precio de estudiante.</p>
+    <div class="ctas">
+      <a class="btn btn-r" href="#ejemplos">Ver ejemplos</a>
+      <a class="btn btn-l" href="#precios">Ver precios</a>
+    </div>
+  </section>
+</div>
+
+<section class="demos" id="ejemplos">
+  <div class="wrap">
+    <header>
+      <h2>Ejemplos</h2>
+      <p>Diseños de muestra. Cada uno puede llevar el nombre, la carta y las fotos de tu negocio.</p>
+    </header>
+    <div class="grid">
+      <a class="demo big" href="restaurante-bar.html">
+        <div class="shot"><img src="img/restaurante-bar.jpg" alt="Captura del ejemplo Restaurante y bar" loading="lazy"></div>
+        <div><h3>Restaurante &amp; bar</h3><p>Carta por momentos del día, reservas, horario en directo, español e inglés.</p></div>
+        <span class="go">Abrir ejemplo</span>
+      </a>
+      <a class="demo big" href="cerveceria.html">
+        <div class="shot"><img src="img/cerveceria.jpg" alt="Captura del ejemplo Cervecería" loading="lazy"></div>
+        <div><h3>Cervecería</h3><p>Para bares de tapas y cervecerías de barrio.</p></div>
+        <span class="go">Abrir ejemplo</span>
+      </a>
+      <a class="demo" href="restaurante-moderno.html">
+        <div class="shot"><img src="img/restaurante-moderno.jpg" alt="Captura del ejemplo Restaurante moderno" loading="lazy"></div>
+        <div><h3>Restaurante moderno</h3><p>Cocina mediterránea, tapas y reservas.</p></div>
+        <span class="go">Abrir ejemplo</span>
+      </a>
+      <a class="demo" href="restaurante-clasico.html">
+        <div class="shot"><img src="img/restaurante-clasico.jpg" alt="Captura del ejemplo Restaurante clásico" loading="lazy"></div>
+        <div><h3>Restaurante clásico</h3><p>Casas de comidas y cocina tradicional.</p></div>
+        <span class="go">Abrir ejemplo</span>
+      </a>
+      <a class="demo" href="churreria.html">
+        <div class="shot"><img src="img/churreria.jpg" alt="Captura del ejemplo Churrería" loading="lazy"></div>
+        <div><h3>Churrería y cafetería</h3><p>Desayunos, meriendas y brunch.</p></div>
+        <span class="go">Abrir ejemplo</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="precios" id="precios">
+    <h2>Precios</h2>
+    <div class="carta">
+      <div class="plato">
+        <h3>Básica</h3><span class="dots"></span><span class="p">150 €</span>
+        <p>Una página con vuestro nombre, fotos, carta, horario, mapa y botones de llamar y WhatsApp.</p>
+      </div>
+      <div class="plato rec">
+        <h3>Completa</h3><span class="dots"></span><span class="p">300 €</span>
+        <p>Todo lo de la Básica, más formulario de reservas, galería, opiniones y versión en inglés.</p>
+      </div>
+      <div class="plato">
+        <h3>Premium</h3><span class="dots"></span><span class="p">500 €</span>
+        <p>Diseño a medida de vuestra marca, varias páginas, ficha de Google lista y tres meses de cambios de carta y horario incluidos.</p>
+      </div>
+    </div>
+    <p class="extra">Pago único. El dominio propio (.es o .com) cuesta unos 10–15 € al año. Mantenimiento opcional desde 15 € al mes.</p>
+  </section>
+
+  <section class="como">
+    <h2>Cómo funciona</h2>
+    <ol class="pasos">
+      <li><h3>Te preparo una muestra</h3><p>Gratis y sin compromiso, con tu nombre y tu carta. Saco las fotos de tu Instagram.</p></li>
+      <li><h3>La ajustamos juntos</h3><p>Cambiamos lo que quieras: colores, textos, platos, fotos.</p></li>
+      <li><h3>La publicamos</h3><p>En tu dominio, lista para Google y para compartir en Instagram.</p></li>
+    </ol>
+  </section>
+</div>
+
+<section class="final">
+  <div class="wrap">
+    <h2>¿Quieres ver tu negocio en una de estas?</h2>
+    <p>Escríbeme por Instagram con el nombre de tu bar o restaurante y te preparo una muestra gratis.</p>
+    <a class="ig" href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>@kamyar._.sh</a>
+  </div>
+</section>
+
+<div class="wrap"><footer>Kamyar · Madrid, 2026</footer></div>
+</body>
+</html>
