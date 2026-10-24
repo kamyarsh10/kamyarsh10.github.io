@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barbería Castiza · Barber Shop &amp; Grooming Club Madrid</title>
+<meta name="description" content="Barbería tradicional y cuidado masculino en el corazón de Malasaña, Madrid. Corte clásico, degradado, afeitado a navaja y toalla caliente. Pide cita online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fondo:#0E1013;
+  --fondo-alt:#14171C;
+  --panel:#1A1E24;
+  --panel-hover:#222831;
+  --borde:rgba(212,175,55,.18);
+  --borde-tenue:rgba(255,255,255,.07);
+  
+  --oro:#D4AF37;
+  --oro-brillante:#F3CE63;
+  --oro-oscuro:#9A7B20;
+  --cuero:#A26A42;
+  
+  --blanco:#F7F6F2;
+  --gris:#9CA3AF;
+  --gris-oscuro:#4B5563;
+  --verde:#10B981;
+  --rojo:#EF4444;
+
+  --serif:"Cinzel", Georgia, serif;
+  --sans:"Plus Jakarta Sans", system-ui, sans-serif;
+  
+  --wrap:1200px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --sombra:0 10px 30px -10px rgba(0,0,0,.7), 0 0 1px 1px rgba(212,175,55,.15);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--fondo);color:var(--blanco);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--oro);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+
+h1,h2,h3,h4{font-family:var(--serif);font-weight:700;margin:0;letter-spacing:.02em;line-height:1.15}
+h1{font-size:clamp(38px,6vw,72px);text-transform:uppercase}
+h2{font-size:clamp(30px,4.5vw,52px);text-transform:uppercase}
+h3{font-size:22px}
+p{margin:0}
+
+/* ---------- BUTTONS ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;border-radius:4px;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .25s var(--ease);border:1px solid transparent}
+.btn-oro{background:linear-gradient(135deg,var(--oro) 0%,var(--oro-oscuro) 100%);color:#0A0B0D;box-shadow:0 4px 20px rgba(212,175,55,.25)}
+.btn-oro:hover{background:linear-gradient(135deg,var(--oro-brillante) 0%,var(--oro) 100%);transform:translateY(-2px);box-shadow:0 6px 25px rgba(212,175,55,.4)}
+.btn-ghost{border-color:var(--borde);color:var(--blanco);background:rgba(255,255,255,.02)}
+.btn-ghost:hover{border-color:var(--oro);color:var(--oro);background:rgba(212,175,55,.05);transform:translateY(-2px)}
+.btn-sm{padding:8px 16px;font-size:12px}
+
+/* ---------- HEADER ---------- */
+.header{position:fixed;inset:0 0 auto;z-index:60;background:rgba(14,16,19,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--borde-tenue);transition:background .3s}
+.header .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+.logo-box{display:flex;align-items:center;gap:12px}
+.logo-icon{width:36px;height:36px;color:var(--oro)}
+.logo-title{font-family:var(--serif);font-size:20px;font-weight:800;letter-spacing:.08em;color:var(--blanco)}
+.logo-sub{display:block;font-size:10px;letter-spacing:.25em;color:var(--oro);font-weight:600;margin-top:-2px}
+
+.nav{display:flex;align-items:center;gap:28px}
+.nav a{font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:var(--gris);transition:color .2s}
+.nav a:hover{color:var(--oro)}
+
+.header-right{display:flex;align-items:center;gap:16px}
+.status-pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;padding:6px 12px;background:rgba(255,255,255,.04);border:1px solid var(--borde-tenue);border-radius:999px}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--verde);box-shadow:0 0 8px var(--verde)}
+.lang-toggle{display:flex;border:1px solid var(--borde-tenue);border-radius:4px;overflow:hidden}
+.lang-toggle button{background:none;border:0;padding:4px 8px;font-size:11px;font-weight:700;color:var(--gris);cursor:pointer}
+.lang-toggle button.active{background:var(--oro);color:#000}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;padding:120px 0 60px;overflow:hidden;background:radial-gradient(ellipse at 80% 30%, rgba(212,175,55,.12) 0%, transparent 60%), radial-gradient(circle at 10% 90%, rgba(162,106,66,.15) 0%, transparent 50%)}
+.hero-bg{position:absolute;inset:0;z-index:-1;opacity:.28;mix-blend-mode:luminosity}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top, var(--fondo) 0%, rgba(14,16,19,.7) 60%, rgba(14,16,19,.95) 100%)}
+
+.hero-content{max-width:760px;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--borde);border-radius:2px;background:rgba(212,175,55,.06);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--oro);font-weight:700;margin-bottom:20px}
+.hero p.lead{font-size:clamp(17px,2vw,20px);color:#D1D5DB;margin:24px 0 36px;line-height:1.6}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-top:28px;border-top:1px solid var(--borde-tenue)}
+.stat-num{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--oro)}
+.stat-label{font-size:12px;color:var(--gris);text-transform:uppercase;letter-spacing:.05em}
+
+/* ---------- SECTIONS ---------- */
+section{padding:90px 0}
+.sec-head{text-align:center;max-width:640px;margin:0 auto 50px}
+.sec-tag{color:var(--oro);font-size:12px;letter-spacing:.25em;text-transform:uppercase;font-weight:700;margin-bottom:10px}
+.sec-head p{color:var(--gris);margin-top:14px;font-size:16px}
+
+/* ---------- SERVICES & PRICING ---------- */
+.servicios{background:var(--fondo-alt)}
+.serv-tabs{display:flex;justify-content:center;gap:10px;margin-bottom:40px;flex-wrap:wrap}
+.serv-tab{background:var(--panel);border:1px solid var(--borde-tenue);padding:10px 22px;border-radius:4px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.serv-tab:hover{border-color:var(--borde);color:var(--oro)}
+.serv-tab.active{background:var(--oro);color:#0A0B0D;border-color:var(--oro)}
+
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.serv-card{background:var(--panel);border:1px solid var(--borde-tenue);border-radius:6px;padding:26px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .25s var(--ease),border-color .25s}
+.serv-card:hover{transform:translateY(-3px);border-color:var(--borde)}
+.serv-card-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px}
+.serv-title{font-size:19px;font-family:var(--serif);font-weight:700}
+.serv-price{font-family:var(--serif);font-size:22px;color:var(--oro);font-weight:700;white-space:nowrap}
+.serv-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--oro-oscuro);font-weight:600;margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em}
+.serv-desc{color:var(--gris);font-size:14px;margin-bottom:18px;line-height:1.5}
+.serv-btn{align-self:flex-start}
+
+/* ---------- EXPERIENCE / RITUAL ---------- */
+.ritual-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.ritual-card{background:var(--panel);border:1px solid var(--borde-tenue);border-radius:6px;padding:32px 24px;position:relative;overflow:hidden}
+.ritual-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--oro),transparent);opacity:0;transition:opacity .3s}
+.ritual-card:hover::before{opacity:1}
+.ritual-num{font-family:var(--serif);font-size:36px;color:var(--borde);font-weight:800;margin-bottom:12px}
+.ritual-card h3{margin-bottom:10px;font-size:20px}
+.ritual-card p{color:var(--gris);font-size:14px}
+
+/* ---------- BARBERS TEAM ---------- */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.barber-card{background:var(--panel);border:1px solid var(--borde-tenue);border-radius:6px;overflow:hidden;text-align:center}
+.barber-img{aspect-ratio:4/5;overflow:hidden;background:#000}
+.barber-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.barber-card:hover .barber-img img{transform:scale(1.05)}
+.barber-info{padding:22px 18px}
+.barber-name{font-size:20px;margin-bottom:4px}
+.barber-role{color:var(--oro);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.barber-bio{color:var(--gris);font-size:13px}
+
+/* ---------- BOOKING ENGINE (CITA PREVIA) ---------- */
+.booking-section{background:linear-gradient(180deg,var(--fondo) 0%,var(--fondo-alt) 100%);position:relative}
+.booking-box{max-width:820px;margin:0 auto;background:var(--panel);border:1px solid var(--borde);border-radius:8px;padding:40px;box-shadow:var(--sombra)}
+.booking-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:32px}
+.b-step{text-align:center;padding:10px;background:rgba(255,255,255,.03);border:1px solid var(--borde-tenue);border-radius:4px;font-size:12px;font-weight:700;color:var(--gris);text-transform:uppercase}
+.b-step.active{background:rgba(212,175,55,.15);border-color:var(--oro);color:var(--oro)}
+
+.form-group{margin-bottom:24px}
+.form-label{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;color:var(--blanco);margin-bottom:8px}
+.form-select,.form-input{width:100%;padding:14px;background:var(--fondo);border:1px solid var(--borde-tenue);border-radius:4px;color:var(--blanco);font-size:15px;transition:border-color .2s}
+.form-select:focus,.form-input:focus{border-color:var(--oro)}
+
+.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.time-btn{padding:10px;background:var(--fondo);border:1px solid var(--borde-tenue);border-radius:4px;cursor:pointer;font-weight:600;font-size:13px;transition:all .2s;text-align:center}
+.time-btn:hover{border-color:var(--oro)}
+.time-btn.selected{background:var(--oro);color:#000;border-color:var(--oro)}
+
+.booking-summary{background:rgba(0,0,0,.3);border:1px solid var(--borde-tenue);border-radius:6px;padding:20px;margin:24px 0}
+.summary-row{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.summary-row.total{border:0;font-weight:700;font-size:17px;color:var(--oro);padding-top:10px}
+
+/* ---------- GALLERY ---------- */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.gal-item{aspect-ratio:1;border-radius:4px;overflow:hidden;position:relative;cursor:pointer;background:#000}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s var(--ease)}
+.gal-item:hover img{transform:scale(1.08)}
+.gal-overlay{position:absolute;inset:0;background:rgba(14,16,19,.5);opacity:0;display:grid;place-items:center;color:var(--oro);transition:opacity .3s}
+.gal-item:hover .gal-overlay{opacity:1}
+
+/* Lightbox Modal */
+.modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.92);place-items:center;padding:20px}
+.modal.open{display:grid}
+.modal-img{max-width:90vw;max-height:85vh;border-radius:4px;box-shadow:0 0 50px rgba(0,0,0,.9)}
+.modal-close{position:absolute;top:24px;right:24px;background:none;border:0;color:#fff;font-size:36px;cursor:pointer}
+
+/* ---------- REVIEWS ---------- */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.review-card{background:var(--panel);border:1px solid var(--borde-tenue);border-radius:6px;padding:28px;display:flex;flex-direction:column;justify-content:space-between}
+.review-stars{color:var(--oro);font-size:18px;margin-bottom:12px;letter-spacing:2px}
+.review-text{font-style:italic;color:#E5E7EB;font-size:15px;line-height:1.6;margin-bottom:20px}
+.reviewer{display:flex;align-items:center;gap:12px}
+.reviewer-avatar{width:42px;height:42px;border-radius:50%;background:var(--cuero);display:grid;place-items:center;font-weight:700;font-family:var(--serif);color:#fff}
+.reviewer-name{font-weight:700;font-size:14px}
+.reviewer-date{font-size:12px;color:var(--gris)}
+
+/* ---------- VISIT & CONTACT ---------- */
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hours-table{width:100%;border-collapse:collapse;margin:20px 0}
+.hours-table tr{border-bottom:1px solid var(--borde-tenue)}
+.hours-table td{padding:12px 0;font-size:14px}
+.hours-table td:last-child{text-align:right;color:var(--gris)}
+.hours-table tr.today{color:var(--oro);font-weight:700}
+.hours-table tr.today td:last-child{color:var(--oro)}
+.map-embed{border-radius:8px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--borde-tenue)}
+.map-embed iframe{width:100%;height:100%;border:0;filter:grayscale(.4) contrast(1.1)}
+
+/* ---------- FOOTER ---------- */
+.footer{background:#08090B;border-top:1px solid var(--borde-tenue);padding:60px 0 100px;color:var(--gris);font-size:13px}
+.foot-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.foot-links{display:flex;gap:24px}
+.foot-links a:hover{color:var(--oro)}
+
+/* ---------- MOBILE BOTTOM BAR ---------- */
+.mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:50;background:#0E1013;border-top:1px solid var(--borde);padding:10px 16px;box-shadow:0 -5px 20px rgba(0,0,0,.6)}
+.mobile-bar-inner{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:8px}
+.mob-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px;font-size:11px;font-weight:700;text-transform:uppercase;border-radius:4px;border:1px solid var(--borde-tenue);background:var(--panel)}
+.mob-btn svg{width:16px;height:16px;margin-bottom:3px}
+.mob-btn-cita{background:var(--oro);color:#000;border-color:var(--oro)}
+
+@media (max-width:960px){
+  .services-grid,.ritual-grid,.team-grid,.reviews-grid,.visit-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .nav{display:none}
+  .mobile-bar{display:block}
+  .hero-stats{grid-template-columns:1fr;gap:14px}
+  .booking-steps{grid-template-columns:repeat(2,1fr)}
+  .time-grid{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="wrap">
+    <a href="#" class="logo-box">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/>
+        <line x1="4" y1="21" x2="20" y2="21"/>
+        <line x1="12" y1="16" x2="12" y2="21"/>
+      </svg>
+      <div>
+        <span class="logo-title">CASTIZA</span>
+        <span class="logo-sub">BARBER CLUB</span>
+      </div>
+    </a>
+
+    <nav class="nav">
+      <a href="#servicios" data-es="Servicios" data-en="Services">Servicios</a>
+      <a href="#experiencia" data-es="El Ritual" data-en="The Ritual">El Ritual</a>
+      <a href="#barberos" data-es="Barberos" data-en="Barbers">Barberos</a>
+      <a href="#galeria" data-es="Galería" data-en="Gallery">Galería</a>
+      <a href="#opiniones" data-es="Opiniones" data-en="Reviews">Opiniones</a>
+      <a href="#contacto" data-es="Contacto" data-en="Contact">Contacto</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="status-pill" id="liveStatus">
+        <span class="status-dot"></span>
+        <span id="statusText" data-es="Abierto ahora · Cierra a las 20:30" data-en="Open now · Closes at 20:30">Abierto ahora · Cierra a las 20:30</span>
+      </div>
+
+      <div class="lang-toggle">
+        <button type="button" class="active" id="btnEs">ES</button>
+        <button type="button" id="btnEn">EN</button>
+      </div>
+
+      <a href="#cita" class="btn btn-oro btn-sm" data-es="Pedir Cita" data-en="Book Appointment">Pedir Cita</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1600&q=80&auto=format&fit=crop" alt="Barbería interior">
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="wrap">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span data-es="★ Barbería Tradicional &amp; Club Masculino en Madrid" data-en="★ Traditional Barber &amp; Men's Grooming in Madrid">★ Barbería Tradicional &amp; Club Masculino en Madrid</span>
+      </div>
+      <h1 data-es="El arte del corte clásico y el afeitado a navaja" data-en="The art of classic cuts &amp; straight razor shaves">El arte del corte clásico y el afeitado a navaja</h1>
+      <p class="lead" data-es="Un refugio de elegancia y calma en el corazón de Malasaña. Navaja clásica de acero japonés, toalla caliente perfumada y café de especialidad de cortesía." data-en="A refuge of elegance and calm in the heart of Malasaña. Japanese steel razor, hot scented towels, and complimentary specialty coffee.">Un refugio de elegancia y calma en el corazón de Malasaña. Navaja clásica de acero japonés, toalla caliente perfumada y café de especialidad de cortesía.</p>
+
+      <div class="hero-ctas">
+        <a href="#cita" class="btn btn-oro" data-es="Reservar Cita Online" data-en="Book Online Now">Reservar Cita Online</a>
+        <a href="#servicios" class="btn btn-ghost" data-es="Ver Carta de Precios" data-en="View Price Menu">Ver Carta de Precios</a>
+      </div>
+
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">4.9 ★</div>
+          <div class="stat-label" data-es="680+ Reseñas Google" data-en="680+ Google Reviews">680+ Reseñas Google</div>
+        </div>
+        <div>
+          <div class="stat-num">+12.000</div>
+          <div class="stat-label" data-es="Cortes realizados" data-en="Haircuts performed">Cortes realizados</div>
+        </div>
+        <div>
+          <div class="stat-num">3</div>
+          <div class="stat-label" data-es="Maestros Barberos" data-en="Master Barbers">Maestros Barberos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICIOS Y PRECIOS ================= -->
+<section class="servicios" id="servicios">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag" data-es="Nuestra Carta" data-en="Our Services">Nuestra Carta</div>
+      <h2 data-es="Cortes, Barba &amp; Rituales" data-en="Haircuts, Beard &amp; Rituals">Cortes, Barba &amp; Rituales</h2>
+      <p data-es="Trabajamos con técnica precisa, productos botánicos premium y tiempo dedicado para cada cliente." data-en="Crafted with precise technique, premium botanical grooming products, and dedicated time for every client.">Trabajamos con técnica precisa, productos botánicos premium y tiempo dedicado para cada cliente.</p>
+    </div>
+
+    <div class="serv-tabs">
+      <button class="serv-tab active" data-cat="all" data-es="Todos los servicios" data-en="All Services">Todos los servicios</button>
+      <button class="serv-tab" data-cat="corte" data-es="Cortes y Cabello" data-en="Haircuts &amp; Styling">Cortes y Cabello</button>
+      <button class="serv-tab" data-cat="barba" data-es="Barba y Afeitado" data-en="Beard &amp; Shave">Barba y Afeitado</button>
+      <button class="serv-tab" data-cat="combos" data-es="Combos &amp; Rituales" data-en="Combos &amp; Rituals">Combos &amp; Rituales</button>
+    </div>
+
+    <div class="services-grid" id="servicesGrid">
+      <!-- 1. Corte Clásico -->
+      <div class="serv-card" data-cat="corte">
+        <div>
+          <div class="serv-card-head">
+            <div class="serv-title" data-es="Corte Clásico a Tijera / Peine" data-en="Classic Scissor Cut">Corte Clásico a Tijera / Peine</div>
+            <div class="serv-price">22 €</div>
+          </div>
+          <div class="serv-meta"><span>⏱ 35 min</span> · <span data-es="Incluye lavado y peinado" data-en="Includes wash &amp; style">Incluye lavado y peinado</span></div>
+          <p class="serv-desc" data-es="Corte adaptado a las facciones de tu rostro. Lavado relajante con champú botánico y peinado con pomada mate o cera artesana." data-en="Custom cut tailored to your facial structure. Relaxing wash with botanical shampoo and finish styling with craft matte pomade.">Corte adaptado a las facciones de tu rostro. Lavado relajante con champú botánico y peinado con pomada mate o cera artesana.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm serv-btn" onclick="selectService('Corte Clásico (22 €)')" data-es="Elegir para mi cita" data-en="Select for my visit">Elegir para mi cita</button>
+      </div>
+
+      <!-- 2. Skin Fade -->
+      <div class="serv-card" data-cat="corte">
+        <div>
+          <div class="serv-card-head">
+            <div class="serv-title" data-es="Degradado / Skin Fade Castizo" data-en="Skin Fade Cut">Degradado / Skin Fade Castizo</div>
+            <div class="serv-price">24 €</div>
+          </div>
+          <div class="serv-meta"><span>⏱ 40 min</span> · <span data-es="Afeitadora shavers &amp; navaja" data-en="Shaver &amp; razor finish">Afeitadora shavers &amp; navaja</span></div>
+          <p class="serv-desc" data-es="Degradado milimétrico desde cero (low, mid o high fade). Transición limpia y contornos definidos al detalle con navaja." data-en="Millimetric skin fade from zero (low, mid, or high fade). Crisp blending and razor-sharp contour lines.">Degradado milimétrico desde cero (low, mid o high fade). Transición limpia y contornos definidos al detalle con navaja.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm serv-btn" onclick="selectService('Skin Fade Castizo (24 €)')" data-es="Elegir para mi cita" data-en="Select for my visit">Elegir para mi cita</button>
+      </div>
+
+      <!-- 3. Afeitado Tradicional -->
+      <div class="serv-card" data-cat="barba">
+        <div>
+          <div class="serv-card-head">
+            <div class="serv-title" data-es="Afeitado a Navaja con Toalla Caliente" data-en="Traditional Hot Towel Shave">Afeitado a Navaja con Toalla Caliente</div>
+            <div class="serv-price">20 €</div>
+          </div>
+          <div class="serv-meta"><span>⏱ 30 min</span> · <span data-es="Ritual clásico italiano" data-en="Italian classic ritual">Ritual clásico italiano</span></div>
+          <p class="serv-desc" data-es="Aceite pre-afeitado de sándalo, doble toalla caliente al vapor, espuma densa con brocha de tejón, navaja clásica y loción balsámica calmante." data-en="Sandalwood pre-shave oil, double steamed hot towels, badger brush lather, straight razor glide, and soothing aftershave balm.">Aceite pre-afeitado de sándalo, doble toalla caliente al vapor, espuma densa con brocha de tejón, navaja clásica y loción balsámica calmante.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm serv-btn" onclick="selectService('Afeitado a Navaja (20 €)')" data-es="Elegir para mi cita" data-en="Select for my visit">Elegir para mi cita</button>
+      </div>
+
+      <!-- 4. Arreglo de Barba -->
+      <div class="serv-card" data-cat="barba">
+        <div>
+          <div class="serv-card-head">
+            <div class="serv-title" data-es="Arreglo &amp; Perfilado de Barba" data-en="Beard Trim &amp; Sculpting">Arreglo &amp; Perfilado de Barba</div>
+            <div class="serv-price">18 €</div>
+          </div>
+          <div class="serv-meta"><span>⏱ 25 min</span> · <span data-es="Recorte y aceites" data-en="Trimming &amp; beard oils">Recorte y aceites</span></div>
+          <p class="serv-desc" data-es="Esculpido con tijera y máquina para dar volumen y forma simétrica. Perfilado de mejillas y cuello a navaja e hidratación profunda con sérum." data-en="Hand-sculpted with scissors and clippers for symmetry. Clean cheek and neck lines with razor and deep serum hydration.">Esculpido con tijera y máquina para dar volumen y forma simétrica. Perfilado de mejillas y cuello a navaja e hidratación profunda con sérum.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm serv-btn" onclick="selectService('Arreglo de Barba (18 €)')" data-es="Elegir para mi cita" data-en="Select for my visit">Elegir para mi cita</button>
+      </div>
+
+      <!-- 5. El Ritual Castizo Completo -->
+      <div class="serv-card" style="border-color:var(--borde);background:linear-gradient(145deg,var(--panel),rgba(212,175,55,.05))" data-cat="combos">
+        <div>
+          <div class="serv-card-head">
+            <div class="serv-title" style="color:var(--oro)" data-es="★ El Ritual Castizo Completo" data-en="★ The Full Castizo Ritual">★ El Ritual Castizo Completo</div>
+            <div class="serv-price">38 €</div>
+          </div>
+          <div class="serv-meta"><span>⏱ 60 min</span> · <span data-es="Nuestra experiencia estrella" data-en="Signature experience">Nuestra experiencia estrella</span></div>
+          <p class="serv-desc" data-es="Corte completo a medida + Ritual de barba o afeitado a navaja con doble toalla caliente + masaje capilar estimulante y café o cerveza fría." data-en="Full signature haircut + beard sculpt or hot towel shave + scalp massage + complimentary coffee or craft cold beer.">Corte completo a medida + Ritual de barba o afeitado a navaja con doble toalla caliente + masaje capilar estimulante y café o cerveza fría.</p>
+        </div>
+        <button class="btn btn-oro btn-sm serv-btn" onclick="selectService('El Ritual Castizo Completo (38 €)')" data-es="Elegir para mi cita" data-en="Select for my visit">Elegir para mi cita</button>
+      </div>
+
+      <!-- 6. Tratamiento Detox & Masaje -->
+      <div class="serv-card" data-cat="combos">
+        <div>
+          <div class="serv-card-head">
+            <div class="serv-title" data-es="Tratamiento Capilar Detox &amp; Masaje" data-en="Detox Scalp Treatment">Tratamiento Capilar Detox &amp; Masaje</div>
+            <div class="serv-price">16 €</div>
+          </div>
+          <div class="serv-meta"><span>⏱ 20 min</span> · <span data-es="Salud del cuero cabelludo" data-en="Scalp rejuvenation">Salud del cuero cabelludo</span></div>
+          <p class="serv-desc" data-es="Exfoliación suave con mentol y arcilla blanca, tónico revitalizante, toalla fría y masaje de 10 minutos para activar la microcirculación." data-en="Gentle scalp scrub with menthol and white clay, invigorating tonic, cold towel compression, and relaxing 10-minute scalp massage.">Exfoliación suave con mentol y arcilla blanca, tónico revitalizante, toalla fría y masaje de 10 minutos para activar la microcirculación.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm serv-btn" onclick="selectService('Tratamiento Capilar Detox (16 €)')" data-es="Elegir para mi cita" data-en="Select for my visit">Elegir para mi cita</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EL RITUAL / EXPERIENCIA ================= -->
+<section id="experiencia">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag" data-es="La Filosofía" data-en="The Philosophy">La Filosofía</div>
+      <h2 data-es="Más que un corte, una pausa" data-en="More Than a Haircut, A Ritual">Más que un corte, una pausa</h2>
+      <p data-es="El tiempo se detiene al cruzar nuestra puerta. Recuperamos el valor de la conversación, el detalle artesanal y el cuidado sin prisas." data-en="Time slows down when you enter our doors. Reviving authentic grooming, handcrafted precision, and unhurried conversation.">El tiempo se detiene al cruzar nuestra puerta. Recuperamos el valor de la conversación, el detalle artesanal y el cuidado sin prisas.</p>
+    </div>
+
+    <div class="ritual-grid">
+      <div class="ritual-card">
+        <div class="ritual-num">01</div>
+        <h3 data-es="Toalla Caliente &amp; Esencias" data-en="Hot Towel &amp; Botanicals">Toalla Caliente &amp; Esencias</h3>
+        <p data-es="Toallas impregnadas con aceites esenciales de cedro, eucalipto y bergamota para abrir el poro, relajar la piel y ablandar la barba antes de la navaja." data-en="Towels infused with cedarwood, eucalyptus, and bergamot essential oils to soften hair and prep skin for a clean, irritation-free shave.">Toallas impregnadas con aceites esenciales de cedro, eucalipto y bergamota para abrir el poro, relajar la piel y ablandar la barba antes de la navaja.</p>
+      </div>
+
+      <div class="ritual-card">
+        <div class="ritual-num">02</div>
+        <h3 data-es="Navaja Japonesa &amp; Precisión" data-en="Japanese Razor Precision">Navaja Japonesa &amp; Precisión</h3>
+        <p data-es="Utilizamos hojas desechables Feather de precisión quirúrgica. Un solo uso por cliente, máxima higiene y un apurado imposible de igualar con cuchillas convencionales." data-en="Single-use surgical-grade Feather blades. Sterile hygiene, zero drag, and an incomparable close shave without razor burn.">Utilizamos hojas desechables Feather de precisión quirúrgica. Un solo uso por cliente, máxima higiene y un apurado imposible de igualar con cuchillas convencionales.</p>
+      </div>
+
+      <div class="ritual-card">
+        <div class="ritual-num">03</div>
+        <h3 data-es="Café de Especialidad &amp; Barra" data-en="Specialty Coffee &amp; Drinks">Café de Especialidad &amp; Barra</h3>
+        <p data-es="Disfruta de un espresso recién molido o una cerveza artesanal bien fría mientras esperas o durante tu servicio. Cortesía de la casa siempre." data-en="Enjoy a freshly brewed specialty espresso or chilled craft beer while you relax. Always complimentary with every visit.">Disfruta de un espresso recién molido o una cerveza artesanal bien fría mientras esperas o durante tu servicio. Cortesía de la casa siempre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVAS (CITA PREVIA INTERACTIVA) ================= -->
+<section class="booking-section" id="cita">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag" data-es="Cita Previa Online" data-en="Online Booking">Cita Previa Online</div>
+      <h2 data-es="Reserva tu turno en 30 segundos" data-en="Book your chair in 30 seconds">Reserva tu turno en 30 segundos</h2>
+      <p data-es="Elige servicio, barbero y hora. Te confirmamos al instante por WhatsApp y evitas esperas." data-en="Pick your service, barber, and preferred time. Instant WhatsApp confirmation with zero waiting.">Elige servicio, barbero y hora. Te confirmamos al instante por WhatsApp y evitas esperas.</p>
+    </div>
+
+    <div class="booking-box">
+      <div class="booking-steps">
+        <div class="b-step active" id="st1">1. Servicio</div>
+        <div class="b-step active" id="st2">2. Barbero</div>
+        <div class="b-step active" id="st3">3. Horario</div>
+        <div class="b-step active" id="st4">4. Confirmar</div>
+      </div>
+
+      <form id="bookingForm" onsubmit="handleBooking(event)">
+        <!-- 1. Servicio -->
+        <div class="form-group">
+          <label class="form-label" data-es="1. Selecciona el servicio" data-en="1. Choose Service">1. Selecciona el servicio</label>
+          <select class="form-select" id="bookService" required onchange="updateSummary()">
+            <option value="El Ritual Castizo Completo (38 €)">El Ritual Castizo Completo (Corte + Barba) — 38 € (60 min)</option>
+            <option value="Skin Fade Castizo (24 €)">Degradado / Skin Fade Castizo — 24 € (40 min)</option>
+            <option value="Corte Clásico (22 €)">Corte Clásico a Tijera / Peine — 22 € (35 min)</option>
+            <option value="Afeitado a Navaja (20 €)">Afeitado a Navaja con Toalla Caliente — 20 € (30 min)</option>
+            <option value="Arreglo de Barba (18 €)">Arreglo y Perfilado de Barba — 18 € (25 min)</option>
+            <option value="Tratamiento Capilar Detox (16 €)">Tratamiento Capilar Detox &amp; Masaje — 16 € (20 min)</option>
+          </select>
+        </div>
+
+        <!-- 2. Barbero -->
+        <div class="form-group">
+          <label class="form-label" data-es="2. Elige a tu barbero" data-en="2. Choose Barber">2. Elige a tu barbero</label>
+          <select class="form-select" id="bookBarber" onchange="updateSummary()">
+            <option value="Primer barbero disponible" data-es="Primer barbero disponible (Cualquiera)" data-en="First available barber (Any)">Primer barbero disponible (Cualquiera)</option>
+            <option value="Mateo 'El Navaja'">Mateo "El Navaja" (Especialista en Fades y Diseño)</option>
+            <option value="Carlos V.">Carlos V. (Maestro en Afeitado Clásico y Barbas)</option>
+            <option value="Hugo M.">Hugo M. (Estilista de corte tradicional y tijera)</option>
+          </select>
+        </div>
+
+        <!-- 3. Fecha y Hora -->
+        <div class="form-group">
+          <label class="form-label" data-es="3. Elige el día y la hora" data-en="3. Pick Date &amp; Time">3. Elige el día y la hora</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+            <select class="form-select" id="bookDay" onchange="updateSummary()">
+              <option value="Hoy (Turno prioritario)">Hoy (Turno prioritario)</option>
+              <option value="Mañana">Mañana</option>
+              <option value="Viernes">Este viernes</option>
+              <option value="Sábado">Este sábado</option>
+            </select>
+            <input type="text" class="form-input" id="bookClientName" placeholder="Tu nombre" required>
+          </div>
+
+          <div class="time-grid" id="timeGrid">
+            <div class="time-btn selected" onclick="setTime('11:00')">11:00</div>
+            <div class="time-btn" onclick="setTime('12:15')">12:15</div>
+            <div class="time-btn" onclick="setTime('13:30')">13:30</div>
+            <div class="time-btn" onclick="setTime('16:00')">16:00</div>
+            <div class="time-btn" onclick="setTime('17:15')">17:15</div>
+            <div class="time-btn" onclick="setTime('18:30')">18:30</div>
+            <div class="time-btn" onclick="setTime('19:15')">19:15</div>
+            <div class="time-btn" onclick="setTime('20:00')">20:00</div>
+          </div>
+        </div>
+
+        <!-- 4. Teléfono -->
+        <div class="form-group">
+          <label class="form-label" data-es="4. Tu número de teléfono / WhatsApp" data-en="4. Phone / WhatsApp">4. Tu número de teléfono / WhatsApp</label>
+          <input type="tel" class="form-input" id="bookPhone" placeholder="+34 600 000 000" required>
+        </div>
+
+        <!-- Resumen -->
+        <div class="booking-summary">
+          <div class="summary-row"><span data-es="Servicio:" data-en="Service:">Servicio:</span> <strong id="sumService">El Ritual Castizo Completo</strong></div>
+          <div class="summary-row"><span data-es="Barbero:" data-en="Barber:">Barbero:</span> <strong id="sumBarber">Primer disponible</strong></div>
+          <div class="summary-row"><span data-es="Fecha y hora:" data-en="Date &amp; Time:">Fecha y hora:</span> <strong id="sumDateTime">Hoy a las 11:00</strong></div>
+          <div class="summary-row total"><span data-es="Total a pagar en local:" data-en="Total in shop:">Total a pagar en local:</span> <span id="sumPrice">38 €</span></div>
+        </div>
+
+        <button type="submit" class="btn btn-oro" style="width:100%" data-es="Confirmar Cita por WhatsApp" data-en="Confirm Appointment via WhatsApp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.187-2.59-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+          Confirmar Cita por WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BARBEROS ================= -->
+<section id="barberos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag" data-es="El Equipo" data-en="The Craftsmen">El Equipo</div>
+      <h2 data-es="Maestros del oficio" data-en="Master Barbers">Maestros del oficio</h2>
+      <p data-es="Profesionales formados en escuelas clásicas y barberías de referencia internacional." data-en="Trained in traditional schools with decades of dedicated grooming craftsmanship.">Profesionales formados en escuelas clásicas y barberías de referencia internacional.</p>
+    </div>
+
+    <div class="team-grid">
+      <!-- Mateo -->
+      <div class="barber-card">
+        <div class="barber-img">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&auto=format&fit=crop" alt="Mateo barbero">
+        </div>
+        <div class="barber-info">
+          <div class="barber-name">Mateo "El Navaja"</div>
+          <div class="barber-role" data-es="Head Barber &amp; Fade Specialist" data-en="Head Barber &amp; Fade Specialist">Head Barber &amp; Fade Specialist</div>
+          <p class="barber-bio" data-es="10 años perfeccionando transiciones imposibles y líneas quirúrgicas. Apasionado del estilo urbano y pulido." data-en="10 years perfecting flawless fades and surgical lines. Specialist in modern urban styles.">10 años perfeccionando transiciones imposibles y líneas quirúrgicas. Apasionado del estilo urbano y pulido.</p>
+        </div>
+      </div>
+
+      <!-- Carlos -->
+      <div class="barber-card">
+        <div class="barber-img">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&auto=format&fit=crop" alt="Carlos barbero">
+        </div>
+        <div class="barber-info">
+          <div class="barber-name">Carlos V.</div>
+          <div class="barber-role" data-es="Maestro Barbero Tradicional" data-en="Traditional Master Barber">Maestro Barbero Tradicional</div>
+          <p class="barber-bio" data-es="Heredero del afeitado clásico italiano a navaja y tratamiento de barbas largas y densas. Su ritual de toalla caliente es legendario." data-en="Master of the classic straight razor ritual and dense beard shaping. His hot towel session is renowned.">Heredero del afeitado clásico italiano a navaja y tratamiento de barbas largas y densas. Su ritual de toalla caliente es legendario.</p>
+        </div>
+      </div>
+
+      <!-- Hugo -->
+      <div class="barber-card">
+        <div class="barber-img">
+          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80&auto=format&fit=crop" alt="Hugo barbero">
+        </div>
+        <div class="barber-info">
+          <div class="barber-name">Hugo M.</div>
+          <div class="barber-role" data-es="Estilista &amp; Tijera Clásica" data-en="Scissor Craft Specialist">Estilista &amp; Tijera Clásica</div>
+          <p class="barber-bio" data-es="Especialista en cortes medios y largos masculinos, peinados con textura y salud capilar personalizada." data-en="Expert in mid-to-long textured men's hair, classic scissoring, and personalized hair health.">Especialista en cortes medios y largos masculinos, peinados con textura y salud capilar personalizada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GALERIA ================= -->
+<section style="background:var(--fondo-alt)" id="galeria">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag" data-es="Portafolio" data-en="Portfolio">Portafolio</div>
+      <h2 data-es="Nuestros Trabajos" data-en="Recent Works">Nuestros Trabajos</h2>
+      <p data-es="Haz clic en cualquier imagen para ver el detalle de los cortes y el local." data-en="Click any photo to view our cuts and barbershop atmosphere in full resolution.">Haz clic en cualquier imagen para ver el detalle de los cortes y el local.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gal-item" onclick="openModal('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80&auto=format&fit=crop')">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80&auto=format&fit=crop" alt="Corte y acabado">
+        <div class="gal-overlay"><span>🔍 Ver foto</span></div>
+      </div>
+      <div class="gal-item" onclick="openModal('https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=1200&q=80&auto=format&fit=crop')">
+        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80&auto=format&fit=crop" alt="Afeitado a navaja">
+        <div class="gal-overlay"><span>🔍 Ver foto</span></div>
+      </div>
+      <div class="gal-item" onclick="openModal('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1200&q=80&auto=format&fit=crop')">
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80&auto=format&fit=crop" alt="Arreglo de barba">
+        <div class="gal-overlay"><span>🔍 Ver foto</span></div>
+      </div>
+      <div class="gal-item" onclick="openModal('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1200&q=80&auto=format&fit=crop')">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80&auto=format&fit=crop" alt="Herramientas artesanales">
+        <div class="gal-overlay"><span>🔍 Ver foto</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div class="modal" id="imgModal" onclick="closeModal()">
+  <button class="modal-close" onclick="closeModal()">&times;</button>
+  <img class="modal-img" id="modalTarget" src="" alt="Ampliada">
+</div>
+
+<!-- ================= RESEÑAS GOOGLE ================= -->
+<section id="opiniones">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-tag" data-es="Reseñas Reales" data-en="Verified Reviews">Reseñas Reales</div>
+      <h2 data-es="4.9 ★ en Google Maps" data-en="4.9 ★ on Google Maps">4.9 ★ en Google Maps</h2>
+      <p data-es="La satisfacción de nuestros clientes habituales es nuestra mayor carta de presentación." data-en="Word of mouth and hundreds of five-star reviews are our badge of honor.">La satisfacción de nuestros clientes habituales es nuestra mayor carta de presentación.</p>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-es="“Llevo 3 años viviendo en Madrid y no cambio de barbería. El degradado con Mateo queda siempre perfecto y el afeitado con toalla caliente es como ir a un spa. Vale cada euro.”" data-en="“I have lived in Madrid for 3 years and wouldn't trade this shop. Mateo's fades are flawless every single time and the hot towel shave is like a luxury spa.”">“Llevo 3 años viviendo en Madrid y no cambio de barbería. El degradado con Mateo queda siempre perfecto y el afeitado con toalla caliente es como ir a un spa. Vale cada euro.”</p>
+        </div>
+        <div class="reviewer">
+          <div class="reviewer-avatar">AG</div>
+          <div>
+            <div class="reviewer-name">Alejandro Gómez</div>
+            <div class="reviewer-date" data-es="Reseña en Google · Hace 2 semanas" data-en="Google Review · 2 weeks ago">Reseña en Google · Hace 2 semanas</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-es="“El local tiene un ambiente increíble: música de vinilo suave, café de especialidad de cortesía y puntualidad británica. Carlos te aconseja según tu tipo de barba y pelo.”" data-en="“Incredible vibe: soft vinyl music, specialty coffee on the house, and prompt timing. Carlos tailors the cut to your exact facial features.”">“El local tiene un ambiente increíble: música de vinilo suave, café de especialidad de cortesía y puntualidad británica. Carlos te aconseja según tu tipo de barba y pelo.”</p>
+        </div>
+        <div class="reviewer">
+          <div class="reviewer-avatar">DM</div>
+          <div>
+            <div class="reviewer-name">David Martínez</div>
+            <div class="reviewer-date" data-es="Reseña en Google · Hace 1 mes" data-en="Google Review · 1 month ago">Reseña en Google · Hace 1 mes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text" data-es="“El Ritual Castizo antes de mi boda fue una de las mejores experiencias. Salí renovado y el corte aguantó intacto todo el fin de semana. Trato de 10.”" data-en="“The Castizo Ritual before my wedding was unforgettable. Came out refreshed, energized, and looking sharp. 10/10 service.”">“El Ritual Castizo antes de mi boda fue una de las mejores experiencias. Salí renovado y el corte aguantó intacto todo el fin de semana. Trato de 10.”</p>
+        </div>
+        <div class="reviewer">
+          <div class="reviewer-avatar">JR</div>
+          <div>
+            <div class="reviewer-name">Javier Ruiz</div>
+            <div class="reviewer-date" data-es="Reseña en Google · Hace 3 semanas" data-en="Google Review · 3 weeks ago">Reseña en Google · Hace 3 semanas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO Y UBICACIÓN ================= -->
+<section style="background:var(--fondo-alt)" id="contacto">
+  <div class="wrap">
+    <div class="visit-grid">
+      <div>
+        <div class="sec-tag" data-es="Dónde Estamos" data-en="Find Us">Dónde Estamos</div>
+        <h2 data-es="En el corazón de Malasaña" data-en="In the heart of Malasaña">En el corazón de Malasaña</h2>
+        <p style="color:var(--gris);margin:16px 0 24px" data-es="Calle de Fuencarral, 84, Malasaña, 28004 Madrid. Metro Tribunal (L1/L10) o Bilbao (L1/L4)." data-en="Calle de Fuencarral, 84, Malasaña, 28004 Madrid. Metro Tribunal or Bilbao.">Calle de Fuencarral, 84, Malasaña, 28004 Madrid. Metro Tribunal (L1/L10) o Bilbao (L1/L4).</p>
+
+        <table class="hours-table">
+          <tr id="rowLunes"><td>Lunes</td><td>10:00 – 20:30</td></tr>
+          <tr id="rowMartes"><td>Martes</td><td>10:00 – 20:30</td></tr>
+          <tr id="rowMiercoles"><td>Miércoles</td><td>10:00 – 20:30</td></tr>
+          <tr id="rowJueves"><td>Jueves</td><td>10:00 – 20:30</td></tr>
+          <tr id="rowViernes"><td>Viernes</td><td>10:00 – 21:00</td></tr>
+          <tr id="rowSabado"><td>Sábado</td><td>09:30 – 19:30</td></tr>
+          <tr id="rowDomingo"><td>Domingo</td><td>Cerrado (Descanso del barbero)</td></tr>
+        </table>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a href="tel:+34910842100" class="btn btn-ghost">📞 +34 910 84 21 00</a>
+          <a href="https://wa.me/34641629730" target="_blank" class="btn btn-oro">💬 WhatsApp Directo</a>
+        </div>
+      </div>
+
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.1993275726356!2d-3.7042078234394626!3d40.42657385472855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287e076e06b9%3A0xb3ad24f6057a6e15!2sC.%20de%20Fuencarral%2C%2084%2C%20Centro%2C%2028004%20Madrid!5e0!3m2!1ses!2ses!4v1729738000000!5m2!1ses!2ses" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-content">
+      <div>
+        <div style="font-family:var(--serif);font-size:18px;color:#fff;font-weight:700">BARBERÍA CASTIZA · MADRID</div>
+        <div style="color:var(--gris-oscuro);margin-top:4px">Corte clásico &amp; Cuidado masculino desde 2018.</div>
+      </div>
+
+      <div class="foot-links">
+        <a href="#servicios">Carta de Precios</a>
+        <a href="#cita">Pedir Cita</a>
+        <a href="https://www.instagram.com/kamyar._.sh/" target="_blank">Instagram</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= MOBILE FIXED BOTTOM ACTION BAR ================= -->
+<div class="mobile-bar">
+  <div class="mobile-bar-inner">
+    <a href="tel:+34910842100" class="mob-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Llamar
+    </a>
+    <a href="https://wa.me/34641629730" target="_blank" class="mob-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.187-2.59-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+      WhatsApp
+    </a>
+    <a href="#cita" class="mob-btn mob-btn-cita">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Pedir Cita
+    </a>
+  </div>
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+// Filter services by category
+const tabs = document.querySelectorAll('.serv-tab');
+const cards = document.querySelectorAll('.serv-card');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const cat = tab.getAttribute('data-cat');
+    cards.forEach(card => {
+      if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+
+// Select service helper
+function selectService(srvName) {
+  const sel = document.getElementById('bookService');
+  for (let i = 0; i < sel.options.length; i++) {
+    if (sel.options[i].text.includes(srvName.split(' (')[0])) {
+      sel.selectedIndex = i;
+      break;
+    }
+  }
+  updateSummary();
+  window.location.hash = '#cita';
+}
+
+// Time selection
+let chosenTime = "11:00";
+function setTime(timeStr) {
+  chosenTime = timeStr;
+  document.querySelectorAll('.time-btn').forEach(b => {
+    b.classList.toggle('selected', b.innerText === timeStr);
+  });
+  updateSummary();
+}
+
+// Update summary
+function updateSummary() {
+  const srv = document.getElementById('bookService').value;
+  const bar = document.getElementById('bookBarber').value;
+  const day = document.getElementById('bookDay').value;
+  
+  document.getElementById('sumService').innerText = srv.split(' — ')[0];
+  document.getElementById('sumBarber').innerText = bar;
+  document.getElementById('sumDateTime').innerText = `${day} a las ${chosenTime}`;
+  
+  const m = srv.match(/(\d+)\s*€/);
+  if (m) {
+    document.getElementById('sumPrice').innerText = m[1] + " €";
+  }
+}
+
+// Handle booking confirmation via WhatsApp
+function handleBooking(e) {
+  e.preventDefault();
+  const name = document.getElementById('bookClientName').value.trim();
+  const phone = document.getElementById('bookPhone').value.trim();
+  const srv = document.getElementById('sumService').innerText;
+  const bar = document.getElementById('sumBarber').innerText;
+  const dt = document.getElementById('sumDateTime').innerText;
+  const price = document.getElementById('sumPrice').innerText;
+
+  const msg = `¡Hola Barbería Castiza! 👋\nQuiero reservar una cita:\n\n👤 Nombre: ${name}\n📞 Teléfono: ${phone}\n✂️ Servicio: ${srv}\n💈 Barbero: ${bar}\n📅 Horario: ${dt}\n💰 Precio: ${price}\n\n¿Tenéis disponible este hueco? ¡Gracias!`;
+  
+  const waUrl = `https://wa.me/34641629730?text=${encodeURIComponent(msg)}`;
+  window.open(waUrl, '_blank');
+}
+
+// Highlight today's hours & live open status
+const now = new Date();
+const dayOfWeek = now.getDay(); // 0 is Sun, 1 is Mon...
+const currentHour = now.getHours() + (now.getMinutes() / 60);
+
+const dayRows = [
+  'rowDomingo', 'rowLunes', 'rowMartes', 'rowMiercoles', 'rowJueves', 'rowViernes', 'rowSabado'
+];
+const todayRow = document.getElementById(dayRows[dayOfWeek]);
+if (todayRow) {
+  todayRow.classList.add('today');
+}
+
+// Open status check (Mon-Thu 10-20.5, Fri 10-21, Sat 9.5-19.5, Sun Closed)
+let isOpen = false;
+let closeTime = "20:30";
+
+if (dayOfWeek >= 1 && dayOfWeek <= 4) { // Mon-Thu
+  isOpen = currentHour >= 10 && currentHour < 20.5;
+  closeTime = "20:30";
+} else if (dayOfWeek === 5) { // Fri
+  isOpen = currentHour >= 10 && currentHour < 21;
+  closeTime = "21:00";
+} else if (dayOfWeek === 6) { // Sat
+  isOpen = currentHour >= 9.5 && currentHour < 19.5;
+  closeTime = "19:30";
+}
+
+const statusText = document.getElementById('statusText');
+const dot = document.querySelector('.status-dot');
+if (!isOpen) {
+  dot.style.background = '#EF4444';
+  dot.style.boxShadow = '0 0 8px #EF4444';
+  statusText.setAttribute('data-es', 'Cerrado ahora · Abre a las 10:00');
+  statusText.setAttribute('data-en', 'Closed now · Opens at 10:00');
+  statusText.innerText = 'Cerrado ahora · Abre a las 10:00';
+}
+
+// Lightbox
+function openModal(src) {
+  document.getElementById('modalTarget').src = src;
+  document.getElementById('imgModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('imgModal').classList.remove('open');
+}
+
+// Language Switcher
+const btnEs = document.getElementById('btnEs');
+const btnEn = document.getElementById('btnEn');
+
+btnEs.addEventListener('click', () => setLanguage('es'));
+btnEn.addEventListener('click', () => setLanguage('en'));
+
+function setLanguage(lang) {
+  btnEs.classList.toggle('active', lang === 'es');
+  btnEn.classList.toggle('active', lang === 'en');
+  
+  document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+    el.innerText = el.getAttribute('data-' + lang);
+  });
+}
+</script>
+</body>
+</html>
