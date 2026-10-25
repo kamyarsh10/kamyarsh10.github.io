@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KRONOS — Concierge Automotive Detailing, PPF & Ceramic Atelier · Madrid</title>
+<meta name="description" content="Atelier de detallado de alta relojería automotriz en Chamartín, Madrid. Corrección de pintura a nivel espejo, PPF autorregenerable invisible y recubrimiento cerámico 10H." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --carbon: #070A10;
+    --carbon-2: #0D121C;
+    --carbon-3: #141C2B;
+    --alcantara: #F3EFE8;
+    --silver: #A4AEBE;
+    --champagne: #E2B458;
+    --champagne-soft: rgba(226, 180, 88, 0.14);
+    --rosso: #E63946;
+    --rosso-soft: rgba(230, 57, 70, 0.16);
+    --line: rgba(243, 239, 232, 0.11);
+    --serif: 'Bodoni Moda', Georgia, serif;
+    --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; background: var(--carbon); color: var(--alcantara); }
+  body {
+    font-family: var(--sans);
+    font-variant-numeric: tabular-nums;
+    background: var(--carbon);
+    color: var(--alcantara);
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  button, input, select, textarea { font: inherit; color: inherit; background: none; border: none; }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(48px, 6.5vw, 96px);
+  }
+
+  /* ================= TELEMETRY TOP HEADER ================= */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 18px 0;
+    transition: all 0.35s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled {
+    background: rgba(7, 10, 16, 0.88);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    padding: 12px 0;
+    border-bottom-color: var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand-crest {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--champagne);
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-size: 20px;
+    color: var(--champagne);
+    background: rgba(226, 180, 88, 0.06);
+  }
+  .brand-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .brand-sub {
+    display: block;
+    font-family: var(--sans);
+    font-size: 10px;
+    color: var(--silver);
+    letter-spacing: 0.16em;
+    margin-top: 3px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    font-family: var(--sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(243, 239, 232, 0.8);
+  }
+  .nav-links a:hover { color: var(--champagne); }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 20px;
+    border: 1px solid var(--champagne);
+    background: var(--champagne-soft);
+    color: var(--champagne);
+    font-family: var(--sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    transition: all 0.3s var(--ease);
+  }
+  .nav-cta:hover {
+    background: var(--champagne);
+    color: var(--carbon);
+    font-weight: 600;
+  }
+
+  /* ================= FULL-BLEED 100SVH SUPERCAR HERO ================= */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 110px 0 0;
+    overflow: hidden;
+    isolation: isolate;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: #04060A;
+  }
+  .hero-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 45%;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 1.15s var(--ease), transform 6.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hero-media img.active {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 78% 35%, rgba(226, 180, 88, 0.14), transparent 45%),
+      linear-gradient(180deg, rgba(7, 10, 16, 0.75) 0%, rgba(7, 10, 16, 0.25) 42%, rgba(7, 10, 16, 0.9) 86%, #070A10 100%);
+  }
+
+  .hero-telemetry-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--silver);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .bay-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--champagne);
+  }
+  .bay-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #2CE59B;
+    box-shadow: 0 0 10px #2CE59B;
+  }
+
+  .hero-body {
+    width: 100%;
+    max-width: 1180px;
+    margin: auto auto;
+    padding: 44px clamp(64px, 8vw, 116px) 36px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    align-items: center;
+  }
+  .hero-body > div:first-child {
+    padding-left: clamp(16px, 2vw, 32px);
+  }
+  .hero-kicker {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(42px, 5.2vw, 74px);
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--champagne);
+  }
+
+  /* Live Optical Telemetry HUD Card */
+  .telemetry-hud {
+    background: rgba(13, 18, 28, 0.78);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(226, 180, 88, 0.35);
+    padding: 28px;
+    position: relative;
+  }
+  .telemetry-hud::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 28px;
+    width: 72px;
+    height: 2px;
+    background: var(--rosso);
+  }
+  .hud-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--champagne);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .hud-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.12;
+    margin-bottom: 10px;
+  }
+  .hud-desc {
+    font-size: 14px;
+    color: var(--silver);
+    margin-bottom: 18px;
+  }
+  .hud-gauges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 20px;
+    font-family: var(--sans);
+  }
+  .hud-gauges div span {
+    display: block;
+    font-size: 9px;
+    color: var(--silver);
+    text-transform: uppercase;
+  }
+  .hud-gauges div strong {
+    font-size: 18px;
+    color: #fff;
+    margin-top: 2px;
+    display: block;
+  }
+
+  .btn-champagne {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px 24px;
+    background: var(--champagne);
+    color: var(--carbon);
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: all 0.3s var(--ease);
+  }
+  .btn-champagne:hover {
+    background: #f0c66d;
+    transform: translateY(-2px);
+  }
+  .btn-dark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    border: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+  .btn-dark:hover { border-color: var(--champagne); color: var(--champagne); }
+
+  /* Bottom Finish Switcher */
+  .hero-modes {
+    background: rgba(7, 10, 16, 0.88);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--line);
+  }
+  .modes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .mode-btn {
+    text-align: left;
+    padding: 22px 24px;
+    border-right: 1px solid var(--line);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .mode-btn:last-child { border-right: none; }
+  .mode-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: var(--champagne);
+    transition: width 0.4s var(--ease);
+  }
+  .mode-btn.active, .mode-btn:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .mode-btn.active::before { width: 100%; }
+  .mode-code {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--champagne);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .mode-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: #fff;
+    display: block;
+  }
+  .mode-sub {
+    font-size: 12px;
+    color: var(--silver);
+    margin-top: 3px;
+    display: block;
+  }
+
+  /* ================= SECTION HEADERS ================= */
+  .section-pad {
+    padding: clamp(84px, 10vw, 144px) 0;
+  }
+  .sec-head-center {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before,
+  .sec-head-center .eyebrow::after {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--rosso);
+  }
+  .sec-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(36px, 4.8vw, 68px);
+    line-height: 1.04;
+    padding-inline: 0.06em;
+  }
+  .sec-title em {
+    font-style: italic;
+    color: var(--champagne);
+    padding-inline: 0.08em;
+  }
+
+  /* ================= UNIQUE FEATURE #1: BESPOKE VEHICLE & PROTECTION CONFIGURATOR ================= */
+  .config-sec {
+    background: var(--carbon-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .config-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 36px;
+    margin-top: 48px;
+  }
+  .config-panel {
+    background: var(--carbon);
+    border: 1px solid var(--line);
+    padding: clamp(24px, 3.5vw, 42px);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .step-lbl {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--champagne);
+    margin-bottom: 14px;
+  }
+  .chassis-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .chassis-btn {
+    padding: 16px 12px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.02);
+    text-align: center;
+    transition: all 0.25s;
+  }
+  .chassis-btn strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .chassis-btn span {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: var(--silver);
+  }
+  .chassis-btn.active {
+    border-color: var(--champagne);
+    background: var(--champagne-soft);
+  }
+
+  .shield-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .shield-card {
+    text-align: left;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.25s;
+  }
+  .shield-card.active {
+    border-color: var(--champagne);
+    background: var(--champagne-soft);
+  }
+  .shield-card .top-line {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--sans);
+    font-size: 10px;
+    color: var(--champagne);
+    margin-bottom: 6px;
+  }
+  .shield-card h4 {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .shield-card p {
+    font-size: 12.5px;
+    color: var(--silver);
+  }
+
+  .addons-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .addon-Check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    border: 1px solid var(--line);
+    font-size: 13px;
+    transition: all 0.25s;
+  }
+  .addon-Check.active {
+    border-color: #2CE59B;
+    background: rgba(44, 229, 155, 0.08);
+  }
+  .addon-Check em {
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 11px;
+    color: var(--champagne);
+  }
+
+  /* Telemetry Spec Sheet Output */
+  .spec-sheet {
+    background: #090D15;
+    border: 1px solid rgba(226, 180, 88, 0.4);
+    padding: clamp(26px, 3.5vw, 42px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .bar-group {
+    display: grid;
+    gap: 16px;
+    margin: 22px 0;
+  }
+  .t-bar-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--sans);
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  .t-track {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+  }
+  .t-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--champagne), var(--rosso));
+    width: 85%;
+    transition: width 0.45s var(--ease);
+  }
+
+  .spec-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 22px;
+    font-family: var(--sans);
+  }
+  .spec-summary div span {
+    display: block;
+    font-size: 10px;
+    color: var(--silver);
+  }
+  .spec-summary div strong {
+    font-size: 19px;
+    color: #fff;
+  }
+
+  /* ================= UNIQUE FEATURE #2: SCANGRIP SWIRL INSPECTOR ================= */
+  .swirl-sec {
+    background: var(--carbon);
+    border-bottom: 1px solid var(--line);
+  }
+  .swirl-stage {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    align-items: center;
+  }
+  .paint-viewport {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border: 1px solid rgba(226, 180, 88, 0.35);
+    overflow: hidden;
+    background: #05070B;
+  }
+  .paint-viewport img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.5s var(--ease), transform 0.6s var(--ease);
+  }
+  /* Simulated spider-web swirl rings under inspection lamp when in "uncorrected" state */
+  .swirl-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-radial-gradient(circle at 52% 48%, rgba(255,255,255,0.22) 0px, rgba(255,255,255,0.02) 2px, transparent 5px, transparent 11px),
+      radial-gradient(circle at 52% 48%, rgba(255, 240, 200, 0.35), transparent 36%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 0.45s var(--ease);
+    pointer-events: none;
+  }
+  .paint-viewport.defects .swirl-overlay {
+    opacity: 0.85;
+  }
+  .paint-viewport.defects img {
+    filter: contrast(0.88) brightness(0.9) saturate(0.82);
+  }
+  .lamp-pill {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    background: rgba(7, 10, 16, 0.86);
+    border: 1px solid var(--champagne);
+    padding: 8px 14px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--champagne);
+  }
+
+  .inspector-switch {
+    display: flex;
+    gap: 12px;
+    margin: 24px 0;
+  }
+  .insp-btn {
+    flex: 1;
+    padding: 15px 18px;
+    border: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    transition: all 0.25s;
+  }
+  .insp-btn.active {
+    background: var(--champagne);
+    color: var(--carbon);
+    border-color: var(--champagne);
+    font-weight: 600;
+  }
+
+  /* ================= CONCIERGE BOOKING ================= */
+  .booking-sec {
+    background: var(--carbon-2);
+  }
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 52px;
+  }
+  .hangar-card {
+    background: var(--carbon);
+    border: 1px solid var(--line);
+    padding: 32px;
+    margin-top: 28px;
+  }
+  .hangar-list {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+    font-size: 14px;
+    margin-top: 14px;
+  }
+  .hangar-list li {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hangar-list li span:first-child { color: var(--silver); }
+
+  .form-hangar {
+    background: var(--carbon);
+    border: 1px solid rgba(226, 180, 88, 0.3);
+    padding: clamp(28px, 4vw, 46px);
+  }
+  .f-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .f-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .f-field label {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--silver);
+  }
+  .f-field input, .f-field select, .f-field textarea {
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    color: #fff;
+    font-size: 14px;
+  }
+  .f-field select option { background: var(--carbon); }
+
+  footer {
+    padding: 44px 0;
+    border-top: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--silver);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-body, .config-grid, .swirl-stage, .booking-grid {
+      grid-template-columns: 1fr;
+    }
+    .modes-grid, .chassis-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 640px) {
+    .modes-grid, .chassis-grid, .shield-grid, .addons-row, .f-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .wrap { padding-left: 22px; padding-right: 22px; }
+    .hero-body, .hero-main, .hero-center { padding-left: 22px !important; padding-right: 22px !important; }
+    .hero-body > div:first-child, .hero-main > div:first-child, .hero-center > div:first-child { padding-left: 0 !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="topNav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">
+      <div class="brand-crest">K</div>
+      <div>
+        <span class="brand-title">KRONOS</span>
+        <span class="brand-sub">Concierge Automotive Atelier · Madrid</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="#configurador">Configurador de Blindaje</a>
+      <a href="#inspector">Inspector Scangrip®</a>
+      <a href="#reserva">Reserva de Bahía</a>
+    </nav>
+    <a href="#reserva" class="nav-cta">Solicitar Bahía Privada →</a>
+  </div>
+</header>
+
+<!-- ================= FULL-BLEED 100SVH HERO ================= -->
+<section class="hero">
+  <div class="hero-media" id="heroMedia">
+    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=2000&q=85&auto=format&fit=crop" alt="Porsche 911 GT3 en cabina óptica KRONOS Madrid" class="active" />
+    <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=2000&q=85&auto=format&fit=crop" alt="Aplicación de recubrimiento cerámico matriz de grafeno 10H" />
+    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=2000&q=85&auto=format&fit=crop" alt="Film protector PPF XPEL Ultimate Plus invisible" />
+    <img src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=2000&q=85&auto=format&fit=crop" alt="Restauración artesanal de cuero Connolly y Alcantara" />
+  </div>
+  <div class="hero-scrim"></div>
+
+  <div class="wrap hero-telemetry-bar">
+    <span class="bay-status">BAHÍA ESTÉRIL #02 DISPONIBLE · CONTROL HIGROMÉTRICO 21°C / 45% HR</span>
+    <span>CHAMARTÍN · ACCESO CONFIDENCIAL VIGILADO 24H</span>
+  </div>
+
+  <div class="wrap hero-body">
+    <div>
+      <span class="hero-kicker" id="hKicker">PROTOCOLO 01 · CORRECCIÓN ÓPTICA CONCOURS D'ELEGANCE</span>
+      <h1 class="hero-title" id="hTitle">
+        Ingeniería<br>del <em>reflejo</em><br>absoluto.
+      </h1>
+    </div>
+
+    <aside class="telemetry-hud">
+      <div class="hud-head">
+        <span id="hudCode">TELEMETRÍA DE LACA · KR-01</span>
+        <span>CERTIFICADO ISO-9001</span>
+      </div>
+      <h2 class="hud-title" id="hudTitle">Corrección Multietapa a Nivel Espejo</h2>
+      <p class="hud-desc" id="hudDesc">
+        Medición ultrasónica micra a micra en cada panel antes de nivelar el barniz con compuestos suizos Rupes® y lámparas de espectro diurno CRI 98.
+      </p>
+      <div class="hud-gauges">
+        <div>
+          <span>Índice Brillo</span>
+          <strong id="gGloss">99.6 GU</strong>
+        </div>
+        <div>
+          <span>Dureza Escudo</span>
+          <strong id="gHard">10H SiC</strong>
+        </div>
+        <div>
+          <span>Ángulo Gota</span>
+          <strong id="gAngle">118°</strong>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="#configurador" class="btn-champagne" style="flex:1;">Configurar Mi Vehículo →</a>
+        <a href="https://wa.me/34600000000?text=Hola%20KRONOS%20Atelier%2C%20quiero%20solicitar%20presupuesto%20para%20mi%20veh%C3%ADculo." target="_blank" rel="noopener" class="btn-dark">WhatsApp</a>
+      </div>
+    </aside>
+  </div>
+
+  <div class="hero-modes">
+    <div class="wrap modes-grid">
+      <button type="button" class="mode-btn active" data-mode="0">
+        <span class="mode-code"><span>01</span><span>99.6 GU</span></span>
+        <span class="mode-name">Corrección Espejo</span>
+        <span class="mode-sub">Eliminación del 99% de swirls y hologramas</span>
+      </button>
+      <button type="button" class="mode-btn" data-mode="1">
+        <span class="mode-code"><span>02</span><span>GARANTÍA 7 AÑOS</span></span>
+        <span class="mode-name">Escudo Cerámico 10H</span>
+        <span class="mode-sub">Carburo de silicio e hidrofobia extrema</span>
+      </button>
+      <button type="button" class="mode-btn" data-mode="2">
+        <span class="mode-code"><span>03</span><span>210 MICRAS</span></span>
+        <span class="mode-name">PPF Autorregenerable</span>
+        <span class="mode-sub">Poliuretano óptico anti-chinazos de grava</span>
+      </button>
+      <button type="button" class="mode-btn" data-mode="3">
+        <span class="mode-code"><span>04</span><span>ACABADO OEM MATE</span></span>
+        <span class="mode-name">Atelier Cuero & Alcantara</span>
+        <span class="mode-sub">Descontaminación con ozono y nutrición</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UNIQUE FEATURE #1: BESPOKE CONFIGURATOR ================= -->
+<section class="section-pad config-sec" id="configurador">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <span class="eyebrow">Calculadora de Bahía · Presupuesto Instantáneo</span>
+      <h2 class="sec-title">Configurador por <em>Carrocería</em><br>& Nivel de Blindaje.</h2>
+    </div>
+
+    <div class="config-grid">
+      <div class="config-panel">
+        <div>
+          <div class="step-lbl">
+            <span>01 · Selecciona la Silueta de tu Vehículo</span>
+            <span id="chassisLabel">DEPORTIVO / COUPÉ</span>
+          </div>
+          <div class="chassis-grid" id="chassisBtns">
+            <button type="button" class="chassis-btn active" data-mult="1.0" data-name="Deportivo / Coupé Biplaza">
+              <strong>Coupé / GT</strong>
+              <span>Ej. 911, Roma, M4</span>
+            </button>
+            <button type="button" class="chassis-btn" data-mult="1.12" data-name="Berlina Gran Turismo">
+              <strong>Berlina Luxury</strong>
+              <span>Ej. Taycan, Clase S</span>
+            </button>
+            <button type="button" class="chassis-btn" data-mult="1.25" data-name="SUV de Altas Prestaciones">
+              <strong>SUV Performance</strong>
+              <span>Ej. Cayenne, Urus, G63</span>
+            </button>
+            <button type="button" class="chassis-btn" data-mult="1.3" data-name="Clásico de Colección">
+              <strong>Clásico / Histórico</strong>
+              <span>Laca Monocapa</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <div class="step-lbl">
+            <span>02 · Nivel de Protección & Tratamiento</span>
+            <span>CERTIFICACIÓN POR ESCRITO</span>
+          </div>
+          <div class="shield-grid" id="shieldBtns">
+            <button type="button" class="shield-card active" data-base="790" data-days="2 Días" data-gloss="98" data-rock="45" data-hydro="114°" data-hydro-pct="92" data-title="Stage 1 · Corrección + Cerámico 5 Años">
+              <div class="top-line"><span>STAGE 01</span><span>GARANTÍA 5 AÑOS</span></div>
+              <h4>Corrección 2 Etapas + Cerámico 9H</h4>
+              <p>Descontaminación férrica, pulido de alto brillo y sellado cerámico en carrocería.</p>
+            </button>
+
+            <button type="button" class="shield-card" data-base="1290" data-days="3 Días" data-gloss="100" data-rock="60" data-hydro="119°" data-hydro-pct="98" data-title="Stage 2 · Concours Mirror + Matriz Grafeno 10H">
+              <div class="top-line"><span>STAGE 02</span><span>GARANTÍA 7 AÑOS</span></div>
+              <h4>Corrección Espejo + Grafeno 10H Bicapa</h4>
+              <p>Corrección del 99% de defectos y doble membrana de carburo de silicio curada con IR.</p>
+            </button>
+
+            <button type="button" class="shield-card" data-base="2150" data-days="4 Días" data-gloss="99" data-rock="95" data-hydro="118°" data-hydro-pct="96" data-title="Stage 3 · PPF Frontal Track Pack + Cerámico">
+              <div class="top-line"><span>STAGE 03</span><span>ANTI-GRAVA FRONTAL</span></div>
+              <h4>PPF Frontal Completo + Cerámico Resto</h4>
+              <p>Paragolpes, capó completo, aletas, faros y retrovisores blindados con film de 210 micras.</p>
+            </button>
+
+            <button type="button" class="shield-card" data-base="4490" data-days="6 Días" data-gloss="100" data-rock="100" data-hydro="120°" data-hydro-pct="100" data-title="Stage 4 · Blindaje Integral PPF Invisible Bespoke">
+              <div class="top-line"><span>STAGE 04</span><span>GARANTÍA 10 AÑOS</span></div>
+              <h4>Full Body PPF Autorregenerable</h4>
+              <p>100% de la carrocería encapsulada con bordes ocultos (wrapped edges) en brillo o satinado.</p>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <div class="step-lbl">
+            <span>03 · Extras de Cabina (Opcionales)</span>
+            <span>SELECCIÓN MÚLTIPLE</span>
+          </div>
+          <div class="addons-row" id="addonBtns">
+            <button type="button" class="addon-Check active" data-price="180" data-label="Desmontaje y Sellado de Llantas + Pinzas">
+              <span>Sellado Llantas & Pinzas (Desmontadas)</span>
+              <em>+180 €</em>
+            </button>
+            <button type="button" class="addon-Check" data-price="220" data-label="Restauración y Escudo en Cuero Interior">
+              <span>Tratamiento Cuero & Alcantara Mate</span>
+              <em>+220 €</em>
+            </button>
+            <button type="button" class="addon-Check" data-price="95" data-label="Sellado Hidrofóbico de Cristales">
+              <span>Escudo Antilluvia en Todos los Cristales</span>
+              <em>+95 €</em>
+            </button>
+            <button type="button" class="addon-Check" data-price="190" data-label="Recogida y Entrega en Remolque Cerrado">
+              <span>Transporte en Remolque Cerrado VIP</span>
+              <em>+190 €</em>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Telemetry Spec Sheet -->
+      <div class="spec-sheet">
+        <div>
+          <span class="eyebrow">Ficha Técnica de Intervención</span>
+          <h3 style="font-family:var(--serif); font-size:30px; margin-bottom:4px;" id="outConfigTitle">Stage 1 · Corrección + Cerámico 5 Años</h3>
+          <p style="font-family:var(--sans); font-size:12px; color:var(--silver);" id="outConfigChassis">SILUETA: Deportivo / Coupé Biplaza</p>
+
+          <div class="bar-group">
+            <div>
+              <div class="t-bar-head"><span>CLARIDAD ÓPTICA & REFLEJO</span><strong id="lblBarGloss">98%</strong></div>
+              <div class="t-track"><div class="t-fill" id="barGloss" style="width:98%"></div></div>
+            </div>
+            <div>
+              <div class="t-bar-head"><span>BLINDAJE CONTRA IMPACTOS DE GRAVA</span><strong id="lblBarRock">45%</strong></div>
+              <div class="t-track"><div class="t-fill" id="barRock" style="width:45%"></div></div>
+            </div>
+            <div>
+              <div class="t-bar-head"><span>CAPACIDAD AUTOLIMPIANTE (HIDROFOBIA)</span><strong id="lblBarHydro">114°</strong></div>
+              <div class="t-track"><div class="t-fill" id="barHydro" style="width:92%"></div></div>
+            </div>
+          </div>
+
+          <div class="spec-summary">
+            <div>
+              <span>Estancia</span>
+              <strong id="outDays">2 Días</strong>
+            </div>
+            <div>
+              <span>Secado IR</span>
+              <strong>Lámpara Onda Corta</strong>
+            </div>
+            <div>
+              <span>Seguro en Hangar</span>
+              <strong>Hasta 500.000 €</strong>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:18px;">
+            <span style="font-family:var(--sans); font-size:11px; color:var(--silver);">INVERSIÓN CERRADA (IVA INCL.)</span>
+            <strong style="font-family:var(--serif); font-size:52px; color:var(--champagne); line-height:1;" id="outTotalPrice">970 €</strong>
+          </div>
+          <button type="button" class="btn-champagne" style="width:100%;" id="sendConfigWA">
+            Reservar Bahía con esta Configuración por WhatsApp →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UNIQUE FEATURE #2: SCANGRIP LIGHT INSPECTOR ================= -->
+<section class="section-pad swirl-sec" id="inspector">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <span class="eyebrow">Laboratorio Luminotécnico · Demostración Interactiva</span>
+      <h2 class="sec-title">Inspector de Lámpara <em>Scangrip®</em>.</h2>
+    </div>
+
+    <div class="swirl-stage">
+      <div class="paint-viewport" id="paintViewport">
+        <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=2000&q=85&auto=format&fit=crop" alt="Inspección de laca automotriz bajo foco Scangrip" />
+        <div class="swirl-overlay"></div>
+        <span class="lamp-pill" id="lampStatus">ESTADO: CORRECCIÓN ESPEJO KRONOS (0% SWIRLS · 99.6 GU)</span>
+      </div>
+
+      <div>
+        <h3 style="font-family:var(--serif); font-size:34px; line-height:1.1; margin-bottom:14px;">
+          Incluso un vehículo recién entregado de concesionario presenta micro-arañazos.
+        </h3>
+        <p style="color:var(--silver); font-size:15px;">
+          Alterna el foco de inspección para observar cómo los lavados de pre-entrega generan «telarañas» (swirls) que apagan la profundidad del color, y cómo nuestra nivelación en 3 pasos devuelve una reflexión cristalina.
+        </p>
+
+        <div class="inspector-switch">
+          <button type="button" class="insp-btn" id="btnShowSwirls">Ver Laca con Micro-Swirls</button>
+          <button type="button" class="insp-btn active" id="btnShowMirror">Ver Acabado Espejo KRONOS</button>
+        </div>
+
+        <p style="font-family:var(--sans); font-size:12px; color:var(--champagne);">
+          ✦ Incluye informe de espesor de pintura en 48 puntos (ideal para certificar pintura original en vehículos de colección).
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONCIERGE RESERVATION ================= -->
+<section class="section-pad booking-sec" id="reserva">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <span class="eyebrow">Recepción Privada · Discreción Total</span>
+      <h2 class="sec-title">Reserva tu <em>Bahía</em><br>en Chamartín.</h2>
+      <p style="color:var(--silver); margin-top:16px; max-width:620px;">
+        Trabajamos exclusivamente con 3 vehículos de forma simultánea. Ocultamos matrículas en todas nuestras comunicaciones salvo autorización expresa del propietario.
+      </p>
+    </div>
+
+    <div class="booking-grid">
+      <div>
+        <div class="hangar-card" style="margin-top:0;">
+          <span style="font-family:var(--sans); font-size:11px; color:var(--champagne);">COORDENADAS DEL HANGAR</span>
+          <ul class="hangar-list">
+            <li><span>Ubicación</span><strong>C/ Mateo Inurria · Chamartín, Madrid</strong></li>
+            <li><span>Horario de Recepción</span><strong>Lun – Sáb · 09:00 a 20:00 (Con Cita)</strong></li>
+            <li><span>Concierge Directo</span><strong>+34 910 000 000</strong></li>
+            <li><span>Seguridad</span><strong>Búnker Climatizado Conectado a Central Policial</strong></li>
+          </ul>
+        </div>
+      </div>
+
+    <form class="form-hangar" id="kronosForm">
+      <h3 style="font-family:var(--serif); font-size:32px; margin-bottom:6px;">Solicitud de Inspección & Cita</h3>
+      <p style="font-size:13px; color:var(--silver); margin-bottom:22px;">Diagnóstico luminotécnico gratuito de 30 minutos.</p>
+
+      <div class="f-row">
+        <div class="f-field">
+          <label for="kName">Propietario</label>
+          <input type="text" id="kName" placeholder="Ej. Carlos Alarcón" required />
+        </div>
+        <div class="f-field">
+          <label for="kCar">Marca y Modelo</label>
+          <input type="text" id="kCar" placeholder="Ej. Porsche 911 Carrera GTS (992)" required />
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="f-field">
+          <label for="kService">Intervención Principal</label>
+          <select id="kService">
+            <option value="Corrección Espejo + Cerámico 10H">Corrección Espejo + Cerámico 10H</option>
+            <option value="PPF Frontal Track Pack">PPF Frontal Anti-Impactos + Cerámico</option>
+            <option value="PPF Integral Full Body">PPF Integral Full Body Invisible</option>
+            <option value="Restauración Interior Cuero & Alcantara">Restauración Cuero & Alcantara</option>
+          </select>
+        </div>
+        <div class="f-field">
+          <label for="kState">Estado del Vehículo</label>
+          <select id="kState">
+            <option value="Recién entregado (0 km)">Recién entregado de concesionario (0 km)</option>
+            <option value="Uso cuidadoso (1 - 3 años)">Uso cuidadoso (1 – 3 años)</option>
+            <option value="Requiere corrección profunda / Clásico">Requiere corrección profunda / Clásico</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="f-field">
+        <label for="kNotes">Observaciones (Color de carrocería, acabado mate/brillo, recogida a domicilio...)</label>
+        <textarea id="kNotes" rows="3" placeholder="Ej. Color Negro Jet Metalizado, me interesa proteger el frontal antes de viaje..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-champagne" style="width:100%;">
+        Confirmar Reserva de Bahía vía WhatsApp →
+      </button>
+    </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div>© 2026 KRONOS AUTOMOTIVE ATELIER MADRID · XPEL & GTECHNIQ ACCREDITED STUDIO</div>
+    <div>CHAMARTÍN · MADRID · +34 910 000 000</div>
+  </div>
+</footer>
+
+<script>
+  · Sticky Nav
+  const topNav = document.getElementById('topNav');
+  window.addEventListener('scroll', () => {
+    topNav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  · Hero 4-Mode Switcher
+  const heroModes = [
+    {
+      kicker: "PROTOCOLO 01 · CORRECCIÓN ÓPTICA CONCOURS D'ELEGANCE",
+      title: 'Ingeniería<br>del <em>reflejo</em><br>absoluto.',
+      code: 'TELEMETRÍA DE LACA · KR-01',
+      hudTitle: 'Corrección Multietapa a Nivel Espejo',
+      hudDesc: 'Medición ultrasónica micra a micra en cada panel antes de nivelar el barniz con compuestos suizos Rupes® y lámparas de espectro diurno CRI 98.',
+      gloss: '99.6 GU', hard: '10H SiC', angle: '118°'
+    },
+    {
+      kicker: 'PROTOCOLO 02 · NANOTECNOLOGÍA COVALENTE DE CARBURO DE SILICIO',
+      title: 'Cristal líquido<br>fundido con<br><em>tu pintura.</em>',
+      code: 'TELEMETRÍA DE LACA · KR-02',
+      hudTitle: 'Escudo Cerámico 10H & Matriz de Grafeno',
+      hudDesc: 'Curado mediante lámparas infrarrojas de onda corta. Repele suciedad, lluvia ácida, ferodo incandescente de frenos y rayos UV durante 7 años.',
+      gloss: '100 GU', hard: '10H+ Grafeno', angle: '120°'
+    },
+    {
+      kicker: 'PROTOCOLO 03 · POLIURETANO ALIFÁTICO AUTORREGENERABLE',
+      title: 'Armadura<br><em>invisible</em> a<br>300 km/h.',
+      code: 'TELEMETRÍA DE LACA · KR-03',
+      hudTitle: 'PPF XPEL Ultimate Plus® con Bordes Ocultos',
+      hudDesc: 'Corte computerizado milimétrico sin usar cuchillas sobre tu carrocería. Los impactos de grava y roces se regeneran solos con el calor del sol.',
+      gloss: '99.2 GU', hard: '210 Micras', angle: '116°'
+    },
+    {
+      kicker: 'PROTOCOLO 04 · CABINA INTERIOR & PIELES NOBLES',
+      title: 'El tacto mate<br>del <em>primer</em><br>día.',
+      code: 'TELEMETRÍA INTERIOR · KR-04',
+      hudTitle: 'Restauración de Cuero Nappa & Alcantara',
+      hudDesc: 'Eliminación de brillos grasos en volantes y pétalos de asiento, peinado de fibras de Alcantara y sellado antimanchas transpirable.',
+      gloss: 'OEM Mate', hard: 'Anti-Fricción', angle: 'Hidrófobo'
+    }
+  ];
+
+  const heroImgs = document.querySelectorAll('#heroMedia img');
+  const modeBtns = document.querySelectorAll('.mode-btn');
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = Number(btn.dataset.mode);
+      modeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      heroImgs.forEach((img, idx) => img.classList.toggle('active', idx === i));
+
+      const m = heroModes[i];
+      document.getElementById('hKicker').textContent = m.kicker;
+      document.getElementById('hTitle').innerHTML = m.title;
+      document.getElementById('hudCode').textContent = m.code;
+      document.getElementById('hudTitle').textContent = m.hudTitle;
+      document.getElementById('hudDesc').textContent = m.hudDesc;
+      document.getElementById('gGloss').textContent = m.gloss;
+      document.getElementById('gHard').textContent = m.hard;
+      document.getElementById('gAngle').textContent = m.angle;
+    });
+  });
+
+  · Bespoke Configurator
+  let cfg = {
+    chassisName: 'Deportivo / Coupé Biplaza',
+    mult: 1.0,
+    pkgTitle: 'Stage 1 · Corrección + Cerámico 5 Años',
+    base: 790,
+    days: '2 Días',
+    gloss: 98,
+    rock: 45,
+    hydro: '114°',
+    hydroPct: 92
+  };
+
+  function updateConfigurator() {
+    let addonsSum = 0;
+    const activeAddons = [];
+    document.querySelectorAll('#addonBtns .addon-Check.active').forEach(a => {
+      addonsSum += Number(a.dataset.price);
+      activeAddons.push(a.dataset.label);
+    });
+
+    const total = Math.round((cfg.base * cfg.mult + addonsSum) / 10) * 10;
+    document.getElementById('outConfigTitle').textContent = cfg.pkgTitle;
+    document.getElementById('outConfigChassis').textContent = 'SILUETA: ' + cfg.chassisName;
+    document.getElementById('outDays').textContent = cfg.days;
+    document.getElementById('outTotalPrice').textContent = total.toLocaleString('es-ES') + ' €';
+
+    document.getElementById('lblBarGloss').textContent = cfg.gloss + '%';
+    document.getElementById('barGloss').style.width = cfg.gloss + '%';
+    document.getElementById('lblBarRock').textContent = cfg.rock + '%';
+    document.getElementById('barRock').style.width = cfg.rock + '%';
+    document.getElementById('lblBarHydro').textContent = cfg.hydro;
+    document.getElementById('barHydro').style.width = cfg.hydroPct + '%';
+  }
+
+  document.querySelectorAll('#chassisBtns .chassis-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#chassisBtns .chassis-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      cfg.mult = Number(btn.dataset.mult);
+      cfg.chassisName = btn.dataset.name;
+      document.getElementById('chassisLabel').textContent = cfg.chassisName.toUpperCase();
+      updateConfigurator();
+    });
+  });
+
+  document.querySelectorAll('#shieldBtns .shield-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('#shieldBtns .shield-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      cfg.base = Number(card.dataset.base);
+      cfg.days = card.dataset.days;
+      cfg.gloss = Number(card.dataset.gloss);
+      cfg.rock = Number(card.dataset.rock);
+      cfg.hydro = card.dataset.hydro;
+      cfg.hydroPct = Number(card.dataset.hydroPct) || 95;
+      cfg.pkgTitle = card.dataset.title;
+      updateConfigurator();
+    });
+  });
+
+  document.querySelectorAll('#addonBtns .addon-Check').forEach(add => {
+    add.addEventListener('click', () => {
+      add.classList.toggle('active');
+      updateConfigurator();
+    });
+  });
+
+  document.getElementById('sendConfigWA').addEventListener('click', () => {
+    const extras = Array.from(document.querySelectorAll('#addonBtns .addon-Check.active')).map(a => a.dataset.label).join(', ') || 'Sin extras';
+    const price = document.getElementById('outTotalPrice').textContent;
+    const msg = `Hola KRONOS Atelier, he configurado el blindaje para mi vehículo:\n• Carrocería: ${cfg.chassisName}\n• Paquete: ${cfg.pkgTitle}\n• Extras: ${extras}\n• Presupuesto estimado: ${price}\n¿Qué disponibilidad de bahía tenéis?`;
+    window.open(`https://wa.me/34600000000?text=${encodeURIComponent(msg)}`, '_blank');
+  });
+
+  · Scangrip Swirl Inspector
+  const paintViewport = document.getElementById('paintViewport');
+  const lampStatus = document.getElementById('lampStatus');
+  const btnShowSwirls = document.getElementById('btnShowSwirls');
+  const btnShowMirror = document.getElementById('btnShowMirror');
+
+  btnShowSwirls.addEventListener('click', () => {
+    paintViewport.classList.add('defects');
+    btnShowSwirls.classList.add('active');
+    btnShowMirror.classList.remove('active');
+    lampStatus.textContent = 'INSPECCIÓN SCANGRIP: MICRO-ARAÑAZOS Y HOLOGRAMAS DETECTADOS';
+  });
+  btnShowMirror.addEventListener('click', () => {
+    paintViewport.classList.remove('defects');
+    btnShowMirror.classList.add('active');
+    btnShowSwirls.classList.remove('active');
+    lampStatus.textContent = 'ESTADO: CORRECCIÓN ESPEJO KRONOS (0% SWIRLS · 99.6 GU)';
+  });
+
+  · Booking Form
+  document.getElementById('kronosForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('kName').value;
+    const car = document.getElementById('kCar').value;
+    const srv = document.getElementById('kService').value;
+    const state = document.getElementById('kState').value;
+    const notes = document.getElementById('kNotes').value || 'Solicitud de diagnóstico luminotécnico.';
+    const text = `Hola KRONOS Atelier, soy ${name}. Quiero reservar bahía para mi ${car}:\n• Tratamiento: ${srv}\n• Estado: ${state}\n• Notas: ${notes}`;
+    window.open(`https://wa.me/34600000000?text=${encodeURIComponent(text)}`, '_blank');
+  });
+
+  · Instant Client Mock-Up Personalization via URL Parameters (?nombre=...&ciudad=...)
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const customName = params.get('nombre') || params.get('brand');
+    const customCity = params.get('ciudad') || params.get('city');
+    if (customName) {
+      document.title = customName + ' — Propuesta Web Exclusiva';
+      const brandEl = document.querySelector('.brand-name, .brand b');
+      if (brandEl) brandEl.textContent = customName.toUpperCase();
+    }
+    if (customCity) {
+      const subEl = document.querySelector('.brand-sub, .brand small');
+      if (subEl) subEl.textContent = customCity;
+    }
+  })();
+</script>
+</body>
+</html>

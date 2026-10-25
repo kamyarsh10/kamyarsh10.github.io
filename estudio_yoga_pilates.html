@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CALMA — Sanctuary of Reformer Pilates, Vinyasa & Sound Bath · Retiro, Madrid</title>
+<meta name="description" content="Santuario arquitectónico de Pilates Reformer, Yoga Vinyasa con calor infrarrojo suave y baños de sonido frente al Parque del Retiro en Madrid." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --travertine: #F6EFE4;
+    --sand: #EAE0CF;
+    --linen: #FBF8F3;
+    --olive-dark: #192118;
+    --olive-mid: #283526;
+    --moss: #485E46;
+    --terracotta: #C25E40;
+    --terracotta-soft: rgba(194, 94, 64, 0.14);
+    --amber-glow: #DF9E5B;
+    --muted: #656B60;
+    --line: rgba(25, 33, 24, 0.11);
+    --line-light: rgba(246, 239, 228, 0.18);
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; background: var(--travertine); color: var(--olive-dark); }
+  body {
+    font-family: var(--sans);
+    background: var(--travertine);
+    color: var(--olive-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  button, input, select, textarea { font: inherit; color: inherit; background: none; border: none; }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(48px, 6.5vw, 96px);
+  }
+
+  /* ================= FLOATING ORGANIC NAVBAR ================= */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 0;
+    transition: all 0.35s var(--ease);
+  }
+  .nav.scrolled {
+    background: rgba(246, 239, 228, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--travertine);
+    transition: color 0.35s;
+  }
+  .nav.scrolled .brand { color: var(--olive-dark); }
+  .brand-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--amber-glow);
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+  }
+  .brand-name {
+    font-family: var(--serif);
+    font-size: 24px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .brand-sub {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-top: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(246, 239, 228, 0.9);
+    transition: color 0.35s;
+  }
+  .nav.scrolled .nav-links { color: var(--olive-dark); }
+  .nav-links a:hover { color: var(--terracotta); }
+
+  .nav-cta {
+    padding: 12px 24px;
+    border-radius: 999px;
+    background: var(--terracotta);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: all 0.3s var(--ease);
+  }
+  .nav-cta:hover {
+    background: var(--olive-dark);
+    transform: translateY(-1px);
+  }
+
+  /* ================= FULL-BLEED 100SVH SUNLIT HERO ================= */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 116px 0 0;
+    color: var(--travertine);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: var(--olive-dark);
+  }
+  .hero-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 1.2s var(--ease), transform 6.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hero-media img.active {
+    opacity: 0.78;
+    transform: scale(1);
+  }
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 22% 30%, rgba(223, 158, 91, 0.2), transparent 46%),
+      linear-gradient(180deg, rgba(25, 33, 24, 0.65) 0%, rgba(25, 33, 24, 0.25) 42%, rgba(25, 33, 24, 0.88) 88%, #192118 100%);
+  }
+
+  .hero-meta-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-light);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(246, 239, 228, 0.85);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .retiro-pill {
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(8px);
+    color: var(--amber-glow);
+    font-weight: 600;
+  }
+
+  .hero-body {
+    width: 100%;
+    max-width: 1180px;
+    margin: auto auto;
+    padding: 44px clamp(64px, 8vw, 116px) 36px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    align-items: center;
+  }
+  .hero-body > div:first-child {
+    padding-left: clamp(16px, 2vw, 32px);
+  }
+  .hero-kicker {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--amber-glow);
+    margin-bottom: 14px;
+    display: block;
+    font-weight: 600;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(42px, 5.2vw, 74px);
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--amber-glow);
+    font-weight: 300;
+  }
+
+  .sanctuary-card {
+    background: rgba(25, 33, 24, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(246, 239, 228, 0.22);
+    border-radius: 26px;
+    padding: 30px;
+  }
+  .sanc-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber-glow);
+    margin-bottom: 10px;
+  }
+  .sanc-title {
+    font-family: var(--serif);
+    font-size: 30px;
+    line-height: 1.12;
+    margin-bottom: 10px;
+  }
+  .sanc-desc {
+    font-size: 14px;
+    color: rgba(246, 239, 228, 0.82);
+    margin-bottom: 18px;
+  }
+  .sanc-specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+    margin-bottom: 20px;
+  }
+  .sanc-specs div span {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: rgba(246, 239, 228, 0.65);
+  }
+  .sanc-specs div strong {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--amber-glow);
+  }
+
+  .btn-terracotta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 24px;
+    border-radius: 999px;
+    background: var(--terracotta);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: all 0.3s var(--ease);
+  }
+  .btn-terracotta:hover {
+    background: #ab4e32;
+    transform: translateY(-2px);
+  }
+  .btn-soft {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--line-light);
+    color: #fff;
+    font-size: 13px;
+  }
+
+  /* Bottom Circadian Day Ruler (Inspired directly by Sol y Sombra's Day Ruler) */
+  .day-ruler {
+    background: rgba(25, 33, 24, 0.86);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--line-light);
+  }
+  .ruler-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .ruler-btn {
+    text-align: left;
+    padding: 22px 24px;
+    border-right: 1px solid var(--line-light);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .ruler-btn:last-child { border-right: none; }
+  .ruler-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: var(--amber-glow);
+    transition: width 0.4s var(--ease);
+  }
+  .ruler-btn.active, .ruler-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .ruler-btn.active::before { width: 100%; }
+  .ruler-hour {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber-glow);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .ruler-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: #fff;
+    display: block;
+  }
+  .ruler-sub {
+    font-size: 12px;
+    color: rgba(246, 239, 228, 0.68);
+  }
+
+  /* ================= SECTION TYPOGRAPHY ================= */
+  .section-pad {
+    padding: clamp(84px, 10vw, 140px) 0;
+  }
+  .sec-head-center {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before,
+  .sec-head-center .eyebrow::after {
+    content: '';
+    width: 24px;
+    height: 1.5px;
+    background: var(--terracotta);
+  }
+  .sec-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(36px, 4.8vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    padding-inline: 0.06em;
+  }
+  .sec-title em {
+    font-style: italic;
+    color: var(--terracotta);
+    padding-inline: 0.08em;
+  }
+
+  /* ================= UNIQUE FEATURE #1: LIVE GUIDED BREATHWORK PACER ================= */
+  .breath-sec {
+    background: var(--olive-dark);
+    color: var(--travertine);
+    position: relative;
+    overflow: hidden;
+  }
+  .breath-sec .eyebrow { color: var(--amber-glow); }
+  .breath-sec .eyebrow::before,
+  .breath-sec .sec-head-center .eyebrow::after { background: var(--amber-glow); }
+  .breath-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    margin-top: 40px;
+  }
+  .aura-stage {
+    height: 400px;
+    border-radius: 32px;
+    background: radial-gradient(circle at center, rgba(223, 158, 91, 0.16), rgba(25, 33, 24, 0.9));
+    border: 1px solid var(--line-light);
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+  .aura-ring-outer {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 1px dashed rgba(223, 158, 91, 0.4);
+    display: grid;
+    place-items: center;
+  }
+  .aura-sphere {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--amber-glow), var(--terracotta));
+    box-shadow: 0 0 60px rgba(223, 158, 91, 0.45);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    transition: transform 4s ease-in-out, background 1.5s;
+  }
+  .aura-sphere span {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: #fff;
+    padding: 10px;
+  }
+  .breath-timer-pill {
+    position: absolute;
+    bottom: 20px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber-glow);
+  }
+
+  .protocol-pills {
+    display: flex;
+    gap: 10px;
+    margin: 24px 0;
+    flex-wrap: wrap;
+  }
+  .proto-btn {
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--line-light);
+    font-size: 13px;
+    transition: all 0.25s;
+  }
+  .proto-btn.active {
+    background: var(--amber-glow);
+    color: var(--olive-dark);
+    border-color: var(--amber-glow);
+    font-weight: 600;
+  }
+
+  /* ================= UNIQUE FEATURE #2: INTERACTIVE SCHEDULE & PASS CALCULATOR ================= */
+  .schedule-sec {
+    background: var(--travertine);
+    border-bottom: 1px solid var(--line);
+  }
+  .sched-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    margin-top: 48px;
+    align-items: start;
+  }
+  .class-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .c-filter {
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--linen);
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.25s;
+  }
+  .c-filter.active {
+    background: var(--olive-dark);
+    color: #fff;
+    border-color: var(--olive-dark);
+  }
+
+  .class-list {
+    display: grid;
+    gap: 12px;
+  }
+  .class-row {
+    background: var(--linen);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .class-row:hover {
+    transform: translateX(4px);
+    border-color: var(--terracotta);
+  }
+  .class-time {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--terracotta);
+    min-width: 90px;
+  }
+  .class-info { flex: 1; }
+  .class-info h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 2px;
+  }
+  .class-info p {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .spots-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--sand);
+  }
+
+  /* Pass Calculator Card */
+  .pass-calc {
+    background: var(--sand);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    padding: clamp(28px, 3.8vw, 42px);
+  }
+  .freq-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(25, 33, 24, 0.15);
+    margin: 18px 0;
+  }
+  .freq-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    border: 3px solid var(--linen);
+    cursor: pointer;
+  }
+  .freq-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--terracotta);
+    border: 3px solid var(--linen);
+    cursor: pointer;
+  }
+  .pass-recommendation {
+    background: var(--linen);
+    border-radius: 20px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .pass-price-big {
+    font-family: var(--serif);
+    font-size: 48px;
+    line-height: 1;
+    color: var(--olive-dark);
+    margin: 8px 0;
+  }
+  .pass-price-big small {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* ================= BOOKING SECTION ================= */
+  .booking-sec {
+    background: var(--linen);
+  }
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 52px;
+  }
+  .retiro-box {
+    background: var(--travertine);
+    border-radius: 22px;
+    padding: 32px;
+    margin-top: 28px;
+    border: 1px solid var(--line);
+  }
+  .retiro-list {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+    font-size: 14px;
+    margin-top: 14px;
+  }
+  .retiro-list li {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .calma-form {
+    background: var(--travertine);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    padding: clamp(28px, 4vw, 46px);
+  }
+  .f-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .f-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .f-group label {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .f-group input, .f-group select, .f-group textarea {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--linen);
+    font-size: 14px;
+  }
+
+  footer {
+    background: var(--olive-dark);
+    color: rgba(246, 239, 228, 0.72);
+    padding: 44px 0;
+    font-size: 12px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-body, .breath-grid, .sched-layout, .booking-grid {
+      grid-template-columns: 1fr;
+    }
+    .ruler-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 640px) {
+    .ruler-grid, .f-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .wrap { padding-left: 22px; padding-right: 22px; }
+    .hero-body, .hero-main, .hero-center { padding-left: 22px !important; padding-right: 22px !important; }
+    .hero-body > div:first-child, .hero-main > div:first-child, .hero-center > div:first-child { padding-left: 0 !important; }
+  }
+
+  /* Serene Centered Minimalist Hero Override */
+  .hero-body {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    justify-items: center !important;
+    max-width: 960px !important;
+    gap: 24px !important;
+  }
+  .hero-body > div:first-child {
+    padding-left: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-lead {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+  .sanctuary-card, .dossier-card {
+    width: 100%;
+    max-width: 820px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    align-items: center;
+    text-align: left;
+    padding: 22px 28px !important;
+  }
+  .sanc-specs, .dossier-metrics {
+    margin-bottom: 10px !important;
+  }
+  @media (max-width: 768px) {
+    .sanctuary-card, .dossier-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="topNav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">
+      <div class="brand-circle">C</div>
+      <div>
+        <span class="brand-name">CALMA</span>
+        <span class="brand-sub">Reformer & Mindful Movement · Retiro</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="#respiracion">Respiración en Vivo</a>
+      <a href="#horario">Horario & Membresías</a>
+      <a href="#reserva">Clase de Bienvenida 19€</a>
+    </nav>
+    <a href="#reserva" class="nav-cta">Reservar 1ª Clase (19 €) →</a>
+  </div>
+</header>
+
+<!-- ================= FULL-BLEED 100SVH SUNLIT HERO ================= -->
+<section class="hero">
+  <div class="hero-media" id="heroMedia">
+    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=2000&q=85&auto=format&fit=crop" alt="Sala de Pilates Reformer bañada por el sol matinal frente al Retiro" class="active" />
+    <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=2000&q=85&auto=format&fit=crop" alt="Sesión de Vinyasa Flow y alineación postural" />
+    <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=2000&q=85&auto=format&fit=crop" alt="Práctica de tarde con luz cálida de velas e infrarrojo suave" />
+    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=2000&q=85&auto=format&fit=crop" alt="Meditación guiada y baño de sonido con cuencos de cuarzo" />
+  </div>
+  <div class="hero-scrim"></div>
+
+  <div class="wrap hero-meta-top">
+    <span class="retiro-pill">✦ FRENTE A LA PUERTA DE HERNANI · PARQUE DEL RETIRO</span>
+    <span>GRUPOS REDUCIDOS DE MÁXIMO 8 CAMAS REFORMER DE NOGAL</span>
+  </div>
+
+  <div class="wrap hero-body">
+    <div>
+      <span class="hero-kicker" id="hKicker">LUZ DE LAS 08:00 H · DESPERTAR BIOMECÁNICO</span>
+      <h1 class="hero-title" id="hTitle">
+        Fuerza serena<br>bajo la <em>luz</em><br>del Retiro.
+      </h1>
+    </div>
+
+    <aside class="sanctuary-card">
+      <div class="sanc-top">
+        <span id="sCode">ATMOSFERA · CA-01</span>
+        <span id="sTemp">22°C · AROMA SÁNDALO & HIGO</span>
+      </div>
+      <h2 class="sanc-title" id="sTitle">Athletic Reformer & Control Postural</h2>
+      <p class="sanc-desc" id="sDesc">
+        Trabaja la musculatura profunda en nuestras camas Balanced Body® Studio de madera de arce mientras los balcones abiertos reciben la brisa matinal de los árboles del Retiro.
+      </p>
+      <div class="sanc-specs">
+        <div>
+          <span>Ratio</span>
+          <strong id="sRatio">Máx. 8 Alumnos</strong>
+        </div>
+        <div>
+          <span>Duración</span>
+          <strong id="sDur">55 Minutos</strong>
+        </div>
+        <div>
+          <span>Incluye</span>
+          <strong id="sTea">Matcha & Toalla</strong>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="#horario" class="btn-terracotta" style="flex:1;">Ver Clases y Bonos →</a>
+        <a href="https://wa.me/34600000000?text=Hola%20Estudio%20CALMA%2C%20me%20gustar%C3%ADa%20reservar%20la%20Clase%20de%20Bienvenida%20de%2019%E2%82%AC." target="_blank" rel="noopener" class="btn-soft">WhatsApp</a>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Circadian Day Ruler at bottom of Hero -->
+  <div class="day-ruler">
+    <div class="wrap ruler-grid">
+      <button type="button" class="ruler-btn active" data-hour="0">
+        <span class="ruler-hour">08:00 – 12:00 · AMANECER</span>
+        <span class="ruler-name">Reformer Sculpt</span>
+        <span class="ruler-sub">Luz natural directa y precisión técnica</span>
+      </button>
+      <button type="button" class="ruler-btn" data-hour="1">
+        <span class="ruler-hour">12:30 – 16:30 · MEDIODÍA</span>
+        <span class="ruler-name">Vinyasa & Barre</span>
+        <span class="ruler-sub">Fluidez dinámica y movilidad articular</span>
+      </button>
+      <button type="button" class="ruler-btn" data-hour="2">
+        <span class="ruler-hour">17:30 – 20:00 · ATARDECER</span>
+        <span class="ruler-name">Warm Infrared Flow</span>
+        <span class="ruler-sub">Calor infrarrojo suave (28°C) con velas</span>
+      </button>
+      <button type="button" class="ruler-btn" data-hour="3">
+        <span class="ruler-hour">20:30 – 21:45 · NOCHE</span>
+        <span class="ruler-name">Yin & Sound Bath</span>
+        <span class="ruler-sub">Cuencos de cuarzo alquímico y descanso</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UNIQUE FEATURE #1: INTERACTIVE BREATHWORK PACER ================= -->
+<section class="section-pad breath-sec" id="respiracion">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <span class="eyebrow">Pausa Sensorial Interactiva · Regulación Vagal</span>
+      <h2 class="sec-title" style="color:#fff;">Sincroniza tu <em>respiración</em><br>antes de entrar a sala.</h2>
+    </div>
+
+    <div class="breath-grid">
+      <div class="aura-stage">
+        <div class="aura-ring-outer">
+          <div class="aura-sphere" id="auraSphere">
+            <span id="breathCue">Pulsa Iniciar</span>
+          </div>
+        </div>
+        <div class="breath-timer-pill" id="breathCycleInfo">PROTOCOLO: COHERENCIA CARDÍACA (4s INHALA · 4s SOSTÉN · 6s EXHALA)</div>
+      </div>
+
+      <div>
+        <h3 style="font-family:var(--serif); font-size:34px; line-height:1.12; margin-bottom:14px;">
+          Cada sesión en CALMA comienza con 3 minutos de descompresión nerviosa.
+        </h3>
+        <p style="color:rgba(246, 239, 228, 0.78); font-size:15px;">
+          Prueba nuestro guía visual interactivo ahora mismo. Elige el ritmo según tu estado de hoy y acompaña el movimiento de la esfera luminosa para reducir el cortisol en menos de 60 segundos.
+        </p>
+
+        <div class="protocol-pills" id="protoBtns">
+          <button type="button" class="proto-btn active" data-in="4" data-hold="4" data-out="6" data-label="COHERENCIA CARDÍACA (4s · 4s · 6s)">
+            Calma Profunda (4-4-6)
+          </button>
+          <button type="button" class="proto-btn" data-in="4" data-hold="4" data-out="4" data-label="BOX BREATHING (4s · 4s · 4s)">
+            Enfoque Mental (4-4-4)
+          </button>
+          <button type="button" class="proto-btn" data-in="5" data-hold="2" data-out="5" data-label="ENERGÍA VITAL PRANA (5s · 2s · 5s)">
+            Energía Matinal (5-2-5)
+          </button>
+        </div>
+
+        <button type="button" class="btn-terracotta" id="toggleBreathBtn">
+          ▶ Iniciar Respiración Guiada
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UNIQUE FEATURE #2: SCHEDULE FILTER & PASS CALCULATOR ================= -->
+<section class="section-pad schedule-sec" id="horario">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <span class="eyebrow">Flexibilidad Total · Sin Permanencia</span>
+      <h2 class="sec-title">Explora las sesiones de hoy y<br>calcula tu <em>membresía ideal</em>.</h2>
+    </div>
+
+    <div class="sched-layout">
+      <!-- Live Filterable Class List -->
+      <div>
+        <div class="class-filters" id="schedFilters">
+          <button type="button" class="c-filter active" data-cat="all">Todas las Disciplinas</button>
+          <button type="button" class="c-filter" data-cat="reformer">Pilates Reformer</button>
+          <button type="button" class="c-filter" data-cat="yoga">Vinyasa & Infrarrojo</button>
+          <button type="button" class="c-filter" data-cat="sound">Barre & Sound Bath</button>
+        </div>
+
+        <div class="class-list" id="classList">
+          <div class="class-row" data-cat="reformer" data-disc="Pilates Reformer Sculpt">
+            <div class="class-time">08:30</div>
+            <div class="class-info">
+              <h4>Reformer Sculpt & Core</h4>
+              <p>Con Elena Vázquez · Sala Travertino (Camas Balanced Body)</p>
+            </div>
+            <span class="spots-badge">Últimas 2 camas</span>
+          </div>
+
+          <div class="class-row" data-cat="yoga" data-disc="Sunlit Vinyasa Yoga">
+            <div class="class-time">10:00</div>
+            <div class="class-info">
+              <h4>Sunlit Vinyasa Flow (75 min)</h4>
+              <p>Con Marco Sampedro · Balcones Abiertos al Retiro</p>
+            </div>
+            <span class="spots-badge">4 plazas libres</span>
+          </div>
+
+          <div class="class-row" data-cat="reformer" data-disc="Pilates Reformer Sculpt">
+            <div class="class-time">14:15</div>
+            <div class="class-info">
+              <h4>Reformer Express Ejecutivo (50 min)</h4>
+              <p>Con Sofía Lindqvist · Fuerza & Alineación Espinal</p>
+            </div>
+            <span class="spots-badge">3 camas libres</span>
+          </div>
+
+          <div class="class-row" data-cat="sound" data-disc="Barre Escultórico">
+            <div class="class-time">18:30</div>
+            <div class="class-info">
+              <h4>Barre Escultórico & Movilidad</h4>
+              <p>Con Elena Vázquez · Tonificación isométrica al ritmo de piano</p>
+            </div>
+            <span class="spots-badge">5 plazas libres</span>
+          </div>
+
+          <div class="class-row" data-cat="yoga" data-disc="Candlelight Infrared Flow">
+            <div class="class-time">19:45</div>
+            <div class="class-info">
+              <h4>Candlelight Infrared Vinyasa (28°C)</h4>
+              <p>Con Marco Sampedro · Calor terapéutico y aceites esenciales</p>
+            </div>
+            <span class="spots-badge">Última plaza</span>
+          </div>
+
+          <div class="class-row" data-cat="sound" data-disc="Yin Yoga & Baño de Sonido">
+            <div class="class-time">20:45</div>
+            <div class="class-info">
+              <h4>Yin Restaurativo & Baño de Cuencos de Cuarzo</h4>
+              <p>Con Clara Valdés · Higiene del sueño profundo</p>
+            </div>
+            <span class="spots-badge">4 plazas libres</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pass Calculator -->
+      <aside class="pass-calc">
+        <span class="eyebrow">Calculadora de Práctica</span>
+        <h3 style="font-family:var(--serif); font-size:30px; margin-bottom:6px;">¿Cuántas veces por semana quieres practicar?</h3>
+        <p style="font-size:14px; color:var(--muted);">Desliza para descubrir el bono con mejor coste por sesión:</p>
+
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:16px;">
+          <strong style="font-family:var(--serif); font-size:28px;" id="freqLabel">2 veces / semana</strong>
+          <span style="font-size:12px; font-weight:600; color:var(--terracotta);" id="monthlySessionsLabel">8 sesiones al mes</span>
+        </div>
+
+        <input type="range" min="1" max="5" value="2" class="freq-slider" id="freqSlider" aria-label="Frecuencia semanal de clases" />
+
+        <div class="pass-recommendation">
+          <span style="font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--moss);" id="recBadge">PLAN RECOMENDADO · ACCESO TOTAL REFORMER + YOGA</span>
+          <h4 style="font-family:var(--serif); font-size:26px; margin-top:4px;" id="recName">Membresía Equilibrio (8 Clases/Mes)</h4>
+          <div class="pass-price-big" id="recPrice">148 €<small>/mes (18,50 € por clase)</small></div>
+          <p style="font-size:13px; color:var(--muted);" id="recNote">Incluye préstamo de toalla orgánica, té matcha o infusión ayurvédica post-clase y congelación gratuita en vacaciones.</p>
+        </div>
+
+        <button type="button" class="btn-terracotta" style="width:100%;" id="bookWelcomeWA">
+          Probar Primero Clase de Bienvenida (19 €) por WhatsApp →
+        </button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVA CLASE DE BIENVENIDA ================= -->
+<section class="section-pad booking-sec" id="reserva">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <span class="eyebrow">Invitación para Nuevos Alumnos</span>
+      <h2 class="sec-title">Tu <em>Primera Sesión</em><br>por 19 € (Todo Incluido).</h2>
+      <p style="color:var(--muted); margin-top:16px; max-width:620px;">
+        Queremos que sientas la textura de la piedra caliza, la luz del Retiro y el cuidado de nuestros profesores antes de elegir un bono. Incluye calcetines técnicos de agarre de regalo y té en nuestro salón botánico.
+      </p>
+    </div>
+
+    <div class="booking-grid">
+      <div>
+        <div class="retiro-box" style="margin-top:0;">
+          <h4 style="font-family:var(--serif); font-size:24px;">Santuario CALMA · Barrio de Salamanca / Retiro</h4>
+          <ul class="retiro-list">
+            <li><span>Dirección</span><strong>C/ Alcalá 109 (Frente al Retiro) · 28009 Madrid</strong></li>
+            <li><span>Apertura</span><strong>Lun – Dom · 07:45 a 22:00</strong></li>
+            <li><span>WhatsApp Recepción</span><strong>+34 910 000 000</strong></li>
+            <li><span>Vestuarios</span><strong>Duchas individuales con cosmética Aesop®</strong></li>
+          </ul>
+        </div>
+      </div>
+
+    <form class="calma-form" id="calmaForm">
+      <h3 style="font-family:var(--serif); font-size:32px; margin-bottom:6px;">Reservar Clase de Bienvenida</h3>
+      <p style="font-size:13px; color:var(--muted); margin-bottom:22px;">Confirmación inmediata de tu cama Reformer o esterilla por WhatsApp.</p>
+
+      <div class="f-row">
+        <div class="f-group">
+          <label for="cName">Nombre y Apellidos</label>
+          <input type="text" id="cName" placeholder="Ej. Lucía Peñalver" required />
+        </div>
+        <div class="f-group">
+          <label for="cDiscipline">Disciplina Elegida</label>
+          <select id="cDiscipline">
+            <option value="Pilates Reformer Sculpt">Pilates Reformer Sculpt</option>
+            <option value="Sunlit Vinyasa Yoga">Sunlit Vinyasa Yoga</option>
+            <option value="Candlelight Infrared Flow">Warm Infrared Flow con Velas</option>
+            <option value="Barre Escultórico">Barre Escultórico</option>
+            <option value="Yin Yoga & Baño de Sonido">Yin Yoga & Baño de Sonido</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="f-row">
+        <div class="f-group">
+          <label for="cLevel">Experiencia Previa</label>
+          <select id="cLevel">
+            <option value="Principiante (Primera vez en Reformer)">Principiante · Primera vez</option>
+            <option value="Intermedio (Práctica habitual)">Intermedio · Práctica habitual</option>
+            <option value="Avanzado / Embarazo / Recuperación">Atención especial / Embarazo / Lesión</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label for="cTime">Franja Preferida</label>
+          <select id="cTime">
+            <option value="Mañanas (08:00 - 12:00)">Mañanas (08:00 – 12:00)</option>
+            <option value="Mediodía (12:30 - 16:00)">Mediodía (12:30 – 16:00)</option>
+            <option value="Tardes / Velas (17:30 - 21:00)">Tardes con Velas (17:30 – 21:00)</option>
+            <option value="Fin de Semana">Sábado o Domingo por la mañana</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="f-group">
+        <label for="cNotes">¿Alguna molestia física o preferencia que debamos conocer?</label>
+        <textarea id="cNotes" rows="3" placeholder="Cuéntanos si tienes tensión cervical, lumbar o si vienes acompañada..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-terracotta" style="width:100%;">
+        Reservar Mi Plaza de Bienvenida (19 €) vía WhatsApp →
+      </button>
+    </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div>© 2026 CALMA SANCTUARY MADRID · REFORMER PILATES, YOGA & SOUND BATH</div>
+    <div>CALLE ALCALÁ 109 · FRENTE AL PARQUE DEL RETIRO · +34 910 000 000</div>
+  </div>
+</footer>
+
+<script>
+  · Sticky Nav
+  const topNav = document.getElementById('topNav');
+  window.addEventListener('scroll', () => {
+    topNav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  · Hero Circadian Day Ruler
+  const dayStages = [
+    {
+      kicker: 'LUZ DE LAS 08:00 H · DESPERTAR BIOMECÁNICO',
+      title: 'Fuerza serena<br>bajo la <em>luz</em><br>del Retiro.',
+      code: 'ATMOSFERA · CA-01',
+      temp: '22°C · AROMA SÁNDALO & HIGO',
+      sTitle: 'Athletic Reformer & Control Postural',
+      sDesc: 'Trabaja la musculatura profunda en nuestras camas Balanced Body® Studio de madera de arce mientras los balcones abiertos reciben la brisa matinal.',
+      ratio: 'Máx. 8 Alumnos', dur: '55 Minutos', tea: 'Matcha & Toalla'
+    },
+    {
+      kicker: 'LUZ DE LAS 13:30 H · FLUIDEZ AL MEDIODÍA',
+      title: 'El cuerpo<br>en <em>estado</em><br>de gracia.',
+      code: 'ATMOSFERA · CA-02',
+      temp: '23°C · LUZ CENITAL NATURAL',
+      sTitle: 'Sunlit Vinyasa & Barre Escultórico',
+      sDesc: 'Secuencias fluidas sincronizadas con la respiración y música acústica en directo los fines de semana para liberar la rigidez de la espalda.',
+      ratio: 'Máx. 10 Plazas', dur: '60 Minutos', tea: 'Infusión Jengibre'
+    },
+    {
+      kicker: 'LUZ DE LAS 19:00 H · PENUMBRA CÁLIDA CON VELAS',
+      title: 'Calor suave<br>que <em>disuelve</em><br>la prisa.',
+      code: 'ATMOSFERA · CA-03',
+      temp: '28°C · PANELES INFRARROJOS BIOMÉDICOS',
+      sTitle: 'Candlelight Warm Infrared Flow',
+      sDesc: 'A diferencia del Bikram asfixiante, nuestros paneles radiantes calientan suavemente músculos y articulaciones sin resecar el aire, a la luz de 80 velas de cera de abeja.',
+      ratio: 'Iluminación Velas', dur: '60 Minutos', tea: 'Electrolitos Botánicos'
+    },
+    {
+      kicker: 'LUZ DE LAS 20:45 H · FRECUENCIA DE DESCANSO',
+      title: 'Silencio<br>vibracional<br><em>profundo.</em>',
+      code: 'ATMOSFERA · CA-04',
+      temp: '24°C · ACEITE ESENCIAL DE LAVANDA SILVESTRE',
+      sTitle: 'Yin Yoga & Baño de Cuencos de Cuarzo',
+      sDesc: 'Posturas pasivas sobre bolsters de lino orgánico seguidas de 25 minutos de inmersión acústica con cuencos alquímicos a 432 Hz.',
+      ratio: 'Mantas de Cachemir', dur: '75 Minutos', tea: 'Elixir Ashwagandha'
+    }
+  ];
+
+  const heroImgs = document.querySelectorAll('#heroMedia img');
+  const rulerBtns = document.querySelectorAll('.ruler-btn');
+  rulerBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = Number(btn.dataset.hour);
+      rulerBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      heroImgs.forEach((img, idx) => img.classList.toggle('active', idx === i));
+
+      const d = dayStages[i];
+      document.getElementById('hKicker').textContent = d.kicker;
+      document.getElementById('hTitle').innerHTML = d.title;
+      document.getElementById('sCode').textContent = d.code;
+      document.getElementById('sTemp').textContent = d.temp;
+      document.getElementById('sTitle').textContent = d.sTitle;
+      document.getElementById('sDesc').textContent = d.sDesc;
+      document.getElementById('sRatio').textContent = d.ratio;
+      document.getElementById('sDur').textContent = d.dur;
+      document.getElementById('sTea').textContent = d.tea;
+    });
+  });
+
+  · Live Guided Breathwork Pacer
+  let breathConfig = { inS: 4, holdS: 4, outS: 6 };
+  let breathRunning = false;
+  let breathTimeout = null;
+  const auraSphere = document.getElementById('auraSphere');
+  const breathCue = document.getElementById('breathCue');
+  const toggleBreathBtn = document.getElementById('toggleBreathBtn');
+
+  function runBreathStep(phase) {
+    if (!breathRunning) return;
+    if (phase === 'in') {
+      breathCue.textContent = `Inhala (${breathConfig.inS}s)`;
+      auraSphere.style.transition = `transform ${breathConfig.inS}s ease-in-out`;
+      auraSphere.style.transform = 'scale(1.85)';
+      breathTimeout = setTimeout(() => runBreathStep('hold'), breathConfig.inS * 1000);
+    } else if (phase === 'hold') {
+      breathCue.textContent = `Sostén (${breathConfig.holdS}s)`;
+      breathTimeout = setTimeout(() => runBreathStep('out'), breathConfig.holdS * 1000);
+    } else {
+      breathCue.textContent = `Exhala (${breathConfig.outS}s)`;
+      auraSphere.style.transition = `transform ${breathConfig.outS}s ease-in-out`;
+      auraSphere.style.transform = 'scale(1)';
+      breathTimeout = setTimeout(() => runBreathStep('in'), breathConfig.outS * 1000);
+    }
+  }
+
+  toggleBreathBtn.addEventListener('click', () => {
+    breathRunning = !breathRunning;
+    if (breathRunning) {
+      toggleBreathBtn.textContent = '⏸ Pausar Guía de Respiración';
+      runBreathStep('in');
+    } else {
+      clearTimeout(breathTimeout);
+      auraSphere.style.transition = 'transform 0.6s ease';
+      auraSphere.style.transform = 'scale(1)';
+      breathCue.textContent = 'En Pausa';
+      toggleBreathBtn.textContent = '▶ Reanudar Respiración Guiada';
+    }
+  });
+
+  document.querySelectorAll('#protoBtns .proto-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#protoBtns .proto-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      breathConfig.inS = Number(btn.dataset.in);
+      breathConfig.holdS = Number(btn.dataset.hold);
+      breathConfig.outS = Number(btn.dataset.out);
+      document.getElementById('breathCycleInfo').textContent = 'PROTOCOLO: ' + btn.dataset.label;
+      if (breathRunning) {
+        clearTimeout(breathTimeout);
+        auraSphere.style.transition = 'none';
+        auraSphere.style.transform = 'scale(1)';
+        void auraSphere.offsetWidth;
+        runBreathStep('in');
+      }
+    });
+  });
+
+  · Schedule Filter & Click-to-Select Class
+  const cFilters = document.querySelectorAll('#schedFilters .c-filter');
+  const classRows = document.querySelectorAll('#classList .class-row');
+  cFilters.forEach(f => {
+    f.addEventListener('click', () => {
+      cFilters.forEach(b => b.classList.remove('active'));
+      f.classList.add('active');
+      const cat = f.dataset.cat;
+      classRows.forEach(r => {
+        r.style.display = (cat === 'all' || r.dataset.cat === cat) ? 'flex' : 'none';
+      });
+    });
+  });
+
+  classRows.forEach(row => {
+    row.addEventListener('click', () => {
+      const disc = row.dataset.disc;
+      const sel = document.getElementById('cDiscipline');
+      if (disc && sel) {
+        sel.value = disc;
+      }
+      document.getElementById('reserva').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  · Pass Calculator
+  const freqSlider = document.getElementById('freqSlider');
+  const passPlans = {
+    1: { name: 'Bono Mensual Sutil (4 Clases/Mes)', price: '84 €', perClass: '21,00 € por clase', note: 'Ideal para combinar Reformer una vez por semana con tu rutina habitual.' },
+    2: { name: 'Membresía Equilibrio (8 Clases/Mes)', price: '148 €', perClass: '18,50 € por clase', note: 'Nuestro plan más elegido. Acceso completo a Reformer, Yoga Infrarrojo y Baños de Sonido.' },
+    3: { name: 'Membresía Armonía (12 Clases/Mes)', price: '192 €', perClass: '16,00 € por clase', note: 'Incluye 1 pase mensual de invitado gratuito para traer a quien quieras.' },
+    4: { name: 'Membresía Santuario Ilimitada', price: '225 €', perClass: '14,00 € por clase', note: 'Acceso ilimitado a todas las disciplinas + prioridad de reserva con 14 días de antelación.' },
+    5: { name: 'Membresía Santuario VIP Ilimitada', price: '225 €', perClass: '11,25 € por clase', note: 'Práctica diaria ilimitada + taquilla privada asignada y lavandería deportiva.' }
+  };
+
+  freqSlider.addEventListener('input', e => {
+    const v = Number(e.target.value);
+    document.getElementById('freqLabel').textContent = `${v} ${v === 1 ? 'vez' : 'veces'} / semana`;
+    document.getElementById('monthlySessionsLabel').textContent = `${v * 4} sesiones al mes`;
+    const p = passPlans[v];
+    document.getElementById('recName').textContent = p.name;
+    document.getElementById('recPrice').innerHTML = `${p.price}<small>/mes (${p.perClass})</small>`;
+    document.getElementById('recNote').textContent = p.note;
+  });
+
+  document.getElementById('bookWelcomeWA').addEventListener('click', () => {
+    const planName = document.getElementById('recName').textContent;
+    const msg = `Hola Estudio CALMA, he calculado en la web el plan "${planName}" y me gustaría probar primero la Clase de Bienvenida de 19 € (con calcetines incluidos). ¿Qué horarios tenéis libres esta semana?`;
+    window.open(`https://wa.me/34600000000?text=${encodeURIComponent(msg)}`, '_blank');
+  });
+
+  · Booking Form
+  document.getElementById('calmaForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('cName').value;
+    const disc = document.getElementById('cDiscipline').value;
+    const lvl = document.getElementById('cLevel').value;
+    const time = document.getElementById('cTime').value;
+    const notes = document.getElementById('cNotes').value || 'Sin observaciones médicas.';
+    const text = `Hola Estudio CALMA, soy ${name}. Quiero reservar mi Clase de Bienvenida (19 €):\n• Disciplina: ${disc}\n• Nivel: ${lvl}\n• Horario preferido: ${time}\n• Notas: ${notes}`;
+    window.open(`https://wa.me/34600000000?text=${encodeURIComponent(text)}`, '_blank');
+  });
+
+  · Instant Client Mock-Up Personalization via URL Parameters (?nombre=...&ciudad=...)
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const customName = params.get('nombre') || params.get('brand');
+    const customCity = params.get('ciudad') || params.get('city');
+    if (customName) {
+      document.title = customName + ' — Propuesta Web Exclusiva';
+      const brandEl = document.querySelector('.brand-name, .brand b');
+      if (brandEl) brandEl.textContent = customName.toUpperCase();
+    }
+    if (customCity) {
+      const subEl = document.querySelector('.brand-sub, .brand small');
+      if (subEl) subEl.textContent = customCity;
+    }
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vértigo · Sastrería Capilar &amp; Barber Club en Salamanca, Madrid</title>
+<meta name="description" content="Sastrería capilar, afeitado clásico con toalla caliente al vapor y club masculino en el Barrio de Salamanca, Madrid. Reserva tu sillón.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --club:#0B1F19;
+  --bosque:#123128;
+  --bosque-2:#1A4236;
+  --oro:#E2B857;
+  --oro-deep:#B88C28;
+  --cognac:#C97A42;
+  --albero:#F5F0E6;
+  --albero-2:#EAE2D3;
+  --tinta:#0B1F19;
+  --niebla:#A5BDB4;
+  --verde:#4ADE80;
+  --rojo:#E06D53;
+
+  --serif:"Cormorant Garamond", Georgia, serif;
+  --sans:"Plus Jakarta Sans", system-ui, sans-serif;
+
+  --s1:4px; --s2:8px; --s3:16px; --s4:24px; --s5:40px; --s6:64px; --s7:104px;
+  --wrap:1200px;
+  --ease:cubic-bezier(.22,1.2,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --shadow-float:0 2px 4px rgba(11,31,25,.14), 0 12px 32px rgba(11,31,25,.22), 0 28px 64px rgba(11,31,25,.28);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--club);color:var(--albero);font:400 17px/1.68 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--oro);outline-offset:3px;border-radius:4px}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 clamp(48px, 6.5vw, 96px)}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;letter-spacing:-.02em;line-height:1.02}
+h2{font-size:clamp(42px,6.2vw,82px)}
+p{margin:0}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;border:1px solid transparent;font-weight:600;font-size:15px;letter-spacing:.02em;text-decoration:none;cursor:pointer;transition:transform .35s var(--ease),background-color .25s,color .25s,border-color .25s}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-oro{background:var(--oro);color:var(--tinta);font-weight:700}
+.btn-oro:hover{background:#F0C96B}
+.btn-ghost{border-color:rgba(245,240,230,.45);color:var(--albero);background:rgba(11,31,25,.25);backdrop-filter:blur(6px)}
+.btn-ghost:hover{border-color:var(--oro);color:var(--oro);background:rgba(226,184,87,.08)}
+.btn-ink{background:var(--tinta);color:var(--albero)}
+.btn-ink:hover{background:var(--bosque-2)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* ---------- header ---------- */
+.top{position:fixed;inset:0 0 auto;z-index:50;transition:background-color .35s,box-shadow .35s}
+.top.scrolled{background:rgba(11,31,25,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(226,184,87,.16)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s4);height:78px}
+.logo{font-family:var(--serif);font-size:28px;font-weight:700;text-decoration:none;letter-spacing:.04em;white-space:nowrap;display:flex;align-items:center;gap:10px}
+.logo i{width:9px;height:9px;border-radius:50%;background:var(--oro);box-shadow:0 0 12px var(--oro)}
+.nav{display:flex;gap:var(--s4);margin-left:auto}
+.nav a{text-decoration:none;font-size:15px;font-weight:500;opacity:.88;padding:6px 0;position:relative}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--oro);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-out)}
+.nav a:hover{opacity:1;color:var(--oro)}
+.nav a:hover::after{transform:scaleX(1)}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;white-space:nowrap;padding:6px 14px;border-radius:999px;background:rgba(11,31,25,.55);border:1px solid rgba(245,240,230,.18)}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--rojo);flex:none}
+.status.open i{background:var(--verde);box-shadow:0 0 0 4px rgba(74,222,128,.2)}
+.lang{display:flex;border:1px solid rgba(245,240,230,.3);border-radius:999px;padding:2px}
+.lang button{background:none;border:0;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;opacity:.7}
+.lang button:hover{opacity:1}
+.lang button[aria-pressed="true"]{background:var(--oro);color:var(--tinta);opacity:1}
+.top .btn{padding:10px 22px;font-size:14px}
+
+/* ---------- FULL-SCREEN LUXURY HERO ---------- */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
+.hero-img{position:absolute;inset:0;z-index:-2}
+.hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.07);transition:opacity 1.15s ease,transform 6.5s ease-out}
+.hero-img img.on{opacity:1;transform:scale(1)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  linear-gradient(to top, rgba(11,31,25,.97) 0%, rgba(11,31,25,.72) 34%, rgba(11,31,25,.2) 65%, rgba(11,31,25,.62) 100%),
+  radial-gradient(circle at 75% 30%, rgba(226,184,87,.16), transparent 55%)}
+.hero-body{width:100%;max-width:1180px;margin:0 auto;padding:135px clamp(64px, 8vw, 116px) 0}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);margin-bottom:14px;padding-left:clamp(16px, 2vw, 32px)}
+.hero-kicker::before{content:"";width:28px;height:1px;background:var(--oro)}
+.hero h1{font-size:clamp(48px,6.8vw,92px);line-height:.92;letter-spacing:-.025em;max-width:14ch;padding-left:clamp(16px, 2vw, 32px)}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em}
+.hero h1 .w span{display:inline-block;transform:translateY(108%);animation:rise 1.1s var(--ease-out) forwards}
+.hero h1 .w:nth-child(2) span{animation-delay:.12s;font-style:italic;font-weight:400;color:var(--oro)}
+.hero h1 .w:nth-child(3) span{animation-delay:.24s}
+@keyframes rise{to{transform:none}}
+.hero-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--s4);margin-top:var(--s4);padding-left:clamp(16px, 2vw, 32px)}
+.hero-lede{font-size:clamp(18px,1.8vw,22px);max-width:38ch;line-height:1.52;color:rgba(245,240,230,.9);opacity:0;animation:fade .9s .45s ease forwards}
+.hero-ctas{display:flex;gap:var(--s3);flex-wrap:wrap;opacity:0;animation:fade .9s .6s ease forwards}
+@keyframes fade{to{opacity:1}}
+
+/* Interactive Ritual Switcher Bar in Hero */
+.ritual-bar{margin-top:var(--s6);padding-bottom:var(--s5);opacity:0;animation:fade .9s .75s ease forwards}
+.ritual-caption{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);margin-bottom:var(--s3);flex-wrap:wrap}
+.ritual-caption strong{font-family:var(--serif);font-size:24px;font-style:italic;color:var(--oro)}
+.ritual-caption span{color:var(--niebla);font-size:15px}
+.ruler{position:relative;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(245,240,230,.3)}
+.ruler button{position:relative;background:none;border:0;border-left:1px solid rgba(245,240,230,.25);padding:16px 16px 8px;text-align:left;cursor:pointer;color:var(--niebla);transition:color .25s,background-color .25s}
+.ruler button:last-child{border-right:1px solid rgba(245,240,230,.25)}
+.ruler button::before{content:"";position:absolute;left:0;right:0;top:-2px;height:3px;background:var(--oro);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease-out)}
+.ruler button:hover{color:var(--albero);background:rgba(245,240,230,.04)}
+.ruler button[aria-pressed="true"]{color:var(--albero);background:rgba(226,184,87,.07)}
+.ruler button[aria-pressed="true"]::before{transform:scaleX(1)}
+.ruler b{display:block;font-family:var(--serif);font-size:21px;font-weight:600;color:inherit}
+.ruler small{display:block;font-size:13px;opacity:.8;margin-top:2px;font-variant-numeric:tabular-nums}
+
+/* ---------- sections ---------- */
+.sec{padding:var(--s7) 0;position:relative}
+.sec-cal{background:var(--albero);color:var(--tinta)}
+.sec-oro{background:linear-gradient(135deg,#E2B857 0%,#C99733 100%);color:var(--tinta)}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:var(--s4);margin-bottom:var(--s6)}
+.sec-head p{max-width:44ch;font-size:18px;opacity:.82}
+.eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--oro);margin-bottom:10px}
+.sec-cal .eyebrow{color:var(--cognac)}
+
+/* ---------- editorial intro ---------- */
+.intro{display:grid;grid-template-columns:1.12fr .88fr;gap:var(--s6);align-items:center}
+.intro p.big{font-family:var(--serif);font-size:clamp(30px,3.5vw,46px);line-height:1.16;letter-spacing:-.01em}
+.intro p.big em{color:var(--oro);font-style:italic}
+.intro .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s5);border-top:1px solid rgba(245,240,230,.18);padding-top:var(--s4)}
+.facts strong{display:block;font-family:var(--serif);font-size:38px;color:var(--oro);line-height:1}
+.facts span{display:block;font-size:14px;color:var(--niebla);margin-top:6px}
+.intro figure{margin:0;position:relative}
+.intro figure img{border-radius:240px 240px 8px 8px;aspect-ratio:4/5;object-fit:cover;width:100%;box-shadow:var(--shadow-float);border:1px solid rgba(226,184,87,.25)}
+
+/* ---------- sticky split service menu ---------- */
+.tabs{display:flex;gap:var(--s2);overflow-x:auto;scrollbar-width:none;margin-bottom:var(--s5);padding-bottom:4px}
+.tabs button{flex:none;background:none;border:1.5px solid rgba(11,31,25,.25);border-radius:999px;padding:11px 24px;cursor:pointer;font-weight:600;transition:all .25s}
+.tabs button:hover{border-color:var(--tinta)}
+.tabs button[aria-selected="true"]{background:var(--tinta);color:var(--albero);border-color:var(--tinta)}
+.menu-panel{display:grid;grid-template-columns:.95fr 1.4fr;gap:var(--s6);align-items:start}
+.menu-panel figure{margin:0;position:sticky;top:110px}
+.menu-panel figure img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:10px;box-shadow:0 18px 40px rgba(11,31,25,.16)}
+.menu-panel figcaption{margin-top:var(--s3);opacity:.75;font-style:italic;font-family:var(--serif);font-size:18px}
+.services-list{list-style:none;margin:0;padding:0}
+.services-list li{display:grid;grid-template-columns:1fr auto;gap:6px var(--s4);padding:22px 0;border-bottom:1px solid rgba(11,31,25,.14);align-items:baseline}
+.services-list li:first-child{padding-top:0}
+.services-list h3{font-size:clamp(24px,2.4vw,30px)}
+.services-list .price{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--cognac);font-variant-numeric:tabular-nums;white-space:nowrap}
+.services-list p{grid-column:1/-1;font-size:16px;opacity:.76;max-width:54ch}
+.services-list .tag{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:var(--oro);color:var(--tinta);border-radius:4px;padding:2px 8px;margin-left:10px;vertical-align:middle}
+.services-list .pick-btn{grid-column:1/-1; justify-self:start; margin-top:8px; background:none; border:1px solid rgba(11,31,25,.3); border-radius:999px; padding:5px 14px; font-size:13px; font-weight:600; cursor:pointer; transition:all .2s}
+.services-list .pick-btn:hover{background:var(--tinta); color:var(--albero)}
+
+/* ---------- UNIQUE INTERACTIVE RITUAL BESPOKE BUILDER ---------- */
+.builder{background:var(--bosque);border:1px solid rgba(226,184,87,.25);border-radius:16px;padding:var(--s5);box-shadow:var(--shadow-float);margin-top:var(--s6)}
+.builder-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:var(--s5);align-items:center}
+.addon-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+.addon{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-radius:10px;border:1.5px solid rgba(245,240,230,.16);background:rgba(11,31,25,.45);cursor:pointer;transition:all .25s;text-align:left}
+.addon:hover{border-color:var(--oro)}
+.addon.active{border-color:var(--oro);background:rgba(226,184,87,.14)}
+.addon strong{display:block;font-size:16px;color:var(--albero)}
+.addon small{font-size:13px;color:var(--niebla)}
+.addon span{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--oro)}
+.builder-summary{background:var(--club);border-radius:12px;padding:32px;border:1px solid rgba(226,184,87,.3);text-align:center}
+.builder-summary .total-price{font-family:var(--serif);font-size:64px;line-height:1;color:var(--oro);margin:12px 0 4px}
+.builder-summary .total-time{font-size:14px;color:var(--niebla);margin-bottom:24px}
+
+/* ---------- 12-Col Masonry Gallery ---------- */
+.gallery{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:120px;gap:14px}
+.gallery button{position:relative;padding:0;border:0;cursor:zoom-in;overflow:hidden;border-radius:8px;background:var(--bosque)}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease-out)}
+.gallery button:hover img{transform:scale(1.05)}
+.gallery button::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(11,31,25,.65),transparent 45%);pointer-events:none}
+.gallery span{position:absolute;left:16px;bottom:12px;z-index:1;font-size:14px;font-weight:600;color:var(--albero)}
+.g1{grid-column:1/6;grid-row:span 4}
+.g2{grid-column:6/10;grid-row:span 2}
+.g3{grid-column:10/13;grid-row:span 4}
+.g4{grid-column:6/10;grid-row:span 2}
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(1100px,92vw);max-height:90vh}
+dialog.lb::backdrop{background:rgba(6,16,13,.94)}
+dialog.lb img{max-height:82vh;width:auto;max-width:100%;border-radius:8px;margin:0 auto}
+dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:var(--serif);font-size:20px}
+.lb-close{position:fixed;top:24px;right:24px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(245,240,230,.4);background:rgba(11,31,25,.8);color:var(--albero);font-size:24px;cursor:pointer}
+
+/* ---------- Horizontal Scroll-Snap Reviews ---------- */
+.score{display:flex;align-items:center;gap:var(--s4)}
+.score strong{font-family:var(--serif);font-size:86px;line-height:1;color:var(--tinta)}
+.stars{color:var(--cognac);font-size:20px;letter-spacing:2px}
+.reviews{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(320px,1fr);gap:var(--s4);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:var(--s3);scrollbar-width:thin}
+.review{scroll-snap-align:start;background:#fff;border-radius:10px;padding:var(--s5);display:flex;flex-direction:column;justify-content:space-between;gap:var(--s3);box-shadow:0 12px 32px rgba(11,31,25,.08)}
+.review blockquote{margin:0;font-family:var(--serif);font-size:23px;line-height:1.35;color:var(--tinta)}
+.review footer{display:flex;justify-content:space-between;font-size:14px;opacity:.75;font-weight:600}
+
+/* ---------- Reservation Section ---------- */
+.resv{display:grid;grid-template-columns:.9fr 1.1fr;gap:var(--s6);align-items:start}
+.card{background:var(--albero);color:var(--tinta);border-radius:14px;padding:var(--s5);box-shadow:var(--shadow-float)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3) var(--s4)}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.field input,.field select{background:#fff;border:1.5px solid rgba(11,31,25,.2);border-radius:8px;padding:13px 14px;font-size:16px;width:100%}
+.barber-pills{display:flex;gap:8px;flex-wrap:wrap}
+.barber-pills button{padding:10px 18px;border-radius:999px;border:1.5px solid rgba(11,31,25,.25);background:#fff;cursor:pointer;font-weight:600;transition:all .2s}
+.barber-pills button[aria-pressed="true"]{background:var(--tinta);color:var(--oro);border-color:var(--tinta)}
+
+/* ---------- Visit & Map ---------- */
+.visit{display:grid;grid-template-columns:1fr 1.2fr;gap:var(--s6);align-items:center}
+.hours{list-style:none;padding:0;margin:var(--s4) 0 0}
+.hours li{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(245,240,230,.12);color:var(--niebla)}
+.hours li.today{color:var(--oro);font-weight:700}
+.map{position:relative;border-radius:12px;overflow:hidden;min-height:440px;box-shadow:var(--shadow-float)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.3) contrast(1.05)}
+
+/* ---------- Footer & Mobile Bar ---------- */
+.foot{border-top:1px solid rgba(245,240,230,.12);padding:var(--s6) 0 110px}
+.foot .logo-giant{font-family:var(--serif);font-size:clamp(52px,9vw,116px);line-height:.9;color:var(--oro)}
+.bar{display:none}
+
+@media (max-width:920px){
+  .nav,.top .status{display:none}
+  .ruler{grid-template-columns:repeat(2,1fr)}
+  .intro,.menu-panel,.builder-grid,.resv,.visit{grid-template-columns:1fr}
+  .menu-panel figure{position:static;max-width:420px}
+  .addon-list{grid-template-columns:1fr}
+  .g1,.g2,.g3,.g4{grid-column:span 6;grid-row:span 2}
+  .bar{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:45;padding:10px 12px;background:rgba(11,31,25,.96);backdrop-filter:blur(12px);border-top:1px solid rgba(226,184,87,.25)}
+  .bar a{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 8px;border-radius:999px;font-weight:700;font-size:14px;border:1px solid rgba(245,240,230,.25);text-decoration:none}
+  .bar .r{background:var(--oro);color:var(--tinta);border-color:var(--oro)}
+}
+@media (max-width:640px){
+  .wrap,.hero-body{padding-left:22px;padding-right:22px}
+  .hero-kicker,.hero h1,.hero-row{padding-left:0}
+  .form,.intro .facts{grid-template-columns:1fr}
+  .g1,.g2,.g3,.g4{grid-column:span 12}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="logo" href="#inicio"><i></i>VÉRTIGO</a>
+    <nav class="nav">
+      <a href="#carta" data-en="Services">Carta de Corte</a>
+      <a href="#ritual" data-en="Custom Ritual">Configurador</a>
+      <a href="#galeria" data-en="Club">El Club</a>
+      <a href="#opiniones" data-en="Reviews">Opiniones</a>
+      <a href="#visitanos" data-en="Location">Salamanca</a>
+    </nav>
+    <span class="status open" id="liveStatus"><i></i><span data-en="Open now · Closes 20:30">Abierto ahora · Cierra 20:30</span></span>
+    <div class="lang">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn-oro" href="#reservar" data-en="Book a Chair">Reservar sillón</a>
+  </div>
+</header>
+
+<main>
+<!-- ================= FULL-BLEED LUXURY HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="hero-img" aria-hidden="true">
+    <img class="on" data-m="corte" src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=2000&q=85&auto=format&fit=crop" alt="">
+    <img data-m="navaja" src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=2000&q=85&auto=format&fit=crop" alt="">
+    <img data-m="barba" src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=2000&q=85&auto=format&fit=crop" alt="">
+    <img data-m="club" src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=2000&q=85&auto=format&fit=crop" alt="">
+  </div>
+
+  <div class="wrap hero-body">
+    <span class="hero-kicker" data-en="Claudio Coello 48 · Barrio de Salamanca">Claudio Coello 48 · Barrio de Salamanca</span>
+    <h1>
+      <span class="w"><span>Sastrería</span></span>
+      <span class="w"><span>&amp;</span></span>
+      <span class="w"><span>Navaja.</span></span>
+    </h1>
+    <div class="hero-row">
+      <p class="hero-lede" id="heroLede" data-en="Classic scissor tailoring, steamed eucalyptus hot towels, Japanese Feather blades and complimentary single malt or specialty espresso.">Corte a tijera de alta precisión, toallas calientes al vapor de eucalipto, acero japonés Feather y whisky de malta o espresso de cortesía.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-oro" href="#reservar" data-en="Book Appointment">Reservar sillón</a>
+        <a class="btn btn-ghost" href="#carta" data-en="Explore Rituals">Ver carta de servicios</a>
+      </div>
+    </div>
+
+    <div class="ritual-bar">
+      <div class="ritual-caption">
+        <strong id="momentTitle">01 · Corte de Autor &amp; Tijera</strong>
+        <span id="momentDesc">Estudio visagista, lavado botánico y acabado con pomada mate artesanal · 45 min</span>
+      </div>
+      <div class="ruler" role="tablist" aria-label="Especialidades de la casa">
+        <button type="button" role="tab" aria-pressed="true" data-key="corte">
+          <b>01 · Corte de Autor</b>
+          <small>Tijera &amp; Skin Fade · 28 €</small>
+        </button>
+        <button type="button" role="tab" aria-pressed="false" data-key="navaja">
+          <b>02 · Afeitado Imperial</b>
+          <small>Doble Toalla Vapor · 26 €</small>
+        </button>
+        <button type="button" role="tab" aria-pressed="false" data-key="barba">
+          <b>03 · Esculpido de Barba</b>
+          <small>Navaja &amp; Aceites · 22 €</small>
+        </button>
+        <button type="button" role="tab" aria-pressed="false" data-key="club">
+          <b>04 · Ritual Vértigo Club</b>
+          <small>Experiencia 75 min · 48 €</small>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTRO & HERITAGE ================= -->
+<section class="sec">
+  <div class="wrap intro">
+    <div>
+      <span class="eyebrow" data-en="La Filosofía del Club">La Filosofía del Club</span>
+      <p class="big" data-en="Not a quick haircut. A forty-five minute pause in leather chairs from 1920, lit by warm brass and cedarwood.">No es un corte rápido. Es una <em>pausa de cuarenta y cinco minutos</em> en sillones Takara Belmont, entre madera de cedro, bronce envejecido y conversación tranquila.</p>
+      <div class="facts">
+        <div>
+          <strong>4,9 ★</strong>
+          <span data-en="740+ verified reviews on Google Maps">740+ reseñas verificadas en Google</span>
+        </div>
+        <div>
+          <strong>45 min</strong>
+          <span data-en="Dedicated time per chair, never rushed">Tiempo mínimo dedicado por cliente</span>
+        </div>
+        <div>
+          <strong>100%</strong>
+          <span data-en="Single-use Japanese surgical blades">Acero quirúrgico japonés de un solo uso</span>
+        </div>
+      </div>
+    </div>
+    <figure>
+      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1000&q=85&auto=format&fit=crop" alt="Herramientas de sastrería capilar y barbería clásica" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+<!-- ================= STICKY INTERACTIVE SERVICE MENU ================= -->
+<section class="sec sec-cal" id="carta">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Oficio &amp; Precisión</span>
+        <h2 data-en="The Service Menu">La Carta de Sillón</h2>
+      </div>
+      <p data-en="Every service includes a complimentary specialty coffee, craft beer or Scottish single malt.">Cada servicio incluye lavado relajante, masaje capilar de bienvenida y un espresso de especialidad o whisky de malta de cortesía.</p>
+    </div>
+
+    <div class="tabs" id="menuTabs" role="tablist"></div>
+
+    <div class="menu-panel">
+      <figure>
+        <img id="menuImg" src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1000&q=85&auto=format&fit=crop" alt="">
+        <figcaption id="menuCap">Sillones clásicos de cuero y hierro fundido en nuestro salón de Claudio Coello.</figcaption>
+      </figure>
+      <div>
+        <ul class="services-list" id="servicesList"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INTERACTIVE BESPOKE RITUAL BUILDER ================= -->
+<section class="sec" id="ritual">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">Experiencia Interactiva</span>
+        <h2 data-en="Build Your Bespoke Ritual">Diseña tu Ritual a Medida</h2>
+      </div>
+      <p data-en="Select the treatments you want to combine today and calculate your exact session duration and club price.">Selecciona los tratamientos que deseas combinar hoy; calculamos al instante el tiempo de sillón y aplicamos el descuento de combo del Club.</p>
+    </div>
+
+    <div class="builder">
+      <div class="builder-grid">
+        <div>
+          <h3 style="font-size:28px;color:var(--oro)">Selecciona tus pasos (haz clic para activar):</h3>
+          <div class="addon-list" id="addonList">
+            <button type="button" class="addon active" data-price="28" data-min="45" data-name="Corte Sastrería">
+              <div><strong>Corte de Autor / Fade</strong><small>45 min · Tijera y navaja</small></div>
+              <span>28 €</span>
+            </button>
+            <button type="button" class="addon active" data-price="22" data-min="25" data-name="Ritual de Barba">
+              <div><strong>Esculpido de Barba &amp; Vapor</strong><small>25 min · Toalla caliente</small></div>
+              <span>22 €</span>
+            </button>
+            <button type="button" class="addon" data-price="14" data-min="15" data-name="Detox Capilar">
+              <div><strong>Masaje Craneal &amp; Detox</strong><small>15 min · Arcilla y mentol</small></div>
+              <span>14 €</span>
+            </button>
+            <button type="button" class="addon" data-price="16" data-min="20" data-name="Velo Negro Carbón">
+              <div><strong>Mascarilla Carbón Activo</strong><small>20 min · Limpieza facial</small></div>
+              <span>16 €</span>
+            </button>
+          </div>
+        </div>
+        <div class="builder-summary">
+          <span class="eyebrow">Tu Combinación Vértigo</span>
+          <div class="total-price" id="builderPrice">46 €</div>
+          <div class="total-time" id="builderTime">Duración estimada: 70 min (Ahorras 4 € en combo)</div>
+          <button type="button" class="btn btn-oro" style="width:100%;justify-content:center" id="applyBuilderBtn">Reservar esta combinación</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 12-COL ASYMMETRIC GALLERY ================= -->
+<section class="sec" id="galeria" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">El Ambiente</span>
+        <h2 data-en="Inside the Club">El Club por Dentro</h2>
+      </div>
+      <p data-en="Tap any photograph to inspect the craftsmanship in full screen.">Pulsa sobre cualquier fotografía para ampliar los detalles del salón.</p>
+    </div>
+    <div class="gallery" id="galleryGrid">
+      <button type="button" class="g1" data-src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1800&q=85&auto=format&fit=crop" data-cap="Salón principal en Calle Claudio Coello 48">
+        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1000&q=80&auto=format&fit=crop" alt="">
+        <span>Salón Principal · Claudio Coello</span>
+      </button>
+      <button type="button" class="g2" data-src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=1800&q=85&auto=format&fit=crop" data-cap="Afeitado tradicional a navaja con doble toalla de vapor">
+        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=900&q=80&auto=format&fit=crop" alt="">
+        <span>Afeitado Imperial a Vapor</span>
+      </button>
+      <button type="button" class="g3" data-src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1800&q=85&auto=format&fit=crop" data-cap="Acabado de precisión por nuestros maestros barberos">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=80&auto=format&fit=crop" alt="">
+        <span>Maestros Barberos en Acción</span>
+      </button>
+      <button type="button" class="g4" data-src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1800&q=85&auto=format&fit=crop" data-cap="Esculpido geométrico de barba y aceites botánicos">
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=80&auto=format&fit=crop" alt="">
+        <span>Perfilado &amp; Botánica</span>
+      </button>
+    </div>
+  </div>
+  <dialog class="lb" id="lb">
+    <button class="lb-close" type="button" id="lbClose">&times;</button>
+    <img id="lbImg" src="" alt="">
+    <p id="lbCap"></p>
+  </dialog>
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section class="sec sec-cal" id="opiniones">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Lo que dicen los socios</h2>
+      <div class="score">
+        <strong>4,9</strong>
+        <div>
+          <div class="stars">★★★★★</div>
+          <small>740+ reseñas en Google Maps</small>
+        </div>
+      </div>
+    </div>
+    <div class="reviews">
+      <article class="review">
+        <blockquote>«La mejor barbería de Madrid sin discusión. Te reciben con un espresso espectacular, la toalla caliente huele a madera de cedro y el corte a tijera de Mateo dura impecable cinco semanas.»</blockquote>
+        <footer><span>Álvaro Mendoza</span><span>Hace 4 días · Google</span></footer>
+      </article>
+      <article class="review">
+        <blockquote>«Entrar en Vértigo es como viajar a Londres. Sillones comodísimos, cero prisas, música jazz en vinilo y un arreglo de barba a navaja que parece cirugía estética.»</blockquote>
+        <footer><span>Gonzalo de la Vega</span><span>Hace 2 semanas · Google</span></footer>
+      </article>
+      <article class="review">
+        <blockquote>«Reservé el Ritual Vértigo antes de mi boda con dos amigos. Salimos como nuevos. El trato y la atención al detalle están muy por encima de cualquier otra peluquería.»</blockquote>
+        <footer><span>Jaime Belmonte</span><span>Hace 3 semanas · Google</span></footer>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVATION ================= -->
+<section class="sec sec-oro" id="reservar">
+  <div class="wrap resv">
+    <div>
+      <span class="eyebrow" style="color:var(--tinta)">Cita Previa sin Esperas</span>
+      <h2>Reserva tu sillón</h2>
+      <p style="margin-top:16px;font-size:18px;max-width:36ch">Confirmación inmediata por WhatsApp. Si necesitas cambiar tu hora, avísanos con 2 horas de antelación sin ningún coste.</p>
+    </div>
+    <div class="card">
+      <form class="form" id="bookForm">
+        <div class="field full">
+          <label>Maestro Barbero Preferido</label>
+          <div class="barber-pills" id="barberPills">
+            <button type="button" aria-pressed="true" data-barber="Mateo (Director)">Mateo · Director</button>
+            <button type="button" aria-pressed="false" data-barber="Carlos (Maestro Navaja)">Carlos · Maestro Navaja</button>
+            <button type="button" aria-pressed="false" data-barber="Hugo (Estilista Tijera)">Hugo · Tijera Clásica</button>
+          </div>
+        </div>
+        <div class="field full">
+          <label for="fSrv">Servicio o Ritual</label>
+          <input type="text" id="fSrv" value="01 · Corte de Autor & Tijera (28 €)" required>
+        </div>
+        <div class="field">
+          <label for="fDate">Día</label>
+          <input type="date" id="fDate" required>
+        </div>
+        <div class="field">
+          <label for="fTime">Hora de Sillón</label>
+          <select id="fTime">
+            <option>10:30</option><option>11:30</option><option>12:30</option>
+            <option>16:30</option><option>17:30</option><option>18:30</option><option>19:30</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fName">Tu Nombre</label>
+          <input type="text" id="fName" placeholder="Ej. Alejandro" required>
+        </div>
+        <div class="field">
+          <label for="fPhone">Teléfono / WhatsApp</label>
+          <input type="tel" id="fPhone" placeholder="+34 600 000 000" required>
+        </div>
+        <div class="field full" style="margin-top:8px">
+          <button type="submit" class="btn btn-ink" style="width:100%;justify-content:center">Confirmar Cita por WhatsApp</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VISIT & MAP ================= -->
+<section class="sec" id="visitanos">
+  <div class="wrap visit">
+    <div>
+      <span class="eyebrow">Barrio de Salamanca</span>
+      <h2>Visítanos</h2>
+      <p style="color:var(--niebla);margin-top:12px">Calle de Claudio Coello, 48 · 28001 Madrid (Metro Serrano / Velázquez)</p>
+      <ul class="hours">
+        <li><span>Lunes a Jueves</span><span>10:00 – 20:30</span></li>
+        <li class="today"><span>Viernes (Horario Club)</span><span>10:00 – 21:30</span></li>
+        <li><span>Sábados</span><span>09:30 – 19:30</span></li>
+        <li><span>Domingos</span><span>Cerrado</span></li>
+      </ul>
+      <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap">
+        <a class="btn btn-oro" href="https://wa.me/34600000000" target="_blank" rel="noopener">WhatsApp Directo</a>
+        <a class="btn btn-ghost" href="tel:+34910000000">+34 910 000 000</a>
+      </div>
+    </div>
+    <div class="map">
+      <iframe title="Mapa Calle Claudio Coello 48 Madrid" src="https://www.google.com/maps?q=Calle+de+Claudio+Coello+48,+Madrid&output=embed" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px">
+    <div class="logo-giant">VÉRTIGO</div>
+    <p style="color:var(--niebla)">© 2026 Vértigo Sastrería Capilar · Salamanca, Madrid</p>
+  </div>
+</footer>
+
+<nav class="bar" aria-label="Acciones rápidas">
+  <a href="tel:+34910000000">Llamar</a>
+  <a href="https://wa.me/34600000000" target="_blank" rel="noopener">WhatsApp</a>
+  <a class="r" href="#reservar">Reservar</a>
+</nav>
+
+<script>
+const MOMENTS = {
+  corte: {
+    title: "01 · Corte de Autor & Tijera",
+    desc: "Estudio visagista, lavado botánico y acabado con pomada mate artesanal · 45 min",
+    img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1000&q=85&auto=format&fit=crop",
+    cap: "Sillones clásicos Takara Belmont en nuestro salón principal de Claudio Coello.",
+    items: [
+      { name: "Corte Sastrería a Tijera", price: "28 €", tag: "45 min", desc: "Corte estructurado enteramente a tijera y peine, lavado relajante y acabado natural." },
+      { name: "Skin Fade & Contorno a Navaja", price: "29 €", tag: "Favorito", desc: "Degradado limpio desde cero con transición invisible y perfilado con hoja japonesa." },
+      { name: "Corte Ejecutivo Express", price: "22 €", tag: "30 min", desc: "Mantenimiento de laterales, nuca y texturizado superior entre cortes." }
+    ]
+  },
+  navaja: {
+    title: "02 · Afeitado Imperial al Vapor",
+    desc: "Doble toalla caliente con eucalipto, espuma de tejón y navaja Feather · 35 min",
+    img: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=1000&q=85&auto=format&fit=crop",
+    cap: "El ritual de doble toalla caliente abre el poro y prepara la piel para un deslizamiento sin irritación.",
+    items: [
+      { name: "Afeitado Clásico Imperial", price: "26 €", tag: "Ritual", desc: "Pre-shave de sándalo, doble toalla al vapor, dos pasadas a navaja y piedra de alumbre." },
+      { name: "Afeitado de Cabeza con Vapor", price: "25 €", tag: "35 min", desc: "Apurado total craneal con toallas aromáticas y bálsamo hidratante matificante." }
+    ]
+  },
+  barba: {
+    title: "03 · Esculpido & Botánica de Barba",
+    desc: "Geometría facial, recorte a tijera y aceites orgánicos prensados en frío · 30 min",
+    img: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1000&q=85&auto=format&fit=crop",
+    cap: "Esculpimos el volumen de la barba para armonizar la mandíbula y el mentón.",
+    items: [
+      { name: "Esculpido & Perfilado a Navaja", price: "22 €", tag: "30 min", desc: "Diseño geométrico, rebaje gradual, toalla templada y aceite de cedro y bergamota." },
+      { name: "Camuflaje Sutil de Canas en Barba", price: "20 €", tag: "Natural", desc: "Pigmentación sin amoniaco que atenúa la cana en 10 minutos sin efecto artificial." }
+    ]
+  },
+  club: {
+    title: "04 · Experiencia Completa Vértigo Club",
+    desc: "La sesión insignia: Corte + Barba/Afeitado + Masaje Craneal + Whisky de Malta · 75 min",
+    img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1000&q=85&auto=format&fit=crop",
+    cap: "Setenta y cinco minutos de desconexión total con copa de cortesía.",
+    items: [
+      { name: "El Gran Ritual Vértigo", price: "48 €", tag: "Insignia · 75 min", desc: "Corte de autor + Afeitado imperial o barba + exfoliación facial y masaje craneal." },
+      { name: "Pack Novio & Padrino (Privado)", price: "90 €", tag: "2 Sillones", desc: "Reserva de dos sillones contiguos, ritual completo y botella de cava o malta." }
+    ]
+  }
+};
+
+// Render Tabs & Menu
+const tabsContainer = document.getElementById('menuTabs');
+Object.keys(MOMENTS).forEach((k, idx) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+  b.dataset.key = k;
+  b.textContent = MOMENTS[k].title;
+  b.onclick = () => activateMoment(k);
+  tabsContainer.appendChild(b);
+});
+
+function activateMoment(key) {
+  const m = MOMENTS[key];
+  document.getElementById('momentTitle').textContent = m.title;
+  document.getElementById('momentDesc').textContent = m.desc;
+  document.querySelectorAll('.hero-img img').forEach(img => {
+    img.classList.toggle('on', img.dataset.m === key);
+  });
+  document.querySelectorAll('.ruler button').forEach(btn => {
+    btn.setAttribute('aria-pressed', btn.dataset.key === key ? 'true' : 'false');
+  });
+  document.querySelectorAll('#menuTabs button').forEach(btn => {
+    btn.setAttribute('aria-selected', btn.dataset.key === key ? 'true' : 'false');
+  });
+  document.getElementById('menuImg').src = m.img;
+  document.getElementById('menuCap').textContent = m.cap;
+  const ul = document.getElementById('servicesList');
+  ul.innerHTML = m.items.map(it => `
+    <li>
+      <h3>${it.name} <span class="tag">${it.tag}</span></h3>
+      <span class="price">${it.price}</span>
+      <p>${it.desc}</p>
+      <button type="button" class="pick-btn" onclick="pickService('${it.name} (${it.price})')">Seleccionar para mi cita →</button>
+    </li>
+  `).join('');
+}
+activateMoment('corte');
+
+document.querySelectorAll('.ruler button').forEach(btn => {
+  btn.addEventListener('click', () => activateMoment(btn.dataset.key));
+});
+
+function pickService(val) {
+  document.getElementById('fSrv').value = val;
+  location.hash = '#reservar';
+}
+
+// Bespoke Ritual Builder
+const addons = document.querySelectorAll('#addonList .addon');
+function updateBuilder() {
+  let sum = 0, mins = 0, names = [];
+  addons.forEach(a => {
+    if (a.classList.contains('active')) {
+      sum += parseInt(a.dataset.price, 10);
+      mins += parseInt(a.dataset.min, 10);
+      names.push(a.dataset.name);
+    }
+  });
+  const discount = names.length >= 2 ? 4 : 0;
+  const finalPrice = Math.max(0, sum - discount);
+  document.getElementById('builderPrice').textContent = finalPrice + ' €';
+  document.getElementById('builderTime').textContent = `Duración estimada: ${mins} min` + (discount ? ` (Ahorras ${discount} € en combo)` : '');
+  document.getElementById('applyBuilderBtn').onclick = () => {
+    pickService(`Ritual a Medida: ${names.join(' + ')} (${finalPrice} €)`);
+  };
+}
+addons.forEach(a => {
+  a.addEventListener('click', () => {
+    const activeCount = document.querySelectorAll('#addonList .addon.active').length;
+    if (a.classList.contains('active') && activeCount <= 1) return;
+    a.classList.toggle('active');
+    updateBuilder();
+  });
+});
+updateBuilder();
+
+// ES / EN Language Switcher
+const langBtns = document.querySelectorAll('.lang button[data-lang]');
+const i18nNodes = document.querySelectorAll('[data-en]');
+i18nNodes.forEach(el => { if (!el.dataset.es) el.dataset.es = el.innerHTML; });
+langBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.dataset.lang;
+    langBtns.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+    i18nNodes.forEach(el => {
+      el.innerHTML = lang === 'en' ? el.dataset.en : el.dataset.es;
+    });
+  });
+});
+
+// Header scroll effect
+window.addEventListener('scroll', () => {
+  document.getElementById('top').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// Lightbox
+const lb = document.getElementById('lb');
+document.querySelectorAll('#galleryGrid button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.getElementById('lbImg').src = b.dataset.src;
+    document.getElementById('lbCap').textContent = b.dataset.cap;
+    lb.showModal();
+  });
+});
+document.getElementById('lbClose').onclick = () => lb.close();
+lb.addEventListener('click', e => { if (e.target === lb) lb.close(); });
+
+// Barber selection pills
+let chosenBarber = "Mateo (Director)";
+document.querySelectorAll('#barberPills button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('#barberPills button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', 'true');
+    chosenBarber = b.dataset.barber;
+  });
+});
+
+// Default today date
+document.getElementById('fDate').valueAsDate = new Date();
+
+// Submit to WhatsApp
+document.getElementById('bookForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const srv = document.getElementById('fSrv').value;
+  const dt = document.getElementById('fDate').value;
+  const tm = document.getElementById('fTime').value;
+  const nm = document.getElementById('fName').value;
+  const ph = document.getElementById('fPhone').value;
+  const msg = `¡Hola Vértigo Barber Club! 👋\nQuiero reservar un sillón:\n\n✂️ Servicio: ${srv}\n💈 Barbero: ${chosenBarber}\n📅 Fecha: ${dt} a las ${tm}\n👤 Cliente: ${nm} (${ph})\n\n¿Tenéis hueco disponible?`;
+  window.open(`https://wa.me/34600000000?text=${encodeURIComponent(msg)}`, '_blank');
+});
+
+  // Instant Client Mock-Up Personalization via URL Parameters (?nombre=...&ciudad=...)
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const customName = params.get('nombre') || params.get('brand');
+    const customCity = params.get('ciudad') || params.get('city');
+    if (customName) {
+      document.title = customName + ' — Propuesta Web Exclusiva';
+      const brandEl = document.querySelector('.brand-name, .brand b');
+      if (brandEl) brandEl.textContent = customName.toUpperCase();
+    }
+    if (customCity) {
+      const subEl = document.querySelector('.brand-sub, .brand small');
+      if (subEl) subEl.textContent = customCity;
+    }
+  })();
+</script>
+</body>
+</html>
