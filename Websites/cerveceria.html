@@ -1,1266 +1,962 @@
-<!doctype html>
-<html lang="es" class="no-js">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cervecería · Tapas, marisco y bocadillos en Madrid</title>
-<meta name="description" content="Cervecería en el centro de Madrid: cerveza bien tirada, tapas, marisco y bocadillos. Reserva tu mesa online.">
-<meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#1432a8">
+<title>Dos Dedos · Cervecería en Madrid</title>
+<meta name="description" content="Cervecería en el centro de Madrid: ocho grifos que cambian cada semana, marisco al peso, tapas de siempre y reserva de mesa online.">
+<meta name="theme-color" content="#10291f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%2310291f'/%3E%3Crect x='10' y='12' width='12' height='13' rx='1' fill='%23f0a830'/%3E%3Crect x='10' y='8' width='12' height='4' rx='1' fill='%23f6f4ee'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
 <style>
-/* =====================================================================
-   CERVECERÍA template. Design system
-   Canvas: warm foam. Structure: cobalt. ONE action colour: lemon (primary
-   buttons + small badges only). Amber is the beer, nothing else.
-   ===================================================================== */
 :root{
-  --cobalt:#1432a8; --deep:#0c2080; --lemon:#ffd23f; --foam:#fffdf5; --cream:#f5eedb;
-  --ink:#0d1330; --grey:#4a4f66; --err:#b3261e;
-  --g:20px; --dock:0px; --hh:64px;
-  --display:"Bricolage Grotesque","Arial Narrow",Arial,sans-serif;
-  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --ease:cubic-bezier(.2,.8,.2,1);
-  --fill:0;
+  --bottle:#10291f; --bottle-2:#173629; --bottle-3:#1f4434;
+  --wood:#1b1410; --wood-2:#2a201a;
+  --zinc:#e3e6e1; --zinc-2:#d2d6cf; --card:#f6f7f3;
+  --tile:#1d4f9a; --tile-2:#173f7c; --tile-3:#2a62b6;
+  --brass:#c9a04f; --brass-2:#e2c27f; --brass-d:#7d5f22;
+  --amber:#f0a830; --amber-2:#f6be55; --amber-d:#b86d10; --foam:#f8f5ec;
+  --ink:#13201a; --ink-2:#3c4a43;
+  --text-d:#eef1ea; --mute-d:#b4c0b8;
+  --serif:'Gloock',Georgia,'Times New Roman',serif;
+  --sans:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --pad:clamp(20px,5vw,72px);
+  --max:1280px;
+  --ease:cubic-bezier(.2,.7,.2,1);
 }
-*{box-sizing:border-box}
-[hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
-html.modal{overflow:hidden}
-body{margin:0;background:var(--foam);color:var(--ink);font:400 1.0625rem/1.6 var(--body);-webkit-text-size-adjust:100%;overflow-x:clip}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bottle);color:var(--text-d);font-family:var(--sans);font-size:17px;line-height:1.55;font-optical-sizing:auto;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+ul,ol{margin:0;padding:0;list-style:none}
+h1,h2,h3,p{margin:0}
 a{color:inherit}
-button{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--lemon);outline-offset:3px;box-shadow:0 0 0 6px var(--ink)}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.skip{position:absolute;left:var(--g);top:-100px;background:var(--lemon);color:var(--ink);padding:.7rem 1.2rem;z-index:80;font-weight:600;border-radius:9999px}
-.skip:focus{top:8px}
-.notice{background:var(--ink);color:var(--foam);font-size:.875rem;line-height:1.4;padding:.6rem var(--g);text-align:center}
-/* Demo banner (template only): dismissible strip above the header, never over the content */
-.notice.demo{display:flex;align-items:center;justify-content:center;gap:.75rem;padding:.35rem var(--g);border-bottom:2px solid var(--lemon)}
-.notice.demo p{text-wrap:balance}
-.notice.demo strong{color:var(--lemon);font-weight:600}
-.demo-x{flex:none;width:36px;height:36px;border-radius:50%;border:2px solid var(--foam);background:transparent;color:var(--foam);font:600 1.25rem/1 var(--body);cursor:pointer;display:grid;place-items:center;padding:0;transition:background .2s,color .2s}
-.demo-x:hover{background:var(--lemon);border-color:var(--lemon);color:var(--ink)}
-.wrap{max-width:1200px;margin:0 auto;padding-inline:var(--g)}
-.band{padding-block:clamp(72px,9vw,112px)}
-.cobalt{background:var(--cobalt);color:var(--foam)}
-.cream{background:var(--cream)}
-h2,.h2{font-family:var(--display);font-weight:400;font-stretch:80%;font-size:clamp(2.6rem,8.5vw,5.75rem);line-height:.92;letter-spacing:-.03em;margin:0 0 clamp(28px,4vw,48px);color:var(--cobalt)}
-.cobalt h2{color:var(--foam)}
-.eyebrow{margin:0 0 1rem;font:600 .8125rem/1.3 var(--body);letter-spacing:.12em;text-transform:uppercase}
-p{margin:0;text-wrap:pretty}
-h1,h2,h3,.h2,.lede,.card p,.hint,.cap{text-wrap:balance}
-ul,ol,dl,dd,figure{margin:0}
+:focus-visible{outline:3px solid var(--amber-2);outline-offset:3px;border-radius:4px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.num{font-variant-numeric:tabular-nums}
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6.4vw,96px);line-height:.95;letter-spacing:-.01em}
+.lead{font-size:clamp(17px,1.5vw,20px);max-width:46ch;margin-top:18px}
+.sec{padding:clamp(80px,11vw,150px) 0;position:relative}
 
-/* Links and buttons */
-/* One underline system, for short inline text links only (nav, "Cómo llegar"): a real 1px
-   text-decoration, shown only on hover/focus, offset well clear of the letters. Never on
-   addresses, phone numbers or display-size text (those signal with colour, icon or a pill).
-   No background-image/pseudo-element underline tricks anywhere. */
-.ul{text-decoration-line:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:.28em;text-decoration-skip-ink:auto;transition:text-decoration-color .25s}
-.ul:hover,.ul:focus-visible{text-decoration-color:currentColor}
-.skip{text-decoration:none}
-.btn{--hb:var(--ink);--hf:var(--foam);display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:.65rem 1.5rem;border-radius:9999px;font:600 1rem/1.15 var(--body);text-decoration:none;border:2px solid currentColor;background:transparent;cursor:pointer;transition:background .2s,color .2s,transform .25s var(--ease)}
-.btn:hover{background:var(--hb);color:var(--hf);border-color:var(--hb)}
-.btn-primary{background:var(--lemon);color:var(--ink);border-color:var(--ink)}
-.btn-primary:hover{background:var(--ink);color:var(--lemon);border-color:var(--ink)}
-.cobalt .btn:not(.btn-primary),.stagebox .btn,.top .btn:not(.btn-primary){--hb:var(--foam);--hf:var(--cobalt)}
-.lb .btn{--hb:var(--foam);--hf:var(--ink)}
-.stagebox .btn{color:var(--foam)}
-.stagebox .btn:hover,.lb .btn:hover{color:var(--hf)}
-.top .btn-primary:hover,.cobalt .btn-primary:hover{background:var(--foam);color:var(--ink);border-color:var(--foam)} /* the ink hover would vanish into the ink header */
-.btn.sm{min-height:44px;padding:.45rem 1.1rem;font-size:.9375rem}
-.link{display:inline-flex;align-items:center;gap:.4rem;min-height:44px;font-weight:600;text-decoration-line:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:.28em;text-decoration-skip-ink:auto;transition:text-decoration-color .25s}
-.link::after{content:"\2192";display:inline-block;text-decoration:none;transition:transform .25s var(--ease)}
-.link:hover::after{transform:translateX(4px)}
-.link:hover,.link:focus-visible{text-decoration-color:currentColor}
-.tbc{display:inline-block;font-size:.875rem;line-height:1.3;background:var(--lemon);color:var(--ink);padding:.15rem .75rem;border-radius:9999px;font-weight:600}
+/* buttons: fully round, sized to their text */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;border:0;font-weight:600;font-size:16px;text-decoration:none;white-space:nowrap;transition:background-color .2s,color .2s,transform .2s var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn-amber{background:var(--amber);color:var(--ink)}
+.btn-amber:hover{background:var(--amber-2)}
+.btn-ghost{background:transparent;color:var(--text-d);box-shadow:inset 0 0 0 2px rgba(238,241,234,.4)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 2px var(--foam);background:rgba(238,241,234,.08)}
+.btn-ink{background:var(--ink);color:var(--foam)}
+.btn-ink:hover{background:var(--bottle-3)}
+.btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--foam)}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;border:0;background:rgba(238,241,234,.08);color:var(--text-d);font-weight:500;font-size:15px;white-space:nowrap;transition:background-color .2s,color .2s}
+.chip:hover{background:rgba(238,241,234,.16)}
+.chip[aria-pressed="true"],.chip[aria-checked="true"]{background:var(--foam);color:var(--ink)}
 
-/* Header */
-.top{position:sticky;top:0;z-index:20;height:var(--hh);background:var(--ink);color:var(--foam);display:flex;align-items:center;gap:.75rem;padding:0 max(var(--g),calc((100% - 1200px)/2 + var(--g)))} /* header content shares the 1200px column with the page */
-.top::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:calc(var(--fill)*100%);background:#f0a020}
-.brand{font:400 1.75rem/1 var(--display);font-stretch:78%;letter-spacing:-.02em;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;margin-right:auto}
-.mnav{display:flex;gap:1.4rem;align-items:center}
-.mnav a{display:inline-flex;align-items:center;min-height:44px;font-weight:500}
-.mnav a:not(.keep){display:none}
-@media (prefers-reduced-motion:no-preference){.top .btn.sm{margin-right:44px}} /* room for the docked mini pint */
-.top .btn.sm{white-space:nowrap}
-@media (max-width:430px){.brand{font-size:1.5rem}.top{gap:.6rem}} /* the longer generic name + docked pint must fit one row at 390px */
-@media (max-width:370px){.mnav a.keep{display:none}}
+/* ---------- header ---------- */
+.top{position:fixed;inset:0 0 auto 0;z-index:50;transition:background-color .3s,box-shadow .3s}
+.top.solid{background:rgba(16,41,31,.96);box-shadow:0 1px 0 rgba(201,160,79,.25)}
+.top-in{display:flex;align-items:center;gap:24px;height:72px;max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--serif);font-size:25px;line-height:1;color:var(--foam);margin-right:auto;min-height:44px;white-space:nowrap}
+.logo svg{width:26px;height:32px;flex:none}
+.nav{display:flex;gap:6px}
+.nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;text-decoration:none;font-weight:500;font-size:15.5px;color:var(--text-d);border-radius:999px;transition:background-color .2s}
+.nav a:hover{background:rgba(238,241,234,.1)}
+.top .btn{min-height:44px;padding:0 20px;font-size:15px}
+.menu-btn{flex:none;display:none;width:44px;height:44px;border:0;border-radius:999px;background:rgba(238,241,234,.1);color:var(--foam);align-items:center;justify-content:center}
+.menu-btn svg{width:20px;height:20px}
+@media (max-width:860px){
+  .nav{position:absolute;top:72px;left:0;right:0;flex-direction:column;gap:0;padding:8px var(--pad) 18px;background:var(--bottle);box-shadow:0 12px 24px rgba(0,0,0,.25);display:none}
+  .nav.open{display:flex}
+  .nav a{min-height:52px;font-size:18px;padding:0 4px}
+  .menu-btn{display:inline-flex}
+  .top-in{gap:10px}
+}
+@media (max-width:480px){.top .btn{padding:0 16px;font-size:14.5px}.logo{font-size:21px;gap:8px}.logo svg{width:20px;height:26px}}
+@media (max-width:350px){.top .btn{padding:0 12px}.logo{font-size:19px}}
 
-/* Hero */
-.hero{background:var(--cobalt);color:var(--foam);position:relative;overflow:clip;isolation:isolate}
-.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle 300px at var(--mx,70%) var(--my,35%),rgba(255,253,245,.16),transparent 70%)}
-.hbg{position:absolute;inset:-10% 0;z-index:-2;width:100%;height:120%;opacity:.07;color:var(--foam)}
-.bubs-bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
-.bubs-bg i{position:absolute;border-radius:50%;background:var(--foam);opacity:.1}
-.lights{position:absolute;left:0;right:0;top:0;height:120px;z-index:0;pointer-events:none}
-.lights svg{width:100%;height:100%;display:block}
-.hero-in{min-height:calc(100vh - 40px - var(--hh));min-height:calc(100svh - 40px - var(--hh));display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;gap:1.5rem;padding-top:96px;padding-bottom:28px}
-.wm{margin:0;line-height:0;align-self:start;max-width:760px}
-.wm svg{display:block;width:100%;height:auto;overflow:visible}
-.wm text{font-family:var(--display);font-weight:400;font-stretch:75%;fill:var(--foam)}
-.hero-main{display:grid;gap:1.5rem;align-items:end}
-.panel{background:var(--foam);color:var(--ink);border-radius:24px;padding:clamp(22px,3vw,34px);width:100%;max-width:540px;justify-self:start;position:relative;z-index:3}
-@media (max-width:819px){.panel{max-width:none}}
-.panel .eyebrow{color:var(--cobalt)}
-.lede{font:400 clamp(2.4rem,6vw,3.9rem)/.92 var(--display);font-stretch:80%;letter-spacing:-.03em;color:var(--cobalt)}
-.sub{margin-top:.8rem;color:var(--grey)}
-/* Hero action group: one row of equal pills on a single left axis (same as the headline),
-   a small caption underneath. Equal height, equal gap, wraps to full-width pills on phones. */
-.cta{margin-top:1.5rem}
-.cta-row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:stretch}
-.cta-row>*{flex:1 1 auto} /* pills share the row evenly, or each fills its own row when they wrap */
-.callpill .numtxt{flex:1;justify-content:center}
-.callpill .copyseg{flex:0 0 auto}
-.cta .btn,.cta .callpill{min-height:52px;font-size:1rem;line-height:1.15}
-.callpill{display:inline-flex;align-items:stretch;border:2px solid var(--ink);border-radius:9999px;font-weight:600} /* no overflow:hidden, so the focus ring is never clipped */
-.callpill[hidden]{display:none}
-.callpill .numtxt{display:inline-flex;align-items:center;padding:.4rem 1.1rem 0.4rem 1.4rem;white-space:nowrap;font-variant-numeric:tabular-nums}
-.callpill .copyseg{display:inline-flex;align-items:center;justify-content:center;padding:.4rem 1.2rem .4rem 1.1rem;border:0;border-left:2px solid var(--ink);border-radius:0 9999px 9999px 0;background:transparent;color:var(--ink);font:600 .9375rem/1.15 var(--body);cursor:pointer;transition:background .2s,color .2s}
-.callpill .copyseg:hover{background:var(--ink);color:var(--foam)}
-.cta-note{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.1rem 1.25rem;margin-top:.5rem;font-size:.875rem;line-height:1.3;color:var(--grey)}
-.cta-note .link{min-height:44px;font-size:.9375rem;color:var(--cobalt)}
+/* ---------- hero: the pour ---------- */
+.hero{position:relative;height:240vh;background:var(--bottle)}
+.hero-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.hero-photo{position:absolute;inset:0}
+.hero-photo img{width:100%;height:100%;object-fit:cover;opacity:.42;transform:scale(calc(1.12 - var(--p,0)*.1));filter:saturate(.85)}
+.hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,41,31,.55) 0%,rgba(16,41,31,.15) 40%,rgba(16,41,31,.9) 85%,var(--bottle) 100%)}
+#bubbles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-in{position:relative;width:100%;max-width:var(--max);margin:0 auto;padding:0 var(--pad) clamp(28px,5vh,56px)}
+.pour{--lvl:8;--fm:4;font-family:var(--serif);font-weight:400;font-size:clamp(96px,min(22vw,calc((100vh - 390px)/1.72)),330px);line-height:.84;letter-spacing:-.02em;margin:0 0 clamp(18px,3vh,34px) -.04em;
+  color:transparent;
+  background-image:linear-gradient(0deg,var(--amber-d) 0%,var(--amber) calc(var(--lvl)*.55%),var(--amber-2) calc((var(--lvl) - var(--fm))*1%),var(--foam) calc((var(--lvl) - var(--fm))*1%),var(--foam) calc(var(--lvl)*1%),rgba(226,194,127,.16) calc(var(--lvl)*1%));
+  -webkit-background-clip:text;background-clip:text}
+.pour span{display:block}
+.pour span+span{padding-left:.5em}
+.hero-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 48px;align-items:end}
+.hero-row p{font-size:clamp(18px,1.7vw,22px);max-width:34ch;color:var(--foam)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.gauge{display:flex;align-items:center;gap:14px;color:var(--mute-d);font-size:15px;text-align:right}
+.gauge b{display:block;color:var(--foam);font-weight:600;font-size:16px}
+.gauge-glass{width:34px;height:54px;border-radius:3px 3px 8px 8px;box-shadow:inset 0 0 0 2px var(--brass);position:relative;overflow:hidden;flex:none}
+.gauge-glass i{position:absolute;left:0;right:0;bottom:0;height:calc(var(--lvl,8)*1%);background:linear-gradient(0deg,var(--amber-d),var(--amber) 70%,var(--foam) 70%)}
+.status{display:inline-flex;align-items:center;gap:10px;margin-top:18px;font-size:15px;color:var(--mute-d)}
+.status::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--mute-d)}
+.status.open::before{background:#7ed39a}
+@media (max-width:760px){
+  .hero{height:200vh}
+  .pour{font-size:clamp(88px,min(31vw,calc((100vh - 420px)/1.72)),240px)}
+  .pour span+span{padding-left:0}
+  .hero-row{grid-template-columns:1fr}
+  .gauge{display:none}
+}
+
+/* ---------- styles band ---------- */
+.band{background:var(--amber);color:var(--ink);overflow:hidden;padding:22px 0}
+.band-track{display:flex;gap:42px;white-space:nowrap;will-change:transform;font-family:var(--serif);font-size:clamp(40px,6vw,84px);line-height:1}
+.band-track span{display:inline-flex;align-items:center;gap:42px}
+.band-track span::after{content:"";width:.32em;height:.32em;border-radius:50%;background:var(--foam);box-shadow:inset 0 -.06em 0 rgba(0,0,0,.12)}
+
+/* ---------- grifos ---------- */
+.grifos{background:var(--bottle)}
+.grifos-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:28px}
+.filters{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-top:36px;padding:4px 2px}
+.filters::-webkit-scrollbar{display:none}
+.taps{display:grid;grid-template-columns:repeat(8,minmax(132px,1fr));gap:10px;margin-top:22px;overflow-x:auto;padding:6px 2px 18px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--brass-d) transparent}
+.tap{scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;gap:10px;min-width:132px;padding:0 12px 18px;border:0;border-radius:999px 999px 18px 18px;background:var(--bottle-2);color:var(--text-d);text-align:center;transition:background-color .25s,opacity .3s,transform .3s var(--ease)}
+.tap:hover{background:var(--bottle-3)}
+.tap[aria-pressed="true"]{background:var(--foam);color:var(--ink)}
+.tap.dim{opacity:.28}
+.tap-handle{width:18px;height:64px;margin-top:-6px;border-radius:9px 9px 4px 4px;background:linear-gradient(90deg,var(--brass-d),var(--brass-2) 45%,var(--brass) 70%,var(--brass-d));transform-origin:50% 100%;transition:transform .45s var(--ease)}
+.tap[aria-pressed="true"] .tap-handle{transform:rotate(-24deg)}
+.tap-sw{width:58px;height:58px;border-radius:50%;background:var(--c);box-shadow:inset 0 -8px 14px rgba(0,0,0,.25),inset 0 11px 0 var(--foam);margin-top:6px}
+.tap b{font-weight:600;font-size:16px;line-height:1.2;min-height:2.4em;display:flex;align-items:center}
+.tap small{font-size:13.5px;opacity:.8;white-space:nowrap}
+.tap .abv{font-family:var(--serif);font-size:24px;line-height:1}
+.keg{width:72%;height:6px;border-radius:6px;background:rgba(238,241,234,.14);overflow:hidden}
+.tap[aria-pressed="true"] .keg{background:rgba(19,32,26,.14)}
+.keg i{display:block;height:100%;width:var(--k);background:var(--amber);border-radius:6px}
+
+.pint{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(28px,5vw,72px);margin-top:42px;align-items:center}
+.pint-photo{position:relative;border-radius:4px;overflow:hidden;aspect-ratio:4/5;background:var(--bottle-2)}
+.pint-photo img{width:100%;height:100%;object-fit:cover;transition:opacity .35s}
+.pint-photo .tint{position:absolute;inset:auto 0 0 0;height:0;background:var(--c,#f0a830);mix-blend-mode:multiply;opacity:.5;transition:height .9s var(--ease)}
+.pint-photo.pouring .tint{height:100%}
+.pint h3{font-family:var(--serif);font-weight:400;font-size:clamp(40px,4.6vw,66px);line-height:1}
+.pint-style{margin-top:8px;color:var(--brass-2);font-weight:500;font-size:17px}
+.pint-note{margin-top:16px;max-width:44ch;font-size:18px}
+.facts{display:flex;flex-wrap:wrap;gap:30px;margin-top:26px}
+.facts div{font-size:14.5px;color:var(--mute-d)}
+.facts b{display:block;font-family:var(--serif);font-weight:400;font-size:38px;line-height:1;color:var(--foam)}
+.scale{display:flex;gap:6px;margin-top:8px}
+.scale i{width:14px;height:14px;border-radius:50%;background:rgba(238,241,234,.16)}
+.scale i.on{background:var(--amber)}
+.sizes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:30px;max-width:520px}
+.size{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:132px;padding:12px 6px;border:0;border-radius:16px;background:var(--bottle-2);color:var(--text-d);transition:background-color .2s,color .2s}
+.size:hover{background:var(--bottle-3)}
+.size[aria-checked="true"]{background:var(--foam);color:var(--ink)}
+.size svg{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;margin-bottom:6px}
+.size b{font-weight:600;font-size:15px}
+.size small{font-size:13px;opacity:.8}
+.pint-buy{display:flex;flex-wrap:wrap;align-items:center;gap:18px;margin-top:22px}
+.pint-buy .price{font-family:var(--serif);font-size:40px;line-height:1}
+@media (max-width:860px){
+  .taps{grid-template-columns:repeat(8,132px);margin-right:calc(var(--pad)*-1);padding-right:var(--pad)}
+  .pint{grid-template-columns:minmax(0,1fr)}
+  .pint-photo{aspect-ratio:16/11;max-height:420px}
+}
+
+/* ---------- flavour map (azulejo) ---------- */
+.mapa{background-color:var(--tile);color:var(--foam);
+  background-image:
+    radial-gradient(circle at 0 0,transparent 25px,rgba(255,255,255,.09) 26px 31px,transparent 32px),
+    radial-gradient(circle at 100% 0,transparent 25px,rgba(255,255,255,.09) 26px 31px,transparent 32px),
+    radial-gradient(circle at 0 100%,transparent 25px,rgba(255,255,255,.09) 26px 31px,transparent 32px),
+    radial-gradient(circle at 100% 100%,transparent 25px,rgba(255,255,255,.09) 26px 31px,transparent 32px),
+    radial-gradient(circle at 50% 50%,rgba(255,255,255,.08) 6px,transparent 7px);
+  background-size:76px 76px}
+.mapa-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,90px);align-items:center}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.mapa .chip{background:rgba(255,255,255,.12)}
+.mapa .chip:hover{background:rgba(255,255,255,.2)}
+.match{display:grid;grid-template-columns:96px minmax(0,1fr);gap:18px;align-items:center;margin-top:34px;padding:16px;border-radius:20px;background:var(--tile-2)}
+.match img{width:96px;height:120px;object-fit:cover;border-radius:12px}
+.match small{font-size:14px;color:#c8d7f0}
+.match h3{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.05;margin-top:2px}
+.match p{font-size:15.5px;margin-top:6px;color:#e2eaf7}
+.match-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.match-act .btn{min-height:44px;padding:0 18px;font-size:15px}
+.pad{position:relative;aspect-ratio:1;width:100%;max-width:560px;justify-self:end;border-radius:28px;background:radial-gradient(120% 120% at 100% 0,#2c64b8 0,var(--tile-2) 70%);touch-action:none;cursor:crosshair;user-select:none;-webkit-user-select:none}
+.pad-ax{position:absolute;font-size:14px;font-weight:500;color:#c8d7f0}
+.pad-ax.l{left:18px;bottom:16px}.pad-ax.r{right:18px;bottom:16px}
+.pad-ax.t{left:18px;top:16px}
+.pad-cross{position:absolute;inset:12%;pointer-events:none;background:linear-gradient(rgba(255,255,255,.14),rgba(255,255,255,.14)) 50% 0/3px 100% no-repeat,linear-gradient(rgba(255,255,255,.14),rgba(255,255,255,.14)) 0 50%/100% 3px no-repeat;border-radius:2px}
+.dot{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none}
+.dot i{width:22px;height:22px;border-radius:50%;background:var(--c);box-shadow:inset 0 5px 0 var(--foam),0 0 0 3px rgba(255,255,255,.18);transition:transform .3s var(--ease),box-shadow .3s}
+.dot span{font-size:13px;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.4);white-space:nowrap}
+.dot.near i{transform:scale(1.45);box-shadow:inset 0 5px 0 var(--foam),0 0 0 4px var(--amber)}
+.puck{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:rgba(240,168,48,.18);box-shadow:inset 0 0 0 3px var(--amber);display:grid;place-items:center;font-weight:700;font-size:14px;color:var(--foam);cursor:grab;touch-action:none}
+.puck:active{cursor:grabbing}
+.puck:focus-visible{outline:3px solid var(--foam);outline-offset:4px;border-radius:50%}
+@media (max-width:860px){.mapa-grid{grid-template-columns:minmax(0,1fr)}.pad{justify-self:stretch;max-width:none}}
+
+/* ---------- barra (zinc + tile dado) ---------- */
+.barra{background:var(--zinc);color:var(--ink);padding-top:0}
+.dado{height:30px;background-color:var(--tile);background-image:radial-gradient(circle at 50% 50%,var(--foam) 4px,transparent 5px),radial-gradient(circle at 0 50%,transparent 10px,rgba(255,255,255,.35) 11px 13px,transparent 14px),radial-gradient(circle at 100% 50%,transparent 10px,rgba(255,255,255,.35) 11px 13px,transparent 14px);background-size:30px 30px;margin-bottom:clamp(70px,10vw,130px)}
+.barra .lead{color:var(--ink-2)}
+.barra-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(28px,4vw,56px);margin-top:48px;align-items:start}
+.bascula{background:var(--card);border-radius:28px;padding:clamp(18px,2.4vw,30px);box-shadow:0 1px 0 rgba(19,32,26,.06)}
+.bas-pick{display:flex;flex-wrap:wrap;gap:8px;padding:2px}
+.bas-pick::-webkit-scrollbar{display:none}
+.bas-pick .chip{background:var(--zinc);color:var(--ink)}
+.bas-pick .chip:hover{background:var(--zinc-2)}
+.bas-pick .chip[aria-checked="true"]{background:var(--ink);color:var(--foam)}
+.bas-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:20px;align-items:stretch}
+.bas-photo{position:relative;border-radius:18px;overflow:hidden;min-height:340px;background:var(--zinc-2)}
+.bas-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bas-read{display:flex;flex-direction:column}
+.bas-read h3{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3vw,40px);line-height:1.02}
+.bas-read .per{color:var(--ink-2);font-size:15.5px;margin-top:6px}
+.display{margin-top:auto;background:var(--bottle);color:var(--foam);border-radius:18px;padding:18px 20px}
+.display .w{font-family:var(--serif);font-size:clamp(44px,5vw,64px);line-height:1}
+.display .w small{font-family:var(--sans);font-size:18px;margin-left:4px;color:var(--mute-d)}
+.display .eur{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px;color:var(--mute-d);font-size:15px}
+.display .eur b{color:var(--amber-2);font-family:var(--serif);font-weight:400;font-size:32px}
+.range{width:100%;margin:22px 0 4px;accent-color:var(--amber-d);height:44px}
+.bas-hint{font-size:14.5px;color:var(--ink-2)}
+.bas-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.pair{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:0;border-radius:999px;background:var(--zinc);color:var(--ink);font-weight:500;font-size:15px}
+.pair i{width:16px;height:16px;border-radius:50%;background:var(--c);box-shadow:inset 0 4px 0 var(--foam)}
+.pair:hover{background:var(--zinc-2)}
+.tapas h3.t{font-family:var(--serif);font-weight:400;font-size:34px;line-height:1}
+.tapas-list{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;margin-top:20px}
+.tapa{position:relative}
+.tapa img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px;background:var(--zinc-2)}
+.tapa b{display:block;font-weight:600;font-size:15.5px;line-height:1.25;margin-top:10px;padding-right:50px}
+.tapa span{font-size:14.5px;color:var(--ink-2)}
+.tapa .add{position:absolute;right:0;bottom:2px;width:44px;height:44px;border:0;border-radius:50%;background:var(--ink);color:var(--foam);display:grid;place-items:center;transition:background-color .2s}
+.tapa .add:hover{background:var(--bottle-3)}
+.tapa .add svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none}
+@media (max-width:1000px){.barra-grid{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){
-  .cta-row>*{flex:1 1 100%}
-  .visit .actions .btn{flex:1 1 100%} /* phones: address/phone pills full width, same as the hero CTAs (no ragged stack) */
-}
-.sw{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em}
-.sw>span{display:inline-block}
-.stagebox{display:flex;flex-direction:column;align-items:center;justify-self:center;gap:.6rem;order:-1}
-.hint .lg{display:none}
-.stage{--sh:clamp(250px,36svh,320px);width:calc(var(--sh)*.65);aspect-ratio:260/400;max-width:100%}
-.hint{font-size:.9375rem;text-align:center;max-width:30ch}
-.refill{margin-top:.2rem;display:none}
-
-/* The pint (fixed in motion mode, in flow otherwise) */
-.pint{position:relative;width:100%;user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:grab;display:block}
-.pint.drag{cursor:grabbing}
-.pint svg{display:block;width:100%;height:auto;overflow:visible}
-.pint.fx{position:fixed;left:0;top:0;width:100px;z-index:26;will-change:transform}
-.pint.fx::before{content:"";position:absolute;inset:-8px -10px}
-.pint:focus-visible{border-radius:20px}
-
-/* Marquee */
-.marq{--mg:clamp(1.2rem,3vw,2.5rem);background:var(--deep);color:var(--foam);overflow:hidden;padding-block:clamp(18px,3vw,30px)}
-.marq-track{display:flex;width:max-content}
-/* Equal rhythm everywhere: word, gap, icon, gap, word... and the same gap at the loop seam
-   (the list's right padding equals the gap), so the ticker never shows an uneven join. */
-.marq ul{display:flex;align-items:center;gap:var(--mg);margin:0;padding:0 var(--mg) 0 0;list-style:none;flex:none}
-.marq li{display:flex;align-items:center;gap:var(--mg);margin:0;padding:0;font:400 clamp(2.6rem,8vw,6rem)/1 var(--display);font-stretch:78%;letter-spacing:-.03em;white-space:nowrap}
-.marq li::marker{content:""}
-.marq li svg{width:.6em;height:.8em;flex:none}
-
-/* Carta tabs */
-/* Tabs: centred in the container, equal gaps; the active dot sits centred UNDER the label
-   (the dot's space is always reserved, so no tab shifts when selection changes). */
-.tabs{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:.25rem clamp(1.1rem,3.4vw,3rem);margin:0 0 clamp(28px,4vw,48px);padding:0;list-style:none}
-.tab{display:inline-flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:.14em;min-height:56px;margin:0;padding:.05em .08em .1em;border:0;background:none;cursor:pointer;font:400 clamp(2.1rem,6.6vw,5rem)/1 var(--display);font-stretch:78%;letter-spacing:-.03em;color:var(--grey);transition:color .25s}
-.tab:hover{color:var(--ink)}
-.tab .dot{display:block;width:.14em;height:.14em;border-radius:50%;background:transparent;transform:scale(0);transition:transform .3s var(--ease),background .3s;flex:none}
-.tab[aria-selected="true"]{color:var(--cobalt)}
-.tab[aria-selected="true"] .dot{background:var(--cobalt);transform:scale(1)}
-html.js .tabpanel[hidden]{display:none}
-.tabpanel{display:grid;gap:clamp(20px,3vw,40px);align-items:center}
-.tabpanel+.tabpanel{margin-top:clamp(32px,5vw,56px)}
-html.js .tabpanel+.tabpanel{margin-top:0}
-.tabpanel p.t{max-width:46ch;font-size:1.1875rem}
-.tabpanel .tbc{margin-top:1rem}
-.tile{border-radius:24px;overflow:hidden;position:relative}
-.tile svg{display:block;width:100%;height:100%}
-.tile.ill{aspect-ratio:5/4;background:var(--cobalt)}
-.tile.ill.b{background:var(--deep)}
-.tile.ill.c{background:#e9dcb6}
-
-/* Services */
-.cards{display:flex;flex-direction:column;gap:12px;margin:0;padding:0;list-style:none}
-.card{background:var(--foam);border-radius:24px;padding:22px;display:flex;flex-direction:row;gap:1rem;align-items:center;transform-style:preserve-3d;transition:transform .2s ease-out}
-.card svg{flex:none;width:56px;height:56px;color:var(--cobalt)}
-.card h3{font:500 1.25rem/1.2 var(--body);margin:0 0 .3rem}
-.card p{font-size:.9375rem;color:var(--grey);line-height:1.4}
-.card.no{background:transparent;box-shadow:inset 0 0 0 2px var(--grey)}
-.svc-note{margin-top:1.5rem;color:var(--grey);max-width:60ch}
-.scene{margin-bottom:clamp(24px,4vw,40px);border-radius:24px;aspect-ratio:4/3;background:var(--deep);overflow:hidden;position:relative}
-.scene svg{position:absolute;inset:0;width:100%;height:100%;display:block}
-.cap{font-size:.875rem;color:var(--grey);margin:0 0 clamp(28px,4vw,48px)}
-.par{will-change:transform}
-.bulbs use{animation:tw 3.6s ease-in-out infinite;animation-delay:var(--d,0s)}
-@keyframes tw{0%,100%{opacity:1}50%{opacity:.62}}
-
-/* Photos */
-.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:150px;gap:12px;margin:0;padding:0;list-style:none}
-.gallery li{border-radius:24px;overflow:hidden;background:var(--cream);position:relative}
-/* Mosaic: spans come from position (repeats every 6 tiles), so the grid has no holes
-   whether it shows placeholders or real photos. 2 cols: 2x2, 1, 1, 2x1, 1, 1. */
-.gallery li:nth-child(6n+1){grid-column:span 2;grid-row:span 2}
-.gallery li:nth-child(6n+4){grid-column:span 2}
-.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;height:100%;color:var(--grey);font-size:.9375rem;text-align:center;padding:1rem}
-.ph svg{width:44px;height:44px;color:var(--cobalt)}
-.gallery button{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in}
-.gallery img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
-.gallery button:hover img{transform:scale(1.04)}
-.gallery button:focus-visible{border-radius:24px;outline-offset:-9px;box-shadow:inset 0 0 0 6px var(--ink)} /* ring drawn inside the tile: the tile clips overflow */
-.gnote{margin-top:1.5rem;font-weight:500;max-width:56ch}
-
-/* Visit */
-.vgrid{display:grid;gap:48px}
-.cobalt h3{font:600 1rem/1.3 var(--body);margin:0 0 .5rem}
-.visit address{font:400 clamp(2.2rem,6.5vw,3.6rem)/1.04 var(--display);font-stretch:82%;font-style:normal;letter-spacing:-.025em;text-wrap:balance}
-/* Address and phone are display-size: no underline at all. Interactivity = colour change
-   (lemon, 7.5:1 on cobalt) plus the "Abrir en Maps" pill / call controls next to them. */
-.visit address a,.visit a.phone{display:inline-block;text-decoration:none;border-radius:8px;transition:color .2s}
-.visit address a:hover,.visit address a:focus-visible,.visit a.phone:hover,.visit a.phone:focus-visible{color:var(--lemon)}
-.visit address a span{display:block}
-.phone{font:400 clamp(2.2rem,7vw,3.4rem)/1 var(--display);font-stretch:82%;letter-spacing:-.02em;display:inline-flex;align-items:center;min-height:44px}
-.btn .ico{width:18px;height:18px;flex:none}
-.block+.block{margin-top:2.25rem}
-.actions{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;margin-top:1rem}
-.tbcrow{margin-top:.9rem;line-height:1} /* a small badge annotates the value right above it; the action pills get their own row, so they never wrap raggedly */
-.tbcrow+.actions{margin-top:.9rem}
-.hours{background:var(--deep);padding:clamp(20px,3vw,32px);border-radius:24px;align-self:start}
-.hours dl{margin:0}
-.hours .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.15rem 1rem;padding:.7rem .8rem;border-radius:14px}
-.hours dt{font-weight:600}
-.hours dd{margin:0;text-align:right}
-/* timeline bar drawn as a pseudo-element (an <i> inside <dl> > <div> is invalid HTML) */
-.hours .row::after{content:"";grid-column:1/-1;height:6px;border-radius:9999px;background:linear-gradient(90deg,transparent var(--a),currentColor var(--a),currentColor var(--b),transparent var(--b)),rgba(255,253,245,.2)}
-.hours .row.now{background:var(--foam);color:var(--ink)}
-.hours .row.now::after{background:linear-gradient(90deg,transparent var(--a),var(--cobalt) var(--a),var(--cobalt) var(--b),transparent var(--b)),rgba(13,19,48,.15)}
-.today{font-weight:600;font-size:.875rem;margin-left:.5rem}
-.hours p{margin:1rem .8rem 0;font-size:.9375rem}
-.resbox{margin-top:2.25rem;background:var(--deep);border-radius:24px;padding:clamp(20px,3vw,28px)}
-.resbox p{margin-bottom:1rem;max-width:44ch}
-
-/* Brindis */
-.brindis{text-align:left}
-.brindis .h2{font-size:clamp(4.5rem,24vw,17rem);margin-bottom:1rem}
-.brindis p:not(.h2){max-width:52ch;color:var(--grey)}
-.brindis .h2{max-width:none}
-.brindis .btn{margin-top:1.4rem;color:var(--cobalt)}
-.brindis .btn:hover{--hb:var(--cobalt);color:var(--foam)}
-
-footer{background:var(--ink);color:var(--foam);padding:2rem var(--g) calc(104px + env(safe-area-inset-bottom));font-size:.9375rem}
-footer p{max-width:calc(1200px - 2*var(--g));margin:0 auto;text-wrap:balance}
-footer p+p{margin-top:.5rem;color:rgba(255,253,245,.8)}
-footer a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
-footer a:hover,footer a:focus-visible{color:var(--lemon)}
-
-/* Sticky contact bar */
-.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--ink);color:var(--foam);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.4rem;padding:.5rem .5rem calc(.5rem + env(safe-area-inset-bottom));transition:transform .4s var(--ease),visibility .4s}
-html.js .bar{transform:translateY(110%);visibility:hidden}
-html.js .bar.show{transform:none;visibility:visible}
-.bb{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1rem;min-height:56px;padding:.35rem .5rem;border-radius:9999px;border:2px solid var(--foam);background:transparent;font:600 .9375rem/1.15 var(--body);text-align:center;text-decoration:none;cursor:pointer;color:var(--foam);transition:background .2s,color .2s}
-.bb small{font-weight:500;font-size:.8125rem}
-.bb:hover{background:var(--foam);color:var(--ink)}
-.bb.call{background:var(--lemon);color:var(--ink);border-color:var(--lemon)}
-.bb.call:hover{background:var(--foam);border-color:var(--foam)}
-.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,10px);background:var(--foam);color:var(--ink);padding:.6rem 1.2rem;border-radius:9999px;font-weight:600;font-size:.9375rem;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s var(--ease);z-index:90;width:max-content;max-width:calc(100% - 32px);text-wrap:balance;text-align:center;box-shadow:0 0 0 2px var(--ink)}
-.toast.on{opacity:1;transform:translate(-50%,0)}
-
-/* Custom cursor (desktop only, added by JS) */
-.cur{position:fixed;left:0;top:0;z-index:95;pointer-events:none;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;border:2px solid var(--lemon);box-shadow:0 0 0 2px var(--ink);display:grid;place-items:center;font:600 .75rem/1 var(--body);color:transparent;transition:width .25s var(--ease),height .25s var(--ease),margin .25s var(--ease),background .2s,color .2s}
-.cur.big{width:56px;height:56px;margin:-28px 0 0 -28px}
-.cur.lbl{width:84px;height:84px;margin:-42px 0 0 -42px;background:var(--ink);color:var(--foam)}
-
-/* Dialogs */
-dialog{border:0;padding:0;width:min(580px,calc(100% - 24px));max-height:calc(100svh - 24px);overflow:auto;border-radius:24px;background:var(--foam);color:var(--ink)}
-dialog::backdrop{background:rgba(13,19,48,.72)}
-.dlg-in{padding:clamp(20px,4vw,32px)}
-.dlg-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem}
-.x{width:44px;height:44px;border-radius:50%;border:2px solid var(--ink);background:transparent;cursor:pointer;display:grid;place-items:center;flex:none}
-.x:hover{background:var(--ink);color:var(--foam)}
-.dlg-in h2{font-size:clamp(2.4rem,8vw,3.4rem);margin-bottom:.8rem}
-.dlg-in .intro{color:var(--grey);margin-bottom:1.25rem}
-.f{margin-bottom:1rem}
-.f label{display:block;font-weight:600;font-size:.9375rem;margin-bottom:.3rem}
-.f .opt{font-weight:400;color:var(--grey)}
-.f input,.f textarea{display:block;width:100%;min-height:52px;padding:.6rem .9rem;border:2px solid var(--ink);border-radius:14px;background:#fff;font:inherit;line-height:1.3;color:var(--ink)}
-.f input{height:52px;min-width:0}
-.f textarea{min-height:92px;resize:vertical}
-.f input[aria-invalid="true"],.f textarea[aria-invalid="true"]{border-color:var(--err);background:#fff6f5}
-.err{color:var(--err);font-size:.9375rem;font-weight:500;margin-top:.3rem}
-.frow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 .9rem}
-.frow>.f{min-width:0}
-@media (max-width:440px){.frow{grid-template-columns:minmax(0,1fr)}} /* native date/time inputs are too wide for two columns on a phone */
-.errsum{background:#fff0ee;color:var(--err);border-radius:14px;padding:.7rem 1rem;margin-bottom:1rem;font-weight:600}
-.sum{margin:1rem 0;padding:0;display:grid;gap:.5rem}
-.sum div{display:grid;grid-template-columns:7.5rem 1fr;gap:.8rem;padding:.6rem 0;border-bottom:1px solid #d9d3bd}
-.sum dt{font-weight:600}
-.sum dd{margin:0;overflow-wrap:anywhere}
-.demo-note{background:var(--cream);border-radius:14px;padding:1rem;margin:1rem 0}
-.lb{background:var(--ink);color:var(--foam);width:min(1000px,calc(100% - 16px))}
-.lb figure{margin:0}
-.lb img{display:block;width:auto;height:auto;max-width:100%;max-height:70svh;margin:0 auto;border-radius:14px;object-fit:contain}
-.lb figcaption{margin-top:.8rem;text-align:center}
-.lbnav{display:flex;justify-content:space-between;align-items:center;gap:.7rem;margin-top:1rem}
-.lb .btn{color:var(--foam)}
-.lbnav .btn{flex:0 0 9rem}
-.lb .x{border-color:var(--foam);color:var(--foam)}
-
-@media (min-width:820px){
-  :root{--g:40px;--hh:72px}
-  .mnav a:not(.keep){display:inline-flex}
-  .top .btn.sm{margin-right:0}
-  .hero-in{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);grid-template-rows:auto 1fr;padding-top:88px;gap:1.25rem 2rem}
-  .wm{grid-column:1;grid-row:1;max-width:min(640px,max(300px,calc((100svh - 630px)*3.3)))} /* hero fits the first screen on short laptops */
-  .hero-main{display:contents}
-  .hint .lg{display:inline}
-  .refill{display:inline-flex}
-  .stage{--sh:clamp(260px,calc(100svh - 400px),520px)}
-  .panel{grid-column:1;grid-row:2;align-self:end}
-  .stagebox{grid-column:2;grid-row:1/3;align-self:center;justify-self:end;margin-right:4vw}
-  .tabpanel{grid-template-columns:1fr 1fr}
-  .scene{aspect-ratio:21/9}
-  .gallery{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:190px}
-  .gallery li:nth-child(6n+5),.gallery li:nth-child(6n){grid-column:span 2}
-  .vgrid{grid-template-columns:1.2fr 1fr;gap:80px}
-  .bar{margin-inline:auto;bottom:16px;width:max-content;max-width:calc(100% - 32px);border-radius:9999px;grid-template-columns:auto auto auto;padding:.45rem .6rem;gap:.5rem;border:2px solid var(--lemon)}
-  .bb{flex-direction:row;gap:.6rem;min-height:48px;padding:.4rem 1.2rem}
-  .toast{bottom:92px}
-}
-/* Service cards: 2-column grid on tablets (five cards in one row would be too narrow), one row of five from 1100px */
-@media (min-width:820px) and (max-width:1099px){
-  .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .cards .card:last-child{grid-column:1/-1}
-  .card{min-height:120px}
-}
-@media (min-width:1100px){
-  .cards{flex-direction:row}
-  .card{flex:1 1 0;min-width:0;flex-direction:column;align-items:flex-start;padding:26px;min-height:230px;justify-content:space-between;transition:flex-grow .5s var(--ease),transform .2s ease-out}
-  .card h3{min-height:2.4em}
-  .card:hover,.card:focus-within{flex-grow:1.8}
-  .card svg{width:64px;height:64px}
-}
-@media (min-width:1100px) and (max-width:1199px){
-  .card h3{min-height:3.6em}
-}
-@media (max-width:420px){
-  .card{min-height:120px} /* "Accesible en silla de ruedas" wraps to 2 lines here: keep all five stacked cards the same height */
-}
-@media (min-width:820px) and (max-width:1099px) and (prefers-reduced-motion:no-preference){
-  .top .btn.sm{margin-right:24px} /* the mini pint docks in the header here: keep it clear of the button */
-}
-@media (min-width:1100px) and (prefers-reduced-motion:no-preference){
-  html.js{--dock:230px}
-  html.js .wrap.dk{padding-right:calc(var(--g) + var(--dock))}
-  .card h3{min-height:3.6em} /* docked pint narrows the column: cards are ~170px wide, titles can take 3 lines */
-  html.js .vgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px} /* docked pint takes 230px: give the hours card enough width that day names stay on one line */
-  html.js .hours{padding-inline:24px}
+  .bas-pick{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .bas-pick .chip{flex:none}
+  .bas-body{grid-template-columns:minmax(0,1fr)}
+  .bas-photo{min-height:0;aspect-ratio:16/10}
+  .tapas-list{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-right:calc(var(--pad)*-1);padding-right:var(--pad);scrollbar-width:none}
+  .tapas-list::-webkit-scrollbar{display:none}
+  .tapa{flex:0 0 62%;scroll-snap-align:start}
 }
 
-/* Section backgrounds: each section has its own coded "world" (.bg).
-   Gradients are used only for liquid/light. Video slot sits in the same .bg. */
-.sec{position:relative;overflow:clip;isolation:isolate}
-.sec>.wrap{position:relative;z-index:1}
-.bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.bg>*,.bg .decor>*{position:absolute}
-.decor{position:absolute;inset:0}
-.bgc{inset:0;width:100%;height:100%}
-.bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.scrim{position:absolute;inset:0}
-.scrim.dark{background:rgba(12,32,128,.84)}
-.scrim.cream{background:rgba(255,253,245,.9)}
-.hasvid .decor,.hasvid .hbg{display:none}
-.grain{inset:0;width:100%;height:100%;opacity:.09;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-.waves{left:0;bottom:0;width:200%;height:70%;opacity:1}
-.waves.w1{animation:wave 26s linear infinite;color:rgba(255,253,245,.07)}
-.waves.w2{animation:wave 17s linear infinite reverse;height:50%;color:rgba(255,253,245,.08)}
-.waves.w3{animation:wave 11s linear infinite;height:32%;color:rgba(255,253,245,.1)}
-.waves svg{display:block;width:100%;height:100%}
-.rays{inset:-40% -20% auto auto;width:140%;height:180%;background:repeating-conic-gradient(from 195deg at 88% 4%,rgba(240,160,32,.11) 0 5deg,transparent 5deg 14deg);-webkit-mask-image:radial-gradient(circle at 88% 4%,#000,transparent 70%);mask-image:radial-gradient(circle at 88% 4%,#000,transparent 70%);transform-origin:88% 4%;animation:sway 40s ease-in-out infinite alternate}
-@keyframes wave{to{transform:translateX(-50%)}}
-@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}
-.blob{border-radius:50%}
-.pool{border-radius:50%;filter:blur(46px);background:rgba(240,160,32,.2);animation:drift 24s ease-in-out infinite alternate}
-@keyframes drift{from{transform:translate(-4%,-3%)}to{transform:translate(8%,6%)}}
-.sec.off *{animation-play-state:paused!important}
-
-/* Motion (only when allowed) */
-@media (prefers-reduced-motion:no-preference){
-  html.js .fw{--p:0;color:transparent;-webkit-text-stroke:2px var(--c,var(--cobalt));background:linear-gradient(to top,var(--c,var(--cobalt)) calc(var(--p)*100%),transparent calc(var(--p)*100%));-webkit-background-clip:text;background-clip:text}
-  html.js .cobalt .fw{--c:var(--foam)}
-  html.js .wm text{animation:none}
-  html.js .wm g{animation:rise 1.2s var(--ease) .1s both}
-  @keyframes rise{from{transform:translateY(110%)}to{transform:none}}
-  html.js .sw>span{animation:chr .9s var(--ease) both;animation-delay:calc(.55s + var(--i)*.022s)}
-  @keyframes chr{from{transform:translateY(105%)}to{transform:none}}
-  html.js .lights{animation:drop 1.1s cubic-bezier(.3,1.4,.5,1) .9s both}
-  @keyframes drop{from{transform:translateY(-110%)}to{transform:none}}
-  html.js .panel{animation:panelin 1s var(--ease) .35s both}
-  @keyframes panelin{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
-  html.js .stagebox .hint,html.js .stagebox .refill{animation:fadein .8s ease 1.6s both}
-  @keyframes fadein{from{opacity:0}to{opacity:1}}
-  html.js .bubs-bg i{animation:floaty 14s ease-in-out infinite}
-  @keyframes floaty{50%{transform:translateY(-30px)}}
-  dialog[open]{animation:pop .35s var(--ease)}
-  @keyframes pop{from{transform:translateY(24px) scale(.97);opacity:0}}
+/* ---------- espacios (dark wood) ---------- */
+.espacios{background:var(--wood)}
+.salas{display:flex;gap:12px;height:clamp(420px,58vh,600px);margin-top:44px}
+.sala{position:relative;flex:1;min-width:0;border:0;padding:0;border-radius:6px;overflow:hidden;background:var(--wood-2);color:var(--foam);text-align:left;transition:flex-grow .6s var(--ease)}
+.sala.on{flex-grow:2.6}
+.sala img{position:absolute;left:0;top:-10%;width:100%;height:120%;object-fit:cover;transform:translateY(var(--py,0));filter:brightness(.78)}
+.sala::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(27,20,16,.88))}
+.sala-t{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:22px}
+.sala-t b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.2vw,46px);line-height:1}
+.sala-t span{display:block;font-size:15.5px;max-width:34ch;color:#e4ddd4;max-height:0;overflow:hidden;opacity:0;transition:opacity .4s .1s,max-height .5s var(--ease),margin .5s}
+.sala.on .sala-t span{opacity:1;max-height:5em;margin-top:8px}
+.semana{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,3vw,40px);margin-top:clamp(56px,7vw,90px)}
+.semana h3{font-family:var(--serif);font-weight:400;font-size:clamp(28px,2.6vw,36px);color:var(--brass-2);line-height:1}
+.semana h3 small{display:block;font-family:var(--sans);font-size:15px;color:#bfb3a6;margin-top:8px}
+.semana p{margin-top:10px;max-width:32ch;color:#e4ddd4}
+.semana-t{font-family:var(--serif);font-weight:400;font-size:clamp(34px,3.6vw,52px);line-height:1;margin-top:clamp(64px,8vw,110px)}
+@media (max-width:760px){
+  .salas{flex-direction:column;height:auto}
+  .sala{flex:none;height:150px;transition:height .5s var(--ease)}
+  .sala.on{height:320px}
+  .semana{grid-template-columns:1fr}
 }
+
+/* ---------- reservar (amber field) ---------- */
+.reservar{background:var(--amber);color:var(--ink)}
+.res-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,90px);align-items:start}
+.reservar .lead{color:#3a2a10}
+.res-ronda{margin-top:30px;padding:18px 20px;border-radius:20px;background:rgba(19,32,26,.08);font-size:15.5px}
+.res-ronda b{display:block;font-weight:600;margin-bottom:4px}
+form.res{display:flex;flex-direction:column;gap:24px}
+.fl{font-weight:600;font-size:15.5px;margin-bottom:10px;display:block}
+.rail{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:3px}
+.rail::-webkit-scrollbar{display:none}
+#hours{flex-wrap:wrap}
+.reservar .chip{background:rgba(19,32,26,.1);color:var(--ink)}
+.reservar .chip:hover{background:rgba(19,32,26,.18)}
+.reservar .chip[aria-checked="true"]{background:var(--ink);color:var(--foam)}
+.day{flex-direction:column;gap:0;min-height:62px;padding:8px 16px;border-radius:18px;line-height:1.15}
+.day b{font-size:20px}
+.day small{font-size:13px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.step{display:inline-flex;align-items:center;gap:4px;background:rgba(19,32,26,.1);border-radius:999px;padding:3px}
+.step button{width:44px;height:44px;border:0;border-radius:50%;background:transparent;font-size:22px;font-weight:500;color:var(--ink)}
+.step button:hover{background:rgba(19,32,26,.12)}
+.step output{min-width:44px;text-align:center;font-weight:600;font-size:18px}
+.field input,.field textarea{width:100%;min-height:52px;padding:12px 18px;border:0;border-radius:16px;background:var(--foam);color:var(--ink);font-size:16px}
+.field textarea{min-height:90px;resize:vertical}
+.field input::placeholder,.field textarea::placeholder{color:#6c706a}
+.res-foot{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.res-foot small{font-size:14px;color:#3a2a10;max-width:36ch}
+.done{padding:28px;border-radius:24px;background:var(--ink);color:var(--foam)}
+.done h3{font-family:var(--serif);font-weight:400;font-size:38px;line-height:1}
+.done p{margin-top:10px;color:var(--mute-d)}
+@media (max-width:900px){.res-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:460px){.row2{grid-template-columns:1fr}}
+
+/* ---------- visita ---------- */
+.visita{background:var(--bottle)}
+.vis-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr) minmax(0,4fr);gap:clamp(32px,5vw,72px);margin-top:48px}
+.vis-grid h3{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1;color:var(--brass-2);margin-bottom:16px}
+.hours li{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:2px solid rgba(238,241,234,.07);font-size:16.5px}
+.hours li.today{color:var(--amber-2);font-weight:600}
+.addr{font-size:19px;line-height:1.45}
+.vis-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.vis-act .btn{min-height:44px;padding:0 18px;font-size:15px}
+.phone{font-family:var(--serif);font-size:34px;line-height:1;text-decoration:none;display:inline-block;min-height:44px}
+.vis-note{margin-top:12px;color:var(--mute-d);font-size:15px;max-width:30ch}
+@media (max-width:900px){.vis-grid{grid-template-columns:minmax(0,1fr)}}
+
+.foot{background:#0b1d16;color:var(--mute-d);padding:40px 0 110px;font-size:14.5px}
+.foot-in{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+.foot .logo{font-size:22px;margin:0}
+.foot a{color:var(--text-d)}
+.demo{margin-top:24px;font-size:12.5px;opacity:.75;max-width:760px}
+
+/* ---------- ronda: floating pill + dialog ---------- */
+.ronda-pill{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:60;display:flex;align-items:center;gap:12px;min-height:56px;padding:0 22px 0 10px;border:0;border-radius:999px;background:var(--ink);color:var(--foam);font-weight:600;font-size:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);transform:translateY(140%);transition:transform .45s var(--ease)}
+.ronda-pill.show{transform:none}
+.ronda-pill .cnt{width:38px;height:38px;border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;font-size:16px}
+.ronda-pill.bump .cnt{animation:bump .5s var(--ease)}
+@keyframes bump{40%{transform:scale(1.3)}}
+dialog.ronda{width:min(460px,100%);max-height:100%;height:100%;margin:0 0 0 auto;padding:0;border:0;background:var(--foam);color:var(--ink)}
+dialog.ronda::backdrop{background:rgba(8,20,15,.55)}
+.r-in{display:flex;flex-direction:column;height:100%}
+.r-head{display:flex;justify-content:space-between;align-items:center;padding:22px 24px 10px}
+.r-head h2{font-size:44px}
+.x{width:44px;height:44px;border:0;border-radius:50%;background:var(--zinc);font-size:24px;line-height:1;color:var(--ink)}
+.x:hover{background:var(--zinc-2)}
+.r-list{flex:1;overflow-y:auto;padding:6px 24px}
+.r-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:14px 0;border-bottom:2px solid var(--zinc)}
+.r-item b{font-weight:600;font-size:16px;line-height:1.25}
+.r-item small{color:var(--ink-2);font-size:14px}
+.r-item .step{background:var(--zinc);grid-row:span 2}
+.r-empty{padding:30px 0;color:var(--ink-2)}
+.r-foot{padding:18px 24px 24px;background:var(--card)}
+.r-tot{display:flex;justify-content:space-between;align-items:baseline;font-size:17px}
+.r-tot b{font-family:var(--serif);font-weight:400;font-size:36px}
+.bote{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;padding:12px 14px;border-radius:18px;background:var(--zinc)}
+.bote p{font-size:15px;line-height:1.35}
+.bote p b{display:block;font-size:20px}
+.bote .step{background:var(--card)}
+.r-act{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.r-act .btn{flex:1}
+
+.toast{position:fixed;left:50%;bottom:90px;z-index:70;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 20px;border-radius:999px;background:var(--foam);color:var(--ink);font-weight:500;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:opacity .3s,transform .3s var(--ease);max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .ia{display:none!important}
-  .marq-track{width:auto;justify-content:center;padding-inline:var(--g)}
-  .marq-track ul:nth-child(2){display:none}
-  .marq ul{flex:0 1 auto;min-width:0;flex-wrap:wrap;justify-content:center;padding:0;gap:.1em var(--mg)}
-  .marq li{font-size:clamp(2.2rem,5.4vw,5rem)}
-  .marq li:last-child svg{display:none}
-  @media (max-width:700px){
-    .marq ul{display:grid;grid-template-columns:repeat(2,auto);justify-content:center;justify-items:center;gap:.05em var(--mg)}
-    .marq li svg{display:none}
-  }
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  .hero{height:auto}
+  .hero-pin{position:relative;min-height:100vh;min-height:100svh;height:auto}
+  .hero-photo img{transform:none}
+  #bubbles{display:none}
 }
 </style>
 </head>
 <body>
-<!-- ===================== CONFIG (edit here) ===================== -->
-<script>
-/* RESERVATIONS. In this template the form is a labelled DEMO that sends nothing.
-   To connect a real service later, set this to your endpoint URL (HTTPS, accepts
-   JSON POST: {name, phone, email, date, time, people, notes}) and reply 2xx.
-   While it is null, NO network request is ever made. */
-var RESERVATION_ENDPOINT = null;
+<a class="sr" href="#grifos">Saltar al contenido</a>
 
-/* PHOTOS. Template photos (Unsplash). Replace them with the owner's own photos, e.g.
-   {src:"images/barra.jpg", alt:"La barra con los grifos de cerveza", caption:"La barra", width:1200, height:800}
-   Never copy photos from Google Maps. With the list empty, the page shows placeholder tiles.
-   width/height are the real pixel size (avoids layout jumps). */
-var U = function(id){return "https://images.unsplash.com/"+id+"?auto=format&fit=crop&w=1200&h=800&q=70"};
-var PHOTOS = [
-  {src:U("photo-1514933651103-005eec06c04b"), alt:"Interior de una cervecería con barra de madera y luces cálidas", caption:"La barra", width:1200, height:800},
-  {src:U("photo-1535958636474-b021ee887b13"), alt:"Caña de cerveza tirándose del grifo", caption:"Cerveza bien tirada", width:1200, height:800},
-  {src:U("photo-1606850780554-b55ea4dd0b70"), alt:"Tabla de marisco con pulpo y langostinos a la plancha", caption:"Marisco", width:1200, height:800},
-  {src:U("photo-1528605248644-14dd04022da1"), alt:"Grupo de amigos compartiendo platos en una mesa", caption:"Para compartir", width:1200, height:800},
-  {src:U("photo-1608270586620-248524c67de9"), alt:"Jarra de cerveza fría con espuma", caption:"Una jarra bien fría", width:1200, height:800},
-  {src:U("photo-1543007630-9710e4a00a20"), alt:"Barra iluminada con botellas al fondo", caption:"Por la noche", width:1200, height:800}
-];
-
-/* CONTACT (template placeholders: replace with the real details) */
-/* BACKGROUND VIDEOS (optional). Leave a slot null to keep the coded background.
-   Put files in a videos/ folder next to this file. Each slot accepts a string (an MP4 path)
-   or {mp4:"videos/x.mp4", webm:"videos/x.webm", poster:"videos/x.jpg"}.
-   Videos must be abstract loops (never the real premises). They are skipped automatically
-   for visitors who prefer reduced motion or have data-saver on. A dark/cream scrim keeps text legible.
-   Specs: MP4 H.264 + WebM, 1920x1080 or 1280x720, 6-12 s seamless loop, under 3 MB, no audio. */
-var BACKGROUND_VIDEOS = {hero:null, marquee:null, carta:null, servicios:null, fotos:null, visita:null, brindis:null};
-var PHONE_TEL = "+34600000000", PHONE_COPY = "+34 600 000 000";
-var ADDRESS = "Calle Ejemplo 1, 28001 Madrid";
-</script>
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <defs>
-    <pattern id="tileF" width="48" height="48" patternUnits="userSpaceOnUse"><g fill="none" stroke="#fffdf5" stroke-width="2"><path d="M24 4l20 20-20 20L4 24z"/><circle cx="24" cy="24" r="6"/><path d="M0 8a8 8 0 008-8M40 0a8 8 0 008 8M48 40a8 8 0 00-8 8M8 48a8 8 0 00-8-8"/></g></pattern>
-    <pattern id="tileC" width="48" height="48" patternUnits="userSpaceOnUse"><g fill="none" stroke="#1432a8" stroke-width="2"><path d="M24 4l20 20-20 20L4 24z"/><circle cx="24" cy="24" r="6"/><path d="M0 8a8 8 0 008-8M40 0a8 8 0 008 8M48 40a8 8 0 00-8 8M8 48a8 8 0 00-8-8"/></g></pattern>
-    <path id="wavep" d="M0 40q150-40 300 0t300 0 300 0 300 0 300 0 300 0 300 0 300 0V200H0z"/>
-    <g id="bulb"><path d="M-3-4h6v6h-6z" fill="#0d1330"/><circle cy="12" r="22" fill="#ffd23f" opacity=".22"/><circle cy="12" r="9" fill="#ffd23f" stroke="#0d1330" stroke-width="2"/></g>
-    <g id="pintico" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M3 2h14l-2 20q0 2-2 2H7q-2 0-2-2z"/><path d="M4 8h12"/></g>
-    <g id="lemico" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M2 14a8 8 0 0116 0z"/><path d="M10 14V8M6 14l2-5M14 14l-2-5"/></g>
-  </defs>
-</svg>
-
-<a class="skip" href="#visita">Ir a cómo visitarnos</a>
-<div class="notice demo" id="demoBanner" role="note"><p><strong>Diseño de ejemplo</strong> · Este sitio puede llevar el nombre, la carta y las fotos de tu negocio.</p><button class="demo-x" type="button" id="demoX" aria-label="Cerrar aviso">×</button></div>
-
-<header class="top" id="head">
-  <a class="brand" href="#top">Cervecería</a>
-  <nav class="mnav" aria-label="Secciones">
-    <a class="ul" href="#carta">Carta</a><a class="ul" href="#servicios">Servicios</a><a class="ul keep" href="#fotos">Fotos</a><a class="ul" href="#visita">Visita</a>
-  </nav>
-  <button class="btn btn-primary sm" type="button" data-reserve>Reservar mesa</button>
+<header class="top" id="top">
+  <div class="top-in">
+    <a class="logo" href="#inicio" aria-label="Dos Dedos, inicio">
+      <svg viewBox="0 0 26 32" aria-hidden="true"><defs><clipPath id="gl"><path d="M3 2h20l-2 27a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/></clipPath></defs><g clip-path="url(#gl)"><rect id="logoFill" x="0" y="26" width="26" height="32" fill="#f0a830"/><rect id="logoFoam" x="0" y="22" width="26" height="4" fill="#f8f5ec"/></g><path d="M3 2h20l-2 27a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" fill="none" stroke="#c9a04f" stroke-width="1.5"/></svg>
+      Dos Dedos
+    </a>
+    <nav class="nav" id="nav" aria-label="Secciones">
+      <a href="#grifos">Grifos</a>
+      <a href="#mapa">Elige cerveza</a>
+      <a href="#barra">Barra</a>
+      <a href="#espacios">Sitios</a>
+      <a href="#visita">Visita</a>
+    </nav>
+    <a class="btn btn-amber" href="#reservar">Reservar mesa</a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menú"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+  </div>
 </header>
 
-<div id="top"></div>
-<section class="hero sec" id="hero" data-parbox aria-label="Presentación">
-  <svg class="hbg par" data-par=".16" aria-hidden="true" focusable="false"><rect width="100%" height="100%" fill="url(#tileF)"/></svg>
-  <div class="bg" data-bgslot="hero" data-scrim="dark" aria-hidden="true"><div class="decor"><canvas class="bgc" data-bubbles="255,253,245" data-a=".22" data-n="34"></canvas></div></div>
-  <div class="lights" aria-hidden="true">
-    <svg viewBox="0 0 1600 130" preserveAspectRatio="xMidYMin slice" focusable="false">
-      <path d="M-20 12Q200 100 420 14Q640 100 860 14Q1080 100 1300 14Q1520 100 1740 14" fill="none" stroke="#0d1330" stroke-width="3"/>
-      <g class="bulbs">
-        <use href="#bulb" x="90" y="45" style="--d:-.4s"/><use href="#bulb" x="200" y="56" style="--d:-1.3s"/><use href="#bulb" x="310" y="46" style="--d:-2.2s"/>
-        <use href="#bulb" x="530" y="45" style="--d:-.9s"/><use href="#bulb" x="640" y="56" style="--d:-2.8s"/><use href="#bulb" x="750" y="46" style="--d:-.1s"/>
-        <use href="#bulb" x="970" y="45" style="--d:-1.8s"/><use href="#bulb" x="1080" y="56" style="--d:-.6s"/><use href="#bulb" x="1190" y="46" style="--d:-2.5s"/>
-        <use href="#bulb" x="1410" y="45" style="--d:-1.1s"/><use href="#bulb" x="1520" y="56" style="--d:-2s"/>
-      </g>
-    </svg>
-  </div>
-  <div class="wrap hero-in">
-    <h1 class="wm">
-      <svg viewBox="0 0 1000 205" role="img" aria-label="Cervecería" focusable="false"><g><text x="0" y="192" font-size="236" textLength="1000" lengthAdjust="spacingAndGlyphs" aria-hidden="true">Cervecería</text></g></svg>
-    </h1>
-    <div class="hero-main">
-      <div class="panel">
-        <p class="eyebrow">En el centro de Madrid</p>
-        <p class="lede" id="lede">Cerveza, tapas, marisco y bocadillos.</p>
-        <p class="sub">Cervecería, bar y restaurante</p>
-        <div class="cta" id="heroCta">
-          <div class="cta-row">
-            <button class="btn btn-primary" type="button" data-reserve>Reservar mesa</button>
-            <a class="btn" href="tel:+34600000000" data-calla aria-describedby="ctaNote">Llamar al 600 000 000</a>
-            <span class="callpill" data-calld hidden><span class="numtxt">600 000 000</span><button class="copyseg" type="button" data-copynum aria-label="Copiar número">Copiar</button></span>
+<main>
+<section class="hero" id="inicio" aria-label="Presentación">
+  <div class="hero-pin">
+    <div class="hero-photo"><img src="https://images.unsplash.com/photo-1769767677849-668341f05f62?w=1800&q=70&auto=format&fit=crop" alt="" fetchpriority="high" width="1800" height="1200"></div>
+    <canvas id="bubbles" aria-hidden="true"></canvas>
+    <div class="hero-in">
+      <h1 class="pour" id="pour"><span>Dos</span><span>Dedos</span><span class="sr"> · Cervecería en Madrid</span></h1>
+      <div class="hero-row">
+        <div>
+          <p>Cañas bien tiradas, marisco al peso y tapas de siempre, en una barra de zinc en el centro de Madrid.</p>
+          <div class="hero-cta">
+            <a class="btn btn-amber" href="#reservar">Reservar mesa</a>
+            <a class="btn btn-ghost" href="#grifos">Ver los grifos</a>
           </div>
-          <p class="cta-note"><span id="ctaNote">Abierto todos los días</span><a class="link ul" href="#visita">Cómo llegar</a></p>
+          <p class="status" id="heroStatus">Horario de hoy</p>
         </div>
-      </div>
-      <div class="stagebox">
-        <div class="stage" id="stage"><div class="pint" id="pint" role="group" tabindex="0" aria-label="Caña de cerveza ilustrada. Se llena a medida que bajas por la página." aria-describedby="hint" data-cur="Arrastra">
-  <svg id="pintsvg" viewBox="-30 -60 260 400" focusable="false" aria-hidden="true">
-    <defs>
-      <clipPath id="in"><path d="M31-6H169L147 270H53Z"/></clipPath>
-      <linearGradient id="beerG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="230"><stop offset="0" stop-color="#ffc83a"/><stop offset="1" stop-color="#d9770a"/></linearGradient>
-      <linearGradient id="foamG" gradientUnits="userSpaceOnUse" x1="0" y1="-60" x2="0" y2="6"><stop offset="0" stop-color="#fffdf5"/><stop offset="1" stop-color="#f0dfae"/></linearGradient>
-    </defs>
-    <rect id="pan" x="-24" y="-54" width="248" height="388" rx="28" fill="#0d1330" opacity="0"/>
-    <g id="meter" opacity="0" fill="#fffdf5">
-      <g stroke="#fffdf5" stroke-width="2"><path d="M186 270h10M186 220h10M186 170h10M186 120h10M186 70h10"/></g>
-      <path id="mk" d="M200 0l12-6v12z" transform="translate(0 270)"/>
-      <text id="pct" x="100" y="322" text-anchor="middle" font-family="Bricolage Grotesque,Arial,sans-serif" font-size="26" font-weight="500">100 %</text>
-    </g>
-    <g id="glass" transform="rotate(0 100 290)">
-      <path d="M30 20H170L150 280Q149 290 139 290H61Q51 290 50 280Z" fill="#fffdf5" fill-opacity=".1"/>
-      <g clip-path="url(#in)">
-        <g id="surf" transform="translate(0 70)">
-          <path id="beer" d="M-160 0H360V900H-160Z" fill="url(#beerG)"/>
-          <g id="foamg"><path id="foamp" d="M-160 4V-40Q31-46 31-50Q60-66 100-62Q140-66 169-50Q169-46 360-40V4Z" fill="url(#foamG)"/></g>
-        </g>
-        <g id="bubs"></g>
-        <path d="M44 24L52 24L66 262L58 262Z" fill="#fffdf5" opacity=".28"/>
-        <path d="M150 30L155 30L142 240L138 240Z" fill="#fffdf5" opacity=".14"/>
-      </g>
-      <path d="M52 270H148L150 280Q149 290 139 290H61Q51 290 50 280Z" fill="#fffdf5" fill-opacity=".28"/>
-      <path d="M30 20H170L150 280Q149 290 139 290H61Q51 290 50 280Z" fill="none" stroke="#fffdf5" stroke-width="5" stroke-linejoin="round"/>
-      <ellipse cx="100" cy="20" rx="70" ry="5" fill="none" stroke="#fffdf5" stroke-width="2" opacity=".6"/>
-      <path d="M46 36L50 36L61 208L57 208Z" fill="#fff" opacity=".5"/>
-      <g id="cond" fill="#fffdf5" opacity=".7">
-        <circle cx="62" cy="120" r="3.2"/><circle cx="78" cy="170" r="2.4"/><circle cx="122" cy="95" r="3"/><circle cx="136" cy="190" r="3.6"/>
-        <circle cx="95" cy="235" r="2.6"/><circle cx="68" cy="215" r="2"/><circle cx="143" cy="140" r="2.4"/><circle cx="108" cy="150" r="2"/><circle cx="52" cy="70" r="2"/><circle cx="150" cy="75" r="2.6"/>
-      </g>
-      <g fill="#fff" opacity=".9"><circle cx="61" cy="119" r="1"/><circle cx="121" cy="94" r="1"/><circle cx="135" cy="189" r="1.2"/><circle cx="149" cy="74" r="1"/></g>
-    </g>
-    <g id="drips" fill="#f0a020"></g>
-  </svg>
-</div></div>
-        <p class="hint ia" id="hint">Baja por la página y la caña se llena.<span class="lg"> Arrástrala para inclinarla; si te pasas, se derrama. Con teclado: flechas izquierda y derecha, y Enter para rellenar.</span></p>
-        <button class="btn ia refill" type="button" id="refill">Rellenar caña</button>
+        <div class="gauge" aria-hidden="true">
+          <div><b id="gaugeT">Tirando la caña</b><span id="gaugeS">Baja para llenarla</span></div>
+          <div class="gauge-glass"><i></i></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<main>
-  <div class="marq sec" role="marquee" aria-label="Tapas, marisco, bocadillos y cerveza">
-    <div class="bg" data-bgslot="marquee" data-scrim="dark" aria-hidden="true"><div class="decor">
-      <svg class="waves w1" viewBox="0 0 2400 200" preserveAspectRatio="none" fill="currentColor" focusable="false"><use href="#wavep"/></svg>
-      <svg class="waves w2" viewBox="0 0 2400 200" preserveAspectRatio="none" fill="currentColor" focusable="false"><use href="#wavep"/></svg>
-      <svg class="waves w3" viewBox="0 0 2400 200" preserveAspectRatio="none" fill="currentColor" focusable="false"><use href="#wavep"/></svg>
-    </div></div>
-    <div class="marq-track" id="mtrack" style="position:relative">
-      <ul>
-        <li>Tapas<svg viewBox="0 0 20 26" aria-hidden="true"><use href="#pintico"/></svg></li>
-        <li>Marisco<svg viewBox="0 0 20 26" aria-hidden="true"><use href="#lemico" y="4"/></svg></li>
-        <li>Bocadillos<svg viewBox="0 0 20 26" aria-hidden="true"><use href="#pintico"/></svg></li>
-        <li>Cerveza<svg viewBox="0 0 20 26" aria-hidden="true"><use href="#lemico" y="4"/></svg></li>
-      </ul>
-      <ul aria-hidden="true">
-        <li>Tapas<svg viewBox="0 0 20 26"><use href="#pintico"/></svg></li>
-        <li>Marisco<svg viewBox="0 0 20 26"><use href="#lemico" y="4"/></svg></li>
-        <li>Bocadillos<svg viewBox="0 0 20 26"><use href="#pintico"/></svg></li>
-        <li>Cerveza<svg viewBox="0 0 20 26"><use href="#lemico" y="4"/></svg></li>
-      </ul>
-    </div>
-  </div>
+<div class="band" aria-hidden="true"><div class="band-track" id="bandTrack"></div></div>
 
-  <section class="band sec" id="carta" aria-labelledby="carta-h">
-    <div class="bg" data-bgslot="carta" data-scrim="cream" aria-hidden="true"><div class="decor"><div class="rays"></div><div class="grain"></div></div></div>
-    <div class="wrap dk">
-      <h2 id="carta-h" class="fw">La carta</h2>
-      <div class="tabs" role="tablist" aria-label="Tapas, marisco o bocadillos" id="tabs">
-        <button class="tab" role="tab" type="button" id="t0" aria-selected="true" aria-controls="p0"><span class="lbl">Tapas</span><span class="dot" aria-hidden="true"></span></button>
-        <button class="tab" role="tab" type="button" id="t1" aria-selected="false" aria-controls="p1" tabindex="-1"><span class="lbl">Marisco</span><span class="dot" aria-hidden="true"></span></button>
-        <button class="tab" role="tab" type="button" id="t2" aria-selected="false" aria-controls="p2" tabindex="-1"><span class="lbl">Bocadillos</span><span class="dot" aria-hidden="true"></span></button>
-      </div>
-
-      <div class="tabpanel" role="tabpanel" id="p0" aria-labelledby="t0">
-        <div><p class="t">Tapas de siempre para acompañar la caña: bravas, croquetas caseras, oreja a la plancha y la tapa del día.</p><span class="tbc">Tapa con cada consumición</span></div>
-        <div class="tile ill" role="img" aria-label="Ilustración genérica de platos de tapas">
-          <svg viewBox="0 0 500 400" class="o" stroke="#0d1330" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-            <ellipse cx="170" cy="270" rx="140" ry="44" fill="#fffdf5"/><ellipse cx="170" cy="266" rx="104" ry="29" fill="#f5eedb"/>
-            <rect x="92" y="236" width="62" height="34" rx="9" fill="#f1cf8a"/><rect x="164" y="244" width="62" height="34" rx="9" fill="#f1cf8a" transform="rotate(-6 195 260)"/>
-            <path d="M120 196V258M192 202V264" fill="none"/><circle cx="120" cy="196" r="9" fill="#6b8e23"/><circle cx="192" cy="202" r="9" fill="#6b8e23"/><circle cx="120" cy="196" r="3" fill="#e9573f" stroke="none"/><circle cx="192" cy="202" r="3" fill="#e9573f" stroke="none"/>
-            <ellipse cx="365" cy="170" rx="100" ry="32" fill="#fffdf5"/><ellipse cx="365" cy="167" rx="72" ry="20" fill="#f5eedb"/>
-            <circle cx="338" cy="164" r="13" fill="#6b8e23"/><circle cx="368" cy="172" r="13" fill="#6b8e23"/><circle cx="396" cy="162" r="13" fill="#6b8e23"/><circle cx="338" cy="164" r="4" fill="#e9573f" stroke="none"/><circle cx="368" cy="172" r="4" fill="#e9573f" stroke="none"/><circle cx="396" cy="162" r="4" fill="#e9573f" stroke="none"/>
-            <ellipse cx="370" cy="316" rx="92" ry="28" fill="#fffdf5"/><ellipse cx="370" cy="313" rx="64" ry="17" fill="#f5eedb"/>
-            <path d="M318 310l30-22 22 18-30 22z" fill="#ffd23f"/><path d="M360 306l30-22 22 18-30 22z" fill="#f1cf8a"/>
-            <path d="M60 110l28-40 26 40z" fill="#ffd23f"/><path d="M72 100h32M80 86h16" fill="none"/>
-          </svg>
-        </div>
-      </div>
-
-      <div class="tabpanel" role="tabpanel" id="p1" aria-labelledby="t1">
-        <div><p class="t">Marisco y pescado: gambas a la plancha, sepia, calamares y mejillones, para compartir en la barra o en la mesa.</p><span class="tbc">Producto fresco cada día</span></div>
-        <div class="tile ill b" role="img" aria-label="Ilustración genérica de una fuente de marisco">
-          <svg viewBox="0 0 500 400" stroke="#0d1330" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-            <ellipse cx="250" cy="250" rx="220" ry="98" fill="#fffdf5"/><ellipse cx="250" cy="244" rx="176" ry="70" fill="#f5eedb"/>
-            <g fill="#f1cf8a"><circle cx="160" cy="226" r="22"/><circle cx="212" cy="214" r="22"/><circle cx="268" cy="232" r="22"/></g><g fill="#f5eedb"><circle cx="160" cy="226" r="8"/><circle cx="212" cy="214" r="8"/><circle cx="268" cy="232" r="8"/></g>
-            <g fill="#e9573f"><path d="M300 190c0-24 40-30 54-6 8 14 0 28-12 26 6-10 0-22-12-20-12 2-14 18-30 0z"/><path d="M180 270c0-22 36-28 50-6 8 12 0 26-11 24 6-10 0-20-11-18-11 2-13 16-28 0z"/><path d="M310 270c0-22 36-28 50-6 8 12 0 26-11 24 6-10 0-20-11-18-11 2-13 16-28 0z"/></g>
-            <path d="M326 192l8 10M336 188l6 12M200 266l8 10M210 262l6 12M334 266l8 10M344 262l6 12" fill="none"/>
-            <g fill="#1432a8"><path d="M110 258c0-26 40-30 50-6 4 12-6 22-26 22s-24-6-24-16z"/><path d="M370 232c0-26 40-30 50-6 4 12-6 22-26 22s-24-6-24-16z"/></g><path d="M120 256l30 4M380 230l30 4" fill="none" stroke="#fffdf5" stroke-width="2"/>
-            <g fill="#ffd23f"><path d="M70 300a30 30 0 0160-0z" transform="rotate(-12 100 300)"/><path d="M380 304a30 30 0 0160 0z" transform="rotate(10 410 304)"/></g>
-            <g fill="#6b8e23"><path d="M236 180l10-22 10 22-10 6zM256 184l16-18 6 22-12 4z"/></g>
-          </svg>
-        </div>
-      </div>
-
-      <div class="tabpanel" role="tabpanel" id="p2" aria-labelledby="t2">
-        <div><p class="t">Bocadillos y platos combinados: calamares, lomo con queso, tortilla y el combinado de la casa.</p><span class="tbc">También para llevar</span></div>
-        <div class="tile ill c" role="img" aria-label="Ilustración genérica de un bocadillo">
-          <svg viewBox="0 0 500 400" stroke="#0d1330" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
-            <path d="M70 250q0-36 40-36h280q40 0 40 36v18H70z" fill="#d89b4a"/>
-            <path d="M82 270q20 22 44 0t44 0 44 0 44 0 44 0 44 0 44 0 24-2v16H70v-14z" fill="#6b8e23"/>
-            <g fill="#e9573f"><ellipse cx="150" cy="284" rx="34" ry="11"/><ellipse cx="250" cy="288" rx="34" ry="11"/><ellipse cx="350" cy="284" rx="34" ry="11"/></g>
-            <path d="M70 296h360v10q0 30-34 30H104q-34 0-34-30z" fill="#e8b568"/>
-            <path d="M90 214q-14-54 60-78 100-30 200 0 74 24 60 78z" fill="#e8b568"/>
-            <path d="M150 168l24 40M220 156l24 52M290 156l24 52M356 168l24 40" fill="none" stroke-width="2.5"/>
-            <path d="M430 240l30 18-34 6z" fill="#ffd23f"/>
-            <path d="M70 336h360" stroke="none"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band cream sec" id="servicios" aria-labelledby="serv-h" data-parbox>
-    <div class="bg" data-bgslot="servicios" data-scrim="cream" aria-hidden="true"><div class="decor">
-      <svg class="hbg" style="opacity:.07;position:absolute;inset:0;width:100%;height:100%" focusable="false"><rect width="100%" height="100%" fill="url(#tileC)"/></svg>
-      <div class="blob par" data-par=".12" style="width:46vw;max-width:520px;aspect-ratio:1;right:-8%;top:6%;background:rgba(20,50,168,.07)"></div>
-      <div class="blob par" data-par="-.1" style="width:30vw;max-width:340px;aspect-ratio:1;left:-6%;bottom:8%;background:rgba(240,160,32,.16)"></div>
-      <div class="blob par" data-par=".2" style="width:16vw;max-width:170px;aspect-ratio:1;left:46%;top:36%;background:rgba(20,50,168,.06)"></div>
-      <div class="grain"></div>
-    </div></div>
-    <div class="wrap dk">
-      <h2 id="serv-h" class="fw">Para pasar un rato o llevártelo</h2>
-      <div class="scene" role="img" aria-label="Ilustración genérica de una terraza con luces y taburetes" data-tilt>
-        <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" stroke="#0d1330" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" focusable="false">
-          <rect width="1200" height="520" fill="#0c2080" stroke="none"/>
-          <g class="par" data-par=".05">
-            <rect x="0" y="130" width="1200" height="300" fill="#1432a8" stroke="none"/>
-            <g fill="#ffd23f" stroke="none" opacity=".9"><rect x="90" y="190" width="70" height="100" rx="35"/><rect x="330" y="190" width="70" height="100" rx="35"/><rect x="570" y="190" width="70" height="100" rx="35"/><rect x="810" y="190" width="70" height="100" rx="35"/><rect x="1050" y="190" width="70" height="100" rx="35"/></g>
-            <rect x="0" y="340" width="1200" height="64" fill="url(#tileF)" stroke="none" opacity=".35"/>
-          </g>
-          <g class="par bulbs" data-par=".1" fill="none">
-            <path d="M-20 70Q300 190 620 70T1220 70" stroke-width="3"/>
-            <use href="#bulb" x="120" y="128" style="--d:-.3s"/><use href="#bulb" x="260" y="150" style="--d:-1.5s"/><use href="#bulb" x="420" y="130" style="--d:-2.4s"/><use href="#bulb" x="760" y="96" style="--d:-.8s"/><use href="#bulb" x="900" y="82" style="--d:-2s"/><use href="#bulb" x="1060" y="78" style="--d:-1.1s"/>
-          </g>
-          <rect x="0" y="404" width="1200" height="116" fill="#0d1330" stroke="none"/>
-          <rect x="0" y="404" width="1200" height="116" fill="url(#tileF)" stroke="none" opacity=".18"/>
-          <g class="par" data-par="-.04">
-            <g transform="translate(300 330)"><ellipse cx="0" cy="0" rx="92" ry="20" fill="#fffdf5"/><path d="M0 20v90M-40 112h80" fill="none" stroke-width="5"/><ellipse cx="-20" cy="-6" rx="26" ry="8" fill="#f5eedb"/><circle cx="-26" cy="-14" r="8" fill="#6b8e23"/><circle cx="28" cy="-12" r="10" fill="#ffd23f"/></g>
-            <g transform="translate(860 330)"><ellipse cx="0" cy="0" rx="92" ry="20" fill="#fffdf5"/><path d="M0 20v90M-40 112h80" fill="none" stroke-width="5"/><path d="M-10-4l8-28h16l8 28z" fill="#ffc83a"/></g>
-          </g>
-          <g class="par" data-par="-.09">
-            <g fill="#ffd23f"><g transform="translate(150 380)"><ellipse rx="40" ry="11"/><path d="M-30 8l-10 100M30 8l10 100M0 11V110" fill="none"/><path d="M-36 66q36 12 72 0" fill="none"/></g>
-            <g transform="translate(470 392)"><ellipse rx="40" ry="11"/><path d="M-30 8l-10 100M30 8l10 100M0 11V110" fill="none"/><path d="M-36 66q36 12 72 0" fill="none"/></g>
-            <g transform="translate(700 392)"><ellipse rx="40" ry="11"/><path d="M-30 8l-10 100M30 8l10 100M0 11V110" fill="none"/><path d="M-36 66q36 12 72 0" fill="none"/></g>
-            <g transform="translate(1040 380)"><ellipse rx="40" ry="11"/><path d="M-30 8l-10 100M30 8l10 100M0 11V110" fill="none"/><path d="M-36 66q36 12 72 0" fill="none"/></g></g>
-          </g>
-        </svg>
-      </div>
-      <p class="cap">Terraza, barra y buen ambiente, de la mañana a la noche.</p>
-      <ul class="cards">
-        <li class="card" data-tilt><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><div><h3>Terraza</h3><p>Al sol de día y con luces de noche.</p></div></li>
-        <li class="card" data-tilt><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><div><h3>Comida para llevar</h3><p>Pide en barra o por teléfono.</p></div></li>
-        <li class="card no" data-tilt><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--grey)"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg><div><h3>Sin reparto a domicilio</h3><p>Ven a por tu pedido: te lo tenemos listo.</p></div></li>
-        <li class="card" data-tilt><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="1.8"/><path d="M12 8v6h5l2 6M12 11H8M9 14a4 4 0 104 6"/></svg><div><h3>Accesible en silla de ruedas</h3><p>Entrada sin escalones.</p></div></li>
-        <li class="card" data-tilt><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19"/></svg><div><h3>Se acepta tarjeta</h3><p>Tarjeta, móvil y efectivo.</p></div></li>
-      </ul>
-      <p class="svc-note"><strong>¿Celebras algo?</strong> Preparamos raciones para grupos y reservamos zona en la terraza.</p>
-    </div>
-  </section>
-
-  <section class="band sec" id="fotos" aria-labelledby="fotos-h" data-parbox>
-    <div class="bg" data-bgslot="fotos" data-scrim="cream" aria-hidden="true"><div class="decor">
-      <div class="pool par" data-par=".15" style="width:60vw;max-width:720px;aspect-ratio:1.4;left:-10%;top:0"></div>
-      <div class="pool par" data-par="-.12" style="width:46vw;max-width:560px;aspect-ratio:1.2;right:-8%;bottom:-6%;animation-duration:31s;background:rgba(20,50,168,.1)"></div>
-      <div class="grain"></div>
-    </div></div>
-    <div class="wrap dk">
-      <h2 id="fotos-h" class="fw">Fotos</h2>
-      <ul class="gallery" id="gallery">
-        <!-- Placeholder tiles (replaced by real photos when PHOTOS has entries) -->
-        <li class="w2 h2x"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Tu foto aquí</div></li>
-        <li><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Tu foto aquí</div></li>
-        <li><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Tu foto aquí</div></li>
-        <li class="w2"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Tu foto aquí</div></li>
-        <li><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Tu foto aquí</div></li>
-        <li><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Tu foto aquí</div></li>
-      </ul>
-      <p class="gnote" id="gnote">Toca una foto para verla más grande.</p>
-    </div>
-  </section>
-
-  <section class="band cobalt visit sec" id="visita" aria-labelledby="visit-h">
-    <div class="bg" data-bgslot="visita" data-scrim="dark" aria-hidden="true"><div class="decor">
-      <canvas class="bgc" data-bubbles="255,253,245" data-a=".18" data-n="22"></canvas>
-      <svg class="waves w1" viewBox="0 0 2400 200" preserveAspectRatio="none" fill="currentColor" focusable="false"><use href="#wavep"/></svg>
-      <svg class="waves w2" viewBox="0 0 2400 200" preserveAspectRatio="none" fill="currentColor" focusable="false"><use href="#wavep"/></svg>
-      <div class="grain" style="opacity:.14"></div>
-    </div></div>
-    <div class="wrap dk vgrid">
+<section class="grifos sec" id="grifos" aria-labelledby="grifos-h">
+  <div class="wrap">
+    <div class="grifos-head">
       <div>
-        <h2 id="visit-h" class="fw">Ven a vernos</h2>
-        <div class="block">
-          <h3>Dirección</h3>
-          <address><a href="https://www.google.com/maps/search/?api=1&amp;query=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener"><span>Calle Ejemplo&nbsp;1</span><span>28001 Madrid</span></a></address>
-          <p class="tbcrow"><span class="tbc">A 5 minutos de Sol</span></p>
-          <div class="actions">
-            <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Abrir en Maps</a>
-            <button class="btn" type="button" data-copy>Copiar dirección</button>
+        <h2 id="grifos-h">Hoy en el grifo</h2>
+        <p class="lead">Ocho grifos que cambiamos cada semana. Toca uno para ver cómo es y en qué vaso lo quieres.</p>
+      </div>
+    </div>
+    <div class="filters" role="group" aria-label="Filtrar cervezas" id="filters">
+      <button class="chip" type="button" data-f="all" aria-pressed="true">Todas</button>
+      <button class="chip" type="button" data-f="suave" aria-pressed="false">Suaves</button>
+      <button class="chip" type="button" data-f="tostada" aria-pressed="false">Tostadas y negras</button>
+      <button class="chip" type="button" data-f="lupulo" aria-pressed="false">Con lúpulo</button>
+      <button class="chip" type="button" data-f="sin" aria-pressed="false">Sin alcohol</button>
+    </div>
+    <div class="taps" id="taps" role="group" aria-label="Grifos"></div>
+
+    <article class="pint" id="pint" aria-live="polite">
+      <div class="pint-photo" id="pintPhoto"><img id="pintImg" src="" alt="" width="900" height="1125"><span class="tint"></span></div>
+      <div>
+        <h3 id="pintName"></h3>
+        <p class="pint-style" id="pintStyle"></p>
+        <p class="pint-note" id="pintNote"></p>
+        <div class="facts">
+          <div><b class="num" id="pintAbv"></b>alcohol</div>
+          <div>Amargor<div class="scale" id="pintBit"></div></div>
+          <div>Cuerpo<div class="scale" id="pintBody"></div></div>
+        </div>
+        <div class="sizes" role="radiogroup" aria-label="Tamaño" id="sizes"></div>
+        <div class="pint-buy">
+          <span class="price num" id="pintPrice"></span>
+          <button class="btn btn-amber" type="button" id="pintAdd">Añadir a la ronda</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="mapa sec" id="mapa" aria-labelledby="mapa-h">
+  <div class="wrap mapa-grid">
+    <div>
+      <h2 id="mapa-h">¿No sabes cuál pedir?</h2>
+      <p class="lead">Arrastra el círculo a tu gusto: más amarga o más suave, más ligera o con más cuerpo. Te decimos cuál es la tuya.</p>
+      <div class="presets" id="presets">
+        <button class="chip" type="button" data-x=".2" data-y=".18">Algo fresquito</button>
+        <button class="chip" type="button" data-x=".55" data-y=".26">Para el marisco</button>
+        <button class="chip" type="button" data-x=".58" data-y=".88">Para la sobremesa</button>
+      </div>
+      <div class="match" id="match" aria-live="polite">
+        <img id="mImg" src="" alt="" width="200" height="250">
+        <div>
+          <small>Te va</small>
+          <h3 id="mName"></h3>
+          <p id="mWhy"></p>
+          <div class="match-act">
+            <button class="btn btn-amber" type="button" id="mAdd">Añadir una caña</button>
+            <a class="btn btn-ghost" href="#grifos" id="mSee">Verla en el grifo</a>
           </div>
         </div>
-        <div class="block">
-          <h3>Teléfono</h3>
-          <a class="phone" href="tel:+34600000000" data-calla>600 000 000</a>
-          <span class="phone" data-calld hidden>600 000 000</span>
-          <p class="tbcrow"><a class="link ul" href="mailto:hola@tunegocio.es">hola@tunegocio.es</a></p>
-          <div class="actions" data-calld hidden><button class="btn" type="button" data-copynum>Copiar número</button></div>
-        </div>
-        <div class="resbox">
-          <span class="tbc">Reserva online</span>
-          <p style="margin-top:.8rem">Pide tu mesa desde la web en menos de un minuto. Para grupos de más de 12 personas, llámanos.</p>
-          <button class="btn btn-primary" type="button" data-reserve>Reservar mesa</button>
-        </div>
-      </div>
-      <div class="hours">
-        <h3>Horario</h3>
-        <dl>
-          <div class="row" data-d="1,2,3,4" style="--a:6.25%;--b:96.9%"><dt>Lunes a jueves</dt><dd>10:00 a 00:30</dd></div>
-          <div class="row" data-d="5,6" style="--a:6.25%;--b:96.9%"><dt>Viernes y sábado</dt><dd>10:00 a 00:30</dd></div>
-          <div class="row" data-d="0" style="--a:6.25%;--b:56.3%"><dt>Domingo</dt><dd>10:00 a 18:00</dd></div>
-        </dl>
-        <p>Cocina abierta todo el día. Festivos, consulta el horario por teléfono.</p>
       </div>
     </div>
-  </section>
-
-  <section class="band brindis sec" aria-labelledby="salud">
-    <div class="bg" data-bgslot="brindis" data-scrim="cream" aria-hidden="true"><div class="decor">
-      <canvas class="bgc" data-bubbles="20,50,168" data-a=".28" data-n="30" data-ring="1"></canvas>
-      <div class="grain"></div>
-    </div></div>
-    <div class="wrap dk">
-      <p class="h2 fw" id="salud">Salud</p>
-      <p>Te esperamos con la caña bien fría. La de esta página se llena según bajas, y se derrama si la inclinas demasiado.</p>
-      <button class="btn ia" type="button" id="refill2">Rellenar caña</button>
+    <div class="pad" id="pad">
+      <div class="pad-cross"></div>
+      <span class="pad-ax t">Con cuerpo</span>
+      <span class="pad-ax l">Suave y ligera</span>
+      <span class="pad-ax r">Amarga</span>
+      <div id="dots"></div>
+      <div class="puck" id="puck" role="slider" tabindex="0" aria-label="Tu gusto. Flechas izquierda y derecha: amargor. Flechas arriba y abajo: cuerpo." aria-valuemin="0" aria-valuemax="100" aria-valuenow="30" aria-valuetext="">Tú</div>
     </div>
-  </section>
-</main>
+  </div>
+</section>
 
-<footer>
-  <p><strong>Cervecería</strong> · Calle Ejemplo 1, 28001 Madrid · <a href="tel:+34600000000">+34 600 000 000</a> · <a href="mailto:hola@tunegocio.es">hola@tunegocio.es</a> · <a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener">Instagram</a></p>
-  <p>© 2026 Cervecería. Fotos de ejemplo de Unsplash.</p>
-  <p class="demo-disclaimer" style="margin:24px auto 0;padding:0 20px 8px;max-width:760px;text-align:center;font-size:12px;line-height:1.5;opacity:.65;font-family:inherit;letter-spacing:0;text-transform:none">Diseño de ejemplo. El nombre, la dirección, los precios, las reseñas y los datos de contacto o certificaciones que aparecen son ficticios y solo sirven de muestra.</p>
-</footer>
-
-<nav class="bar" id="bar" aria-label="Contacto rápido">
-  <a class="bb call" href="tel:+34600000000" data-calla>Llamar<small>600 000 000</small></a>
-  <button class="bb call" type="button" data-copynum data-calld hidden>Copiar número<small>600 000 000</small></button>
-  <button class="bb" type="button" data-reserve>Reservar mesa<small>online</small></button>
-  <a class="bb" href="https://www.google.com/maps/search/?api=1&amp;query=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener">Cómo llegar<small>abre el mapa</small></a>
-</nav>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<!-- Reservation dialog: DEMO only -->
-<dialog id="resDlg" aria-labelledby="resT" aria-describedby="resD">
-  <div class="dlg-in">
-    <div class="dlg-head"><span class="tbc">Demostración</span><button class="x" type="button" data-close aria-label="Cerrar"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15"/></svg></button></div>
-    <h2 id="resT">Reservar mesa</h2>
-    <div id="resFormWrap">
-      <p class="intro" id="resD">Formulario de ejemplo: no se envía nada. En la web real, la solicitud llega al local al momento.</p>
-      <form id="resForm" novalidate>
-        <div class="errsum" id="resErrs" role="alert" hidden></div>
-        <div class="f"><label for="r-name">Nombre</label><input id="r-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name"><p class="err" id="e-name" hidden></p></div>
-        <div class="f"><label for="r-phone">Teléfono</label><input id="r-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="e-phone"><p class="err" id="e-phone" hidden></p></div>
-        <div class="f"><label for="r-email">Correo electrónico <span class="opt">(opcional)</span></label><input id="r-email" name="email" type="email" autocomplete="email" aria-describedby="e-email"><p class="err" id="e-email" hidden></p></div>
-        <div class="frow">
-          <div class="f"><label for="r-date">Fecha</label><input id="r-date" name="date" type="date" required aria-describedby="e-date"><p class="err" id="e-date" hidden></p></div>
-          <div class="f"><label for="r-time">Hora</label><input id="r-time" name="time" type="time" required aria-describedby="e-time"><p class="err" id="e-time" hidden></p></div>
+<section class="barra sec" id="barra" aria-labelledby="barra-h">
+  <div class="dado" aria-hidden="true"></div>
+  <div class="wrap">
+    <h2 id="barra-h">La barra</h2>
+    <p class="lead">Marisco al peso, que pesamos delante de ti, y tapas de toda la vida para acompañar.</p>
+    <div class="barra-grid">
+      <div class="bascula" aria-labelledby="bas-h">
+        <h3 class="sr" id="bas-h">Marisco al peso</h3>
+        <div class="bas-pick" role="radiogroup" aria-label="Marisco" id="basPick"></div>
+        <div class="bas-body">
+          <div class="bas-photo"><img id="basImg" src="" alt="" width="700" height="875"></div>
+          <div class="bas-read">
+            <h3 id="basName"></h3>
+            <p class="per num" id="basPer"></p>
+            <label class="sr" for="basRange">Peso en gramos</label>
+            <input class="range" type="range" id="basRange" min="100" max="1000" step="50" value="300">
+            <p class="bas-hint" id="basHint"></p>
+            <div class="display" aria-live="polite">
+              <div class="w num"><span id="basW">300</span><small>g</small></div>
+              <div class="eur"><span>En la báscula</span><b class="num" id="basEur"></b></div>
+            </div>
+          </div>
         </div>
-        <div class="f"><label for="r-people">Número de personas</label><input id="r-people" name="people" type="number" min="1" max="12" value="2" inputmode="numeric" required aria-describedby="e-people"><p class="err" id="e-people" hidden></p></div>
-        <div class="f"><label for="r-notes">Notas <span class="opt">(opcional)</span></label><textarea id="r-notes" name="notes" rows="3"></textarea></div>
-        <button class="btn btn-primary" type="submit">Enviar solicitud de prueba</button>
+        <div class="bas-act">
+          <button class="btn btn-ink" type="button" id="basAdd">Añadir a la ronda</button>
+          <button class="pair" type="button" id="basPair"></button>
+        </div>
+      </div>
+      <div class="tapas">
+        <h3 class="t">Para picar</h3>
+        <ul class="tapas-list" id="tapas"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="espacios sec" id="espacios" aria-labelledby="esp-h">
+  <div class="wrap">
+    <h2 id="esp-h">Dónde te sientas</h2>
+    <p class="lead" style="color:#e4ddd4">De pie en la barra, en el comedor o fuera en la terraza. Toca uno para elegirlo al reservar.</p>
+    <div class="salas" id="salas" role="radiogroup" aria-label="Sitio">
+      <button class="sala on" type="button" role="radio" aria-checked="true" data-sala="Barra">
+        <img src="https://images.unsplash.com/photo-1546622891-02c72c1537b6?w=1200&q=70&auto=format&fit=crop" alt="Camarero tirando una caña en la barra" loading="lazy" width="1200" height="800">
+        <span class="sala-t"><b>Barra</b><span>De pie o en taburete, junto a los grifos y el marisco. Para 2 a 6 personas.</span></span>
+      </button>
+      <button class="sala" type="button" role="radio" aria-checked="false" data-sala="Comedor">
+        <img src="https://images.unsplash.com/photo-1767096088529-1ba1ecc457ee?w=1200&q=70&auto=format&fit=crop" alt="Mesa con raciones para compartir" loading="lazy" width="1200" height="800">
+        <span class="sala-t"><b>Comedor</b><span>Mesas para comer con calma. Grupos de hasta 20 con menú para compartir.</span></span>
+      </button>
+      <button class="sala" type="button" role="radio" aria-checked="false" data-sala="Terraza">
+        <img src="https://images.unsplash.com/photo-1761427097572-25d7d64fe42b?w=1200&q=70&auto=format&fit=crop" alt="Cerveza en la terraza con luces de noche" loading="lazy" width="1200" height="800">
+        <span class="sala-t"><b>Terraza</b><span>Con luces y estufas en invierno. Abierta todo el año.</span></span>
+      </button>
+    </div>
+
+    <h3 class="semana-t">Esta semana</h3>
+    <div class="semana" id="semana"></div>
+  </div>
+</section>
+
+<section class="reservar sec" id="reservar" aria-labelledby="res-h">
+  <div class="wrap res-grid">
+    <div>
+      <h2 id="res-h">Reserva tu mesa</h2>
+      <p class="lead">Elige día, hora y sitio. Te llamamos para confirmar.</p>
+      <div class="res-ronda" id="resRonda" hidden></div>
+    </div>
+    <div id="resBox">
+      <form class="res" id="resForm" novalidate>
+        <div><span class="fl" id="dayL">Día</span><div class="rail" role="radiogroup" aria-labelledby="dayL" id="days"></div></div>
+        <div><span class="fl" id="hourL">Hora</span><div class="rail" role="radiogroup" aria-labelledby="hourL" id="hours"></div></div>
+        <div class="row2">
+          <div><span class="fl" id="paxL">Personas</span>
+            <div class="step" role="group" aria-labelledby="paxL"><button type="button" data-d="-1" aria-label="Una persona menos">−</button><output id="pax" class="num">2</output><button type="button" data-d="1" aria-label="Una persona más">+</button></div>
+          </div>
+          <div><span class="fl" id="salaL">Sitio</span><div class="rail" role="radiogroup" aria-labelledby="salaL" id="salaPick"></div></div>
+        </div>
+        <div class="row2">
+          <label class="field"><span class="fl">Nombre</span><input id="fName" name="nombre" autocomplete="name" required placeholder="Tu nombre"></label>
+          <label class="field"><span class="fl">Teléfono</span><input id="fTel" name="telefono" type="tel" autocomplete="tel" required placeholder="600 000 000"></label>
+        </div>
+        <label class="field"><span class="fl">Algo que debamos saber</span><textarea id="fNote" name="nota" placeholder="Cumpleaños, trona, alergias…"></textarea></label>
+        <div class="res-foot">
+          <button class="btn btn-ink" type="submit">Reservar mesa</button>
+          <small id="resMsg">Es un ejemplo: este formulario no envía nada.</small>
+        </div>
       </form>
     </div>
-    <div id="resOk" hidden tabindex="-1">
-      <p class="intro"><strong>Solicitud de prueba preparada.</strong> Revisa los datos.</p>
-      <dl class="sum" id="resSum"></dl>
-      <div class="demo-note" id="resNote"></div>
-      <div class="actions"><button class="btn btn-primary" type="button" data-close>Cerrar</button><button class="btn" type="button" id="resEdit">Editar solicitud</button></div>
+  </div>
+</section>
+
+<section class="visita sec" id="visita" aria-labelledby="vis-h">
+  <div class="wrap">
+    <h2 id="vis-h">Ven a vernos</h2>
+    <div class="vis-grid">
+      <div>
+        <h3>Horario</h3>
+        <ul class="hours" id="hoursList"></ul>
+        <p class="status" id="visStatus"></p>
+      </div>
+      <div>
+        <h3>Dónde</h3>
+        <p class="addr">Calle Ejemplo, 1<br>28013 Madrid</p>
+        <div class="vis-act">
+          <a class="btn btn-amber" href="https://www.google.com/maps/search/?api=1&query=Puerta%20del%20Sol%2C%20Madrid" target="_blank" rel="noopener">Cómo llegar</a>
+          <button class="btn btn-ghost" type="button" id="copyAddr">Copiar dirección</button>
+        </div>
+        <p class="vis-note">Metro Sol, líneas 1, 2 y 3. A dos minutos andando.</p>
+      </div>
+      <div>
+        <h3>Llámanos</h3>
+        <a class="phone num" id="phone" href="tel:+34600000000">600 000 000</a>
+        <div class="vis-act">
+          <button class="btn btn-ghost" type="button" id="copyTel">Copiar número</button>
+          <a class="btn btn-ghost" href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+        <p class="vis-note">Grupos de más de 10, mejor por teléfono.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-in">
+      <a class="logo" href="#inicio">Dos Dedos</a>
+      <p>Cervecería en Madrid. <a href="#reservar">Reservar mesa</a></p>
+    </div>
+    <p class="demo">Diseño de ejemplo. El nombre, la dirección, los precios, las reseñas y los datos de contacto o certificaciones que aparecen son ficticios y solo sirven de muestra.</p>
+  </div>
+</footer>
+
+<button class="ronda-pill" type="button" id="rondaPill" aria-haspopup="dialog"><span class="cnt num" id="rCnt">0</span><span>Tu ronda <span class="num" id="rPillTot"></span></span></button>
+<dialog class="ronda" id="ronda" aria-labelledby="ronda-h">
+  <div class="r-in">
+    <div class="r-head"><h2 id="ronda-h">Tu ronda</h2><button class="x" type="button" id="rClose" aria-label="Cerrar">×</button></div>
+    <ul class="r-list" id="rList"></ul>
+    <div class="r-foot">
+      <div class="r-tot"><span>Total</span><b class="num" id="rTot">0,00 €</b></div>
+      <div class="bote">
+        <p>Bote entre <span class="num" id="rPax">2</span><b class="num" id="rEach">0,00 € cada uno</b></p>
+        <div class="step" role="group" aria-label="Personas en el bote"><button type="button" data-b="-1" aria-label="Una persona menos">−</button><output id="rPaxO" class="num">2</output><button type="button" data-b="1" aria-label="Una persona más">+</button></div>
+      </div>
+      <div class="r-act">
+        <button class="btn btn-ink" type="button" id="rBook">Reservar con esta ronda</button>
+        <button class="btn btn-line" type="button" id="rClear">Vaciar</button>
+      </div>
     </div>
   </div>
 </dialog>
-
-<dialog id="lb" class="lb" aria-label="Galería de fotos">
-  <div class="dlg-in">
-    <div class="dlg-head"><span id="lbCount" aria-live="polite"></span><button class="x" type="button" data-close aria-label="Cerrar galería"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15"/></svg></button></div>
-    <figure><img id="lbImg" alt="" width="1200" height="800"><figcaption id="lbCap"></figcaption></figure>
-    <div class="lbnav"><button class="btn" type="button" id="lbPrev">Anterior</button><button class="btn" type="button" id="lbNext">Siguiente</button></div>
-  </div>
-</dialog>
-
-<div class="cur" id="cur" aria-hidden="true" hidden></div>
-
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 (function(){
-  "use strict";
-  var root=document.documentElement;
-  root.classList.remove('no-js');root.classList.add('js');
-  var $=function(s,c){return (c||document).querySelector(s)};
-  var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
-  var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
-  var lerp=function(a,b,t){return a+(b-a)*t};
-  var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine=window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  var touch=window.matchMedia('(hover:none) and (pointer:coarse)').matches;
-  var NS='http://www.w3.org/2000/svg';
+'use strict';
+// ---------- helpers ----------
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var TOUCH=window.matchMedia('(hover:none) and (pointer:coarse)').matches;
+var U=function(id,w){return 'https://images.unsplash.com/photo-'+id+'?w='+w+'&q=72&auto=format&fit=crop'};
+var eur=function(n){return n.toFixed(2).replace('.',',')+' €'};
+var clamp=function(v,a,b){return Math.max(a,Math.min(b,v))};
+var toastT;
+function toast(msg){var t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('show')},2400)}
+function copy(text,msg){
+  var done=function(){toast(msg)};
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(done,function(){fallback()})}else{fallback()}
+  function fallback(){var a=document.createElement('textarea');a.value=text;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove();done()}
+}
 
-  /* ---------- Demo banner (template only): close removes it; resize re-docks the pint ---------- */
-  var demoX=$('#demoX');
-  if(demoX){demoX.addEventListener('click',function(){var b=$('#demoBanner');if(b)b.remove();try{window.dispatchEvent(new Event('resize'))}catch(_){}})}
+// ---------- data ----------
+var BEERS=[
+  {id:'rubia',name:'Rubia de la casa',style:'Lager',f:'suave',abv:4.8,bit:2,body:2,x:.25,y:.26,c:'#f3c544',k:72,m:1,photo:'1777558578003-e65755409d8e',note:'La de siempre: fresca, limpia y con un final seco. La que pide medio Madrid.',why:'Fresca y fácil de beber, para empezar o para toda la tarde.'},
+  {id:'pils',name:'Pilsner checa',style:'Pilsner',f:'lupulo',abv:4.4,bit:4,body:2,x:.56,y:.22,c:'#f7d75a',k:45,m:1.1,photo:'1618183479302-1e0aa382c36b',note:'Dorada y muy viva, con un amargor floral que limpia la boca. Ideal con marisco.',why:'Ligera pero con un punto amargo que va de lujo con la gamba.'},
+  {id:'trigo',name:'Trigo',style:'Weissbier',f:'suave',abv:5.2,bit:1,body:3,x:.13,y:.48,c:'#efc56c',k:88,m:1.25,photo:'1636391945755-4e260dd880cb',note:'Turbia y cremosa, con notas de plátano y clavo. Mucha espuma, poco amargor.',why:'Suave, cremosa y afrutada. Para quien no quiere nada amargo.'},
+  {id:'tostada',name:'Tostada',style:'Märzen',f:'tostada',abv:5.6,bit:2,body:4,x:.34,y:.64,c:'#c4711f',k:31,m:1.2,photo:'1586993451228-09818021e309',note:'Color cobre, sabor a pan tostado y caramelo. Redonda y con buen cuerpo.',why:'Dulce, a caramelo y con cuerpo, sin pasarse de amarga.'},
+  {id:'ipa',name:'IPA de temporada',style:'India Pale Ale',f:'lupulo',abv:6.5,bit:5,body:3,x:.86,y:.55,c:'#e3a43a',k:58,m:1.4,photo:'1600788886242-5c96aabe3757',note:'Mucho lúpulo: aroma a cítricos y fruta tropical, amargor largo. Cambia cada mes.',why:'Para los que buscan amargor y aroma de verdad.'},
+  {id:'roja',name:'Roja',style:'Irish Red Ale',f:'tostada',abv:5,bit:3,body:3,x:.47,y:.48,c:'#9c3d1a',k:64,m:1.2,photo:'1774109078105-83b89022a6d0',note:'Rojiza, con malta tostada y un final seco. El término medio de la carta.',why:'Ni muy suave ni muy amarga: el punto justo en todo.'},
+  {id:'stout',name:'Stout',style:'Stout seca',f:'tostada',abv:6,bit:4,body:5,x:.57,y:.9,c:'#2a140b',k:22,m:1.35,photo:'1704431990600-3679fea86516',note:'Negra, con espuma color crema. Café, cacao y un amargor tostado.',why:'Negra y con mucho cuerpo, a café y cacao. Para la sobremesa.'},
+  {id:'sin',name:'Sin alcohol',style:'Lager 0,0',f:'sin',abv:0,bit:2,body:1,x:.2,y:.1,c:'#f4cf5e',k:80,m:.95,photo:'1608270586620-248524c67de9',note:'Todo el sabor de una rubia, sin alcohol. Bien fría y bien tirada, como las demás.',why:'Ligera y sin alcohol, con el sabor de la rubia de siempre.'}
+];
+var SIZES=[
+  {id:'cana',name:'Caña',ml:'200 ml',p:2.2,svg:'<svg width="22" height="30" viewBox="0 0 22 30"><path d="M2 2h18l-2 25a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 27z"/><path d="M3 8h16"/></svg>'},
+  {id:'tubo',name:'Tubo',ml:'300 ml',p:2.9,svg:'<svg width="20" height="42" viewBox="0 0 20 42"><path d="M2 2h16v37a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 39z"/><path d="M2 9h16"/></svg>'},
+  {id:'pinta',name:'Pinta',ml:'500 ml',p:4.5,svg:'<svg width="26" height="50" viewBox="0 0 26 50"><path d="M2 2h22l-1.5 9-2.5 36a1.5 1.5 0 0 1-1.5 1.5H7.5A1.5 1.5 0 0 1 6 47L3.5 11z"/><path d="M3 10h20"/></svg>'},
+  {id:'jarra',name:'Jarra',ml:'1 litro',p:8.4,svg:'<svg width="40" height="56" viewBox="0 0 40 56"><path d="M3 3h26v48a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M29 14h4a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4h-4"/><path d="M3 11h26"/><path d="M10 17v28M16 17v28M22 17v28"/></svg>'}
+];
+var MAR=[
+  {id:'roja',name:'Gamba roja a la plancha',kg:56,photo:'1559737558-2f5a35f4523b',alt:'Gambas rojas a la plancha con limón',pair:'pils'},
+  {id:'blanca',name:'Gamba blanca cocida',kg:64,photo:'1548587468-971ebe4c8c3b',alt:'Gambas cocidas sobre hielo',pair:'rubia'},
+  {id:'almejas',name:'Almejas a la marinera',kg:38,photo:'1763575392558-7a83929678fd',alt:'Almejas recién hechas',pair:'trigo'}
+];
+var TAPAS=[
+  {id:'bravas',name:'Patatas bravas',p:6.5,photo:'1565599837634-134bc3aadce8',alt:'Patatas bravas con salsa'},
+  {id:'croquetas',name:'Croquetas de jamón (4)',p:8,photo:'1767974963436-2208b3553561',alt:'Croquetas caseras en un plato'},
+  {id:'padron',name:'Pimientos de Padrón',p:6,photo:'1709740198353-df155e1acf36',alt:'Pimientos de Padrón en cazuela de barro'},
+  {id:'mejillones',name:'Mejillones al vapor',p:9.5,photo:'1757972367630-fbfcec63bb41',alt:'Mejillones al vapor con hierbas'},
+  {id:'montaditos',name:'Montaditos del día (4)',p:7.5,photo:'1761110429384-0678d7015545',alt:'Montaditos sobre una tabla de madera'},
+  {id:'bacalao',name:'Croquetas de bacalao (4)',p:8.5,photo:'1626011852881-4609127619a8',alt:'Croquetas de bacalao en un plato'}
+];
+var beerById=function(id){for(var i=0;i<BEERS.length;i++)if(BEERS[i].id===id)return BEERS[i]};
 
-  /* ---------- Toast + copy ---------- */
-  var toast=$('#toast'),tt;
-  function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},2600)}
-  function legacy(t){var ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0;top:0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}ta.remove();return ok}
-  function copy(text,okMsg){
-    var done=function(ok){say(ok?okMsg:'No se pudo copiar. Selecciona el texto y cópialo a mano.')};
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){done(true)},function(){done(legacy(text))})}
-    else done(legacy(text));
-  }
-  $$('[data-copy]').forEach(function(b){b.addEventListener('click',function(){copy(ADDRESS,'Dirección copiada')})});
-  $$('[data-copynum]').forEach(function(b){b.addEventListener('click',function(){copy(PHONE_COPY,'Número copiado')})});
-
-  /* ---------- Call: real tel: link on touch, text + copy button on desktop ---------- */
-  $$('[data-calla]').forEach(function(e){e.hidden=!touch});
-  $$('[data-calld]').forEach(function(e){e.hidden=touch});
-
-  /* ---------- Today's row ---------- */
-  /* "hoy" follows Madrid's calendar day (not the visitor's time zone); falls back to the device day */
-  var day=new Date().getDay();
-  try{day=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(new Intl.DateTimeFormat('en-GB',{weekday:'short',timeZone:'Europe/Madrid'}).format(new Date()));if(day<0)day=new Date().getDay()}catch(_){}
-  $$('.hours .row').forEach(function(r){
-    if(r.getAttribute('data-d').split(',').indexOf(String(day))>-1){
-      r.classList.add('now');
-      var s=document.createElement('span');s.className='today';s.textContent='hoy';
-      $('dt',r).appendChild(s);
-    }
+// ---------- ronda (order) ----------
+var ronda=[]; var bote=2;
+function addItem(key,name,price,qty){
+  var it=null;for(var i=0;i<ronda.length;i++)if(ronda[i].key===key)it=ronda[i];
+  if(it)it.qty+=qty||1;else ronda.push({key:key,name:name,price:price,qty:qty||1});
+  renderRonda(true);toast('Añadido a la ronda: '+name);
+}
+function total(){return ronda.reduce(function(s,i){return s+i.price*i.qty},0)}
+function count(){return ronda.reduce(function(s,i){return s+i.qty},0)}
+function renderRonda(bump){
+  var pill=$('#rondaPill'),n=count();
+  $('#rCnt').textContent=n;$('#rPillTot').textContent=n?eur(total()):'';
+  pill.classList.toggle('show',n>0);
+  if(bump&&!RM){pill.classList.remove('bump');void pill.offsetWidth;pill.classList.add('bump')}
+  var L=$('#rList');L.innerHTML='';
+  if(!n){L.innerHTML='<li class="r-empty">Todavía no hay nada. Añade una caña o algo de la barra.</li>'}
+  ronda.forEach(function(it,idx){
+    var li=document.createElement('li');li.className='r-item';
+    li.innerHTML='<b></b><div class="step" role="group"><button type="button" data-q="-1">−</button><output class="num">'+it.qty+'</output><button type="button" data-q="1">+</button></div><small class="num">'+eur(it.price)+' la unidad</small>';
+    li.querySelector('b').textContent=it.name;
+    li.querySelector('[data-q="-1"]').setAttribute('aria-label','Quitar una: '+it.name);
+    li.querySelector('[data-q="1"]').setAttribute('aria-label','Añadir otra: '+it.name);
+    li.querySelector('.step').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;it.qty+=+b.dataset.q;if(it.qty<1)ronda.splice(idx,1);renderRonda(false)});
+    L.appendChild(li);
   });
+  $('#rTot').textContent=eur(total());
+  $('#rPax').textContent=bote;$('#rPaxO').textContent=bote;
+  $('#rEach').textContent=eur(total()/bote)+' cada uno';
+  if(!n&&$('#ronda').open){}
+}
+$('#rondaPill').addEventListener('click',function(){$('#ronda').showModal()});
+$('#rClose').addEventListener('click',function(){$('#ronda').close()});
+$('#ronda').addEventListener('click',function(e){if(e.target===this)this.close()});
+$('.bote .step').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;bote=clamp(bote+ +b.dataset.b,1,20);renderRonda(false)});
+$('#rClear').addEventListener('click',function(){ronda=[];renderRonda(false);$('#resRonda').hidden=true;$('#ronda').close()});
+$('#rBook').addEventListener('click',function(){
+  if(!count()){toast('Añade algo a la ronda primero');return}
+  var txt=ronda.map(function(i){return i.qty+' × '+i.name}).join(', ');
+  var box=$('#resRonda');box.hidden=false;box.innerHTML='<b>Llevas preparada esta ronda</b>';box.appendChild(document.createTextNode(txt+'. Total '+eur(total())+'.'));
+  $('#fNote').value='Ronda preparada: '+txt+'.';
+  $('#ronda').close();
+  $('#reservar').scrollIntoView({behavior:RM?'auto':'smooth'});
+});
 
-  /* ---------- Tabs (Tapas / Marisco / Bocadillos) ---------- */
-  var tabs=$$('#tabs [role=tab]'),panels=$$('.tabpanel'),curTab=0;
-  function selTab(i,focus){
-    curTab=i;
-    tabs.forEach(function(t,k){t.setAttribute('aria-selected',k===i);t.tabIndex=k===i?0:-1});
-    panels.forEach(function(p,k){p.hidden=k!==i});
-    if(focus)tabs[i].focus();
-  }
-  /* Equal panel heights, so the page below never jumps when you switch tabs */
-  function evenPanels(){
-    var h=0;
-    panels.forEach(function(p){p.style.minHeight='';p.hidden=false;h=Math.max(h,p.offsetHeight)});
-    panels.forEach(function(p,k){p.style.minHeight=h+'px';p.hidden=k!==curTab});
-  }
-  selTab(0);evenPanels();
-  window.addEventListener('resize',evenPanels);
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(evenPanels);
-  tabs.forEach(function(t,i){
-    t.addEventListener('click',function(){selTab(i)});
-    t.addEventListener('keydown',function(e){
-      var n=-1;
-      if(e.key==='ArrowRight')n=(i+1)%3;else if(e.key==='ArrowLeft')n=(i+2)%3;else if(e.key==='Home')n=0;else if(e.key==='End')n=2;
-      if(n>-1){e.preventDefault();selTab(n,true)}
-    });
-  });
+// ---------- header, menu ----------
+var top=$('#top'),menuBtn=$('#menuBtn'),nav=$('#nav');
+menuBtn.addEventListener('click',function(){var o=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o);menuBtn.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú')});
+$$('#nav a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false')})});
 
-  /* ---------- Split-text headline (hero lede) ---------- */
-  (function(){
-    var el=$('#lede');if(!el||rm)return;
-    var txt=el.textContent,n=0,html='';
-    txt.split(' ').forEach(function(w){
-      html+='<span class="sw">';
-      w.split('').forEach(function(c){html+='<span style="--i:'+(n++)+'">'+c+'</span>'});
-      html+='</span> ';
-    });
-    el.innerHTML='<span class="sr">'+txt+'</span><span aria-hidden="true">'+html+'</span>';
-  })();
+// ---------- hero pour + scroll effects ----------
+var hero=$('#inicio'),pour=$('#pour'),gauge=$('.gauge'),heroImg=$('.hero-photo img');
+var fill=$('#logoFill'),foam=$('#logoFoam'),track=$('#bandTrack');
+var words=['Rubia','Pilsner','Trigo','Tostada','IPA','Roja','Stout','Sin alcohol'];
+track.innerHTML=words.concat(words,words).map(function(w){return '<span>'+w+'</span>'}).join('');
+var salas=$$('.sala');
+var intro=RM?1:0, introStart=null;
+function setLevel(l){pour.style.setProperty('--lvl',l.toFixed(2));pour.style.setProperty('--fm',Math.min(9,l*.45).toFixed(2));gauge.style.setProperty('--lvl',l.toFixed(2))}
+function frame(){
+  var vh=window.innerHeight,y=window.scrollY;
+  top.classList.toggle('solid',y>vh*.6);
+  var docH=document.documentElement.scrollHeight-vh,prog=docH>0?clamp(y/docH,0,1):0;
+  var fy=29-prog*22;fill.setAttribute('y',fy.toFixed(1));foam.setAttribute('y',(fy-4).toFixed(1));
+  if(RM){setLevel(94);$('#gaugeT').textContent='Lista: dos dedos de espuma';$('#gaugeS').textContent='Así la tiramos todas';return}
+  var span=hero.offsetHeight-vh,p=span>0?clamp(y/span,0,1):1;
+  var lvl=14*intro+p*80;setLevel(lvl);
+  hero.style.setProperty('--p',p.toFixed(3));
+  var full=p>.97;
+  $('#gaugeT').textContent=full?'Lista: dos dedos de espuma':'Tirando la caña';
+  $('#gaugeS').textContent=full?'Sigue bajando para pedir':'Baja para llenarla';
+  var br=track.parentNode.getBoundingClientRect();
+  if(br.bottom>0&&br.top<vh){var w=track.scrollWidth/3;track.style.transform='translate3d('+(-((y*.45)%w)-w*.2).toFixed(1)+'px,0,0)'}
+  salas.forEach(function(s){var r=s.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;var c=(r.top+r.height/2-vh/2)/vh;s.querySelector('img').style.setProperty('--py',(c*-40).toFixed(1)+'px')});
+}
+var ticking=false;
+function onScroll(){if(!ticking){ticking=true;requestAnimationFrame(function(){ticking=false;frame()})}}
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',onScroll);
+if(!RM){
+  // load moment: the first pour
+  var t0=performance.now();
+  (function introStep(t){intro=clamp((t-t0)/1300,0,1);intro=1-Math.pow(1-intro,3);frame();if(intro<1)requestAnimationFrame(introStep)})(t0);
+}
+frame();
 
-  /* ---------- Spotlight in hero ---------- */
-  var hero=$('#hero');
-  if(!rm&&fine){hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();hero.style.setProperty('--mx',(e.clientX-r.left)+'px');hero.style.setProperty('--my',(e.clientY-r.top)+'px')})}
+// bubbles: carbonation in the hero, paused off screen
+(function(){
+  var cv=$('#bubbles');if(RM||!cv.getContext)return;
+  var ctx=cv.getContext('2d'),bs=[],W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2),run=false,raf;
+  function size(){W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+  function mk(y){return{x:Math.random()*W,y:y==null?H+10:y,r:1+Math.random()*3.2,s:.3+Math.random()*1.1,w:Math.random()*6.28}}
+  size();var N=W<700?28:60;for(var i=0;i<N;i++)bs.push(mk(Math.random()*H));
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<bs.length;i++){var b=bs[i];b.y-=b.s;b.w+=.03;b.x+=Math.sin(b.w)*.25;if(b.y<-10)bs[i]=mk();
+      ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,6.283);ctx.strokeStyle='rgba(248,245,236,.38)';ctx.lineWidth=1;ctx.stroke();
+      ctx.beginPath();ctx.arc(b.x-b.r*.35,b.y-b.r*.35,b.r*.3,0,6.283);ctx.fillStyle='rgba(248,245,236,.5)';ctx.fill()}
+    raf=requestAnimationFrame(draw);
+  }
+  function set(on){if(on&&!run&&!document.hidden){run=true;draw()}else if(!on&&run){run=false;cancelAnimationFrame(raf)}}
+  new IntersectionObserver(function(e){set(e[0].isIntersecting)}).observe(hero);
+  document.addEventListener('visibilitychange',function(){set(!document.hidden&&hero.getBoundingClientRect().bottom>0)});
+  window.addEventListener('resize',size);
+})();
 
-  /* ---------- Tilt cards ---------- */
-  if(!rm&&fine){
-    $$('[data-tilt]').forEach(function(el){
-      el.addEventListener('pointermove',function(e){
-        var r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-        el.style.transform='perspective(800px) rotateY('+(x*7).toFixed(2)+'deg) rotateX('+(-y*7).toFixed(2)+'deg)';
-      });
-      el.addEventListener('pointerleave',function(){el.style.transform=''});
-    });
-  }
+// ---------- grifos ----------
+var cur=BEERS[0],size=SIZES[0];
+var taps=$('#taps');
+BEERS.forEach(function(b){
+  var el=document.createElement('button');el.type='button';el.className='tap';el.dataset.id=b.id;el.dataset.f=b.f;
+  el.setAttribute('aria-pressed',b===cur?'true':'false');
+  el.innerHTML='<span class="tap-handle" aria-hidden="true"></span><span class="tap-sw" style="--c:'+b.c+'" aria-hidden="true"></span><b>'+b.name+'</b><span class="abv num">'+String(b.abv).replace('.',',')+' %</span><span class="keg" aria-hidden="true"><i style="--k:'+b.k+'%"></i></span><small>Barril al '+b.k+' %</small>';
+  el.addEventListener('click',function(){selectBeer(b,true)});
+  taps.appendChild(el);
+});
+var sizesEl=$('#sizes');
+SIZES.forEach(function(s,i){
+  var el=document.createElement('button');el.type='button';el.className='size';el.setAttribute('role','radio');el.setAttribute('aria-checked',i===0?'true':'false');el.dataset.id=s.id;
+  el.innerHTML=s.svg+'<b>'+s.name+'</b><small>'+s.ml+'</small>';
+  el.addEventListener('click',function(){size=s;$$('.size').forEach(function(x){x.setAttribute('aria-checked',x===el?'true':'false')});price()});
+  sizesEl.appendChild(el);
+});
+sizesEl.addEventListener('keydown',function(e){var k=e.key,all=$$('.size'),i=all.indexOf(document.activeElement);if(i<0)return;if(k==='ArrowRight'||k==='ArrowLeft'){e.preventDefault();var n=all[(i+(k==='ArrowRight'?1:all.length-1))%all.length];n.focus();n.click()}});
+function bp(b,s){return Math.round(s.p*b.m*10)/10}
+function price(){$('#pintPrice').textContent=eur(bp(cur,size))}
+function dots(el,n){el.innerHTML='';for(var i=1;i<=5;i++){var d=document.createElement('i');if(i<=n)d.className='on';el.appendChild(d)}el.setAttribute('aria-label',n+' de 5')}
+function selectBeer(b,anim){
+  cur=b;
+  $$('.tap').forEach(function(t){t.setAttribute('aria-pressed',t.dataset.id===b.id?'true':'false')});
+  var ph=$('#pintPhoto'),img=$('#pintImg');
+  img.src=U(b.photo,900);img.alt=b.name+', '+b.style;
+  ph.style.setProperty('--c',b.c);
+  if(anim&&!RM){ph.classList.remove('pouring');void ph.offsetWidth;ph.classList.add('pouring');setTimeout(function(){ph.classList.remove('pouring')},950)}
+  $('#pintName').textContent=b.name;$('#pintStyle').textContent=b.style;$('#pintNote').textContent=b.note;
+  $('#pintAbv').textContent=String(b.abv).replace('.',',')+' %';
+  dots($('#pintBit'),b.bit);dots($('#pintBody'),b.body);price();
+}
+$('#pintAdd').addEventListener('click',function(){addItem(cur.id+'-'+size.id,size.name+' de '+cur.name,bp(cur,size))});
+$('#filters').addEventListener('click',function(e){
+  var c=e.target.closest('.chip');if(!c)return;var f=c.dataset.f;
+  $$('#filters .chip').forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});
+  var first=null;
+  $$('.tap').forEach(function(t){var on=f==='all'||t.dataset.f===f;t.classList.toggle('dim',!on);if(on&&!first)first=t});
+  if(first&&f!=='all'&&beerById(first.dataset.id).f!==cur.f){selectBeer(beerById(first.dataset.id),true)}
+  if(first){taps.scrollTo({left:first.offsetLeft-taps.offsetLeft-2,behavior:RM?'auto':'smooth'})}
+});
+selectBeer(cur,false);
 
-  /* ---------- Custom cursor (desktop only) ---------- */
-  var cur=$('#cur');
-  if(!rm&&fine){
-    /* stays hidden until the first pointer move (it used to sit, a quarter visible, in the top-left corner) */
-    var cx=-100,cy=-100,tx=-100,ty=-100,curRaf=0;
-    cur.style.transform='translate(-100px,-100px)';
-    window.addEventListener('pointermove',function(){cur.hidden=false},{once:true,passive:true});
-    /* single rAF loop that stops as soon as the ring has caught up with the pointer */
-    function mv(){curRaf=0;cx+=(tx-cx)*.22;cy+=(ty-cy)*.22;
-      if(Math.abs(tx-cx)<.3&&Math.abs(ty-cy)<.3){cx=tx;cy=ty}
-      cur.style.transform='translate('+cx.toFixed(1)+'px,'+cy.toFixed(1)+'px)';
-      if((cx!==tx||cy!==ty)&&!document.hidden)curRaf=requestAnimationFrame(mv)}
-    window.addEventListener('pointermove',function(e){tx=e.clientX;ty=e.clientY;
-      var t=e.target.closest?e.target.closest('a,button,[data-cur],input,textarea,[role=tab]'):null;
-      var lb=t&&t.getAttribute('data-cur');
-      cur.classList.toggle('big',!!t&&!lb);cur.classList.toggle('lbl',!!lb);cur.textContent=lb||'';
-      if(!curRaf)curRaf=requestAnimationFrame(mv);
-    },{passive:true});
+// ---------- flavour pad ----------
+var pad=$('#pad'),puck=$('#puck'),dotsEl=$('#dots'),pos={x:.3,y:.3},near=null;
+BEERS.forEach(function(b){var d=document.createElement('div');d.className='dot';d.dataset.id=b.id;d.style.left=(8+b.x*84)+'%';d.style.top=(92-b.y*84)+'%';d.innerHTML='<i style="--c:'+b.c+'"></i><span>'+b.name.replace(' de la casa','').replace(' de temporada','')+'</span>';dotsEl.appendChild(d)});
+function placePuck(){
+  puck.style.left=(8+pos.x*84)+'%';puck.style.top=(92-pos.y*84)+'%';
+  var best=null,bd=9;BEERS.forEach(function(b){var d=Math.pow(b.x-pos.x,2)+Math.pow(b.y-pos.y,2);if(d<bd){bd=d;best=b}});
+  puck.setAttribute('aria-valuenow',Math.round(pos.x*100));
+  puck.setAttribute('aria-valuetext','Amargor '+Math.round(pos.x*100)+' de 100, cuerpo '+Math.round(pos.y*100)+' de 100. Te va: '+best.name);
+  if(best!==near){near=best;
+    $$('.dot').forEach(function(d){d.classList.toggle('near',d.dataset.id===best.id)});
+    $('#mImg').src=U(best.photo,240);$('#mImg').alt=best.name;$('#mName').textContent=best.name;$('#mWhy').textContent=best.why;
   }
+}
+function fromEvent(e){var r=pad.getBoundingClientRect();pos.x=clamp(((e.clientX-r.left)/r.width-.08)/.84,0,1);pos.y=clamp((.92-(e.clientY-r.top)/r.height)/.84,0,1);placePuck()}
+var dragging=false;
+pad.addEventListener('pointerdown',function(e){dragging=true;pad.setPointerCapture(e.pointerId);fromEvent(e);e.preventDefault()});
+pad.addEventListener('pointermove',function(e){if(dragging)fromEvent(e)});
+pad.addEventListener('pointerup',function(){dragging=false});
+pad.addEventListener('pointercancel',function(){dragging=false});
+puck.addEventListener('keydown',function(e){var s=.05,k=e.key;if(k==='ArrowRight')pos.x+=s;else if(k==='ArrowLeft')pos.x-=s;else if(k==='ArrowUp')pos.y+=s;else if(k==='ArrowDown')pos.y-=s;else return;e.preventDefault();pos.x=clamp(pos.x,0,1);pos.y=clamp(pos.y,0,1);placePuck()});
+$('#presets').addEventListener('click',function(e){var c=e.target.closest('.chip');if(!c)return;pos.x=+c.dataset.x;pos.y=+c.dataset.y;placePuck()});
+$('#mAdd').addEventListener('click',function(){addItem(near.id+'-cana','Caña de '+near.name,bp(near,SIZES[0]))});
+$('#mSee').addEventListener('click',function(){selectBeer(near,true);$$('#filters .chip').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.f==='all'?'true':'false')});$$('.tap').forEach(function(t){t.classList.remove('dim')})});
+placePuck();
 
-  /* ---------- Marquee (speeds up with fill and scroll) ---------- */
-  var mAnim=null,track=$('#mtrack');
-  if(!rm&&track.animate){mAnim=track.animate([{transform:'translateX(0)'},{transform:'translateX(-50%)'}],{duration:36000,iterations:Infinity})}
+// ---------- báscula ----------
+var mar=MAR[0],range=$('#basRange');
+var pick=$('#basPick');
+MAR.forEach(function(m,i){var c=document.createElement('button');c.type='button';c.className='chip';c.setAttribute('role','radio');c.setAttribute('aria-checked',i===0?'true':'false');c.textContent=m.name;c.addEventListener('click',function(){mar=m;$$('#basPick .chip').forEach(function(x){x.setAttribute('aria-checked',x===c?'true':'false')});bascula(true)});pick.appendChild(c)});
+function bascula(newPhoto){
+  var g=+range.value,p=Math.round(mar.kg*g/100)/10;
+  if(newPhoto){$('#basImg').src=U(mar.photo,700);$('#basImg').alt=mar.alt}
+  $('#basName').textContent=mar.name;$('#basPer').textContent=eur(mar.kg)+' el kilo';
+  $('#basW').textContent=g;$('#basEur').textContent=eur(p);
+  var n=Math.max(1,Math.round(g/125));
+  $('#basHint').textContent='Unos 125 g por persona: da para '+n+(n===1?' persona.':' personas.');
+  var b=beerById(mar.pair);var pr=$('#basPair');pr.innerHTML='<i style="--c:'+b.c+'"></i>';pr.appendChild(document.createTextNode('Con una caña de '+b.name));
+  range.setAttribute('aria-valuetext',g+' gramos, '+eur(p));
+}
+range.addEventListener('input',function(){bascula(false)});
+$('#basAdd').addEventListener('click',function(){var g=+range.value;addItem('mar-'+mar.id+'-'+g,mar.name+' ('+g+' g)',Math.round(mar.kg*g/100)/10)});
+$('#basPair').addEventListener('click',function(){var b=beerById(mar.pair);addItem(b.id+'-cana','Caña de '+b.name,bp(b,SIZES[0]))});
+bascula(true);
 
-  /* ---------- Scroll: fill, bar, fill-words, parallax, pint dock ---------- */
-  var head=$('#head'),bar=$('#bar'),cta=$('#heroCta'),pint=$('#pint'),stagePh=$('#stage');
-  var fws=$$('.fw'),pars=$$('[data-par]'),sp=0,ticking=false,vel=0,lastY=window.pageYOffset;
-  var vbFull=[-30,-60,260,400],vbCrop=[24,-22,152,316],svg=$('#pintsvg'),panEl=$('#pan'),meter=$('#meter');
-  var ease=function(t){return t*t*(3-2*t)};
-  function layoutPint(){
-    if(rm||!window.innerHeight||!window.innerWidth)return; /* 0-size viewport (hidden/resizing frame): skip, avoids NaN viewBox */
-    var sr=stagePh.getBoundingClientRect(),hr=head.getBoundingClientRect(),desk=window.innerWidth>=1100;
-    var p=ease(clamp(window.pageYOffset/(window.innerHeight*.55),0,1));
-    var dw,dx,dy,vt;
-    if(desk){dw=190;dx=window.innerWidth-dw-22;dy=Math.max(hr.bottom,0)+18;vt=vbFull}
-    else{var dh=hr.height-8;dw=dh*vbCrop[2]/vbCrop[3];dx=window.innerWidth-dw-16;dy=hr.top+4;vt=vbCrop}
-    var w=lerp(sr.width,dw,p),x=lerp(sr.left,dx,p),y=lerp(sr.top,dy,p);
-    pint.style.width=w.toFixed(1)+'px';
-    pint.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)';
-    var vb=[0,1,2,3].map(function(k){return lerp(vbFull[k],vt[k],p)});
-    svg.setAttribute('viewBox',vb.map(function(v){return v.toFixed(1)}).join(' '));
-    var ov=desk?p:0;panEl.setAttribute('opacity',(ov*.92).toFixed(2));meter.setAttribute('opacity',ov.toFixed(2));
-  }
-  function onScroll(){
-    ticking=false;
-    var y=window.pageYOffset,vh=window.innerHeight,max=Math.max(1,document.documentElement.scrollHeight-vh);
-    sp=clamp(y/max,0,1);
-    root.style.setProperty('--fill',sp.toFixed(3));
-    bar.classList.toggle('show',cta.getBoundingClientRect().bottom<0);
-    if(!rm){
-      fws.forEach(function(el){var r=el.getBoundingClientRect();el.style.setProperty('--p',clamp((vh*.95-r.top)/(vh*.45),0,1).toFixed(3))});
-      pars.forEach(function(el){
-        var box=el.closest('[data-parbox]')||el.parentNode;var r=box.getBoundingClientRect();
-        if(r.bottom<-200||r.top>vh+200)return;
-        var off=(r.top+r.height/2-vh/2)*parseFloat(el.getAttribute('data-par'));
-        el.style.transform='translate(0,'+off.toFixed(1)+'px)';
-      });
-      layoutPint();
-    }
-  }
-  function req(){if(!ticking){ticking=true;requestAnimationFrame(onScroll)}}
-  window.addEventListener('scroll',req,{passive:true});
-  window.addEventListener('resize',req);
-  window.addEventListener('load',req); /* re-place the fixed pint once fonts/images have settled the layout */
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(req);
+// ---------- tapas ----------
+var tl=$('#tapas');
+TAPAS.forEach(function(t){
+  var li=document.createElement('li');li.className='tapa';
+  li.innerHTML='<img src="'+U(t.photo,520)+'" alt="'+t.alt+'" loading="lazy" width="520" height="520"><b>'+t.name+'</b><span class="num">'+eur(t.p)+'</span><button class="add" type="button" aria-label="Añadir '+t.name+' a la ronda"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v12M3 9h12"/></svg></button>';
+  li.querySelector('.add').addEventListener('click',function(){addItem('tapa-'+t.id,t.name,t.p)});
+  tl.appendChild(li);
+});
 
-  /* ---------- The pint ---------- */
-  var glass=$('#glass'),surf=$('#surf'),beer=$('#beer'),foamp=$('#foamp'),foamg=$('#foamg'),bubs=$('#bubs'),drips=$('#drips'),cond=$('#cond'),mk=$('#mk'),pct=$('#pct');
-  var FULL=70,EMPTY=270;
-  var th=0,thV=0,thT=0,yL=EMPTY,spillY=0,refilling=null,introAt=0;
-  var raf=0,phase=0,A=2.5,drops=[],bub=[],last=0,running=false,dragging=false,keyDir=0,velS=0;
-  for(var i=0;i<26;i++){
-    var c=document.createElementNS(NS,'circle');
-    var b={el:c,x:56+Math.random()*88,y:70+Math.random()*200,r:1.4+Math.random()*3.2,s:20+Math.random()*34,ph:Math.random()*6};
-    c.setAttribute('fill','#fffdf5');c.setAttribute('fill-opacity','.7');c.setAttribute('r',b.r.toFixed(1));
-    bubs.appendChild(c);bub.push(b);
-  }
-  function wv(x,amp){return amp*Math.sin(x*.045+phase*2.2)+amp*.5*Math.sin(x*.09-phase*1.7)}
-  function render(lvl,ft){
-    var r=th*Math.PI/180,empty=yL>=EMPTY-2;
-    glass.setAttribute('transform','rotate('+th.toFixed(2)+' 100 290)');
-    surf.style.display=empty?'none':'';
-    if(!empty){
-      surf.setAttribute('transform','translate(0 '+yL.toFixed(1)+') rotate('+(-th).toFixed(2)+' 100 0)');
-      var d='M-160 '+wv(-160,A).toFixed(1),f='',x,fr=clamp((ft-8)/50,0,1);
-      for(x=-160;x<=360;x+=10){
-        d+='L'+x+' '+wv(x,A).toFixed(1);
-        var dome=(x>30&&x<170)?7*(1-Math.pow((x-100)/70,2))*fr:0;
-        f+=(x===-160?'M':'L')+x+' '+(-ft+wv(x,A)*.6-Math.abs(Math.sin(x*.09))*(2+4*fr)-dome).toFixed(1);
-      }
-      for(x=360;x>=-160;x-=10){f+='L'+x+' '+(wv(x,A)+4).toFixed(1)}
-      beer.setAttribute('d',d+'L360 900L-160 900Z');
-      foamp.setAttribute('d',f+'Z');
-      foamg.style.opacity=clamp(lvl*5,0,1).toFixed(2);
-    }
-    var tn=Math.tan(r);
-    bub.forEach(function(b){
-      var sy=yL-(b.x-100)*tn;
-      var show=!empty&&b.y>sy+6;
-      b.el.style.display=show?'':'none';
-      if(show){b.el.setAttribute('cx',(b.x+Math.sin(phase*3+b.ph)*2).toFixed(1));b.el.setAttribute('cy',b.y.toFixed(1))}
-    });
-    cond.setAttribute('opacity',(.15+.6*clamp(lvl*1.3,0,1)).toFixed(2));
-    var yy=EMPTY-(EMPTY-FULL)*lvl;
-    mk.setAttribute('transform','translate(0 '+yy.toFixed(1)+')');
-    pct.textContent=Math.round(lvl*100)+' %';
-  }
-  function spawn(){
-    if(drops.length>36)return;
-    var r=th*Math.PI/180,sgn=th>=0?1:-1,xr=sgn>0?170:30,dx=xr-100,dy=20-290;
-    var wx=100+dx*Math.cos(r)-dy*Math.sin(r),wy=290+dx*Math.sin(r)+dy*Math.cos(r);
-    var el=document.createElementNS(NS,'circle');el.setAttribute('r',(2+Math.random()*2.5).toFixed(1));
-    drips.appendChild(el);
-    drops.push({el:el,x:wx+(Math.random()*4-2),y:wy,vx:sgn*(20+Math.random()*30),vy:0});
-  }
-  function frame(now){
-    if(!running)return;
-    var dt=Math.min(.05,(now-last)/1000);last=now;phase+=dt;
-    var yNow=window.pageYOffset,sv=Math.abs(yNow-lastY)/Math.max(dt,.001);lastY=yNow;
-    velS+=(sv-velS)*Math.min(1,dt*6);
-    var target=dragging?thT:(keyDir?keyDir*45:0);
-    thV+=(70*(target-th)-9*thV)*dt;th+=thV*dt;th=clamp(th,-85,85);
-    /* liquid level follows scroll (10% minimum), after the intro delay */
-    var lvT=now<introAt?0:.1+.9*sp;
-    var Y=EMPTY-(EMPTY-FULL)*lvT+spillY;
-    if(refilling!==null){var q=(now-refilling.t0)/1400;if(q>=1){spillY=0;refilling=null}else spillY=refilling.from*(1-ease(q))}
-    var need=20+70*Math.abs(Math.tan(th*Math.PI/180));
-    if(refilling===null&&Y<need&&Y<EMPTY){var add=Math.min(need-Y,110*dt);spillY+=add;if(Math.random()<.8)spawn()}
-    yL+=(Y-yL)*Math.min(1,dt*5);
-    var lvl=clamp((EMPTY-yL)/(EMPTY-FULL),0,1);
-    var ft=6+50*ease(clamp((sp-.8)/.2,0,1))*clamp(lvl*1.2,0,1);
-    A=2.2+Math.min(6.5,Math.abs(thV)*.05+velS*.004);
-    bub.forEach(function(b){
-      b.y-=b.s*dt*(1+velS*.002);
-      if(b.y<yL-(b.x-100)*Math.tan(th*Math.PI/180)){b.y=262+Math.random()*8;b.x=58+Math.random()*84}
-    });
-    for(var i=drops.length-1;i>=0;i--){
-      var d=drops[i];d.vy+=620*dt;d.x+=d.vx*dt;d.y+=d.vy*dt;
-      if(d.y>330){d.el.remove();drops.splice(i,1)}else{d.el.setAttribute('cx',d.x.toFixed(1));d.el.setAttribute('cy',d.y.toFixed(1))}
-    }
-    render(lvl,ft);
-    if(mAnim)mAnim.playbackRate=1+sp*2.2+Math.min(5,velS/350);
-    raf=requestAnimationFrame(frame);
-  }
-  function startLoop(){if(running)return;running=true;last=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame)}
-  function refill(){refilling={t0:performance.now(),from:spillY};if(spillY<1)spillY=0}
+// ---------- espacios + semana ----------
+var salaName='Barra';
+function setSala(n){salaName=n;salas.forEach(function(s){var on=s.dataset.sala===n;s.classList.toggle('on',on);s.setAttribute('aria-checked',on?'true':'false')});$$('#salaPick .chip').forEach(function(c){c.setAttribute('aria-checked',c.textContent===n?'true':'false')})}
+salas.forEach(function(s){s.addEventListener('click',function(){setSala(s.dataset.sala)});s.addEventListener('mouseenter',function(){if(!TOUCH){salas.forEach(function(x){x.classList.toggle('on',x===s)})}})});
+$('#salas').addEventListener('mouseleave',function(){setSala(salaName)});
+var DOW=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+var MON=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+var cap=function(s){return s.charAt(0).toUpperCase()+s.slice(1)};
+function nextDow(d){var t=new Date();t.setHours(12,0,0,0);var add=(d-t.getDay()+7)%7;t.setDate(t.getDate()+add);return t}
+[{d:4,h:'20:00, 15 € con tapa',p:'Cata de cuatro cervezas del grifo, explicadas por quien las tira.'},
+ {d:6,h:'Desde las 18:00',p:'Fútbol en la pantalla del comedor. Reserva si quieres mesa con buena vista.'},
+ {d:0,h:'De 12:00 a 15:00',p:'Vermú de grifo y marisco recién cocido para el aperitivo del domingo.'}].forEach(function(ev){
+  var dt=nextDow(ev.d),el=document.createElement('div');
+  el.innerHTML='<h3>'+cap(DOW[ev.d])+' '+dt.getDate()+'<small>'+ev.h+'</small></h3><p>'+ev.p+'</p>';
+  $('#semana').appendChild(el);
+});
 
-  if(rm){
-    /* Reduced motion: glass shown full and static, in the hero, no dock */
-    th=0;yL=FULL;A=2;sp=1;render(1,56);
-    $('#meter').setAttribute('opacity','0');
-    stagePh.removeAttribute('id');
-  }else{
-    pint.classList.add('fx');document.body.insertBefore(pint,$('#top'));
-    introAt=performance.now()+1300;
-    onScroll();render(0,6);
-    startLoop();
-    document.addEventListener('visibilitychange',function(){if(document.hidden)running=false;else startLoop()});
-    var x0=0,t0=0;
-    pint.addEventListener('pointerdown',function(e){
-      if(e.pointerType==='mouse'&&e.button!==0)return;
-      dragging=true;x0=e.clientX;t0=th;thT=th;pint.classList.add('drag');
-      try{pint.setPointerCapture(e.pointerId)}catch(_){}
-    });
-    pint.addEventListener('pointermove',function(e){if(dragging)thT=clamp(t0+(e.clientX-x0)*.4,-80,80)});
-    function end(){if(!dragging)return;dragging=false;pint.classList.remove('drag')}
-    pint.addEventListener('pointerup',end);pint.addEventListener('pointercancel',end);
-    pint.addEventListener('keydown',function(e){
-      if(e.key==='ArrowLeft'){keyDir=-1;e.preventDefault()}
-      else if(e.key==='ArrowRight'){keyDir=1;e.preventDefault()}
-      else if(e.key==='Enter'||e.key===' '){refill();e.preventDefault()}
-    });
-    pint.addEventListener('keyup',function(e){if(e.key==='ArrowLeft'||e.key==='ArrowRight')keyDir=0});
-    pint.addEventListener('blur',function(){keyDir=0});
-    $('#refill').addEventListener('click',refill);
-    $('#refill2').addEventListener('click',refill);
-  }
-  if(rm){$$('.ia').forEach(function(e){e.hidden=true})}
-  onScroll();
+// ---------- horario ----------
+// [opens, closes] in hours; closes past 24 means after midnight
+var HOURS={0:[12,17],1:[12,24],2:[12,24],3:[12,24],4:[12,24],5:[12,25.5],6:[12,25.5]};
+var fmt=function(h){h=h%24;var m=Math.round((h%1)*60);return (Math.floor(h)<10?'0':'')+Math.floor(h)+':'+(m<10?'0':'')+m};
+function state(){
+  var now=new Date(),d=now.getDay(),h=now.getHours()+now.getMinutes()/60,prev=HOURS[(d+6)%7],today=HOURS[d];
+  if(prev[1]>24&&h<prev[1]-24)return {open:true,txt:'Abierto ahora, cierra a las '+fmt(prev[1])};
+  if(h>=today[0]&&h<today[1])return {open:true,txt:'Abierto ahora, cierra a las '+fmt(today[1])};
+  if(h<today[0])return {open:false,txt:'Cerrado ahora, abre hoy a las '+fmt(today[0])};
+  return {open:false,txt:'Cerrado ahora, abre mañana a las '+fmt(HOURS[(d+1)%7][0])};
+}
+var st=state();
+[$('#heroStatus'),$('#visStatus')].forEach(function(el){el.textContent=st.txt;el.classList.toggle('open',st.open)});
+var rows=[[1,'Lunes'],[2,'Martes'],[3,'Miércoles'],[4,'Jueves'],[5,'Viernes'],[6,'Sábado'],[0,'Domingo']],todayD=new Date().getDay();
+rows.forEach(function(r){var li=document.createElement('li');if(r[0]===todayD)li.className='today';li.innerHTML='<span>'+r[1]+'</span><span class="num">'+fmt(HOURS[r[0]][0])+' a '+fmt(HOURS[r[0]][1])+'</span>';$('#hoursList').appendChild(li)});
 
-  /* =====================================================================
-     BACKGROUNDS: bubble canvases, pause-offscreen, optional videos
-     ===================================================================== */
-  var secs=$$('.sec'),visSet={};
-  var DPR=Math.min(window.devicePixelRatio||1,1.5);
-  var fields=$$('canvas[data-bubbles]').map(function(cv){
-    var ctx=cv.getContext('2d'),col=cv.getAttribute('data-bubbles'),al=parseFloat(cv.getAttribute('data-a')||.2),ring=cv.getAttribute('data-ring')==='1';
-    var f={cv:cv,vis:false,W:0,H:0,items:[]};
-    function size(){
-      var w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
-      cv.width=Math.round(w*DPR);cv.height=Math.round(h*DPR);f.W=w;f.H=h;
-      var n=Math.round(parseInt(cv.getAttribute('data-n'),10)*(w<600?.55:1));f.items=[];
-      for(var i=0;i<n;i++)f.items.push({x:Math.random()*w,y:Math.random()*h,r:3+Math.pow(Math.random(),2.2)*(w<600?22:40),v:6+Math.random()*16,ph:Math.random()*6,a:.35+Math.random()*.65});
-    }
-    f.size=size;
-    f.draw=function(dt){
-      ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,f.W,f.H);
-      f.items.forEach(function(b){
-        b.y-=b.v*dt;b.ph+=dt*.6;
-        if(b.y<-b.r*2){b.y=f.H+b.r*2;b.x=Math.random()*f.W}
-        var x=b.x+Math.sin(b.ph)*10;
-        ctx.beginPath();ctx.arc(x,b.y,b.r,0,6.2832);
-        if(ring){ctx.strokeStyle='rgba('+col+','+(al*b.a).toFixed(3)+')';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='rgba(240,160,32,'+(al*.35*b.a).toFixed(3)+')';ctx.fill()}
-        else{ctx.fillStyle='rgba('+col+','+(al*.45*b.a).toFixed(3)+')';ctx.fill();ctx.strokeStyle='rgba('+col+','+(al*b.a).toFixed(3)+')';ctx.lineWidth=1.2;ctx.stroke()}
-        ctx.beginPath();ctx.arc(x-b.r*.35,b.y-b.r*.35,Math.max(1,b.r*.18),0,6.2832);ctx.fillStyle='rgba(255,255,255,'+(al*1.2*b.a).toFixed(3)+')';ctx.fill();
-      });
-    };
-    size();f.draw(0);
-    return f;
-  });
-  window.addEventListener('resize',function(){fields.forEach(function(f){f.size();f.draw(0)})});
-  var bgLast=0,bgRaf=0;
-  function bgLoop(now){
-    var dt=Math.min(.05,(now-bgLast)/1000);bgLast=now;var any=false;
-    fields.forEach(function(f){if(f.vis){any=true;f.draw(dt)}});
-    bgRaf=any&&!document.hidden?requestAnimationFrame(bgLoop):0;
-  }
-  function bgKick(){if(!bgRaf&&!rm){bgLast=performance.now();bgRaf=requestAnimationFrame(bgLoop)}}
-  document.addEventListener('visibilitychange',bgKick);
-  var vids=[];
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(en){
-      en.forEach(function(e){
-        var s=e.target;s.classList.toggle('off',!e.isIntersecting);
-        fields.forEach(function(f){if(s.contains(f.cv))f.vis=e.isIntersecting});
-        if(mAnim&&s.contains(track)){if(e.isIntersecting)mAnim.play();else mAnim.pause()} /* marquee (WAAPI) pauses off screen too */
-        vids.forEach(function(v){if(s.contains(v)){if(e.isIntersecting)v.play().catch(function(){});else v.pause()}});
-      });
-      bgKick();
-    },{rootMargin:'80px'});
-    secs.forEach(function(s){io.observe(s)});
-  }else{fields.forEach(function(f){f.vis=!rm});bgKick()}
+// ---------- reservar ----------
+var res={day:null,hour:null,pax:2};
+function radioRail(el,items,onPick){
+  el.innerHTML='';
+  items.forEach(function(it,i){var c=document.createElement('button');c.type='button';c.className='chip'+(it.cls?' '+it.cls:'');c.setAttribute('role','radio');c.setAttribute('aria-checked',it.on?'true':'false');c.innerHTML=it.html;c.addEventListener('click',function(){$$('.chip',el).forEach(function(x){x.setAttribute('aria-checked',x===c?'true':'false')});onPick(it)});el.appendChild(c)});
+  el.addEventListener('keydown',function(e){var all=$$('.chip',el),i=all.indexOf(document.activeElement);if(i<0)return;if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();var n=all[(i+(e.key==='ArrowRight'?1:all.length-1))%all.length];n.focus();n.click()}});
+}
+var days=[];for(var i=0;i<8;i++){var d=new Date();d.setDate(d.getDate()+i);days.push(d)}
+function hourItems(d){var lunch=['13:00','13:30','14:00','14:30','15:00'],dinner=['20:30','21:00','21:30','22:00','22:30'];return (d.getDay()===0?lunch:lunch.concat(dinner)).map(function(h,i){return {v:h,html:h,on:i===0}})}
+function pickDay(d){res.day=d;var hi=hourItems(d);res.hour=hi[0].v;radioRail($('#hours'),hi,function(it){res.hour=it.v})}
+radioRail($('#days'),days.map(function(d,i){return {v:d,cls:'day',on:i===0,html:'<small>'+(i===0?'Hoy':i===1?'Mañana':cap(DOW[d.getDay()]).slice(0,3))+'</small><b class="num">'+d.getDate()+'</b>'}}),function(it){pickDay(it.v)});
+pickDay(days[0]);
+radioRail($('#salaPick'),['Barra','Comedor','Terraza'].map(function(n){return {v:n,html:n,on:n===salaName}}),function(it){setSala(it.v)});
+$('.reservar .step').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;res.pax=clamp(res.pax+ +b.dataset.d,1,20);$('#pax').textContent=res.pax});
+$('#resForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=$('#fName'),t=$('#fTel'),miss=[];
+  if(!n.value.trim())miss.push(n);if(t.value.replace(/\D/g,'').length<9)miss.push(t);
+  [n,t].forEach(function(x){x.setAttribute('aria-invalid',miss.indexOf(x)>-1?'true':'false')});
+  if(miss.length){$('#resMsg').textContent=miss.length===2?'Falta tu nombre y un teléfono de 9 cifras.':(miss[0]===n?'Falta tu nombre.':'Escribe un teléfono de 9 cifras.');miss[0].focus();return}
+  var d=res.day,when=(d.toDateString()===new Date().toDateString()?'hoy':DOW[d.getDay()]+' '+d.getDate()+' de '+MON[d.getMonth()]);
+  var box=$('#resBox');
+  box.innerHTML='<div class="done" tabindex="-1"><h3>Mesa pedida</h3><p></p><p>Es un ejemplo: no se ha enviado nada.</p><button class="btn btn-amber" type="button" style="margin-top:18px">Hacer otra reserva</button></div>';
+  box.querySelector('p').textContent=n.value.trim()+', '+res.pax+(res.pax===1?' persona':' personas')+' en '+salaName.toLowerCase()+', '+when+' a las '+res.hour+'. Te llamamos al '+t.value.trim()+' para confirmar.';
+  box.querySelector('.done').focus();
+  box.querySelector('button').addEventListener('click',function(){location.reload()});
+});
 
-  /* Optional looping background videos (see BACKGROUND_VIDEOS in the config) */
-  (function(){
-    var conn=navigator.connection||{};
-    if(rm||conn.saveData||/(^|-)2g$/.test(conn.effectiveType||''))return;
-    Object.keys(BACKGROUND_VIDEOS||{}).forEach(function(key){
-      var cfg=BACKGROUND_VIDEOS[key];if(!cfg)return;
-      if(typeof cfg==='string')cfg={mp4:cfg};
-      var slot=$('[data-bgslot="'+key+'"]');if(!slot)return;
-      var v=document.createElement('video');
-      v.className='bgvid';v.muted=true;v.defaultMuted=true;v.loop=true;v.autoplay=true;v.playsInline=true;v.preload='metadata';
-      v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('aria-hidden','true');v.tabIndex=-1;
-      if(cfg.poster)v.poster=cfg.poster;
-      [['webm','video/webm'],['mp4','video/mp4']].forEach(function(t){if(cfg[t[0]]){var s=document.createElement('source');s.src=cfg[t[0]];s.type=t[1];v.appendChild(s)}});
-      var scrim=document.createElement('div');scrim.className='scrim '+(slot.getAttribute('data-scrim')||'dark');
-      slot.insertBefore(scrim,slot.firstChild);slot.insertBefore(v,slot.firstChild);
-      v.addEventListener('loadeddata',function(){slot.parentNode.classList.add('hasvid')});
-      v.addEventListener('error',function(){v.remove();scrim.remove()},true);
-      vids.push(v);
-    });
-  })();
+// ---------- contacto ----------
+$('#copyAddr').addEventListener('click',function(){copy('Calle Ejemplo, 1, 28013 Madrid','Dirección copiada')});
+$('#copyTel').addEventListener('click',function(){copy('600 000 000','Número copiado')});
+$('#phone').addEventListener('click',function(e){if(!TOUCH){e.preventDefault();copy('600 000 000','Número copiado: 600 000 000')}});
 
-  /* =====================================================================
-     RESERVATION DEMO. Nothing is sent unless RESERVATION_ENDPOINT is set
-     (see CONFIG at the top of the page).
-     ===================================================================== */
-  var dlg=$('#resDlg'),form=$('#resForm'),opener=null;
-  function openDlg(d,from){opener=from||document.activeElement;if(d.showModal){d.showModal()}else{d.setAttribute('open','')}root.classList.add('modal')}
-  function closeDlg(d){if(d.close)d.close();else d.removeAttribute('open')}
-  function onClosed(){root.classList.remove('modal');if(opener&&opener.focus&&document.contains(opener)){opener.focus()}}
-  dlg.addEventListener('close',onClosed);
-  $$('[data-reserve]').forEach(function(b){b.addEventListener('click',function(){
-    $('#resFormWrap').hidden=false;$('#resOk').hidden=true;
-    var today=new Date(),iso=today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
-    $('#r-date').min=iso;
-    openDlg(dlg,b);setTimeout(function(){$('#r-name').focus()},30);
-  })});
-  $$('[data-close]',dlg).forEach(function(b){b.addEventListener('click',function(){closeDlg(dlg)})});
-  dlg.addEventListener('click',function(e){if(e.target===dlg)closeDlg(dlg)});
-
-  var MSG={
-    name:'Escribe tu nombre.',
-    phone:'Escribe un teléfono de 9 cifras, por ejemplo 612 345 678.',
-    email:'Escribe un correo con este formato: nombre@dominio.es, o deja el campo vacío.',
-    date:'Elige una fecha de hoy en adelante.',
-    time:'Elige una hora.',
-    people:'Indica entre 1 y 12 personas. Para grupos mayores, llama al local.'
-  };
-  function validate(d){
-    var e={},ph=d.phone.replace(/[\s.\-()]/g,'').replace(/^(\+34|0034)/,'');
-    if(!d.name.trim())e.name=1;
-    if(!/^[6-9]\d{8}$/.test(ph))e.phone=1;
-    if(d.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email))e.email=1;
-    if(!d.date||d.date<$('#r-date').min)e.date=1;
-    if(!d.time)e.time=1;
-    var n=parseInt(d.people,10);if(!(n>=1&&n<=12))e.people=1;
-    return e;
-  }
-  function getData(){var o={};['name','phone','email','date','time','people','notes'].forEach(function(k){o[k]=form.elements[k].value});return o}
-  /* One place that sends the request. Returns a promise: {demo:true} when no endpoint is set. */
-  function sendReservation(data){
-    if(!RESERVATION_ENDPOINT)return Promise.resolve({demo:true});
-    return fetch(RESERVATION_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
-      .then(function(r){if(!r.ok)throw new Error('http '+r.status);return {demo:false}});
-  }
-  function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  form.addEventListener('submit',function(ev){
-    ev.preventDefault();
-    var data=getData(),errs=validate(data),keys=Object.keys(errs),first=null;
-    ['name','phone','email','date','time','people'].forEach(function(k){
-      var inp=$('#r-'+k),p=$('#e-'+k);
-      if(errs[k]){p.textContent=MSG[k];p.hidden=false;inp.setAttribute('aria-invalid','true');if(!first)first=inp}
-      else{p.hidden=true;inp.removeAttribute('aria-invalid')}
-    });
-    var sum=$('#resErrs');
-    if(keys.length){sum.textContent=keys.length===1?'Corrige 1 campo para continuar.':'Corrige '+keys.length+' campos para continuar.';sum.hidden=false;first.focus();return}
-    sum.hidden=true;
-    sendReservation(data).then(function(res){
-      var df=new Date(data.date+'T12:00:00'),dtxt=df.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-      var rows=[['Nombre',data.name],['Teléfono',data.phone],['Correo',data.email||'No indicado'],['Fecha',dtxt],['Hora',data.time],['Personas',String(data.people)],['Notas',data.notes||'Sin notas']];
-      $('#resSum').innerHTML=rows.map(function(r){return '<div><dt>'+r[0]+'</dt><dd>'+esc(r[1])+'</dd></div>'}).join('');
-      $('#resNote').innerHTML=res.demo
-        ?'<strong>Demostración: no se ha enviado nada.</strong> En la web real, esta solicitud llegaría al local al momento y te confirmaríamos la mesa por teléfono o correo. Para hablar con nosotros, llama al 600 000 000.'
-        :'<strong>Solicitud enviada.</strong> El restaurante la recibirá y te responderá.';
-      $('#resFormWrap').hidden=true;$('#resOk').hidden=false;$('#resOk').focus();
-    }).catch(function(){
-      sum.textContent='No se pudo enviar la solicitud. Inténtalo de nuevo o llama al local.';sum.hidden=false;
-    });
-  });
-  $('#resEdit').addEventListener('click',function(){$('#resOk').hidden=true;$('#resFormWrap').hidden=false;$('#r-name').focus()});
-
-  /* =====================================================================
-     PHOTOS gallery + lightbox. Fed by PHOTOS (see CONFIG at the top).
-     ===================================================================== */
-  var gal=$('#gallery'),lb=$('#lb'),li=0,lbOpener=null,SPAN=['w2 h2x','','','w2','',''];
-  function renderGallery(){
-    if(!PHOTOS||!PHOTOS.length)return; /* keep placeholder tiles */
-    gal.innerHTML='';
-    PHOTOS.forEach(function(ph,i){
-      var li2=document.createElement('li');li2.className=SPAN[i%SPAN.length];
-      var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Ampliar foto '+(i+1)+' de '+PHOTOS.length+': '+(ph.caption||ph.alt));
-      var im=document.createElement('img');im.src=ph.src;im.alt=ph.alt||'';im.loading='lazy';im.decoding='async';im.width=ph.width||1200;im.height=ph.height||800;
-      b.appendChild(im);li2.appendChild(b);gal.appendChild(li2);
-      b.addEventListener('click',function(){showPhoto(i);lbOpener=b;openDlg(lb,b)});
-    });
-    $('#gnote').textContent='Toca una foto para verla más grande.';
-  }
-  function showPhoto(i){
-    li=(i+PHOTOS.length)%PHOTOS.length;var p=PHOTOS[li];
-    var im=$('#lbImg');im.src=p.src;im.alt=p.alt||'';im.width=p.width||1200;im.height=p.height||800;
-    $('#lbCap').textContent=p.caption||'';$('#lbCount').textContent='Foto '+(li+1)+' de '+PHOTOS.length;
-    $('#lbPrev').hidden=$('#lbNext').hidden=PHOTOS.length<2;
-  }
-  lb.addEventListener('close',onClosed);
-  $$('[data-close]',lb).forEach(function(b){b.addEventListener('click',function(){closeDlg(lb)})});
-  $('#lbPrev').addEventListener('click',function(){showPhoto(li-1)});
-  $('#lbNext').addEventListener('click',function(){showPhoto(li+1)});
-  lb.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'){showPhoto(li-1)}else if(e.key==='ArrowRight'){showPhoto(li+1)}});
-  lb.addEventListener('click',function(e){if(e.target===lb)closeDlg(lb)});
-  renderGallery();
+renderRonda(false);
 })();
 </script>
 </body>
