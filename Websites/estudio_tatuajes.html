@@ -236,7 +236,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 @media (max-width:899px){.artists{grid-auto-flow:column;grid-auto-columns:min(82%,330px);overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--gut) * -1);padding:4px var(--gut) 18px;scroll-padding:0 var(--gut);scrollbar-width:none}.artists::-webkit-scrollbar{display:none}.artists>*{scroll-snap-align:start}}
 @media (min-width:900px){.artists{grid-template-columns:repeat(3,1fr);gap:24px}}
 .artist{background:var(--ink-2);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
-.artist .cover{aspect-ratio:5/4;overflow:hidden}
+.artist .cover{aspect-ratio:4/5;overflow:hidden}
+.artist .cover img{object-position:50% 25%}
 .artist .cover img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
 .artist:hover .cover img{transform:scale(1.03)}
 .artist .body{padding:22px 20px 22px;display:flex;flex-direction:column;flex:1}
@@ -756,9 +757,9 @@ var FLASH=[
   {k:'minis',name:'Pliego de minis',img:'1753260814170-9f77d48c016e',price:50,cm:4,tone:'negro',left:9,total:16}
 ];
 var ART={
-  lucia:{name:'Lucía',tags:'Línea fina y lettering',cover:'1651692883249-ed36b3523419',text:'Trazo fino y mucha paciencia: flores, animales pequeños y letras. Muchos clientes vienen a por su primer tatuaje.',slot:'Primera plaza en 6 días'},
-  marcos:{name:'Marcos',tags:'Tradicional y flash',cover:'1564426622559-5af68da63b96',text:'Contorno grueso y color plano, de los que aguantan décadas. Es quien dibuja casi todo el flash de la pared.',slot:'Primera plaza en 3 días'},
-  ines:{name:'Inés',tags:'Blackwork y negro y gris',cover:'1561377455-190afb395ed7',text:'Piezas grandes en negro: mangas, espaldas y sombras. Dibuja cada proyecto a mano y lo ajusta a tu cuerpo.',slot:'Primera plaza en 12 días'}
+  lucia:{photo:'1544005313-94ddf0286df2',name:'Lucía',tags:'Línea fina y lettering',cover:'1651692883249-ed36b3523419',text:'Trazo fino y mucha paciencia: flores, animales pequeños y letras. Muchos clientes vienen a por su primer tatuaje.',slot:'Primera plaza en 6 días'},
+  marcos:{photo:'1506794778202-cad84cf45f1d',name:'Marcos',tags:'Tradicional y flash',cover:'1564426622559-5af68da63b96',text:'Contorno grueso y color plano, de los que aguantan décadas. Es quien dibuja casi todo el flash de la pared.',slot:'Primera plaza en 3 días'},
+  ines:{photo:'1534528741775-53994a69daeb',name:'Inés',tags:'Blackwork y negro y gris',cover:'1561377455-190afb395ed7',text:'Piezas grandes en negro: mangas, espaldas y sombras. Dibuja cada proyecto a mano y lo ajusta a tu cuerpo.',slot:'Primera plaza en 12 días'}
 };
 var STYLES=[
   {k:'fina',name:'Línea fina',img:'1562962230-16e4623d36e6',text:'Trazo delgado y detalle pequeño: flores, letras y símbolos. Elegante en tamaños pequeños y discreto con la ropa.',pain:'Suave',heal:'2 semanas',from:80,rate:8,weeks:2,a:'lucia'},
@@ -933,7 +934,7 @@ $('#cAdd').addEventListener('click',function(){
 var workF='all',workAll=false,phone=window.matchMedia('(max-width:759px)');
 Object.keys(ART).forEach(function(k){
   var a=ART[k],el=document.createElement('article');el.className='artist';
-  el.innerHTML='<div class="cover"><img src="'+U(a.cover,700)+'" alt="Trabajo de '+a.name+'" width="700" height="560" loading="lazy"></div>'+
+  el.innerHTML='<div class="cover"><img src="https://images.unsplash.com/photo-'+a.photo+'?auto=format&fit=crop&crop=faces&w=640&h=800&q=72" alt="Retrato de '+a.name+', '+a.tags.toLowerCase()+'" width="640" height="800" loading="lazy"></div>'+
     '<div class="body"><h3>'+a.name+'</h3><p class="tags">'+a.tags+'</p><p>'+a.text+'</p><p class="slot"><i></i>'+a.slot+'</p>'+
     '<div class="acts"><button class="btn btn-bone btn-sm" data-book="'+a.name+'">Pedir cita con '+a.name+'</button><button class="link" data-work="'+k+'">Ver su trabajo</button></div></div>';
   $('#artists').appendChild(el);
