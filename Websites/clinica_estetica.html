@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LUMA · Medicina estética en Salamanca, Madrid</title>
+<meta name="description" content="Medicina estética con resultados naturales: ácido hialurónico, láser y calidad de piel. Primera valoración gratis." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --silk: #FAF6F1;
+    --alabaster: #F2EAE0;
+    --cream-card: #FFFFFF;
+    --espresso: #1D1614;
+    --espresso-soft: #332824;
+    --rose-gold: #B67D68;
+    --rose-gold-light: #DFB7A5;
+    --rose-gold-pale: rgba(182, 125, 104, 0.12);
+    --champagne: #C9A46C;
+    --muted: #6E615B;
+    --line: rgba(29, 22, 20, 0.1);
+    --line-light: rgba(250, 246, 241, 0.18);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; background: var(--silk); color: var(--espresso); }
+  body {
+    font-family: var(--sans);
+    font-variant-numeric: tabular-nums;
+    background: var(--silk);
+    color: var(--espresso);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  button, input, select, textarea { font: inherit; color: inherit; background: none; border: none; }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(48px, 6.5vw, 96px);
+  }
+
+  /* ================= FLOATING LUXURY NAVBAR ================= */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 0;
+    transition: all 0.35s var(--ease);
+  }
+  .nav.scrolled {
+    background: rgba(250, 246, 241, 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    transition: color 0.35s;
+  }
+  .nav.scrolled .brand { color: var(--espresso); }
+  .brand-name {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    line-height: 1;
+  }
+  .brand-sub {
+    font-size: 9px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.88);
+  }
+  .nav.scrolled .nav-links { color: var(--espresso); }
+  .nav-links a {
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1.5px;
+    background: var(--rose-gold);
+    transition: width 0.3s var(--ease);
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    padding: 11px 22px;
+    border-radius: 999px;
+    background: var(--rose-gold);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: transform 0.25s, background 0.25s;
+  }
+  .nav-cta:hover {
+    background: var(--espresso);
+    transform: translateY(-1px);
+  }
+
+  /* ================= 100SVH FULL-BLEED HERO ================= */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    color: #fff;
+    overflow: hidden;
+    background: #17110F;
+  }
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 1.1s var(--ease), transform 6s ease-out;
+    filter: brightness(0.76) contrast(1.04);
+  }
+  .hero-media img.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(23, 17, 15, 0.58) 0%, rgba(23, 17, 15, 0.18) 42%, rgba(23, 17, 15, 0.86) 100%),
+      radial-gradient(circle at 20% 60%, rgba(23, 17, 15, 0.52) 0%, transparent 58%);
+    z-index: 1;
+  }
+
+  .hero-body {
+    position: relative;
+    z-index: 2;
+    align-self: end;
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 120px clamp(64px, 8vw, 116px) 42px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    align-items: center;
+  }
+  .hero-body > div:first-child {
+    padding-left: clamp(16px, 2vw, 32px);
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(250, 246, 241, 0.14);
+    border: 1px solid rgba(250, 246, 241, 0.28);
+    backdrop-filter: blur(10px);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #F6DFD2;
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(42px, 5.2vw, 74px);
+    line-height: 0.96;
+    letter-spacing: -0.015em;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--rose-gold-light);
+    font-weight: 400;
+  }
+  .hero-lead {
+    margin-top: 20px;
+    max-width: 540px;
+    font-size: clamp(15px, 1.2vw, 18px);
+    color: rgba(250, 246, 241, 0.86);
+    font-weight: 300;
+  }
+
+  /* Floating Glass Medical Dossier Card */
+  .dossier-card {
+    background: rgba(29, 22, 20, 0.62);
+    border: 1px solid rgba(250, 246, 241, 0.22);
+    border-radius: 24px;
+    padding: 28px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .dossier-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rose-gold-light);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line-light);
+  }
+  .dossier-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    margin: 14px 0 8px;
+  }
+  .dossier-desc {
+    font-size: 13.5px;
+    color: rgba(250, 246, 241, 0.8);
+    margin-bottom: 18px;
+  }
+  .dossier-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+    margin-bottom: 18px;
+  }
+  .dossier-metrics span {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(250, 246, 241, 0.62);
+  }
+  .dossier-metrics strong {
+    font-family: var(--serif);
+    font-size: 19px;
+    color: #fff;
+  }
+
+  .btn-rose {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    background: var(--rose-gold);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    transition: all 0.25s var(--ease);
+  }
+  .btn-rose:hover {
+    background: #9E6550;
+    transform: translateY(-1px);
+  }
+  .btn-outline-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 20px;
+    border-radius: 999px;
+    border: 1px solid rgba(250, 246, 241, 0.35);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.25s;
+  }
+  .btn-outline-light:hover {
+    background: rgba(250, 246, 241, 0.14);
+  }
+
+  /* Bottom 4-Pillar Switcher */
+  .hero-pillars {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--line-light);
+    background: rgba(23, 17, 15, 0.68);
+    backdrop-filter: blur(14px);
+  }
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .pillar-btn {
+    text-align: left;
+    padding: 20px 22px;
+    border-right: 1px solid var(--line-light);
+    transition: background 0.3s;
+    position: relative;
+  }
+  .pillar-btn:last-child { border-right: none; }
+  .pillar-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--rose-gold-light);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .pillar-btn.active {
+    background: rgba(182, 125, 104, 0.18);
+  }
+  .pillar-btn.active::before {
+    transform: scaleX(1);
+  }
+  .pillar-num {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rose-gold-light);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .pillar-name {
+    font-family: var(--serif);
+    font-size: 21px;
+    display: block;
+    color: #fff;
+  }
+  .pillar-sub {
+    font-size: 12px;
+    color: rgba(250, 246, 241, 0.68);
+  }
+
+  /* ================= CENTERED SECTION HEADERS ================= */
+  .section-pad {
+    padding: clamp(84px, 10vw, 136px) 0;
+  }
+  .sec-head-center {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rose-gold);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before,
+  .sec-head-center .eyebrow::after {
+    content: '';
+    width: 24px;
+    height: 1.5px;
+    background: var(--rose-gold);
+  }
+  .sec-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(36px, 4.8vw, 66px);
+    line-height: 1.04;
+    padding-inline: 0.06em;
+  }
+  .sec-title em {
+    font-style: italic;
+    color: var(--rose-gold);
+    padding-inline: 0.08em;
+  }
+
+  /* ================= UNIQUE FEATURE #1: FACIAL HARMONY & ZONE CONFIGURATOR ================= */
+  .harmony-sec {
+    background: var(--alabaster);
+    border-bottom: 1px solid var(--line);
+  }
+  .harmony-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 36px;
+    align-items: stretch;
+  }
+  .zone-selector-card {
+    background: var(--cream-card);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: clamp(24px, 3.5vw, 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .zone-step-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .zone-pills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .zone-btn {
+    text-align: left;
+    padding: 18px 20px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: var(--silk);
+    transition: all 0.25s var(--ease);
+  }
+  .zone-btn:hover {
+    border-color: var(--rose-gold);
+  }
+  .zone-btn.active {
+    background: var(--espresso);
+    color: #fff;
+    border-color: var(--espresso);
+  }
+  .zone-btn strong {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .zone-btn span {
+    font-size: 12px;
+    opacity: 0.78;
+  }
+
+  .intensity-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .int-btn {
+    padding: 13px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    background: var(--silk);
+    transition: all 0.25s;
+  }
+  .int-btn.active {
+    background: var(--rose-gold);
+    color: #fff;
+    border-color: var(--rose-gold);
+  }
+
+  .prescription-card {
+    background: var(--espresso);
+    color: var(--silk);
+    border-radius: 24px;
+    padding: clamp(28px, 3.8vw, 44px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .rx-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--rose-gold-light);
+    margin-bottom: 10px;
+  }
+  .rx-title {
+    font-family: var(--serif);
+    font-size: 34px;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .rx-desc {
+    font-size: 14px;
+    color: rgba(250, 246, 241, 0.78);
+    margin-bottom: 24px;
+  }
+  .rx-specs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+    margin-bottom: 24px;
+  }
+  .rx-specs span {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(250, 246, 241, 0.6);
+    display: block;
+  }
+  .rx-specs strong {
+    font-family: var(--serif);
+    font-size: 21px;
+    color: #fff;
+  }
+  .rx-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+  }
+  .rx-price {
+    font-family: var(--serif);
+    font-size: 48px;
+    color: var(--rose-gold-light);
+    line-height: 1;
+  }
+
+  /* ================= UNIQUE FEATURE #2: GLASS-SKIN LUMINOSITY REVEAL SLIDER ================= */
+  .reveal-sec {
+    background: var(--silk);
+    border-bottom: 1px solid var(--line);
+  }
+  .reveal-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .skin-compare {
+    position: relative;
+    height: 460px;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(29, 22, 20, 0.14);
+    user-select: none;
+  }
+  .skin-compare img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .skin-before {
+    filter: saturate(0.72) contrast(0.92) brightness(0.92);
+  }
+  .skin-after-wrap {
+    position: absolute;
+    inset: 0;
+    width: 50%;
+    overflow: hidden;
+    border-right: 2px solid #fff;
+  }
+  .skin-after-wrap img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    filter: saturate(1.08) contrast(1.04) brightness(1.04);
+  }
+  .skin-tag {
+    position: absolute;
+    bottom: 18px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: rgba(29, 22, 20, 0.75);
+    color: #fff;
+    backdrop-filter: blur(8px);
+    z-index: 4;
+  }
+  .skin-tag.left { left: 18px; top: 18px; bottom: auto; background: var(--rose-gold); }
+  .skin-tag.right { right: 18px; }
+  .skin-range {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: ew-resize;
+    z-index: 6;
+  }
+  .skin-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--espresso);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .protocol-list {
+    list-style: none;
+    display: grid;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .protocol-list li {
+    background: var(--cream-card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .protocol-list strong {
+    font-family: var(--serif);
+    font-size: 21px;
+    display: block;
+  }
+  .protocol-list span {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .protocol-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--rose-gold);
+    background: var(--rose-gold-pale);
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  /* ================= MEDICAL RESERVATION ================= */
+  .booking-sec {
+    background: var(--alabaster);
+  }
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: 44px;
+  }
+  .clinic-box {
+    background: var(--cream-card);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 34px;
+  }
+  .clinic-list {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  .clinic-list li {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .clinic-list span { color: var(--muted); }
+
+  .aurea-form {
+    background: var(--cream-card);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: clamp(28px, 4vw, 44px);
+  }
+  .f-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .f-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .f-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--espresso);
+  }
+  .f-group input, .f-group select, .f-group textarea {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--silk);
+    font-size: 14px;
+  }
+
+  footer {
+    background: var(--espresso);
+    color: rgba(250, 246, 241, 0.72);
+    padding: 36px 0;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media (max-width: 980px) {
+    .hero-body, .harmony-grid, .reveal-layout, .booking-grid {
+      grid-template-columns: 1fr;
+    }
+    .pillar-grid { grid-template-columns: 1fr 1fr; }
+    .pillar-btn { border-bottom: 1px solid var(--line-light); }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 640px) {
+    .pillar-grid, .zone-pills, .intensity-row, .f-row, .rx-specs { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .wrap { padding-left: 22px; padding-right: 22px; }
+    .hero-body, .hero-main, .hero-center { padding-left: 22px !important; padding-right: 22px !important; }
+    .hero-body > div:first-child, .hero-main > div:first-child, .hero-center > div:first-child { padding-left: 0 !important; }
+  }
+
+  /* Serene Centered Minimalist Hero Override */
+  .hero-body {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    justify-items: center !important;
+    max-width: 960px !important;
+    gap: 24px !important;
+  }
+  .hero-body > div:first-child {
+    padding-left: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-lead {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+  .sanctuary-card, .dossier-card {
+    width: 100%;
+    max-width: 820px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 20px;
+    align-items: center;
+    text-align: left;
+    padding: 22px 28px !important;
+  }
+  .sanc-specs, .dossier-metrics {
+    margin-bottom: 10px !important;
+  }
+  @media (max-width: 768px) {
+    .sanctuary-card, .dossier-card { grid-template-columns: 1fr; }
+  }
+
+  /* Header button: keep on one line on phones */
+  .nav-cta { white-space: nowrap; flex-shrink: 0; }
+  @media (max-width: 640px) {
+    .nav-cta { padding: 10px 14px; font-size: 11px; letter-spacing: 0.04em; min-height: 44px; }
+    .brand-sub, .brand small { display: none; }
+  }
+  .cta-short { display: none; }
+  @media (max-width: 420px) {
+    .cta-long { display: none; }
+    .cta-short { display: inline; }
+  }
+  /* Menu: one line per link; hide it before it gets squeezed */
+  .nav-links a { white-space: nowrap; }
+  @media (max-width: 1180px) { .nav-links { display: none; } }
+  /* Stop long dropdowns and cards from pushing sections wider than the phone */
+  @media (max-width: 980px) {
+    [class*="grid"] > *, [class*="layout"] > *, [class*="list"] > *, .f-row > * { min-width: 0; }
+    select, input, textarea { max-width: 100%; min-width: 0; }
+  }
+
+  :root {
+    --x-l-bg: var(--silk);
+    --x-l-alt: var(--alabaster);
+    --x-l-card: #FFFFFF;
+    --x-l-field: var(--silk);
+    --x-l-ink: var(--espresso);
+    --x-l-muted: #6A5D57;
+    --x-l-line: rgba(29, 22, 20, 0.12);
+    --x-d-bg: var(--espresso);
+    --x-d-alt: var(--espresso-soft);
+    --x-d-card: #2A211E;
+    --x-d-field: #2A211E;
+    --x-d-ink: var(--silk);
+    --x-d-muted: rgba(250, 246, 241, 0.72);
+    --x-d-line: rgba(250, 246, 241, 0.16);
+    --x-accent: #9C6553;
+    --x-accent-ink: #FFFFFF;
+    --x-accent-text: #9C6553;
+    --x-accent-on-dark: var(--rose-gold-light);
+    --x-accent-line: var(--rose-gold);
+    --x-foot: var(--espresso);
+  }
+
+  /* ================= Preview-2 shared blocks (palette from the tokens above) ================= */
+  .x-light-a { --c-bg: var(--x-l-bg); --c-ink: var(--x-l-ink); --c-muted: var(--x-l-muted); --c-line: var(--x-l-line); --c-card: var(--x-l-card); --c-field: var(--x-l-field); }
+  .x-light-b { --c-bg: var(--x-l-alt); --c-ink: var(--x-l-ink); --c-muted: var(--x-l-muted); --c-line: var(--x-l-line); --c-card: var(--x-l-card); --c-field: var(--x-l-field); }
+  .x-dark-a { --c-bg: var(--x-d-bg); --c-ink: var(--x-d-ink); --c-muted: var(--x-d-muted); --c-line: var(--x-d-line); --c-card: var(--x-d-card); --c-field: var(--x-d-field); }
+  .x-dark-b { --c-bg: var(--x-d-alt); --c-ink: var(--x-d-ink); --c-muted: var(--x-d-muted); --c-line: var(--x-d-line); --c-card: var(--x-d-card); --c-field: var(--x-d-field); }
+  .x-sec { background: var(--c-bg); color: var(--c-ink); padding: clamp(80px, 9vw, 128px) 0; }
+  .x-sec[id], section[id] { scroll-margin-top: 72px; }
+  .x-wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 clamp(22px, 6.5vw, 96px); }
+  .x-title { font-family: var(--serif); font-weight: 400; font-size: clamp(36px, 4.6vw, 62px); line-height: 1.04; color: var(--c-ink); text-wrap: balance; }
+  .x-title em { font-style: italic; color: var(--x-accent-text, var(--x-accent)); }
+  .x-dark-a .x-title em, .x-dark-b .x-title em { color: var(--x-accent-on-dark); }
+  .x-lead { color: var(--c-muted); font-size: 17px; margin-top: 18px; max-width: 34em; }
+
+  .x-btn, .x-btn-line, .x-btn-light {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px;
+    padding: 14px 26px; border-radius: 999px; font-family: var(--sans); font-size: 14px; font-weight: 600;
+    letter-spacing: 0.01em; text-transform: none; text-decoration: none; cursor: pointer; transition: all 0.3s var(--ease);
+  }
+  .x-btn { background: var(--x-accent); color: var(--x-accent-ink); border: 1px solid var(--x-accent); }
+  .x-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .x-btn-line { border: 1px solid var(--c-line); color: var(--c-ink); background: transparent; }
+  .x-btn-line:hover { border-color: var(--c-ink); }
+  .x-btn-light { border: 1px solid rgba(255, 255, 255, 0.45); color: #fff; background: transparent; }
+  .x-btn-light:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+  .x-btn svg, .x-btn-line svg, .x-mbar svg, .x-foot-ig svg { width: 18px; height: 18px; flex: none; }
+
+  /* calm hero */
+  .x-hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; color: #fff; overflow: hidden; isolation: isolate; background: var(--x-d-bg); }
+  .x-hero-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: var(--x-hero-pos, center); }
+  .x-hero::before { content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.08) 34%, rgba(0, 0, 0, 0.82) 100%),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 70%); }
+  .x-hero-body { padding-top: 150px; padding-bottom: clamp(56px, 9vh, 104px); }
+  .x-hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 6.4vw, 92px); line-height: 1; max-width: 13ch; text-wrap: balance; color: #fff; letter-spacing: -0.01em; }
+  .x-hero h1 em { display: block; font-style: italic; color: var(--x-accent-on-dark); }
+  .x-hero-sub { margin-top: 24px; max-width: 34em; font-size: clamp(17px, 1.4vw, 20px); color: rgba(255, 255, 255, 0.9); }
+  .x-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .x-hero-facts { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 30px; margin-top: 44px; padding-top: 20px; max-width: 700px;
+    border-top: 1px solid rgba(255, 255, 255, 0.22); font-size: 14px; color: rgba(255, 255, 255, 0.86); }
+  .x-hero-facts li { display: flex; align-items: center; gap: 10px; }
+  .x-hero-facts li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--x-accent-on-dark); flex: none; }
+
+  /* services + finder */
+  .x-split { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .x-services { list-style: none; border-top: 1px solid var(--c-line); }
+  .x-services li { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) auto; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--c-line); align-items: baseline; }
+  .x-services h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(21px, 1.9vw, 26px); line-height: 1.15; color: var(--c-ink); }
+  .x-services p { color: var(--c-muted); font-size: 15px; }
+  .x-price { font-family: var(--serif); font-size: 19px; color: var(--c-ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .x-price small { font-family: var(--sans); font-size: 12px; color: var(--c-muted); margin-right: 4px; }
+  .x-finder { margin-top: 36px; }
+  .x-finder-q { font-size: 16px; color: var(--c-muted); margin-bottom: 14px; }
+  .x-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .x-pills button { padding: 11px 16px; min-height: 44px; border-radius: 999px; border: 1px solid var(--c-line); background: var(--c-card); color: var(--c-ink); font: 500 14px/1.2 var(--sans); cursor: pointer; transition: all 0.25s; }
+  .x-pills button:hover { border-color: var(--c-ink); }
+  .x-pills button[aria-pressed="true"], .x-pills button[aria-checked="true"] { background: var(--c-ink); color: var(--c-bg); border-color: var(--c-ink); }
+  .x-answer { margin-top: 18px; padding: 22px 24px; border-radius: 18px; background: var(--c-card); border: 1px solid var(--c-line); }
+  .x-answer h3 { font-family: var(--serif); font-weight: 400; font-size: 25px; color: var(--c-ink); line-height: 1.1; }
+  .x-answer p { color: var(--c-muted); font-size: 15px; margin: 6px 0 12px; }
+  .x-link { font-weight: 600; font-size: 14px; color: var(--c-ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* FAQ */
+  .x-faq { border-top: 1px solid var(--c-line); }
+  .x-faq details { border-bottom: 1px solid var(--c-line); }
+  .x-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 24px 0; font-family: var(--serif); font-size: clamp(20px, 1.8vw, 24px); color: var(--c-ink); }
+  .x-faq summary::-webkit-details-marker { display: none; }
+  .x-faq summary i { position: relative; width: 16px; height: 16px; flex: none; }
+  .x-faq summary i::before, .x-faq summary i::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: var(--x-accent-line); transition: transform 0.3s var(--ease); }
+  .x-faq summary i::after { transform: rotate(90deg); }
+  .x-faq details[open] summary i::after { transform: rotate(0deg); }
+  .x-faq details p { color: var(--c-muted); font-size: 16px; padding: 0 40px 24px 0; max-width: 60ch; }
+
+  /* booking */
+  .x-book-head { text-align: center; max-width: 760px; margin: 0 auto 52px; }
+  .x-book-head .x-lead { margin-left: auto; margin-right: auto; }
+  .x-book { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 64px); align-items: start; }
+  .x-steps h3 { font-family: var(--serif); font-weight: 400; font-size: 30px; color: var(--c-ink); margin-bottom: 20px; }
+  .x-steps ol { list-style: none; counter-reset: v; display: grid; gap: 18px; }
+  .x-steps li { counter-increment: v; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; color: var(--c-muted); font-size: 15px; }
+  .x-steps li::before { content: counter(v); width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--x-accent-line); display: grid; place-items: center; font-family: var(--serif); font-size: 17px; color: var(--c-ink); }
+  .x-steps strong { color: var(--c-ink); font-weight: 600; }
+  .x-call-line { margin-top: 26px; font-size: 15px; color: var(--c-muted); }
+  .x-call-line a { color: var(--c-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+  .x-form, .x-done { background: var(--c-card); border: 1px solid var(--c-line); border-radius: 24px; padding: clamp(26px, 4vw, 44px); box-shadow: 0 24px 50px rgba(0, 0, 0, 0.06); color: var(--c-ink); }
+  .x-form h3, .x-done h3 { font-family: var(--serif); font-weight: 400; font-size: 32px; color: var(--c-ink); margin-bottom: 6px; }
+  .x-form > p { font-size: 14px; color: var(--c-muted); margin-bottom: 22px; }
+  .x-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  .x-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; min-width: 0; }
+  .x-field label, .x-pick legend { font-size: 12px; font-weight: 600; color: var(--c-ink); }
+  .x-field input, .x-field select, .x-field textarea { width: 100%; max-width: 100%; min-width: 0; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--c-line); background: var(--c-field); color: var(--c-ink); font: 400 15px/1.4 var(--sans); }
+  .x-field input:focus, .x-field select:focus, .x-field textarea:focus { outline: none; border-color: var(--x-accent-line); }
+  .x-pick { border: 0; margin: 0 0 18px; padding: 0; min-width: 0; }
+  .x-pick legend { margin-bottom: 8px; padding: 0; }
+  .x-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .x-chips button { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 64px; min-height: 44px;
+    padding: 8px 14px; border-radius: 12px; border: 1px solid var(--c-line); background: var(--c-field); color: var(--c-ink); font: 600 14px/1.2 var(--sans); cursor: pointer; transition: all 0.2s; }
+  .x-chips button small { font-size: 11px; font-weight: 500; color: var(--c-muted); }
+  .x-chips button:hover { border-color: var(--x-accent-line); }
+  .x-chips button[aria-checked="true"] { background: var(--c-ink); border-color: var(--c-ink); color: var(--c-bg); }
+  .x-chips button[aria-checked="true"] small { color: inherit; opacity: 0.75; }
+  .x-form .x-btn { width: 100%; margin-top: 4px; }
+  .x-small { margin-top: 12px; font-size: 12px; color: var(--c-muted); text-align: center; }
+  .x-done p { color: var(--c-muted); margin: 10px 0 24px; }
+  .x-done:focus { outline: none; }
+
+  /* how to get there */
+  .x-visit { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .x-address { font-family: var(--serif); font-size: clamp(24px, 2.4vw, 32px); line-height: 1.25; color: var(--c-ink); margin-top: 24px; }
+  .x-facts { list-style: none; margin-top: 26px; display: grid; gap: 10px; font-size: 15px; color: var(--c-ink); }
+  .x-facts li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
+  .x-facts span { color: var(--c-muted); }
+  .x-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .x-hours { background: var(--c-card); border: 1px solid var(--c-line); border-radius: 24px; padding: clamp(26px, 3.4vw, 40px); }
+  .x-hours h3 { font-family: var(--serif); font-weight: 400; font-size: 28px; color: var(--c-ink); margin-bottom: 14px; }
+  .x-hours ul { list-style: none; }
+  .x-hours li { display: flex; justify-content: space-between; gap: 16px; padding: 11px 12px; margin: 0 -12px; border-radius: 10px; font-size: 15px; color: var(--c-muted); font-variant-numeric: tabular-nums; }
+  .x-hours li.today { background: var(--c-bg); color: var(--c-ink); font-weight: 600; }
+  .x-hours p { margin-top: 18px; font-size: 15px; }
+  .x-hours p a { color: var(--c-ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* footer */
+  .x-foot { background: var(--x-foot); color: rgba(255, 255, 255, 0.72); padding: 64px 0 36px; font-family: var(--sans); font-size: 14px; letter-spacing: 0; }
+  .x-foot-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 0.8fr; gap: 32px; }
+  .x-foot-brand { font-family: var(--serif); font-size: 26px; letter-spacing: 0.12em; color: #fff; margin-bottom: 6px; }
+  .x-foot-h { color: var(--x-accent-on-dark); font-weight: 600; margin-bottom: 8px; }
+  .x-foot a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, 0.3); }
+  .x-foot a:hover { color: #fff; }
+  .x-foot-ig { display: inline-flex; align-items: center; gap: 8px; }
+  .x-legal { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, 0.14); font-size: 13px; }
+
+  /* phone action bar + toast */
+  .x-mbar { display: none; }
+  .x-toast { position: fixed; left: 50%; bottom: 28px; z-index: 400; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; max-width: calc(100% - 32px);
+    background: var(--x-d-bg); color: #fff; padding: 12px 20px; border-radius: 999px; font: 500 14px/1.4 var(--sans); transition: all 0.35s var(--ease); text-align: center; }
+  .x-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 1024px) {
+    .x-split, .x-book, .x-visit { grid-template-columns: minmax(0, 1fr); }
+    .x-foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 760px) {
+    .x-mbar { display: grid; grid-template-columns: 0.9fr 1.2fr 1fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 300;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: var(--x-foot); border-top: 1px solid rgba(255, 255, 255, 0.12); }
+    .x-mbar a { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 46px; border-radius: 999px; padding: 0 8px;
+      border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; font: 600 13px/1 var(--sans); white-space: nowrap; text-decoration: none; }
+    .x-mbar svg { width: 16px; height: 16px; }
+    .x-mbar .x-mbar-main { background: var(--x-accent); border-color: var(--x-accent); color: var(--x-accent-ink); }
+    body { padding-bottom: 72px; }
+    .x-toast { bottom: 90px; }
+    .x-foot-grid { grid-template-columns: 1fr; }
+    .x-services li { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; padding: 22px 0; }
+    .x-services li p { grid-column: 1 / -1; grid-row: 2; }
+    .x-row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .x-actions a, .x-hero-actions a { flex: 1 1 100%; }
+    .x-hero-body { padding-top: 120px; }
+    .x-hero::before { background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.42) 45%, rgba(0, 0, 0, 0.88) 100%); }
+    .x-hero-facts { margin-top: 32px; gap: 8px 20px; font-size: 13px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .x-faq summary i::before, .x-faq summary i::after, .x-toast, .x-btn { transition: none; } }
+
+  .x-gift { align-items: center; }
+  .x-gift-amounts { margin-top: 30px; }
+  .x-gift-card { position: relative; aspect-ratio: 1.6 / 1; max-width: 460px; width: 100%; margin-left: auto; border-radius: 22px; padding: clamp(24px, 3vw, 36px);
+    display: flex; flex-direction: column; justify-content: space-between; background: #F2E3DA; color: var(--espresso);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35); transform: rotate(-3deg); }
+  .x-gift-brand { font-family: var(--serif); font-size: 28px; letter-spacing: 0.3em; }
+  .x-gift-amount { font-family: var(--serif); font-size: clamp(48px, 6vw, 72px); line-height: 1; transition: opacity 0.25s; }
+  .x-gift-foot { font-size: 13px; color: #6A5D57; }
+  @media (max-width: 1024px) { .x-gift-card { margin: 12px auto 0; transform: rotate(-2deg); } }
+
+</style>
+</head>
+<body>
+
+<header class="nav" id="topNav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-name">LUMA</span>
+      <span class="brand-sub">Medicina estética · Madrid</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#servicios">Tratamientos</a>
+      <a href="#armonizacion">Por zonas</a>
+      <a href="#piel">Piel</a>
+      <a href="#visitanos">Contacto</a>
+    </nav>
+    <a href="#reserva" class="nav-cta"><span class="cta-long">Pedir valoración</span><span class="cta-short">Pedir cita</span></a>
+  </div>
+</header>
+
+<!-- ================= CALM HERO ================= -->
+<section class="x-hero" style="--x-hero-pos:center 35%">
+  <img class="x-hero-img" src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=2000&q=82&auto=format&fit=crop" alt="Médica realizando un tratamiento facial suave" />
+  <div class="x-wrap x-hero-body">
+    <h1>Tu cara de siempre,<em>más descansada.</em></h1>
+    <p class="x-hero-sub">Medicina estética en el barrio de Salamanca: ácido hialurónico, láser y tratamientos de piel hechos por médicos. Resultados que no se notan, se ven.</p>
+    <div class="x-hero-actions">
+      <a href="#reserva" class="x-btn">Pedir valoración gratis</a>
+      <a href="#servicios" class="x-btn-light">Ver tratamientos</a>
+    </div>
+    <ul class="x-hero-facts"><li>Primera valoración gratis</li><li>Siempre un médico</li><li id="xOpenNow">Lunes a viernes, 10:00–20:30</li></ul>
+  </div>
+</section>
+
+<!-- ================= SERVICIOS ================= -->
+<section class="x-sec x-light-a" id="servicios">
+  <div class="x-wrap x-split">
+    <div>
+      <h2 class="x-title">Lo que <em>hacemos</em></h2>
+      <div class="x-finder" id="xFinder">
+        <p class="x-finder-q">¿No sabes por dónde empezar? Dinos qué te preocupa:</p>
+        <div class="x-pills" role="group" aria-label="¿No sabes por dónde empezar? Dinos qué te preocupa:">
+          <button type="button" data-pick="0">Arrugas</button>
+          <button type="button" data-pick="1">Manchas</button>
+          <button type="button" data-pick="2">Flacidez</button>
+          <button type="button" data-pick="3">Ojeras</button>
+          <button type="button" data-pick="4">Labios</button>
+        </div>
+        <div class="x-answer" id="xFinderAnswer" aria-live="polite" hidden>
+          <h3 id="xFinderTitle"></h3>
+          <p id="xFinderText"></p>
+          <a href="#reserva" class="x-link" id="xFinderLink">Pedir valoración para esto</a>
+        </div>
+      </div>
+    </div>
+    <ul class="x-services">
+      <li><h3>Armonización facial</h3><p>Ácido hialurónico para recuperar volumen en pómulos y óvalo, sin cambiar tu expresión.</p><span class="x-price"><small>desde</small>290 €</span></li>
+      <li><h3>Labios naturales</h3><p>Hidratación y perfilado suave. Nada de efecto «relleno».</p><span class="x-price"><small>desde</small>280 €</span></li>
+      <li><h3>Ojeras y mirada</h3><p>Ilumina la ojera y suaviza las líneas para una mirada descansada.</p><span class="x-price"><small>desde</small>320 €</span></li>
+      <li><h3>Láser de manchas</h3><p>Manchas del sol, rojeces y textura irregular. Sin pelarte.</p><span class="x-price"><small>desde</small>180 €</span></li>
+      <li><h3>Calidad de piel</h3><p>Microinyecciones de hidratación profunda para una piel con brillo propio.</p><span class="x-price"><small>desde</small>220 €</span></li>
+      <li><h3>Flacidez sin cirugía</h3><p>Ultrasonidos y radiofrecuencia para tensar óvalo y cuello.</p><span class="x-price"><small>desde</small>650 €</span></li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ================= UNIQUE FEATURE #1: INTERACTIVE FACIAL ZONE CONFIGURATOR ================= -->
+<section class="section-pad harmony-sec" id="armonizacion">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <h2 class="sec-title">Elige la zona y mira <em>tu plan</em>.</h2>
+    </div>
+
+    <div class="harmony-grid">
+      <div class="zone-selector-card">
+        <div>
+          <div class="zone-step-lbl">
+            <span>Elige la zona</span>
+            <span id="zoneActiveTag">TERCIO MEDIO &amp; PÓMULOS</span>
+          </div>
+          <div class="zone-pills" id="zoneBtns">
+            <button type="button" class="zone-btn active" data-zone="pomulos">
+              <strong>Pómulos &amp; Óvalo</strong>
+              <span>Efecto lifting y soporte ligamento</span>
+            </button>
+            <button type="button" class="zone-btn" data-zone="labios">
+              <strong>Labios Couture</strong>
+              <span>Hidratación perfilada sin «boca de pato»</span>
+            </button>
+            <button type="button" class="zone-btn" data-zone="mirada">
+              <strong>Mirada &amp; Ojeras</strong>
+              <span>Polinucleótidos + neuromodulador suave</span>
+            </button>
+            <button type="button" class="zone-btn" data-zone="cuello">
+              <strong>Cuello &amp; Mandíbula</strong>
+              <span>Marcación mandibular e inductores Radiesse®</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <div class="zone-step-lbl">
+            <span>¿Cuánto cambio buscas?</span>
+            <span>NATURALIDAD GARANTIZADA</span>
+          </div>
+          <div class="intensity-row" id="intBtns">
+            <button type="button" class="int-btn" data-mult="0.8" data-level="Preventivo Sutil (1 Vial)">Preventivo Sutil</button>
+            <button type="button" class="int-btn active" data-mult="1.0" data-level="Armonización Ideal (Protocolo Completo)">Armonización Ideal</button>
+            <button type="button" class="int-btn" data-mult="1.35" data-level="Reestructuración Global Premium">Global Premium</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="prescription-card">
+        <div>
+          <span class="rx-badge" id="rxLevelBadge">PRESCRIPCIÓN ORIENTATIVA · ARMONIZACIÓN IDEAL</span>
+          <h3 class="rx-title" id="rxTitle">Reposicionamiento de Tercio Medio &amp; Soporte Malar</h3>
+          <p class="rx-desc" id="rxDesc">
+            Infiltración profunda con microcánula roma guiada por ecografía para elevar el surco nasogeniano devolviendo la proyección juvenil del pómulo.
+          </p>
+
+          <div class="rx-specs">
+            <div>
+              <span>Tiempo en Consulta</span>
+              <strong id="rxTime">45 Minutos</strong>
+            </div>
+            <div>
+              <span>Anestesia</span>
+              <strong id="rxAnes">Tópica + Lidocaína</strong>
+            </div>
+            <div>
+              <span>Duración Efecto</span>
+              <strong id="rxLongevity">14 a 18 Meses</strong>
+            </div>
+            <div>
+              <span>Revisión + Retoque</span>
+              <strong>Incluido a los 15 días</strong>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="rx-price-row">
+            <span style="font-size:12px; text-transform:uppercase; letter-spacing:0.12em; color:rgba(250,246,241,0.7);">Precio orientativo</span>
+            <strong class="rx-price" id="rxPrice">490 €</strong>
+          </div>
+          <button type="button" class="btn-rose" style="width:100%;" id="btnSendRxWA">
+            Pedir valoración con este plan
+          </button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= UNIQUE FEATURE #2: GLASS-SKIN LUMINOSITY COMPARATOR ================= -->
+<section class="section-pad reveal-sec" id="piel">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <h2 class="sec-title">Una piel más <em>uniforme</em>, sin pelarte.</h2>
+    </div>
+
+    <div class="reveal-layout">
+      <div class="skin-compare" id="skinBox">
+        <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1400&q=85&auto=format&fit=crop" alt="Piel antes de tratamiento" class="skin-before" />
+        <div class="skin-after-wrap" id="skinAfterWrap">
+          <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1400&q=85&auto=format&fit=crop" alt="Piel luminosa tras protocolo LUMA" id="skinAfterImg" />
+        </div>
+        <span class="skin-tag left">Después</span>
+        <span class="skin-tag right">Antes</span>
+        <div class="skin-handle" id="skinHandle">↔</div>
+        <input type="range" min="5" max="95" value="50" class="skin-range" id="skinSlider" aria-label="Comparador de luminosidad cutánea" />
+      </div>
+
+      <div>
+        <h3 style="font-family:var(--serif); font-size:36px; font-weight:400; line-height:1.12; margin-bottom:14px;">
+          Unificamos el tono y cerramos el poro, sin pelado agresivo y sin quedarte en casa.
+        </h3>
+        <p style="color:var(--muted); font-size:15px;">
+          Combinamos diagnóstico multiespectral Visia® con energía lumínica fraccionada y mesoterapia de vitaminas y ácido hialurónico no reticulado.
+        </p>
+
+        <ul class="protocol-list">
+          <li>
+            <div>
+              <strong>Diagnóstico Digital Visia® 3D</strong>
+              <span>Mapa de edad biológica cutánea, manchas UV y porfirinas</span>
+            </div>
+            <span class="protocol-badge">Cortesía en 1ª Cita</span>
+          </li>
+          <li>
+            <div>
+              <strong>Láser IPL + Picosegundos</strong>
+              <span>Elimina léntigos solares, rojeces y estimula elastina</span>
+            </div>
+            <span class="protocol-badge">Sin Costras</span>
+          </li>
+          <li>
+            <div>
+              <strong>Skinbooster Redensificador</strong>
+              <span>Microinyecciones de hidratación profunda efecto espejo</span>
+            </div>
+            <span class="protocol-badge">Brillo Inmediato</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRIVATE MEDICAL CONSULTATION ================= -->
+
+<!-- ================= TARJETA REGALO ================= -->
+<section class="x-sec x-dark-a" id="regalo">
+  <div class="x-wrap x-split x-gift">
+    <div>
+      <h2 class="x-title">Regala un <em>tratamiento</em></h2>
+      <p class="x-lead">Una tarjeta regalo para cualquier tratamiento de la clínica. Válida un año y canjeable también por la valoración y el análisis de piel.</p>
+      <div class="x-pills x-gift-amounts" role="radiogroup" aria-label="Importe de la tarjeta">
+        <button type="button" role="radio" aria-checked="false" data-amount="50">50 €</button>
+        <button type="button" role="radio" aria-checked="true" data-amount="100">100 €</button>
+        <button type="button" role="radio" aria-checked="false" data-amount="150">150 €</button>
+        <button type="button" role="radio" aria-checked="false" data-amount="200">200 €</button>
+      </div>
+      <div class="x-actions"><button type="button" class="x-btn" id="xGiftBtn">Pedir tarjeta regalo</button></div>
+    </div>
+    <div class="x-gift-card" aria-hidden="true">
+      <span class="x-gift-brand">LUMA</span>
+      <span class="x-gift-amount" id="xGiftAmount">100 €</span>
+      <span class="x-gift-foot">Tarjeta regalo · válida 12 meses</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PREGUNTAS FRECUENTES ================= -->
+<section class="x-sec x-light-b" id="preguntas">
+  <div class="x-wrap x-split">
+    <h2 class="x-title">Preguntas <em>frecuentes</em></h2>
+    <div class="x-faq">
+      <details><summary>¿Quién hace los tratamientos?<i aria-hidden="true"></i></summary><p>Siempre un médico, en una consulta autorizada. Antes de tratarte te explicamos riesgos y alternativas.</p></details>
+      <details><summary>¿Se va a notar que me he hecho algo?<i aria-hidden="true"></i></summary><p>Buscamos que te vean bien, no «operada». Empezamos con poco y revisamos a los 15 días.</p></details>
+      <details><summary>¿Duele?<i aria-hidden="true"></i></summary><p>Usamos crema anestésica y la mayoría de productos llevan anestesia. Lo normal es una molestia leve.</p></details>
+      <details><summary>¿Cuánto dura el ácido hialurónico?<i aria-hidden="true"></i></summary><p>Entre 9 y 18 meses según la zona y tu piel. En la valoración te damos una estimación.</p></details>
+      <details><summary>¿Puedo volver al trabajo el mismo día?<i aria-hidden="true"></i></summary><p>Casi siempre sí. Puede quedar una pequeña inflamación durante 24–48 horas.</p></details>
+      <details><summary>¿Puedo pagar a plazos?<i aria-hidden="true"></i></summary><p>Sí, hasta 12 meses sin intereses en tratamientos a partir de 300 €.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVA ================= -->
+<section class="x-sec x-light-a" id="reserva">
+  <div class="x-wrap">
+    <div class="x-book-head">
+      <h2 class="x-title">Tu primera valoración,<br><em>gratis y sin compromiso</em>.</h2>
+      <p class="x-lead">Te miramos con calma, te explicamos qué tiene sentido para ti y qué no, y te damos un precio cerrado.</p>
+    </div>
+    <div class="x-book">
+      <div class="x-steps">
+        <h3>Qué pasa en tu primera visita</h3>
+        <ol>
+            <li><span><strong>Te escuchamos.</strong> Nos cuentas qué te gustaría mejorar y qué no quieres cambiar.</span></li>
+            <li><span><strong>Analizamos tu piel.</strong> Con fotos de alta resolución para ver manchas, poro e hidratación.</span></li>
+            <li><span><strong>Te proponemos un plan.</strong> Solo lo necesario, con alternativas y lo que puedes esperar.</span></li>
+            <li><span><strong>Precio cerrado.</strong> Por escrito. Tú decides si y cuándo empezar.</span></li>
+        </ol>
+        <p class="x-call-line">¿Prefieres hablar con alguien? <a href="tel:+34910000000" class="js-call" data-number="+34 910 000 000">Llámanos al +34 910 000 000</a></p>
+      </div>
+      <div>
+        <form class="x-form" id="xForm">
+          <h3>Pide tu valoración</h3>
+          <p>Gratis: valoración médica y análisis de piel.</p>
+          <div class="x-row">
+            <div class="x-field"><label for="xName">Nombre</label><input type="text" id="xName" placeholder="Tu nombre" autocomplete="name" required /></div>
+            <div class="x-field"><label for="xPhone">Teléfono</label><input type="tel" id="xPhone" placeholder="600 000 000" autocomplete="tel" required /></div>
+          </div>
+          <div class="x-field">
+            <label for="xService">¿Qué te interesa?</label>
+            <select id="xService">
+            <option value="Armonización facial">Armonización facial</option>
+            <option value="Labios naturales">Labios naturales</option>
+            <option value="Ojeras y mirada">Ojeras y mirada</option>
+            <option value="Láser de manchas">Láser de manchas</option>
+            <option value="Calidad de piel">Calidad de piel</option>
+            <option value="Flacidez sin cirugía">Flacidez sin cirugía</option>
+            </select>
+          </div>
+          <fieldset class="x-pick"><legend>Elige día</legend><div class="x-chips" id="xDays" role="radiogroup" aria-label="Día"></div></fieldset>
+          <fieldset class="x-pick"><legend>Elige hora</legend><div class="x-chips" id="xTimes" role="radiogroup" aria-label="Hora"></div></fieldset>
+          <div class="x-field"><label for="xNotes">¿Algo que debamos saber?</label><textarea id="xNotes" rows="3" placeholder="Por ejemplo: es mi primera vez, o me hice ácido hialurónico hace un año."></textarea></div>
+          <button type="submit" class="x-btn">Solicitar cita</button>
+          <p class="x-small">Te llamamos para confirmarlo. No compartimos tus datos con nadie.</p>
+        </form>
+        <div class="x-done" id="xDone" hidden tabindex="-1">
+          <h3>¡Solicitud recibida!</h3>
+          <p id="xDoneText"></p>
+          <button type="button" class="x-btn-line" id="xAgain">Hacer otra solicitud</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CÓMO LLEGAR ================= -->
+<section class="x-sec x-light-b" id="visitanos">
+  <div class="x-wrap x-visit">
+    <div>
+      <h2 class="x-title">Cómo <em>llegar</em></h2>
+      <p class="x-address">Calle Ejemplo 48<br>28001 Madrid · Barrio de Salamanca</p>
+      <ul class="x-facts">
+        <li><span>Metro</span>Velázquez (L4), a 2 minutos andando</li>
+        <li><span>Coche</span>Parking público en la misma calle</li>
+        <li><span>Acceso</span>Edificio con ascensor</li>
+      </ul>
+      <div class="x-actions">
+        <a class="x-btn" href="https://www.google.com/maps/dir/?api=1&destination=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Cómo llegar</a>
+        <a class="x-btn-line js-call" href="tel:+34910000000" data-number="+34 910 000 000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Llamar</a>
+        <a class="x-btn-line" href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a>
+      </div>
+    </div>
+    <div class="x-hours">
+      <h3>Horario</h3>
+      <ul id="xHours">
+        <li data-day="1"><span>Lunes</span><span>10:00 – 20:30</span></li>
+        <li data-day="2"><span>Martes</span><span>10:00 – 20:30</span></li>
+        <li data-day="3"><span>Miércoles</span><span>10:00 – 20:30</span></li>
+        <li data-day="4"><span>Jueves</span><span>10:00 – 20:30</span></li>
+        <li data-day="5"><span>Viernes</span><span>10:00 – 20:30</span></li>
+        <li data-day="6"><span>Sábado</span><span>10:00 – 14:00, con cita</span></li>
+        <li data-day="0"><span>Domingo</span><span>Cerrado</span></li>
+      </ul>
+      <p><a href="mailto:hola@tunegocio.es">hola@tunegocio.es</a></p>
+    </div>
+  </div>
+</section>
+
+<footer class="x-foot">
+  <div class="x-wrap x-foot-grid">
+    <div>
+      <p class="x-foot-brand">LUMA</p>
+      <p>Medicina estética en el barrio de Salamanca.</p>
+    </div>
+    <div>
+      <p class="x-foot-h">Contacto</p>
+      <p>Calle Ejemplo 48, Madrid<br><a href="tel:+34910000000" class="js-call" data-number="+34 910 000 000">+34 910 000 000</a><br><a href="mailto:hola@tunegocio.es">hola@tunegocio.es</a></p>
+    </div>
+    <div>
+      <p class="x-foot-h">Horario</p>
+      <p>Lunes a viernes, 10:00–20:30<br>Sábados con cita</p>
+    </div>
+    <div>
+      <p class="x-foot-h">Síguenos</p>
+      <p><a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="x-foot-ig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a></p>
+    </div>
+  </div>
+  <div class="x-wrap x-legal">
+    <span>© 2026 LUMA</span>
+    <span><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></span>
+  </div>
+  <p class="demo-disclaimer" style="margin:24px auto 0;padding:0 20px 8px;max-width:760px;text-align:center;font-size:12px;line-height:1.5;opacity:.65;font-family:inherit;letter-spacing:0;text-transform:none">Diseño de ejemplo. El nombre, la dirección, los precios, las reseñas y los datos de contacto o certificaciones que aparecen son ficticios y solo sirven de muestra.</p>
+</footer>
+
+<nav class="x-mbar" aria-label="Acciones rápidas">
+  <a href="tel:+34910000000" class="js-call" data-number="+34 910 000 000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Llamar</a>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Cómo llegar</a>
+  <a href="#reserva" class="x-mbar-main">Pedir cita</a>
+</nav>
+<div class="x-toast" id="xToast" role="status" aria-live="polite"></div>
+
+
+
+
+<script>
+  // · Sticky Nav
+  const topNav = document.getElementById('topNav');
+  window.addEventListener('scroll', () => {
+    topNav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // · Hero 4-Pillar Switcher
+  const heroPillars = [
+    {
+      kicker: 'COLEGIADOS COMEM · CALLE VELÁZQUEZ 48, MADRID',
+      title: 'La ciencia de<br>la belleza <em>intacta</em>.',
+      lead: 'Resultados imperceptibles al ojo ajeno. Restauramos la arquitectura facial con ácido hialurónico suizo Teoxane®, inductores de colágeno y diagnóstico ecográfico previo.',
+      code: 'PROTOCOLO CLÍNICO · AU-01',
+      dTitle: 'Armonización Facial Full-Face',
+      dDesc: 'Reposicionamiento de pómulos, definición mandibular e hidratación labial sin alterar tus facciones ni tu expresión natural.',
+      prod: 'Teoxane® RHA', dur: '14 – 18 Meses', rec: 'Inmediata'
+    },
+    {
+      kicker: 'BIOTECNOLOGÍA CELULAR · REGENERACIÓN TISULAR',
+      title: 'Juventud desde<br>el <em>propio colágeno</em>.',
+      lead: 'Polinucleótidos de alta pureza y exosomas que despiertan los fibroblastos dormidos, engrosando la piel fina de la ojera y el cuello de forma biológica.',
+      code: 'PROTOCOLO CLÍNICO · AU-02',
+      dTitle: 'Bioestimulación con Polinucleótidos',
+      dDesc: 'El tratamiento favorito para iluminar la mirada cansada y tensar la piel sin aportar absolutamente nada de volumen artificial.',
+      prod: 'Plinest® / Croma', dur: '12 Meses', rec: 'Sin Baja Social'
+    },
+    {
+      kicker: 'PLATAFORMA LÁSER MÉDICA · PIEL DE PORCELANA',
+      title: 'Luz pura sobre<br>un <em>lienzo uniforme</em>.',
+      lead: 'Eliminamos manchas solares, capilares y textura irregular mediante pulsos ultracortos de picosegundos respetando las pieles más sensibles.',
+      code: 'PROTOCOLO CLÍNICO · AU-03',
+      dTitle: 'Protocolo Láser Glass-Skin 360°',
+      dDesc: 'Combinación en una misma sesión de luz pulsada médica de banda estrecha, láser fraccionado no ablativo y velo de factores epidérmicos.',
+      prod: 'Picosegundos + IPL', dur: 'Anual', rec: '24 Horas'
+    },
+    {
+      kicker: 'TENSIÓN PROFUNDA · LIFTING NO QUIRÚRGICO',
+      title: 'Firmeza estructural<br><em>sin bisturí</em>.',
+      lead: 'Ultrasonidos microfocalizados y radiofrecuencia fraccionada que contraen la fascia muscular SMAS para redefinir el óvalo facial y el submentón.',
+      code: 'PROTOCOLO CLÍNICO · AU-04',
+      dTitle: 'Ultherapy® Prime & Morpheus8',
+      dDesc: 'Ideal para combatir la flacidez incipiente o moderada en tercio inferior y cuello con una única sesión anual.',
+      prod: 'Ultrasonido SMAS', dur: '18 – 24 Meses', rec: 'Inmediata'
+    }
+  ];
+
+  const heroImgs = document.querySelectorAll('#heroMedia img');
+  const pillarBtns = document.querySelectorAll('.pillar-btn');
+  pillarBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.idx);
+      pillarBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      heroImgs.forEach((im, i) => im.classList.toggle('active', i === idx));
+
+      const p = heroPillars[idx];
+      document.getElementById('hKicker').textContent = p.kicker;
+      document.getElementById('hTitle').innerHTML = p.title;
+      document.getElementById('hLead').textContent = p.lead;
+      document.getElementById('dCode').textContent = p.code;
+      document.getElementById('dTitle').textContent = p.dTitle;
+      document.getElementById('dDesc').textContent = p.dDesc;
+      document.getElementById('mProd').textContent = p.prod;
+      document.getElementById('mDur').textContent = p.dur;
+      document.getElementById('mRec').textContent = p.rec;
+    });
+  });
+
+  // · Facial Harmony Zone Configurator
+  const zoneData = {
+    pomulos: {
+      tag: 'TERCIO MEDIO & PÓMULOS',
+      title: 'Reposicionamiento de Tercio Medio & Soporte Malar',
+      desc: 'Infiltración profunda con microcánula roma guiada por ecografía para elevar el surco nasogeniano devolviendo la proyección juvenil del pómulo.',
+      time: '45 Minutos', anes: 'Tópica + Lidocaína', long: '14 a 18 Meses', basePrice: 490
+    },
+    labios: {
+      tag: 'ARQUITECTURA LABIAL COUTURE',
+      title: 'Hidratación & Perfilado Labial con Ácido Hialurónico Dinámico',
+      desc: 'Técnica francesa de micro-depósitos verticales que define el arco de Cupido, corrige asimetrías e hidrata profundamente manteniendo la movilidad suave del labio.',
+      time: '35 Minutos', anes: 'Bloqueo Indoloro', long: '10 a 14 Meses', basePrice: 380
+    },
+    mirada: {
+      tag: 'MIRADA, OJERAS & TERCIO SUPERIOR',
+      title: 'Redensificación Periocular con Polinucleótidos + Mirada Descansada',
+      desc: 'Aclara la ojera vascular o hundida y suaviza las líneas de expresión dinámicas conservando una expresividad fresca y luminosa.',
+      time: '40 Minutos', anes: 'Crema Anestésica', long: '9 a 12 Meses', basePrice: 440
+    },
+    cuello: {
+      tag: 'ARCO MANDIBULAR & CUELLO',
+      title: 'Marcación Mandibular & Bioestimulación con Hidroxiapatita',
+      desc: 'Define el ángulo gonial, disimula la papada incipiente y tensa la piel del cuello mediante vectores de colágeno tipo I y III.',
+      time: '50 Minutos', anes: 'Tópica + Cánula', long: '15 a 18 Meses', basePrice: 560
+    }
+  };
+
+  let activeZone = 'pomulos';
+  let activeMult = 1.0;
+  let activeLevelName = 'Armonización Ideal (Protocolo Completo)';
+
+  function updatePrescription() {
+    const z = zoneData[activeZone];
+    const total = Math.round((z.basePrice * activeMult) / 10) * 10;
+    document.getElementById('zoneActiveTag').textContent = z.tag;
+    document.getElementById('rxLevelBadge').textContent = 'PRESCRIPCIÓN · ' + activeLevelName.toUpperCase();
+    document.getElementById('rxTitle').textContent = z.title;
+    document.getElementById('rxDesc').textContent = z.desc;
+    document.getElementById('rxTime').textContent = z.time;
+    document.getElementById('rxAnes').textContent = z.anes;
+    document.getElementById('rxLongevity').textContent = z.long;
+    document.getElementById('rxPrice').textContent = total + ' €';
+  }
+
+  document.querySelectorAll('#zoneBtns .zone-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#zoneBtns .zone-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeZone = btn.dataset.zone;
+      updatePrescription();
+    });
+  });
+
+  document.querySelectorAll('#intBtns .int-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#intBtns .int-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeMult = Number(btn.dataset.mult);
+      activeLevelName = btn.dataset.level;
+      updatePrescription();
+    });
+  });
+
+  document.getElementById('btnSendRxWA')?.addEventListener('click', () => {
+    const z = zoneData[activeZone];
+    const price = document.getElementById('rxPrice').textContent;
+    const msg = `Hola LUMA, he configurado mi protocolo facial en la web:\n• Zona: ${z.title}\n• Nivel: ${activeLevelName}\n• Presupuesto orientativo: ${price}\nMe gustaría agendar una cita de valoración médica.`;
+    window.open(`https://wa.me/34600000000?text=${encodeURIComponent(msg)}`, '_blank');
+  });
+
+  // · Glass-Skin Before/After Slider
+  const skinBox = document.getElementById('skinBox');
+  const skinSlider = document.getElementById('skinSlider');
+  const skinAfterWrap = document.getElementById('skinAfterWrap');
+  const skinAfterImg = document.getElementById('skinAfterImg');
+  const skinHandle = document.getElementById('skinHandle');
+
+  function syncSkinWidth() {
+    if (skinBox && skinAfterImg) {
+      skinAfterImg.style.width = skinBox.offsetWidth + 'px';
+    }
+  }
+  window.addEventListener('resize', syncSkinWidth);
+  syncSkinWidth();
+
+  skinSlider.addEventListener('input', e => {
+    const val = e.target.value;
+    skinAfterWrap.style.width = val + '%';
+    skinHandle.style.left = val + '%';
+  });
+
+  // · Booking Form
+  document.getElementById('aureaForm')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('aName').value;
+    const treat = document.getElementById('aTreat').value;
+    const time = document.getElementById('aTime').value;
+    const prev = document.getElementById('aPrev').value;
+    const notes = document.getElementById('aNotes').value || 'Valoración general.';
+    const text = `Hola LUMA, soy ${name}. Quiero reservar mi Diagnóstico Facial en C/ Velázquez:\n• Tratamiento: ${treat}\n• Horario: ${time}\n• Experiencia previa: ${prev}\n• Consulta: ${notes}`;
+    window.open(`https://wa.me/34600000000?text=${encodeURIComponent(text)}`, '_blank');
+  });
+
+  // · Instant Client Mock-Up Personalization via URL Parameters (?nombre=...&ciudad=...)
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const customName = params.get('nombre') || params.get('brand');
+    const customCity = params.get('ciudad') || params.get('city');
+    if (customName) {
+      document.title = customName + ' — Propuesta Web Exclusiva';
+      const brandEl = document.querySelector('.brand-name, .brand b');
+      if (brandEl) brandEl.textContent = customName.toUpperCase();
+    }
+    if (customCity) {
+      const subEl = document.querySelector('.brand-sub, .brand small');
+      if (subEl) subEl.textContent = customCity;
+    }
+  })();
+
+  // · Preview-2 shared behaviour (config injected as X)
+  (function () {
+    const X = {"hours": {"1": [600, 1230], "2": [600, 1230], "3": [600, 1230], "4": [600, 1230], "5": [600, 1230], "6": [600, 840], "0": null}, "slots": {"default": ["10:00", "11:30", "13:00", "16:30", "18:00", "19:30"], "6": ["10:00", "11:00", "12:30"]}, "finder": [{"label": "Arrugas", "title": "Armonización facial", "text": "Suavizamos las arrugas devolviendo el soporte perdido, sin congelar tu expresión.", "service": "Armonización facial"}, {"label": "Manchas", "title": "Láser de manchas", "text": "Dos o tres sesiones suelen bastar para unificar el tono. Puedes volver a tu vida el mismo día.", "service": "Láser de manchas"}, {"label": "Flacidez", "title": "Flacidez sin cirugía", "text": "Una sesión al año tensa la piel desde dentro. El efecto aparece poco a poco y dura.", "service": "Flacidez sin cirugía"}, {"label": "Ojeras", "title": "Ojeras y mirada", "text": "Rellenamos lo justo y mejoramos la calidad de la piel fina del ojo.", "service": "Ojeras y mirada"}, {"label": "Labios", "title": "Labios naturales", "text": "Hidratamos y definimos el contorno. Tú decides cuánto: empezamos poco.", "service": "Labios naturales"}], "openWord": "Abierto", "closedWord": "Cerrado", "doneLine": "Te esperamos"};
+    const $ = id => document.getElementById(id);
+    const toast = $('xToast');
+    let toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+    window.xShowToast = showToast;
+
+    // Opening hours in Madrid time: hero status + today's row
+    const DAY_NAMES = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    const fmt = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+    function madridNow() {
+      const p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+      const get = t => p.find(x => x.type === t).value;
+      return { day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday')), min: Number(get('hour')) * 60 + Number(get('minute')) };
+    }
+    function renderOpen() {
+      const H = X.hours, { day, min } = madridNow(), t = H[day];
+      let text;
+      if (t && min >= t[0] && min < t[1]) text = `${X.openWord} ahora, hasta las ${fmt(t[1])}`;
+      else if (t && min < t[0]) text = `${X.closedWord} ahora, abrimos hoy a las ${fmt(t[0])}`;
+      else {
+        let d = day, add = 0;
+        do { d = (d + 1) % 7; add++; } while (!H[d] && add < 8);
+        text = H[d] ? `${X.closedWord} ahora, abrimos ${add === 1 ? 'mañana' : 'el ' + DAY_NAMES[d]} a las ${fmt(H[d][0])}` : X.closedWord;
+      }
+      const el = $('xOpenNow');
+      if (el) el.textContent = text;
+      document.querySelectorAll('#xHours li').forEach(li => li.classList.toggle('today', Number(li.dataset.day) === day));
+    }
+    renderOpen();
+    setInterval(renderOpen, 60000);
+
+    // Finder: pick what you need, get a suggestion that also fills the booking form
+    const finder = document.querySelectorAll('#xFinder [data-pick]');
+    finder.forEach(btn => btn.addEventListener('click', () => {
+      const f = X.finder[Number(btn.dataset.pick)];
+      finder.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      $('xFinderTitle').textContent = f.title;
+      $('xFinderText').textContent = f.text;
+      $('xFinderAnswer').hidden = false;
+      $('xFinderLink').onclick = () => { $('xService').value = f.service; };
+    }));
+
+    // Booking: next open days + slots; confirmation shown on the page (demo, nothing is sent)
+    const dayChips = $('xDays'), timeChips = $('xTimes');
+    let pickDay = null, pickTime = null;
+    function chip(box, label, sub) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('role', 'radio');
+      b.setAttribute('aria-checked', 'false');
+      b.innerHTML = sub ? `<span>${label}</span><small>${sub}</small>` : label;
+      box.appendChild(b);
+      return b;
+    }
+    const select = (box, b) => box.querySelectorAll('button').forEach(x => x.setAttribute('aria-checked', String(x === b)));
+    function renderTimes(dow) {
+      timeChips.innerHTML = '';
+      pickTime = null;
+      (X.slots[dow] || X.slots.default).forEach(t => { chip(timeChips, t).dataset.value = t; });
+    }
+    (function renderDays() {
+      const short = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+      const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      const d = new Date();
+      let added = 0, guard = 0;
+      while (added < 6 && guard++ < 21) {
+        d.setDate(d.getDate() + 1);
+        if (!X.hours[d.getDay()]) continue;
+        const isTomorrow = guard === 1;
+        const c = chip(dayChips, isTomorrow ? 'Mañana' : short[d.getDay()], `${d.getDate()}/${d.getMonth() + 1}`);
+        c.dataset.dow = d.getDay();
+        c.dataset.full = `${DAY_NAMES[d.getDay()]} ${d.getDate()} de ${months[d.getMonth()]}`;
+        added++;
+      }
+    })();
+    dayChips.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      select(dayChips, b); pickDay = b; renderTimes(b.dataset.dow);
+    });
+    timeChips.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      select(timeChips, b); pickTime = b.dataset.value;
+    });
+    renderTimes('default');
+    const form = $('xForm'), done = $('xDone');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!pickDay || !pickTime) { showToast('Elige un día y una hora.'); return; }
+      const name = $('xName').value.trim().split(' ')[0];
+      $('xDoneText').textContent = `Gracias, ${name}. ${X.doneLine} el ${pickDay.dataset.full} a las ${pickTime}. Te llamaremos para confirmarlo.`;
+      form.hidden = true; done.hidden = false; done.focus();
+    });
+    $('xAgain').addEventListener('click', () => {
+      form.reset(); select(dayChips, null); pickDay = null; renderTimes('default');
+      done.hidden = true; form.hidden = false;
+    });
+
+    // Any old "send by WhatsApp" button now fills the booking form instead
+    function toBooking(text) {
+      const notes = $('xNotes');
+      // the old WhatsApp messages greet the business ("Hola X, …"); in the visitor's own notes that reads oddly
+      text = (text || '').replace(/^\s*hola[^,]*,\s*/i, '');
+      if (text) text = text.charAt(0).toUpperCase() + text.slice(1);
+      if (text && notes) notes.value = text;
+      $('reserva').scrollIntoView({ behavior: 'smooth' });
+      showToast('Lo hemos añadido a tu solicitud.');
+    }
+    window.xToBooking = toBooking;
+    const nativeOpen = window.open.bind(window);
+    window.open = (url, ...rest) => {
+      if (typeof url === 'string' && url.indexOf('wa.me/') !== -1) {
+        let text = '';
+        try { text = new URL(url).searchParams.get('text') || ''; } catch (err) {}
+        toBooking(text);
+        return null;
+      }
+      return nativeOpen(url, ...rest);
+    };
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href*="wa.me/"]');
+      if (!a) return;
+      e.preventDefault();
+      let text = '';
+      try { text = new URL(a.href).searchParams.get('text') || ''; } catch (err) {}
+      toBooking(text);
+    });
+
+    // Call links: phones dial, computers copy the number
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    document.querySelectorAll('.js-call').forEach(a => a.addEventListener('click', e => {
+      if (isTouch) return;
+      e.preventDefault();
+      const num = a.dataset.number;
+      if (navigator.clipboard) navigator.clipboard.writeText(num).then(() => showToast(`Número copiado: ${num}`), () => showToast(`Llámanos al ${num}`));
+      else showToast(`Llámanos al ${num}`);
+    }));
+  })();
+
+  // · Gift card builder
+  (function () {
+    let amount = 100;
+    const pills = document.querySelectorAll('.x-gift-amounts button');
+    pills.forEach(b => b.addEventListener('click', () => {
+      amount = Number(b.dataset.amount);
+      pills.forEach(p => p.setAttribute('aria-checked', String(p === b)));
+      document.getElementById('xGiftAmount').textContent = amount + ' €';
+    }));
+    document.getElementById('xGiftBtn').addEventListener('click', () => window.xToBooking(`Quiero una tarjeta regalo de ${amount} €.`));
+  })();
+
+</script>
+</body>
+</html>

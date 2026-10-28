@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Botánica Real · Floristería en Las Salesas, Madrid</title>
+<meta name="description" content="Ramos hechos cada mañana con envío el mismo día en Madrid, y flores para bodas y eventos." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #F9F4EC;
+    --sage-cream: #EDE6DA;
+    --card-white: #FFFFFF;
+    --botanical: #152018;
+    --botanical-mid: #213226;
+    --peony: #BC6C5C;
+    --peony-light: #E4A99B;
+    --peony-pale: rgba(188, 108, 92, 0.12);
+    --gold-leaf: #B89352;
+    --muted: #626960;
+    --line: rgba(21, 32, 24, 0.11);
+    --line-light: rgba(249, 244, 236, 0.18);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; background: var(--parchment); color: var(--botanical); }
+  body {
+    font-family: var(--sans);
+    font-variant-numeric: tabular-nums;
+    background: var(--parchment);
+    color: var(--botanical);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  button, input, select, textarea { font: inherit; color: inherit; background: none; border: none; }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(48px, 6.5vw, 96px);
+  }
+
+  /* ================= FLOATING BOTANICAL NAVBAR ================= */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 0;
+    transition: all 0.35s var(--ease);
+  }
+  .nav.scrolled {
+    background: rgba(249, 244, 236, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 13px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    transition: color 0.35s;
+  }
+  .nav.scrolled .brand { color: var(--botanical); }
+  .brand-name {
+    font-family: var(--serif);
+    font-size: 27px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    line-height: 1;
+  }
+  .brand-sub {
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0.82;
+    margin-top: 4px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 30px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .nav.scrolled .nav-links { color: var(--botanical); }
+  .nav-links a {
+    position: relative;
+    padding: 4px 0;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1.5px;
+    background: var(--peony);
+    transition: width 0.3s var(--ease);
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    padding: 11px 22px;
+    border-radius: 999px;
+    background: var(--peony);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: all 0.25s;
+  }
+  .nav-cta:hover {
+    background: var(--botanical);
+    transform: translateY(-1px);
+  }
+
+  /* ================= 100SVH FULL-BLEED BOTANICAL HERO ================= */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    color: #fff;
+    overflow: hidden;
+    background: var(--botanical);
+  }
+  .hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 1.1s var(--ease), transform 6s ease-out;
+    filter: brightness(0.73) contrast(1.05);
+  }
+  .hero-media img.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(21, 32, 24, 0.58) 0%, rgba(21, 32, 24, 0.18) 44%, rgba(21, 32, 24, 0.88) 100%),
+      radial-gradient(circle at 20% 60%, rgba(21, 32, 24, 0.55) 0%, transparent 58%);
+    z-index: 1;
+  }
+
+  .hero-body {
+    position: relative;
+    z-index: 2;
+    align-self: end;
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 120px clamp(64px, 8vw, 116px) 42px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    align-items: center;
+  }
+  .hero-body > div:first-child {
+    padding-left: clamp(16px, 2vw, 32px);
+  }
+  .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(249, 244, 236, 0.14);
+    border: 1px solid rgba(249, 244, 236, 0.28);
+    backdrop-filter: blur(10px);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #F7D8CE;
+    margin-bottom: 18px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(42px, 5.2vw, 74px);
+    line-height: 0.96;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--peony-light);
+  }
+  .hero-lead {
+    margin-top: 18px;
+    max-width: 540px;
+    font-size: clamp(15px, 1.2vw, 18px);
+    color: rgba(249, 244, 236, 0.86);
+    font-weight: 300;
+  }
+
+  /* Botanical Edition Card */
+  .stem-card {
+    background: rgba(21, 32, 24, 0.72);
+    border: 1px solid rgba(249, 244, 236, 0.24);
+    border-radius: 24px;
+    padding: 28px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .stem-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--peony-light);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line-light);
+  }
+  .stem-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    margin: 14px 0 8px;
+  }
+  .stem-desc {
+    font-size: 13.5px;
+    color: rgba(249, 244, 236, 0.8);
+    margin-bottom: 18px;
+  }
+  .stem-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 12px 0;
+    border-top: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+    margin-bottom: 18px;
+  }
+  .stem-metrics span {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(249, 244, 236, 0.6);
+  }
+  .stem-metrics strong {
+    font-family: var(--serif);
+    font-size: 19px;
+    color: #fff;
+  }
+
+  .btn-peony {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    background: var(--peony);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    transition: all 0.25s;
+  }
+  .btn-peony:hover {
+    background: #A35748;
+    transform: translateY(-1px);
+  }
+  .btn-ghost-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 20px;
+    border-radius: 999px;
+    border: 1px solid rgba(249, 244, 236, 0.35);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Bottom 4-Collection Bar */
+  .hero-seasons {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid var(--line-light);
+    background: rgba(21, 32, 24, 0.78);
+    backdrop-filter: blur(14px);
+  }
+  .season-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .season-btn {
+    text-align: left;
+    padding: 20px 22px;
+    border-right: 1px solid var(--line-light);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .season-btn:last-child { border-right: none; }
+  .season-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--peony-light);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+  .season-btn.active {
+    background: rgba(188, 108, 92, 0.18);
+  }
+  .season-btn.active::before {
+    transform: scaleX(1);
+  }
+  .season-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--peony-light);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .season-name {
+    font-family: var(--serif);
+    font-size: 21px;
+    display: block;
+    color: #fff;
+  }
+  .season-sub {
+    font-size: 12px;
+    color: rgba(249, 244, 236, 0.68);
+  }
+
+  /* ================= CENTERED SECTION HEADERS ================= */
+  .section-pad {
+    padding: clamp(84px, 10vw, 136px) 0;
+  }
+  .sec-head-center {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--peony);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before,
+  .sec-head-center .eyebrow::after {
+    content: '';
+    width: 24px;
+    height: 1.5px;
+    background: var(--peony);
+  }
+  .sec-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(36px, 4.8vw, 66px);
+    line-height: 1.04;
+    padding-inline: 0.06em;
+  }
+  .sec-title em {
+    font-style: italic;
+    color: var(--peony);
+    padding-inline: 0.08em;
+  }
+
+  /* ================= UNIQUE FEATURE #1: BESPOKE BOUQUET & WAX-SEALED CARD CONFIGURATOR ================= */
+  .bouquet-sec {
+    background: var(--sage-cream);
+    border-bottom: 1px solid var(--line);
+  }
+  .bouquet-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 36px;
+    align-items: stretch;
+  }
+  .bouquet-panel {
+    background: var(--card-white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: clamp(26px, 3.6vw, 42px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .b-lbl {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .tone-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .tone-btn {
+    text-align: left;
+    padding: 16px 18px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: var(--parchment);
+    transition: all 0.25s;
+  }
+  .tone-btn.active {
+    background: var(--botanical);
+    color: #fff;
+    border-color: var(--botanical);
+  }
+  .tone-btn strong {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .tone-btn span {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .size-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .sz-btn {
+    padding: 14px 12px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--parchment);
+    text-align: center;
+    font-size: 12.5px;
+    font-weight: 600;
+    transition: all 0.25s;
+  }
+  .sz-btn.active {
+    background: var(--peony);
+    color: #fff;
+    border-color: var(--peony);
+  }
+
+  .card-input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--parchment);
+    font-size: 14px;
+  }
+
+  /* Wax-Sealed Card Live Preview */
+  .wax-preview-box {
+    background: var(--botanical);
+    color: var(--parchment);
+    border-radius: 24px;
+    padding: clamp(28px, 3.8vw, 42px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .stationery-card {
+    background: #FCF8F0;
+    color: var(--botanical);
+    border-radius: 16px;
+    padding: 28px 24px 24px;
+    margin: 18px 0 22px;
+    position: relative;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+    text-align: center;
+    border: 1px solid rgba(184, 147, 82, 0.35);
+  }
+  .wax-seal {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #D47A68, #9C4636 70%, #6D2B1F 100%);
+    color: #FBE9DF;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    display: grid;
+    place-items: center;
+    margin: -42px auto 12px;
+    box-shadow: 0 6px 14px rgba(109, 43, 31, 0.45);
+    border: 2px solid rgba(255, 232, 214, 0.35);
+  }
+  .dedication-text {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--botanical);
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ================= UNIQUE FEATURE #2: WEDDING & EVENT SCENOGRAPHY CALCULATOR ================= */
+  .wedding-sec {
+    background: var(--parchment);
+    border-bottom: 1px solid var(--line);
+  }
+  .wedding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .w-card {
+    background: var(--card-white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: clamp(28px, 3.8vw, 42px);
+  }
+  .check-list {
+    display: grid;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .w-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 18px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--parchment);
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: all 0.25s;
+  }
+  .w-item.active {
+    background: var(--botanical);
+    color: #fff;
+    border-color: var(--botanical);
+  }
+  .w-item em {
+    font-style: normal;
+    color: var(--peony);
+    font-weight: 700;
+  }
+  .w-item.active em { color: var(--peony-light); }
+
+  /* ================= ATELIER RESERVATION ================= */
+  .booking-sec {
+    background: var(--sage-cream);
+  }
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: 44px;
+  }
+  .salesas-box {
+    background: var(--card-white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 34px;
+  }
+  .salesas-list {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  .salesas-list li {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .salesas-list span { color: var(--muted); }
+
+  .botanica-form {
+    background: var(--card-white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: clamp(28px, 4vw, 44px);
+  }
+  .f-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .f-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .f-group label {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .f-group input, .f-group select, .f-group textarea {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--parchment);
+    font-size: 14px;
+  }
+
+  footer {
+    background: var(--botanical);
+    color: rgba(249, 244, 236, 0.72);
+    padding: 36px 0;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media (max-width: 980px) {
+    .hero-body, .bouquet-grid, .wedding-grid, .booking-grid {
+      grid-template-columns: 1fr;
+    }
+    .season-grid { grid-template-columns: 1fr 1fr; }
+    .season-btn { border-bottom: 1px solid var(--line-light); }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 640px) {
+    .season-grid, .tone-grid, .size-row, .f-row { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .wrap { padding-left: 22px; padding-right: 22px; }
+    .hero-body, .hero-main, .hero-center { padding-left: 22px !important; padding-right: 22px !important; }
+    .hero-body > div:first-child, .hero-main > div:first-child, .hero-center > div:first-child { padding-left: 0 !important; }
+  }
+
+  /* Centered Editorial Magazine Hero Override */
+  .hero-body {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    justify-items: center !important;
+    max-width: 980px !important;
+    gap: 28px !important;
+    padding-top: 115px !important;
+  }
+  .hero-body > div:first-child {
+    padding-left: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-lead {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+  }
+  .hero-body > aside {
+    width: 100%;
+    max-width: 760px;
+    text-align: left;
+  }
+
+  /* Header button: keep on one line on phones */
+  .nav-cta { white-space: nowrap; flex-shrink: 0; }
+  @media (max-width: 640px) {
+    .nav-cta { padding: 10px 14px; font-size: 11px; letter-spacing: 0.04em; min-height: 44px; }
+    .brand-sub, .brand small { display: none; }
+  }
+  .cta-short { display: none; }
+  @media (max-width: 420px) {
+    .cta-long { display: none; }
+    .cta-short { display: inline; }
+  }
+  /* Menu: one line per link; hide it before it gets squeezed */
+  .nav-links a { white-space: nowrap; }
+  @media (max-width: 1180px) { .nav-links { display: none; } }
+  /* Stop long dropdowns and cards from pushing sections wider than the phone */
+  @media (max-width: 980px) {
+    [class*="grid"] > *, [class*="layout"] > *, [class*="list"] > *, .f-row > * { min-width: 0; }
+    select, input, textarea { max-width: 100%; min-width: 0; }
+  }
+
+  :root {
+    --x-l-bg: var(--parchment);
+    --x-l-alt: var(--sage-cream);
+    --x-l-card: #FFFFFF;
+    --x-l-field: var(--parchment);
+    --x-l-ink: var(--botanical);
+    --x-l-muted: #5A6159;
+    --x-l-line: rgba(21, 32, 24, 0.12);
+    --x-d-bg: var(--botanical);
+    --x-d-alt: var(--botanical-mid);
+    --x-d-card: #1C2B20;
+    --x-d-field: #1C2B20;
+    --x-d-ink: var(--parchment);
+    --x-d-muted: rgba(249, 244, 236, 0.74);
+    --x-d-line: rgba(249, 244, 236, 0.16);
+    --x-accent: #A35444;
+    --x-accent-ink: #FFFFFF;
+    --x-accent-text: #A35444;
+    --x-accent-on-dark: var(--peony-light);
+    --x-accent-line: var(--peony);
+    --x-foot: var(--botanical);
+  }
+
+  /* ================= Preview-2 shared blocks (palette from the tokens above) ================= */
+  .x-light-a { --c-bg: var(--x-l-bg); --c-ink: var(--x-l-ink); --c-muted: var(--x-l-muted); --c-line: var(--x-l-line); --c-card: var(--x-l-card); --c-field: var(--x-l-field); }
+  .x-light-b { --c-bg: var(--x-l-alt); --c-ink: var(--x-l-ink); --c-muted: var(--x-l-muted); --c-line: var(--x-l-line); --c-card: var(--x-l-card); --c-field: var(--x-l-field); }
+  .x-dark-a { --c-bg: var(--x-d-bg); --c-ink: var(--x-d-ink); --c-muted: var(--x-d-muted); --c-line: var(--x-d-line); --c-card: var(--x-d-card); --c-field: var(--x-d-field); }
+  .x-dark-b { --c-bg: var(--x-d-alt); --c-ink: var(--x-d-ink); --c-muted: var(--x-d-muted); --c-line: var(--x-d-line); --c-card: var(--x-d-card); --c-field: var(--x-d-field); }
+  .x-sec { background: var(--c-bg); color: var(--c-ink); padding: clamp(80px, 9vw, 128px) 0; }
+  .x-sec[id], section[id] { scroll-margin-top: 72px; }
+  .x-wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 clamp(22px, 6.5vw, 96px); }
+  .x-title { font-family: var(--serif); font-weight: 400; font-size: clamp(36px, 4.6vw, 62px); line-height: 1.04; color: var(--c-ink); text-wrap: balance; }
+  .x-title em { font-style: italic; color: var(--x-accent-text, var(--x-accent)); }
+  .x-dark-a .x-title em, .x-dark-b .x-title em { color: var(--x-accent-on-dark); }
+  .x-lead { color: var(--c-muted); font-size: 17px; margin-top: 18px; max-width: 34em; }
+
+  .x-btn, .x-btn-line, .x-btn-light {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px;
+    padding: 14px 26px; border-radius: 999px; font-family: var(--sans); font-size: 14px; font-weight: 600;
+    letter-spacing: 0.01em; text-transform: none; text-decoration: none; cursor: pointer; transition: all 0.3s var(--ease);
+  }
+  .x-btn { background: var(--x-accent); color: var(--x-accent-ink); border: 1px solid var(--x-accent); }
+  .x-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .x-btn-line { border: 1px solid var(--c-line); color: var(--c-ink); background: transparent; }
+  .x-btn-line:hover { border-color: var(--c-ink); }
+  .x-btn-light { border: 1px solid rgba(255, 255, 255, 0.45); color: #fff; background: transparent; }
+  .x-btn-light:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+  .x-btn svg, .x-btn-line svg, .x-mbar svg, .x-foot-ig svg { width: 18px; height: 18px; flex: none; }
+
+  /* calm hero */
+  .x-hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; color: #fff; overflow: hidden; isolation: isolate; background: var(--x-d-bg); }
+  .x-hero-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: var(--x-hero-pos, center); }
+  .x-hero::before { content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.08) 34%, rgba(0, 0, 0, 0.82) 100%),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 70%); }
+  .x-hero-body { padding-top: 150px; padding-bottom: clamp(56px, 9vh, 104px); }
+  .x-hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 6.4vw, 92px); line-height: 1; max-width: 13ch; text-wrap: balance; color: #fff; letter-spacing: -0.01em; }
+  .x-hero h1 em { display: block; font-style: italic; color: var(--x-accent-on-dark); }
+  .x-hero-sub { margin-top: 24px; max-width: 34em; font-size: clamp(17px, 1.4vw, 20px); color: rgba(255, 255, 255, 0.9); }
+  .x-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .x-hero-facts { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 30px; margin-top: 44px; padding-top: 20px; max-width: 700px;
+    border-top: 1px solid rgba(255, 255, 255, 0.22); font-size: 14px; color: rgba(255, 255, 255, 0.86); }
+  .x-hero-facts li { display: flex; align-items: center; gap: 10px; }
+  .x-hero-facts li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--x-accent-on-dark); flex: none; }
+
+  /* services + finder */
+  .x-split { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .x-services { list-style: none; border-top: 1px solid var(--c-line); }
+  .x-services li { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr) auto; gap: 24px; padding: 26px 0; border-bottom: 1px solid var(--c-line); align-items: baseline; }
+  .x-services h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(21px, 1.9vw, 26px); line-height: 1.15; color: var(--c-ink); }
+  .x-services p { color: var(--c-muted); font-size: 15px; }
+  .x-price { font-family: var(--serif); font-size: 19px; color: var(--c-ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .x-price small { font-family: var(--sans); font-size: 12px; color: var(--c-muted); margin-right: 4px; }
+  .x-finder { margin-top: 36px; }
+  .x-finder-q { font-size: 16px; color: var(--c-muted); margin-bottom: 14px; }
+  .x-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .x-pills button { padding: 11px 16px; min-height: 44px; border-radius: 999px; border: 1px solid var(--c-line); background: var(--c-card); color: var(--c-ink); font: 500 14px/1.2 var(--sans); cursor: pointer; transition: all 0.25s; }
+  .x-pills button:hover { border-color: var(--c-ink); }
+  .x-pills button[aria-pressed="true"], .x-pills button[aria-checked="true"] { background: var(--c-ink); color: var(--c-bg); border-color: var(--c-ink); }
+  .x-answer { margin-top: 18px; padding: 22px 24px; border-radius: 18px; background: var(--c-card); border: 1px solid var(--c-line); }
+  .x-answer h3 { font-family: var(--serif); font-weight: 400; font-size: 25px; color: var(--c-ink); line-height: 1.1; }
+  .x-answer p { color: var(--c-muted); font-size: 15px; margin: 6px 0 12px; }
+  .x-link { font-weight: 600; font-size: 14px; color: var(--c-ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* FAQ */
+  .x-faq { border-top: 1px solid var(--c-line); }
+  .x-faq details { border-bottom: 1px solid var(--c-line); }
+  .x-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 24px 0; font-family: var(--serif); font-size: clamp(20px, 1.8vw, 24px); color: var(--c-ink); }
+  .x-faq summary::-webkit-details-marker { display: none; }
+  .x-faq summary i { position: relative; width: 16px; height: 16px; flex: none; }
+  .x-faq summary i::before, .x-faq summary i::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: var(--x-accent-line); transition: transform 0.3s var(--ease); }
+  .x-faq summary i::after { transform: rotate(90deg); }
+  .x-faq details[open] summary i::after { transform: rotate(0deg); }
+  .x-faq details p { color: var(--c-muted); font-size: 16px; padding: 0 40px 24px 0; max-width: 60ch; }
+
+  /* booking */
+  .x-book-head { text-align: center; max-width: 760px; margin: 0 auto 52px; }
+  .x-book-head .x-lead { margin-left: auto; margin-right: auto; }
+  .x-book { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 64px); align-items: start; }
+  .x-steps h3 { font-family: var(--serif); font-weight: 400; font-size: 30px; color: var(--c-ink); margin-bottom: 20px; }
+  .x-steps ol { list-style: none; counter-reset: v; display: grid; gap: 18px; }
+  .x-steps li { counter-increment: v; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; color: var(--c-muted); font-size: 15px; }
+  .x-steps li::before { content: counter(v); width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--x-accent-line); display: grid; place-items: center; font-family: var(--serif); font-size: 17px; color: var(--c-ink); }
+  .x-steps strong { color: var(--c-ink); font-weight: 600; }
+  .x-call-line { margin-top: 26px; font-size: 15px; color: var(--c-muted); }
+  .x-call-line a { color: var(--c-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+  .x-form, .x-done { background: var(--c-card); border: 1px solid var(--c-line); border-radius: 24px; padding: clamp(26px, 4vw, 44px); box-shadow: 0 24px 50px rgba(0, 0, 0, 0.06); color: var(--c-ink); }
+  .x-form h3, .x-done h3 { font-family: var(--serif); font-weight: 400; font-size: 32px; color: var(--c-ink); margin-bottom: 6px; }
+  .x-form > p { font-size: 14px; color: var(--c-muted); margin-bottom: 22px; }
+  .x-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  .x-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; min-width: 0; }
+  .x-field label, .x-pick legend { font-size: 12px; font-weight: 600; color: var(--c-ink); }
+  .x-field input, .x-field select, .x-field textarea { width: 100%; max-width: 100%; min-width: 0; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--c-line); background: var(--c-field); color: var(--c-ink); font: 400 15px/1.4 var(--sans); }
+  .x-field input:focus, .x-field select:focus, .x-field textarea:focus { outline: none; border-color: var(--x-accent-line); }
+  .x-pick { border: 0; margin: 0 0 18px; padding: 0; min-width: 0; }
+  .x-pick legend { margin-bottom: 8px; padding: 0; }
+  .x-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .x-chips button { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 64px; min-height: 44px;
+    padding: 8px 14px; border-radius: 12px; border: 1px solid var(--c-line); background: var(--c-field); color: var(--c-ink); font: 600 14px/1.2 var(--sans); cursor: pointer; transition: all 0.2s; }
+  .x-chips button small { font-size: 11px; font-weight: 500; color: var(--c-muted); }
+  .x-chips button:hover { border-color: var(--x-accent-line); }
+  .x-chips button[aria-checked="true"] { background: var(--c-ink); border-color: var(--c-ink); color: var(--c-bg); }
+  .x-chips button[aria-checked="true"] small { color: inherit; opacity: 0.75; }
+  .x-form .x-btn { width: 100%; margin-top: 4px; }
+  .x-small { margin-top: 12px; font-size: 12px; color: var(--c-muted); text-align: center; }
+  .x-done p { color: var(--c-muted); margin: 10px 0 24px; }
+  .x-done:focus { outline: none; }
+
+  /* how to get there */
+  .x-visit { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+  .x-address { font-family: var(--serif); font-size: clamp(24px, 2.4vw, 32px); line-height: 1.25; color: var(--c-ink); margin-top: 24px; }
+  .x-facts { list-style: none; margin-top: 26px; display: grid; gap: 10px; font-size: 15px; color: var(--c-ink); }
+  .x-facts li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; }
+  .x-facts span { color: var(--c-muted); }
+  .x-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+  .x-hours { background: var(--c-card); border: 1px solid var(--c-line); border-radius: 24px; padding: clamp(26px, 3.4vw, 40px); }
+  .x-hours h3 { font-family: var(--serif); font-weight: 400; font-size: 28px; color: var(--c-ink); margin-bottom: 14px; }
+  .x-hours ul { list-style: none; }
+  .x-hours li { display: flex; justify-content: space-between; gap: 16px; padding: 11px 12px; margin: 0 -12px; border-radius: 10px; font-size: 15px; color: var(--c-muted); font-variant-numeric: tabular-nums; }
+  .x-hours li.today { background: var(--c-bg); color: var(--c-ink); font-weight: 600; }
+  .x-hours p { margin-top: 18px; font-size: 15px; }
+  .x-hours p a { color: var(--c-ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* footer */
+  .x-foot { background: var(--x-foot); color: rgba(255, 255, 255, 0.72); padding: 64px 0 36px; font-family: var(--sans); font-size: 14px; letter-spacing: 0; }
+  .x-foot-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 0.8fr; gap: 32px; }
+  .x-foot-brand { font-family: var(--serif); font-size: 26px; letter-spacing: 0.12em; color: #fff; margin-bottom: 6px; }
+  .x-foot-h { color: var(--x-accent-on-dark); font-weight: 600; margin-bottom: 8px; }
+  .x-foot a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255, 255, 255, 0.3); }
+  .x-foot a:hover { color: #fff; }
+  .x-foot-ig { display: inline-flex; align-items: center; gap: 8px; }
+  .x-legal { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, 0.14); font-size: 13px; }
+
+  /* phone action bar + toast */
+  .x-mbar { display: none; }
+  .x-toast { position: fixed; left: 50%; bottom: 28px; z-index: 400; transform: translate(-50%, 20px); opacity: 0; pointer-events: none; max-width: calc(100% - 32px);
+    background: var(--x-d-bg); color: #fff; padding: 12px 20px; border-radius: 999px; font: 500 14px/1.4 var(--sans); transition: all 0.35s var(--ease); text-align: center; }
+  .x-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (max-width: 1024px) {
+    .x-split, .x-book, .x-visit { grid-template-columns: minmax(0, 1fr); }
+    .x-foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 760px) {
+    .x-mbar { display: grid; grid-template-columns: 0.9fr 1.2fr 1fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 300;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: var(--x-foot); border-top: 1px solid rgba(255, 255, 255, 0.12); }
+    .x-mbar a { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 46px; border-radius: 999px; padding: 0 8px;
+      border: 1px solid rgba(255, 255, 255, 0.25); color: #fff; font: 600 13px/1 var(--sans); white-space: nowrap; text-decoration: none; }
+    .x-mbar svg { width: 16px; height: 16px; }
+    .x-mbar .x-mbar-main { background: var(--x-accent); border-color: var(--x-accent); color: var(--x-accent-ink); }
+    body { padding-bottom: 72px; }
+    .x-toast { bottom: 90px; }
+    .x-foot-grid { grid-template-columns: 1fr; }
+    .x-services li { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; padding: 22px 0; }
+    .x-services li p { grid-column: 1 / -1; grid-row: 2; }
+    .x-row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .x-actions a, .x-hero-actions a { flex: 1 1 100%; }
+    .x-hero-body { padding-top: 120px; }
+    .x-hero::before { background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.42) 45%, rgba(0, 0, 0, 0.88) 100%); }
+    .x-hero-facts { margin-top: 32px; gap: 8px 20px; font-size: 13px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .x-faq summary i::before, .x-faq summary i::after, .x-toast, .x-btn { transition: none; } }
+
+  /* ================= Florist: visual shop ================= */
+  .fl-head { max-width: 720px; margin-bottom: 40px; }
+  .fl-head-row { max-width: none; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  .fl-trust { background: var(--x-d-bg); color: var(--x-d-ink); border-bottom: 1px solid var(--x-d-line); }
+  .fl-trust-row { display: flex; justify-content: space-between; gap: 12px 28px; flex-wrap: wrap; padding: 16px 0; font: 400 14px/1.4 var(--sans); color: var(--x-d-muted); }
+  .fl-trust-row b { color: var(--x-accent-on-dark); font-weight: 600; }
+
+  .fl-occ-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+  .fl-occ { position: relative; display: block; aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; padding: 0; border: 0; cursor: pointer; background: var(--c-card); }
+  .fl-occ img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+  .fl-occ::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.62)); }
+  .fl-occ span { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 1; color: #fff; font: 400 22px/1.1 var(--serif); text-align: left; }
+  .fl-occ:hover img, .fl-occ:focus-visible img { transform: scale(1.05); }
+  .fl-occ[aria-pressed="true"] { outline: 3px solid var(--x-accent-line); outline-offset: 3px; }
+
+  .fl-cats { justify-content: flex-end; }
+  .fl-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 20px; }
+  .fl-prod { display: flex; flex-direction: column; gap: 12px; }
+  .fl-prod-img { position: relative; aspect-ratio: 4 / 5; border-radius: 18px; overflow: hidden; background: var(--c-card); }
+  .fl-prod-img img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.35s, transform 0.8s var(--ease); }
+  .fl-prod:hover .fl-prod-img img { transform: scale(1.04); }
+  .fl-badge { position: absolute; top: 12px; left: 12px; z-index: 1; background: var(--c-card); color: var(--c-ink); font: 600 12px/1 var(--sans); padding: 7px 11px; border-radius: 999px; }
+  .fl-prod h3 { font: 400 23px/1.15 var(--serif); color: var(--c-ink); }
+  .fl-prod p { font-size: 14px; color: var(--c-muted); }
+  .fl-prod-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .fl-dots { display: flex; gap: 6px; }
+  .fl-dots button { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--c-bg); box-shadow: 0 0 0 1px var(--c-line); background: var(--sw); cursor: pointer; padding: 0; position: relative; }
+  .fl-dots button::before { content: ""; position: absolute; inset: -9px; }
+  .fl-dots button[aria-checked="true"] { box-shadow: 0 0 0 2px var(--c-ink); }
+  .fl-price { font: 400 21px/1 var(--serif); color: var(--c-ink); }
+  .fl-variant { font-size: 13px; color: var(--c-muted); }
+  .fl-add { min-height: 44px; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--c-ink); background: transparent; color: var(--c-ink); font: 600 14px/1 var(--sans); cursor: pointer; transition: all 0.25s; }
+  .fl-add:hover, .fl-add.added { background: var(--c-ink); color: var(--c-bg); }
+  .fl-empty { margin-top: 20px; color: var(--c-muted); }
+
+  .fl-builder { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(36px, 5vw, 80px); align-items: center; }
+  .fl-preview { position: relative; text-align: center; }
+  .fl-wrap-svg { width: 100%; max-width: 420px; height: auto; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.35)); }
+  .fl-wrap-svg #flScale { transition: transform 0.45s var(--ease); }
+  .fl-wrap-svg path, .fl-wrap-svg circle { transition: fill 0.35s; }
+  #flPaperBack { fill: var(--paper); filter: brightness(0.86); }
+  #flPaperFront { fill: var(--paper); }
+  #flBow path, #flBow circle { fill: var(--ribbon); stroke: rgba(0, 0, 0, 0.18); stroke-width: 1; }
+  .fl-card-preview { position: relative; margin: -40px auto 0; max-width: 260px; background: #FFFDF8; color: #2B2A28; border-radius: 6px; padding: 16px 18px; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25); transform: rotate(-3deg); text-align: left; }
+  .fl-card-preview span { font: 600 11px/1 var(--sans); color: #8A7A6A; }
+  .fl-card-preview p { font: italic 400 20px/1.25 var(--serif); margin-top: 6px; min-height: 2.5em; word-wrap: break-word; }
+  .fl-step { margin-top: 24px; }
+  .fl-step-t { display: block; font: 600 13px/1 var(--sans); color: var(--c-ink); margin-bottom: 12px; }
+  .fl-step-t span { font-weight: 400; color: var(--c-muted); margin-left: 6px; }
+  .fl-photo-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .fl-photo-sw { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: var(--c-muted); font: 500 12px/1.2 var(--sans); cursor: pointer; }
+  .fl-sw-bloom { width: 100%; max-width: 76px; height: auto; aspect-ratio: 1; border-radius: 50%; background: var(--c-card); border: 3px solid transparent; transition: border-color 0.25s; }
+  .fl-photo-sw[aria-checked="true"] .fl-sw-bloom { border-color: var(--x-accent-on-dark); }
+  /* 3D stage: tilt follows the pointer, layers move by depth, blooms sway while idle */
+  .fl-stage { perspective: 900px; display: inline-block; width: 100%; max-width: 420px; touch-action: pan-y; }
+  .fl-stage .fl-wrap-svg { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.25s ease-out; transform-style: preserve-3d; }
+  .fl-layer { transition: transform 0.25s ease-out; }
+  .fl-sway { transform-box: fill-box; transform-origin: 50% 100%; animation: flSway 6s ease-in-out infinite; }
+  @keyframes flSway { 0%, 100% { rotate: -1.2deg; } 50% { rotate: 1.2deg; } }
+  .fl-photo-sw[aria-checked="true"] { color: var(--c-ink); }
+  .fl-sizes small { margin-top: 2px; }
+  .fl-color-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .fl-color-sw { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 62px; padding: 6px 4px; border-radius: 12px; border: 1px solid transparent; background: none; color: var(--c-muted); font: 500 12px/1.2 var(--sans); cursor: pointer; }
+  .fl-color-sw i { width: 40px; height: 40px; border-radius: 10px; background: var(--sw); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: inset 0 -8px 12px rgba(0, 0, 0, 0.12); }
+  .fl-ribbon-sw svg { width: 42px; height: 30px; }
+  .fl-ribbon-sw svg path, .fl-ribbon-sw svg circle { fill: var(--sw); stroke: rgba(255, 255, 255, 0.35); stroke-width: 0.8; }
+  .fl-color-sw[aria-checked="true"] { border-color: var(--x-accent-on-dark); color: var(--c-ink); }
+  .fl-steps textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--c-line); background: var(--c-field); color: var(--c-ink); font: 400 15px/1.4 var(--sans); }
+  .fl-build-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--c-line); }
+  .fl-total { font: 400 40px/1 var(--serif); color: var(--c-ink); }
+
+  .fl-addons { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+  .fl-addon { background: var(--c-card); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--c-line); }
+  .fl-addon img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .fl-addon div { padding: 14px 14px 6px; display: flex; justify-content: space-between; gap: 8px; font-size: 14px; color: var(--c-ink); }
+  .fl-addon div span { color: var(--c-muted); white-space: nowrap; }
+  .fl-add-mini { margin: 6px 14px 14px; min-height: 44px; border-radius: 999px; border: 1px solid var(--c-line); background: transparent; color: var(--c-ink); font: 600 13px/1 var(--sans); cursor: pointer; transition: all 0.25s; }
+  .fl-add-mini[aria-pressed="true"] { background: var(--c-ink); color: var(--c-bg); border-color: var(--c-ink); }
+
+  .fl-plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .fl-plan { display: flex; flex-direction: column; text-align: left; padding: 0; border-radius: 20px; overflow: hidden; border: 2px solid transparent; background: var(--c-card); cursor: pointer; color: var(--c-ink); transition: border-color 0.25s, transform 0.3s var(--ease); }
+  .fl-plan img { width: 100%; aspect-ratio: 10 / 7; object-fit: cover; }
+  .fl-plan-body { display: flex; flex-direction: column; gap: 4px; padding: 18px 20px 22px; }
+  .fl-plan strong { font: 400 24px/1.1 var(--serif); }
+  .fl-plan em { font-style: normal; font-weight: 600; color: var(--x-accent-text); }
+  .fl-plan span span, .fl-plan-body > span { font-size: 14px; color: var(--c-muted); }
+  .fl-plan:hover { transform: translateY(-3px); }
+  .fl-plan[aria-pressed="true"] { border-color: var(--x-accent-line); }
+
+  .fl-delivery { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(36px, 5vw, 80px); align-items: center; }
+  .fl-cp { margin-top: 28px; }
+  .fl-cp label { display: block; font: 600 13px/1 var(--sans); color: var(--c-ink); margin-bottom: 10px; }
+  .fl-cp-row { display: flex; gap: 10px; max-width: 420px; }
+  .fl-cp-row input { flex: 1; min-width: 0; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--c-line); background: var(--c-field); color: var(--c-ink); font: 600 18px/1.2 var(--sans); letter-spacing: 0.08em; }
+  .fl-cp p { margin-top: 12px; color: var(--c-muted); font-size: 15px; }
+  .fl-countdown { margin-top: 0; text-align: center; padding: clamp(26px, 4vw, 44px); }
+  .fl-cd-label { margin: 0 !important; color: var(--c-muted); }
+  .fl-cd-time { font: 400 clamp(44px, 6vw, 72px)/1.05 var(--serif); color: var(--c-ink) !important; margin: 10px 0 20px !important; font-variant-numeric: tabular-nums; }
+  .fl-cd-steps { list-style: none; display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; counter-reset: s; }
+  .fl-cd-steps li { counter-increment: s; font-size: 13px; color: var(--c-muted); padding: 7px 12px; border: 1px solid var(--c-line); border-radius: 999px; }
+  .fl-cd-steps li::before { content: counter(s) " · "; color: var(--x-accent-on-dark); font-weight: 600; }
+
+  .fl-wedding { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: clamp(36px, 5vw, 80px); align-items: center; }
+  .fl-mosaic { display: grid; grid-template-columns: 1.1fr 1fr 0.9fr; grid-template-rows: 180px 180px 160px; gap: 12px; }
+  .fl-mosaic img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; }
+  .fl-mosaic .m1 { grid-row: 1 / 4; }
+  .fl-mosaic .m2 { grid-column: 2 / 4; }
+  .fl-mosaic .m3 { grid-row: 2 / 3; }
+  .fl-mosaic .m4 { grid-row: 2 / 4; grid-column: 3; }
+  .fl-mosaic .m5 { grid-column: 2; grid-row: 3; }
+
+  .fl-ig { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+  .fl-ig-item { display: block; aspect-ratio: 1; border-radius: 14px; overflow: hidden; }
+  .fl-ig-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease), filter 0.3s; }
+  .fl-ig-item:hover img { transform: scale(1.06); filter: brightness(0.9); }
+
+  .fl-cart-btn { position: fixed; right: 20px; bottom: 24px; z-index: 320; width: 60px; height: 60px; border-radius: 50%; border: 0; background: var(--x-accent); color: var(--x-accent-ink); display: grid; place-items: center; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3); cursor: pointer; transition: transform 0.3s var(--ease); }
+  .fl-cart-btn svg { width: 26px; height: 26px; }
+  .fl-cart-btn.bump { transform: scale(1.12); }
+  .fl-cart-count { position: absolute; top: -2px; right: -2px; min-width: 24px; height: 24px; padding: 0 6px; border-radius: 999px; background: var(--x-d-bg); color: #fff; font: 700 12px/24px var(--sans); }
+  .fl-cart { position: fixed; top: 0; right: 0; bottom: 0; z-index: 330; width: min(400px, 100%); background: var(--c-bg); color: var(--c-ink); box-shadow: -20px 0 50px rgba(0, 0, 0, 0.25); display: flex; flex-direction: column; padding: 24px; }
+  .fl-cart[hidden] { display: none; }
+  .fl-cart-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .fl-cart-head h3 { font: 400 28px/1 var(--serif); }
+  .fl-cart-close { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--c-line); background: none; color: var(--c-ink); font-size: 24px; cursor: pointer; }
+  .fl-cart-list { list-style: none; flex: 1; overflow-y: auto; display: grid; gap: 12px; align-content: start; }
+  .fl-cart-list li { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; align-items: center; font-size: 14px; }
+  .fl-cart-list img { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; }
+  .fl-cart-list .fl-sw-thumb { width: 56px; height: 56px; border-radius: 10px; background: var(--sw); }
+  .fl-cart-list small { display: block; color: var(--c-muted); }
+  .fl-cart-list button { border: 0; background: none; color: var(--c-muted); text-decoration: underline; cursor: pointer; font-size: 13px; min-height: 44px; }
+  .fl-cart-empty { color: var(--c-muted); }
+  .fl-cart-foot { border-top: 1px solid var(--c-line); padding-top: 16px; display: grid; gap: 8px; }
+  .fl-cart-foot p { display: flex; justify-content: space-between; color: var(--c-muted); }
+  .fl-cart-total { color: var(--c-ink) !important; font: 400 24px/1.2 var(--serif); }
+  .fl-cart-foot .x-btn { width: 100%; margin-top: 8px; }
+
+  @media (max-width: 1100px) {
+    .fl-occ-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .fl-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .fl-addons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .fl-ig { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 900px) {
+    .fl-builder, .fl-delivery, .fl-wedding { grid-template-columns: minmax(0, 1fr); }
+    .fl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; }
+    .fl-plans { grid-template-columns: minmax(0, 1fr); }
+    .fl-cats { justify-content: flex-start; }
+  }
+  @media (max-width: 760px) {
+    .fl-cart-btn { bottom: 86px; right: 14px; width: 54px; height: 54px; }
+    .fl-trust-row { font-size: 13px; padding: 12px 0; }
+    .fl-trust-row span:nth-child(n+3) { display: none; }
+    .fl-occ span { font-size: 18px; }
+    .fl-photo-row { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+    .fl-photo-sw { font-size: 10px; }
+    .fl-addons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fl-mosaic { grid-template-rows: 130px 130px 110px; gap: 8px; }
+    .fl-prod h3 { font-size: 20px; }
+    .fl-prod-row { flex-wrap: wrap; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fl-occ img, .fl-prod-img img, .fl-ig-item img, .fl-plan, .fl-cart-btn, .fl-wrap-svg #flScale, .fl-wrap-svg path, .fl-wrap-svg circle { transition: none; }
+    .fl-sway { animation: none; }
+    .fl-stage .fl-wrap-svg, .fl-layer { transition: none; }
+  }
+
+  .x-cutoff { margin-top: 0; text-align: center; padding: clamp(26px, 4vw, 44px); }
+  .x-cutoff-label { font-size: 15px; color: var(--c-muted); margin: 0 !important; }
+  .x-cutoff-time { font-family: var(--serif); font-size: clamp(44px, 6vw, 72px); line-height: 1.05; color: var(--c-ink) !important; margin: 10px 0 22px !important; font-variant-numeric: tabular-nums; }
+
+</style>
+</head>
+<body>
+
+<header class="nav" id="topNav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-name">BOTÁNICA REAL</span>
+      <span class="brand-sub">Floristería · Madrid</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#ocasiones">Ocasiones</a>
+      <a href="#tienda">Tienda</a>
+      <a href="#disena">Diseña tu ramo</a>
+      <a href="#bodas-intro">Bodas</a>
+      <a href="#visitanos">Contacto</a>
+    </nav>
+    <a href="#tienda" class="nav-cta"><span class="cta-long">Ver ramos</span><span class="cta-short">Tienda</span></a>
+  </div>
+</header>
+
+<!-- ================= CALM HERO ================= -->
+<section class="x-hero" style="--x-hero-pos:center 50%">
+  <img class="x-hero-img" src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=2000&q=82&auto=format&fit=crop" alt="Ramo de rosas y flores de temporada" />
+  <div class="x-wrap x-hero-body">
+    <h1>Flores de hoy,<em>en tu puerta hoy.</em></h1>
+    <p class="x-hero-sub">Ramos hechos cada mañana en nuestro taller de Las Salesas, con envío el mismo día en Madrid. También vestimos bodas y eventos.</p>
+    <div class="x-hero-actions">
+      <a href="#tienda" class="x-btn">Ver ramos</a>
+      <a href="#disena" class="x-btn-light">Diseñar mi ramo</a>
+    </div>
+    <ul class="x-hero-facts"><li>Envío el mismo día</li><li>Tarjeta escrita a mano</li><li id="xOpenNow">Lunes a sábado, 9:30–20:30</li></ul>
+  </div>
+</section>
+
+<!-- ================= TRUST BAR ================= -->
+<div class="fl-trust x-dark-a">
+  <div class="x-wrap fl-trust-row">
+    <span><b>Entrega hoy</b> en Madrid si pides antes de las 14:00</span>
+    <span><b>Flores frescas</b> cada mañana</span>
+    <span><b>Tarjeta escrita a mano</b> gratis</span>
+    <span><b>Te enviamos una foto</b> antes de salir</span>
+  </div>
+</div>
+
+<!-- ================= OCASIONES ================= -->
+<section class="x-sec x-light-a fl-occ-sec" id="ocasiones">
+  <div class="x-wrap">
+    <div class="fl-head"><h2 class="x-title">¿Para qué <em>ocasión</em>?</h2><p class="x-lead">Toca una y te enseñamos los ramos que mejor le van.</p></div>
+    <div class="fl-occ-grid">
+        <button type="button" class="fl-occ" data-occ="cumple">
+          <img src="https://images.unsplash.com/photo-1778101410311-6cca527142d6?w=480&h=600&q=78&auto=format&fit=crop" alt="" width="480" height="600" loading="lazy" decoding="async" />
+          <span>Cumpleaños</span>
+        </button>
+        <button type="button" class="fl-occ" data-occ="amor">
+          <img src="https://images.unsplash.com/photo-1512056495345-913a0c261dc8?w=480&h=600&q=78&auto=format&fit=crop" alt="" width="480" height="600" loading="lazy" decoding="async" />
+          <span>Amor</span>
+        </button>
+        <button type="button" class="fl-occ" data-occ="nacimiento">
+          <img src="https://images.unsplash.com/photo-1561848355-890d054dc55a?w=480&h=600&q=78&auto=format&fit=crop" alt="" width="480" height="600" loading="lazy" decoding="async" />
+          <span>Nacimiento</span>
+        </button>
+        <button type="button" class="fl-occ" data-occ="gracias">
+          <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=480&h=600&q=78&auto=format&fit=crop" alt="" width="480" height="600" loading="lazy" decoding="async" />
+          <span>Gracias</span>
+        </button>
+        <button type="button" class="fl-occ" data-occ="condolencias">
+          <img src="https://images.unsplash.com/photo-1595467959554-9ffcbf37f10f?w=480&h=600&q=78&auto=format&fit=crop" alt="" width="480" height="600" loading="lazy" decoding="async" />
+          <span>Condolencias</span>
+        </button>
+        <button type="button" class="fl-occ" data-occ="casa">
+          <img src="https://images.unsplash.com/photo-1762755647813-017e128a4ba0?w=480&h=600&q=78&auto=format&fit=crop" alt="" width="480" height="600" loading="lazy" decoding="async" />
+          <span>Para casa</span>
+        </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TIENDA ================= -->
+<section class="x-sec x-light-b" id="tienda">
+  <div class="x-wrap">
+    <div class="fl-head fl-head-row">
+      <div><h2 class="x-title" id="flShopTitle">Las más <em>pedidas</em></h2><p class="x-lead" id="flShopSub">Toca los colores para ver cada versión.</p></div>
+      <div class="x-pills fl-cats" role="group" aria-label="Filtrar"><button type="button" data-cat="todo" aria-pressed="true">Todo</button>
+<button type="button" data-cat="ramos" aria-pressed="false">Ramos</button>
+<button type="button" data-cat="rosas" aria-pressed="false">Rosas</button>
+<button type="button" data-cat="cajas" aria-pressed="false">Cajas</button>
+<button type="button" data-cat="secas" aria-pressed="false">Secas</button>
+<button type="button" data-cat="plantas" aria-pressed="false">Plantas</button>
+<button type="button" data-cat="menos35" aria-pressed="false">Menos de 35 €</button></div>
+    </div>
+    <div class="fl-grid" id="flGrid"></div>
+    <p class="fl-empty" id="flEmpty" hidden>No hay ramos con ese filtro. <button type="button" class="x-link" id="flReset">Ver todo</button></p>
+  </div>
+</section>
+
+<!-- ================= DISEÑA TU RAMO ================= -->
+<section class="x-sec x-dark-a" id="disena">
+  <div class="x-wrap fl-builder">
+    <div class="fl-preview">
+      <div class="fl-stage" id="flStage">
+      <svg viewBox="0 0 360 470" class="fl-wrap-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="flFold" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></linearGradient>
+          <radialGradient id="flBloomShade" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></radialGradient>
+        </defs>
+        <g id="flScale" style="transform-origin:180px 300px">
+          <!-- drawn in layers so the 3D tilt can move each one by a different amount -->
+          <g class="fl-layer" data-depth="-6"><path id="flPaperBack" d="M40 150 L180 460 L320 150 Z"/></g>
+          <g class="fl-layer" data-depth="-2" id="flLeaves"></g>
+          <g class="fl-layer fl-sway" data-depth="4" id="flBlooms"></g>
+          <g class="fl-layer" data-depth="10">
+            <path id="flPaperFront" d="M58 220 Q180 282 302 220 L180 460 Z"/>
+            <path d="M58 220 Q180 282 302 220 L180 460 Z" fill="url(#flFold)"/>
+            <g id="flBow" transform="translate(180 352)">
+              <path d="M0 0 C-30 -40 -70 -32 -64 -6 C-58 14 -24 12 0 0 Z M0 0 C30 -40 70 -32 64 -6 C58 14 24 12 0 0 Z"/>
+              <path d="M-6 4 L-28 62 L-16 58 L0 10 L16 58 L28 62 L6 4 Z"/>
+              <circle r="9"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+      </div>
+      <div class="fl-card-preview"><span>Tu tarjeta</span><p id="flCardOut">Escribe tu mensaje…</p></div>
+    </div>
+    <div class="fl-steps">
+      <h2 class="x-title">Diseña <em>tu ramo</em></h2>
+      <p class="x-lead">Elige las flores, el tamaño, el papel y el lazo. Lo verás aquí mismo.</p>
+      <div class="fl-step"><p class="fl-step-t">1 · Flores</p><div class="fl-photo-row" role="radiogroup" aria-label="Flores">
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="true" data-i="0" aria-label="Rosas rosa"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Rosas rosa</span></button>
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="1" aria-label="Rosas blancas"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Rosas blancas</span></button>
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="2" aria-label="Rosas rojas"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Rosas rojas</span></button>
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="3" aria-label="Amarillo sol"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Amarillo sol</span></button>
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="4" aria-label="Campestre"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Campestre</span></button>
+      </div></div>
+      <div class="fl-step"><p class="fl-step-t">2 · Tamaño</p><div class="x-chips fl-sizes" role="radiogroup" aria-label="Tamaño"><button type="button" role="radio" aria-checked="false" data-i="0">Pequeño<small>35 €</small></button>
+<button type="button" role="radio" aria-checked="true" data-i="1">Mediano<small>49 €</small></button>
+<button type="button" role="radio" aria-checked="false" data-i="2">Grande<small>69 €</small></button></div></div>
+      <div class="fl-step"><p class="fl-step-t">3 · Papel <span id="flPaperName">Kraft</span></p><div class="fl-color-row" id="flPaperRow" role="radiogroup" aria-label="Papel"><button type="button" class="fl-color-sw" role="radio" aria-checked="true" data-i="0" aria-label="Papel Kraft" style="--sw:#C9A27A"><i></i><span>Kraft</span></button>
+<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="1" aria-label="Papel Blanco" style="--sw:#F3F0E8"><i></i><span>Blanco</span></button>
+<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="2" aria-label="Papel Rosa palo" style="--sw:#E9C6C2"><i></i><span>Rosa palo</span></button>
+<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="3" aria-label="Papel Salvia" style="--sw:#A9B8A0"><i></i><span>Salvia</span></button>
+<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="4" aria-label="Papel Negro" style="--sw:#2B2A28"><i></i><span>Negro</span></button></div></div>
+      <div class="fl-step"><p class="fl-step-t">4 · Lazo <span id="flRibbonName">Rosa</span></p><div class="fl-color-row" role="radiogroup" aria-label="Lazo"><button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="0" aria-label="Lazo Satén blanco" style="--sw:#FFFFFF"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Satén blanco</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="1" aria-label="Lazo Rojo" style="--sw:#B3262E"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Rojo</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="true" data-i="2" aria-label="Lazo Rosa" style="--sw:#E79AAE"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Rosa</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="3" aria-label="Lazo Dorado" style="--sw:#C9A34E"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Dorado</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="4" aria-label="Lazo Verde" style="--sw:#4F6B4A"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Verde</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="5" aria-label="Lazo Negro" style="--sw:#141414"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Negro</span></button></div></div>
+      <div class="fl-step"><label class="fl-step-t" for="flCard">5 · Tu tarjeta</label><textarea id="flCard" rows="2" maxlength="140" placeholder="Por ejemplo: Feliz cumpleaños, mamá. Te quiero."></textarea></div>
+      <div class="fl-build-foot"><span class="fl-total" id="flBuildPrice">49 €</span><button type="button" class="x-btn" id="flBuildAdd">Añadir al carrito</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DETALLES ================= -->
+<section class="x-sec x-light-a" id="detalles">
+  <div class="x-wrap">
+    <div class="fl-head"><h2 class="x-title">Añade <em>un detalle</em></h2><p class="x-lead">Van en la misma entrega, junto al ramo.</p></div>
+    <ul class="fl-addons">
+        <li class="fl-addon">
+          <img src="https://images.unsplash.com/photo-1548741487-18d363dc4469?w=400&h=400&q=78&auto=format&fit=crop" alt="Bombones artesanos" width="400" height="400" loading="lazy" decoding="async" />
+          <div><strong>Bombones artesanos</strong><span>14 €</span></div>
+          <button type="button" class="fl-add-mini" data-addon="bombones" data-name="Bombones artesanos" data-price="14" aria-pressed="false">Añadir</button>
+        </li>
+        <li class="fl-addon">
+          <img src="https://images.unsplash.com/photo-1782329566851-c0748a5577b6?w=400&h=400&q=78&auto=format&fit=crop" alt="Cava brut" width="400" height="400" loading="lazy" decoding="async" />
+          <div><strong>Cava brut</strong><span>18 €</span></div>
+          <button type="button" class="fl-add-mini" data-addon="cava" data-name="Cava brut" data-price="18" aria-pressed="false">Añadir</button>
+        </li>
+        <li class="fl-addon">
+          <img src="https://images.unsplash.com/photo-1612293905607-b003de9e54fb?w=400&h=400&q=78&auto=format&fit=crop" alt="Vela aromática" width="400" height="400" loading="lazy" decoding="async" />
+          <div><strong>Vela aromática</strong><span>16 €</span></div>
+          <button type="button" class="fl-add-mini" data-addon="vela" data-name="Vela aromática" data-price="16" aria-pressed="false">Añadir</button>
+        </li>
+        <li class="fl-addon">
+          <img src="https://images.unsplash.com/photo-1778409499256-9c921a5f819b?w=400&h=400&q=78&auto=format&fit=crop" alt="Jarrón de cristal" width="400" height="400" loading="lazy" decoding="async" />
+          <div><strong>Jarrón de cristal</strong><span>12 €</span></div>
+          <button type="button" class="fl-add-mini" data-addon="jarron" data-name="Jarrón de cristal" data-price="12" aria-pressed="false">Añadir</button>
+        </li>
+        <li class="fl-addon">
+          <img src="https://images.unsplash.com/photo-1602734846297-9299fc2d4703?w=400&h=400&q=78&auto=format&fit=crop" alt="Osito de peluche" width="400" height="400" loading="lazy" decoding="async" />
+          <div><strong>Osito de peluche</strong><span>15 €</span></div>
+          <button type="button" class="fl-add-mini" data-addon="oso" data-name="Osito de peluche" data-price="15" aria-pressed="false">Añadir</button>
+        </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= SUSCRIPCIÓN ================= -->
+<section class="x-sec x-light-b" id="suscripcion">
+  <div class="x-wrap">
+    <div class="fl-head"><h2 class="x-title">Flores <em>sin tener que pedirlas</em></h2><p class="x-lead">Elige cada cuánto. Pausa o cancela cuando quieras.</p></div>
+    <div class="fl-plans" role="group" aria-label="Frecuencia">
+        <button type="button" class="fl-plan" data-plan="Cada semana" aria-pressed="false">
+          <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=600&h=420&q=78&auto=format&fit=crop" alt="" width="600" height="420" loading="lazy" decoding="async" />
+          <span class="fl-plan-body"><strong>Cada semana</strong><em>29 € / semana</em><span>Flores frescas cada lunes. Ideal para casa u oficina.</span></span>
+        </button>
+        <button type="button" class="fl-plan" data-plan="Cada 15 días" aria-pressed="false">
+          <img src="https://images.unsplash.com/photo-1778101410311-6cca527142d6?w=600&h=420&q=78&auto=format&fit=crop" alt="" width="600" height="420" loading="lazy" decoding="async" />
+          <span class="fl-plan-body"><strong>Cada 15 días</strong><em>32 € / envío</em><span>Un ramo nuevo cada dos semanas.</span></span>
+        </button>
+        <button type="button" class="fl-plan" data-plan="Cada mes" aria-pressed="false">
+          <img src="https://images.unsplash.com/photo-1608027790251-5e0c80d043d9?w=600&h=420&q=78&auto=format&fit=crop" alt="" width="600" height="420" loading="lazy" decoding="async" />
+          <span class="fl-plan-body"><strong>Cada mes</strong><em>35 € / envío</em><span>El regalo que se repite: perfecto para regalar.</span></span>
+        </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ENTREGA ================= -->
+<section class="x-sec x-dark-a" id="envios">
+  <div class="x-wrap fl-delivery">
+    <div>
+      <h2 class="x-title">¿Llega <em>hoy</em>?</h2>
+      <p class="x-lead">Pide antes de las 14:00 y lo entregamos esta tarde en Madrid capital. Envío 8 €, gratis desde 60 €.</p>
+      <div class="fl-cp">
+        <label for="flCp">Comprueba tu código postal</label>
+        <div class="fl-cp-row"><input id="flCp" inputmode="numeric" maxlength="5" placeholder="28004" autocomplete="postal-code" /><button type="button" class="x-btn" id="flCpBtn">Comprobar</button></div>
+        <p id="flCpOut" aria-live="polite">Entregamos en toda la ciudad de Madrid.</p>
+      </div>
+    </div>
+    <div class="x-answer fl-countdown">
+      <p class="fl-cd-label" id="xCutLabel">Para entregar hoy, pide en</p>
+      <p class="fl-cd-time" id="xCutTime">—</p>
+      <ol class="fl-cd-steps"><li>Lo preparamos</li><li>Te mandamos una foto</li><li>Sale el repartidor</li></ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BODAS ================= -->
+<section class="x-sec x-light-b" id="bodas-intro">
+  <div class="x-wrap fl-wedding">
+        <div class="fl-mosaic">
+          <img src="https://images.unsplash.com/photo-1521543832500-49e69fb2bea2?w=600&h=800&q=78&auto=format&fit=crop" alt="Novia con ramo de flores de temporada" width="600" height="800" loading="lazy" class="m1" decoding="async" />
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&h=500&q=78&auto=format&fit=crop" alt="Mesa de boda con centros de flores" width="700" height="500" loading="lazy" class="m2" decoding="async" />
+          <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=500&h=500&q=78&auto=format&fit=crop" alt="Alianzas sobre rosas" width="500" height="500" loading="lazy" class="m3" decoding="async" />
+          <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?w=500&h=700&q=78&auto=format&fit=crop" alt="Ramo de novia en tonos rosa" width="500" height="700" loading="lazy" class="m4" decoding="async" />
+          <img src="https://images.unsplash.com/photo-1776437209317-e1f7bcff1300?w=700&h=500&q=78&auto=format&fit=crop" alt="Arreglo floral en tonos pastel" width="700" height="500" loading="lazy" class="m5" decoding="async" />
+        </div>
+    <div>
+      <h2 class="x-title">Flores para <em>tu boda</em></h2>
+      <p class="x-lead">Ramo de novia, iglesia, finca y mesas. Vamos a ver el sitio contigo y te damos un presupuesto cerrado.</p>
+      <div class="x-actions"><a href="#bodas" class="x-btn">Calcular presupuesto</a><a href="#reserva" class="x-btn-line">Pedir cita</a></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= UNIQUE FEATURE #2: WEDDING & EVENT SCENOGRAPHY CALCULATOR ================= -->
+<section class="section-pad wedding-sec" id="bodas">
+  <div class="wrap">
+    <div class="sec-head-center">
+      <h2 class="sec-title">Calcula las flores de <em>tu boda</em>.</h2>
+    </div>
+
+    <div class="wedding-grid">
+      <div>
+        <h3 style="font-family:var(--serif); font-size:36px; font-weight:400; line-height:1.12; margin-bottom:14px;">
+          Transformamos fincas, iglesias históricas y palacetes en jardines efímeros.
+        </h3>
+        <p style="color:var(--muted); font-size:15px; margin-bottom:20px;">
+          Trabajamos sin espuma floral contaminante utilizando estructuras orgánicas que permiten que las flores se mantengan frescas durante toda la celebración. Selecciona las partidas que necesitas para obtener una estimación instantánea:
+        </p>
+
+        <div class="check-list" id="weddingItems">
+          <button type="button" class="w-item active" data-cost="240" data-name="Ramo de Novia Couture + 2 Réplicas & Prendidos">
+            <span>Ramo de Novia Couture + Prendidos</span>
+            <em>240 €</em>
+          </button>
+          <button type="button" class="w-item active" data-cost="1150" data-name="Arco Botánico Escultórico en Ceremonia">
+            <span>Arco Botánico Escultórico de Ceremonia</span>
+            <em>1.150 €</em>
+          </button>
+          <button type="button" class="w-item active" data-cost="1400" data-name="Centros Florales para 15 Mesas de Banquete + Presidencia">
+            <span>Guirnaldas y Centros para 15 Mesas + Presidencia</span>
+            <em>1.400 €</em>
+          </button>
+          <button type="button" class="w-item" data-cost="680" data-name="Escenografía en Bodegón de Bienvenida & Seating Plan">
+            <span>Instalación Floral en Seating Plan &amp; Bienvenida</span>
+            <em>680 €</em>
+          </button>
+        </div>
+      </div>
+
+      <aside class="w-card">
+        <h4 style="font-family:var(--serif); font-size:30px; font-weight:400; margin-bottom:8px;">Propuesta de Escenografía Botánica</h4>
+        <p style="font-size:13.5px; color:var(--muted); margin-bottom:22px;">
+          Incluye dossier de inspiración personalizado (moodboard), prueba presencial de centro de mesa 1 mes antes de la boda, transporte en furgón isotermo y montaje/desmontaje completo con equipo de 6 floristas.
+        </p>
+
+        <div style="background:var(--parchment); padding:22px; border-radius:18px; margin-bottom:22px; display:flex; justify-content:space-between; align-items:baseline;">
+          <span style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em;">Inversión Estimada</span>
+          <strong style="font-family:var(--serif); font-size:48px; color:var(--botanical); line-height:1;" id="outWeddingTotal">2.790 €</strong>
+        </div>
+
+        <button type="button" class="btn-peony" style="width:100%;" id="btnWeddingWA">
+          Consultar fecha de boda
+        </button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ATELIER VISIT & CONTACT ================= -->
+
+<!-- ================= INSTAGRAM ================= -->
+<section class="x-sec x-light-b" id="instagram">
+  <div class="x-wrap">
+    <div class="fl-head fl-head-row"><h2 class="x-title">Lo que sale <em>del taller</em></h2><a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="x-btn-line">Síguenos en Instagram</a></div>
+    <div class="fl-ig">
+        <a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="fl-ig-item" aria-label="Ver en Instagram"><img src="https://images.unsplash.com/photo-1589217289787-879b47f6edab?w=500&h=500&q=78&auto=format&fit=crop" alt="" width="500" height="500" loading="lazy" decoding="async" /></a>
+        <a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="fl-ig-item" aria-label="Ver en Instagram"><img src="https://images.unsplash.com/photo-1759420319818-1a2c8684a584?w=500&h=500&q=78&auto=format&fit=crop" alt="" width="500" height="500" loading="lazy" decoding="async" /></a>
+        <a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="fl-ig-item" aria-label="Ver en Instagram"><img src="https://images.unsplash.com/photo-1557926005-012bd4382a0d?w=500&h=500&q=78&auto=format&fit=crop" alt="" width="500" height="500" loading="lazy" decoding="async" /></a>
+        <a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="fl-ig-item" aria-label="Ver en Instagram"><img src="https://images.unsplash.com/photo-1559407848-bc459cb7dbba?w=500&h=500&q=78&auto=format&fit=crop" alt="" width="500" height="500" loading="lazy" decoding="async" /></a>
+        <a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="fl-ig-item" aria-label="Ver en Instagram"><img src="https://images.unsplash.com/photo-1587317996237-eddd7e834d84?w=500&h=500&q=78&auto=format&fit=crop" alt="" width="500" height="500" loading="lazy" decoding="async" /></a>
+        <a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="fl-ig-item" aria-label="Ver en Instagram"><img src="https://images.unsplash.com/photo-1572454591674-2739f30d8c40?w=500&h=500&q=78&auto=format&fit=crop" alt="" width="500" height="500" loading="lazy" decoding="async" /></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CARRITO ================= -->
+<button type="button" class="fl-cart-btn" id="flCartBtn" aria-label="Ver carrito" aria-expanded="false" aria-controls="flCart">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+  <span class="fl-cart-count" id="flCartCount">0</span>
+</button>
+<aside class="fl-cart x-light-a" id="flCart" aria-label="Carrito" hidden>
+  <div class="fl-cart-head"><h3>Tu pedido</h3><button type="button" class="fl-cart-close" id="flCartClose" aria-label="Cerrar carrito">×</button></div>
+  <ul class="fl-cart-list" id="flCartList"></ul>
+  <p class="fl-cart-empty" id="flCartEmpty">Aún no has añadido nada.</p>
+  <div class="fl-cart-foot">
+    <p><span>Envío</span><span id="flShip">8 €</span></p>
+    <p class="fl-cart-total"><span>Total</span><span id="flTotal">0 €</span></p>
+    <button type="button" class="x-btn" id="flCheckout">Continuar con el pedido</button>
+  </div>
+</aside>
+
+<!-- ================= PREGUNTAS FRECUENTES ================= -->
+<section class="x-sec x-dark-a" id="preguntas">
+  <div class="x-wrap x-split">
+    <h2 class="x-title">Preguntas <em>frecuentes</em></h2>
+    <div class="x-faq">
+      <details><summary>¿Hasta qué hora puedo pedir para hoy?<i aria-hidden="true"></i></summary><p>Hasta las 14:00 de lunes a sábado para entregar en Madrid capital esa misma tarde.</p></details>
+      <details><summary>¿Cuánto cuesta el envío?<i aria-hidden="true"></i></summary><p>8 € en Madrid capital. Gratis en pedidos de más de 60 €.</p></details>
+      <details><summary>¿Puedo elegir la hora de entrega?<i aria-hidden="true"></i></summary><p>Puedes elegir mañana o tarde. Te avisamos por mensaje cuando salga el repartidor.</p></details>
+      <details><summary>¿Y si la persona no está en casa?<i aria-hidden="true"></i></summary><p>La llamamos, y si no contesta lo dejamos con el portero o volvemos otro día sin coste.</p></details>
+      <details><summary>¿Cuánto duran las flores?<i aria-hidden="true"></i></summary><p>Entre 5 y 8 días con agua limpia y tallos recortados cada dos días.</p></details>
+      <details><summary>¿Hacéis bodas fuera de Madrid?<i aria-hidden="true"></i></summary><p>Sí, en toda la Comunidad de Madrid y alrededores. Pregúntanos por tu fecha.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RESERVA ================= -->
+<section class="x-sec x-light-a" id="reserva">
+  <div class="x-wrap">
+    <div class="x-book-head">
+      <h2 class="x-title">Haz tu <em>pedido</em>.</h2>
+      <p class="x-lead">Elige el ramo y el día de entrega. Te confirmamos por teléfono antes de salir.</p>
+    </div>
+    <div class="x-book">
+      <div class="x-steps">
+        <h3>Cómo funciona</h3>
+        <ol>
+            <li><span><strong>Eliges el ramo.</strong> O nos dices la ocasión y el presupuesto.</span></li>
+            <li><span><strong>Lo preparamos esa mañana.</strong> Con flores de temporada recién llegadas.</span></li>
+            <li><span><strong>Te enviamos una foto.</strong> Antes de que salga del taller.</span></li>
+            <li><span><strong>Lo entregamos.</strong> Con tu tarjeta escrita a mano.</span></li>
+        </ol>
+        <p class="x-call-line">¿Prefieres hablar con alguien? <a href="tel:+34910000000" class="js-call" data-number="+34 910 000 000">Llámanos al +34 910 000 000</a></p>
+      </div>
+      <div>
+        <form class="x-form" id="xForm">
+          <h3>Pide tu ramo</h3>
+          <p>Entrega hoy si lo pides antes de las 14:00.</p>
+          <div class="x-row">
+            <div class="x-field"><label for="xName">Nombre</label><input type="text" id="xName" placeholder="Tu nombre" autocomplete="name" required /></div>
+            <div class="x-field"><label for="xPhone">Teléfono</label><input type="tel" id="xPhone" placeholder="600 000 000" autocomplete="tel" required /></div>
+          </div>
+          <div class="x-field">
+            <label for="xService">¿Qué quieres?</label>
+            <select id="xService">
+            <option value="Pedido de la tienda">Pedido de la tienda</option>
+            <option value="Ramo de temporada">Ramo de temporada</option>
+            <option value="Suscripción semanal">Suscripción semanal</option>
+            <option value="Bodas">Bodas</option>
+            <option value="Eventos y empresas">Eventos y empresas</option>
+            </select>
+          </div>
+          <fieldset class="x-pick"><legend>Elige día</legend><div class="x-chips" id="xDays" role="radiogroup" aria-label="Día"></div></fieldset>
+          <fieldset class="x-pick"><legend>Elige hora</legend><div class="x-chips" id="xTimes" role="radiogroup" aria-label="Hora"></div></fieldset>
+          <div class="x-field"><label for="xNotes">Dirección de entrega y dedicatoria</label><textarea id="xNotes" rows="3" placeholder="Por ejemplo: Calle Ejemplo 5, 2ºB. Tarjeta: «Feliz cumpleaños, mamá»."></textarea></div>
+          <button type="submit" class="x-btn">Hacer pedido</button>
+          <p class="x-small">Te llamamos para confirmarlo. No compartimos tus datos con nadie.</p>
+        </form>
+        <div class="x-done" id="xDone" hidden tabindex="-1">
+          <h3>¡Solicitud recibida!</h3>
+          <p id="xDoneText"></p>
+          <button type="button" class="x-btn-line" id="xAgain">Hacer otra solicitud</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CÓMO LLEGAR ================= -->
+<section class="x-sec x-light-b" id="visitanos">
+  <div class="x-wrap x-visit">
+    <div>
+      <h2 class="x-title">Cómo <em>llegar</em></h2>
+      <p class="x-address">Calle Ejemplo 9<br>28004 Madrid · Las Salesas</p>
+      <ul class="x-facts">
+        <li><span>Metro</span>Colón (L4) o Chueca (L5)</li>
+        <li><span>Taller</span>Ven a elegir tus flores en persona</li>
+        <li><span>Envíos</span>Toda la ciudad, el mismo día</li>
+      </ul>
+      <div class="x-actions">
+        <a class="x-btn" href="https://www.google.com/maps/dir/?api=1&destination=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Cómo llegar</a>
+        <a class="x-btn-line js-call" href="tel:+34910000000" data-number="+34 910 000 000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Llamar</a>
+        <a class="x-btn-line" href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a>
+      </div>
+    </div>
+    <div class="x-hours">
+      <h3>Horario</h3>
+      <ul id="xHours">
+        <li data-day="1"><span>Lunes</span><span>9:30 – 20:30</span></li>
+        <li data-day="2"><span>Martes</span><span>9:30 – 20:30</span></li>
+        <li data-day="3"><span>Miércoles</span><span>9:30 – 20:30</span></li>
+        <li data-day="4"><span>Jueves</span><span>9:30 – 20:30</span></li>
+        <li data-day="5"><span>Viernes</span><span>9:30 – 20:30</span></li>
+        <li data-day="6"><span>Sábado</span><span>9:30 – 20:30</span></li>
+        <li data-day="0"><span>Domingo</span><span>10:00 – 14:00</span></li>
+      </ul>
+      <p><a href="mailto:hola@tunegocio.es">hola@tunegocio.es</a></p>
+    </div>
+  </div>
+</section>
+
+<footer class="x-foot">
+  <div class="x-wrap x-foot-grid">
+    <div>
+      <p class="x-foot-brand">BOTÁNICA REAL</p>
+      <p>Floristería y flores para eventos en Las Salesas.</p>
+    </div>
+    <div>
+      <p class="x-foot-h">Contacto</p>
+      <p>Calle Ejemplo 9, Madrid<br><a href="tel:+34910000000" class="js-call" data-number="+34 910 000 000">+34 910 000 000</a><br><a href="mailto:hola@tunegocio.es">hola@tunegocio.es</a></p>
+    </div>
+    <div>
+      <p class="x-foot-h">Horario</p>
+      <p>Lunes a sábado, 9:30–20:30<br>Domingos, 10:00–14:00</p>
+    </div>
+    <div>
+      <p class="x-foot-h">Síguenos</p>
+      <p><a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" class="x-foot-ig"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram</a></p>
+    </div>
+  </div>
+  <div class="x-wrap x-legal">
+    <span>© 2026 BOTÁNICA REAL</span>
+    <span><a href="#">Aviso legal</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></span>
+  </div>
+  <p class="demo-disclaimer" style="margin:24px auto 0;padding:0 20px 8px;max-width:760px;text-align:center;font-size:12px;line-height:1.5;opacity:.65;font-family:inherit;letter-spacing:0;text-transform:none">Diseño de ejemplo. El nombre, la dirección, los precios, las reseñas y los datos de contacto o certificaciones que aparecen son ficticios y solo sirven de muestra.</p>
+</footer>
+
+<nav class="x-mbar" aria-label="Acciones rápidas">
+  <a href="tel:+34910000000" class="js-call" data-number="+34 910 000 000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>Llamar</a>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Cómo llegar</a>
+  <a href="#reserva" class="x-mbar-main">Pedir</a>
+</nav>
+<div class="x-toast" id="xToast" role="status" aria-live="polite"></div>
+
+
+
+
+<script>
+  // · Sticky Nav
+  const topNav = document.getElementById('topNav');
+  window.addEventListener('scroll', () => {
+    topNav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // · Hero 4-Season Switcher
+  const seasonsData = [
+    {
+      kicker: 'TALLER BOTÁNICO EN LAS SALESAS · ENTREGA EN 3 HORAS',
+      title: 'Esculturas<br>efímeras en<br><em>flor viva</em>.',
+      lead: 'Ramos asimétricos compuestos cada mañana con rosas inglesas David Austin®, ranúnculos italianos y ramas silvestres, envueltos en lino crudo con lacre artesanal.',
+      code: 'COSECHA DEL DÍA · BR-01',
+      bTitle: 'Colección «Jardín de Invierno en Salesas»',
+      bDesc: 'Cada encargo viaja en bolsa de agua nutritiva con tarjeta en papel de algodón timbrada con sello de lacre.',
+      origin: 'Holanda & Galicia', wrap: 'Lino & Lacre', deliv: 'En el Mismo Día'
+    },
+    {
+      kicker: 'ARQUITECTURA BOTÁNICA NUPCIAL · MADRID Y TODA ESPAÑA',
+      title: 'Bodas que<br>parecen un<br><em>cuadro flamenco</em>.',
+      lead: 'Diseñamos instalaciones suspendidas, altares silvestres y mesas imperiales con candelabros y fruta natural que emocionan a cada invitado.',
+      code: 'ALTA COSTURA NUPCIAL · BR-02',
+      bTitle: 'Dirección Creativa Integral de Bodas',
+      bDesc: 'Atendemos una sola boda por fin de semana para dedicar todo nuestro taller exclusivamente a vuestra celebración.',
+      origin: 'Cultivo Local', wrap: 'Sin Espuma Tóxica', deliv: 'Equipo de 6 Floristas'
+    },
+    {
+      kicker: 'SUSCRIPCIÓN BOTÁNICA · RESIDENCIAS PRIVADAS, CLÍNICAS Y HOTELES',
+      title: 'Naturaleza<br>renovada cada<br><em>lunes</em>.',
+      lead: 'Recibe cada semana o quincena una composición de temporada ya arreglada en jarrón de cerámica artesanal que intercambiamos en la siguiente entrega.',
+      code: 'MEMBRESÍA FLORAL · BR-03',
+      bTitle: 'Club de Suscripción Botánica Real',
+      bDesc: 'Flores de tallo largo seleccionadas en capullo cerrado para garantizar hasta 12 días de frescura en tu salón o recepción.',
+      origin: 'Temporada Pura', wrap: 'Jarrón en Préstamo', deliv: 'Portes Gratis'
+    },
+    {
+      kicker: 'ESCENOGRAFÍA EFÍMERA · PRESENTACIONES DE PRENSA Y CENAS DE MARCA',
+      title: 'Instalaciones<br>que cautivan<br>la <em>mirada</em>.',
+      lead: 'Colaboramos con firmas de moda, alta joyería y gastronomía para transformar espacios en experiencias botánicas memorables.',
+      code: 'PROYECTOS DE MARCA · BR-04',
+      bTitle: 'Escaparates & Cenas Editoriales',
+      bDesc: 'Desde esculturas de musgo y ramas de magnolio hasta estilismo de mesa para eventos privados.',
+      origin: 'Diseño a Medida', wrap: 'Montaje Nocturno', deliv: 'Madrid & Nacional'
+    }
+  ];
+
+  const heroImgs = document.querySelectorAll('#heroMedia img');
+  const seasonBtns = document.querySelectorAll('.season-btn');
+  seasonBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.idx);
+      seasonBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      heroImgs.forEach((im, i) => im.classList.toggle('active', i === idx));
+
+      const s = seasonsData[idx];
+      document.getElementById('hKicker').textContent = s.kicker;
+      document.getElementById('hTitle').innerHTML = s.title;
+      document.getElementById('hLead').textContent = s.lead;
+      document.getElementById('bCode').textContent = s.code;
+      document.getElementById('bTitle').textContent = s.bTitle;
+      document.getElementById('bDesc').textContent = s.bDesc;
+      document.getElementById('bOrigin').textContent = s.origin;
+      document.getElementById('bWrap').textContent = s.wrap;
+      document.getElementById('bDeliv').textContent = s.deliv;
+    });
+  });
+
+  // · Wedding Calculator (Guard at least 1 item selected)
+  const wItems = document.querySelectorAll('#weddingItems .w-item');
+  function updateWeddingCalc() {
+    let sum = 0;
+    wItems.forEach(item => {
+      if (item.classList.contains('active')) {
+        sum += Number(item.dataset.cost);
+      }
+    });
+    document.getElementById('outWeddingTotal').textContent = sum.toLocaleString('es-ES') + ' €';
+  }
+
+  wItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const activeCount = document.querySelectorAll('#weddingItems .w-item.active').length;
+      if (item.classList.contains('active') && activeCount <= 1) return;
+      item.classList.toggle('active');
+      updateWeddingCalc();
+    });
+  });
+
+  document.getElementById('btnWeddingWA')?.addEventListener('click', () => {
+    const selected = Array.from(document.querySelectorAll('#weddingItems .w-item.active')).map(i => i.dataset.name).join(', ');
+    const total = document.getElementById('outWeddingTotal').textContent;
+    const msg = `Hola BOTÁNICA REAL, he calculado el presupuesto floral para nuestra boda:\n• Partidas: ${selected}\n• Estimación: ${total}\nNos gustaría consultar disponibilidad de nuestra fecha.`;
+    window.open(`https://wa.me/34600000000?text=${encodeURIComponent(msg)}`, '_blank');
+  });
+
+  // · Booking Form
+  document.getElementById('botanicaForm')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('fName').value;
+    const type = document.getElementById('fType').value;
+    const date = document.getElementById('fDate').value;
+    const zone = document.getElementById('fZone').value;
+    const notes = document.getElementById('fNotes').value || 'Asesoramiento floral.';
+    const text = `Hola BOTÁNICA REAL, soy ${name}.\n• Solicitud: ${type}\n• Fecha: ${date}\n• Lugar: ${zone}\n• Detalles: ${notes}`;
+    window.open(`https://wa.me/34600000000?text=${encodeURIComponent(text)}`, '_blank');
+  });
+
+  // · Instant Client Mock-Up Personalization via URL Parameters (?nombre=...&ciudad=...)
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const customName = params.get('nombre') || params.get('brand');
+    const customCity = params.get('ciudad') || params.get('city');
+    if (customName) {
+      document.title = customName + ' — Propuesta Web Exclusiva';
+      const brandEl = document.querySelector('.brand-name, .brand b');
+      if (brandEl) brandEl.textContent = customName.toUpperCase();
+    }
+    if (customCity) {
+      const subEl = document.querySelector('.brand-sub, .brand small');
+      if (subEl) subEl.textContent = customCity;
+    }
+  })();
+
+  // · Preview-2 shared behaviour (config injected as X)
+  (function () {
+    const X = {"hours": {"1": [570, 1230], "2": [570, 1230], "3": [570, 1230], "4": [570, 1230], "5": [570, 1230], "6": [570, 1230], "0": [600, 840]}, "slots": {"default": ["Mañana (10–14 h)", "Tarde (16–20 h)"], "0": ["Mañana (10–14 h)"]}, "finder": [{"label": "Cumpleaños", "title": "Ramo de temporada", "text": "Alegre y lleno de color. Lo entregamos hoy si lo pides antes de las 14:00.", "service": "Ramo de temporada"}, {"label": "Aniversario", "title": "Rosas", "text": "Rosas de jardín en tonos suaves con tarjeta escrita a mano.", "service": "Rosas"}, {"label": "Para casa", "title": "Suscripción semanal", "text": "Flores frescas cada lunes. Pausa o cancela cuando quieras.", "service": "Suscripción semanal"}, {"label": "Una boda", "title": "Bodas", "text": "Quedamos contigo, vemos el sitio y te damos un presupuesto cerrado.", "service": "Bodas"}], "openWord": "Abierto", "closedWord": "Cerrado", "doneLine": "Lo entregamos"};
+    const $ = id => document.getElementById(id);
+    const toast = $('xToast');
+    let toastTimer;
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+    window.xShowToast = showToast;
+
+    // Opening hours in Madrid time: hero status + today's row
+    const DAY_NAMES = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    const fmt = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+    function madridNow() {
+      const p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+      const get = t => p.find(x => x.type === t).value;
+      return { day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday')), min: Number(get('hour')) * 60 + Number(get('minute')) };
+    }
+    function renderOpen() {
+      const H = X.hours, { day, min } = madridNow(), t = H[day];
+      let text;
+      if (t && min >= t[0] && min < t[1]) text = `${X.openWord} ahora, hasta las ${fmt(t[1])}`;
+      else if (t && min < t[0]) text = `${X.closedWord} ahora, abrimos hoy a las ${fmt(t[0])}`;
+      else {
+        let d = day, add = 0;
+        do { d = (d + 1) % 7; add++; } while (!H[d] && add < 8);
+        text = H[d] ? `${X.closedWord} ahora, abrimos ${add === 1 ? 'mañana' : 'el ' + DAY_NAMES[d]} a las ${fmt(H[d][0])}` : X.closedWord;
+      }
+      const el = $('xOpenNow');
+      if (el) el.textContent = text;
+      document.querySelectorAll('#xHours li').forEach(li => li.classList.toggle('today', Number(li.dataset.day) === day));
+    }
+    renderOpen();
+    setInterval(renderOpen, 60000);
+
+    // Finder: pick what you need, get a suggestion that also fills the booking form
+    const finder = document.querySelectorAll('#xFinder [data-pick]');
+    finder.forEach(btn => btn.addEventListener('click', () => {
+      const f = X.finder[Number(btn.dataset.pick)];
+      finder.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      $('xFinderTitle').textContent = f.title;
+      $('xFinderText').textContent = f.text;
+      $('xFinderAnswer').hidden = false;
+      $('xFinderLink').onclick = () => { $('xService').value = f.service; };
+    }));
+
+    // Booking: next open days + slots; confirmation shown on the page (demo, nothing is sent)
+    const dayChips = $('xDays'), timeChips = $('xTimes');
+    let pickDay = null, pickTime = null;
+    function chip(box, label, sub) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('role', 'radio');
+      b.setAttribute('aria-checked', 'false');
+      b.innerHTML = sub ? `<span>${label}</span><small>${sub}</small>` : label;
+      box.appendChild(b);
+      return b;
+    }
+    const select = (box, b) => box.querySelectorAll('button').forEach(x => x.setAttribute('aria-checked', String(x === b)));
+    function renderTimes(dow) {
+      timeChips.innerHTML = '';
+      pickTime = null;
+      (X.slots[dow] || X.slots.default).forEach(t => { chip(timeChips, t).dataset.value = t; });
+    }
+    (function renderDays() {
+      const short = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+      const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      const d = new Date();
+      let added = 0, guard = 0;
+      while (added < 6 && guard++ < 21) {
+        d.setDate(d.getDate() + 1);
+        if (!X.hours[d.getDay()]) continue;
+        const isTomorrow = guard === 1;
+        const c = chip(dayChips, isTomorrow ? 'Mañana' : short[d.getDay()], `${d.getDate()}/${d.getMonth() + 1}`);
+        c.dataset.dow = d.getDay();
+        c.dataset.full = `${DAY_NAMES[d.getDay()]} ${d.getDate()} de ${months[d.getMonth()]}`;
+        added++;
+      }
+    })();
+    dayChips.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      select(dayChips, b); pickDay = b; renderTimes(b.dataset.dow);
+    });
+    timeChips.addEventListener('click', e => {
+      const b = e.target.closest('button'); if (!b) return;
+      select(timeChips, b); pickTime = b.dataset.value;
+    });
+    renderTimes('default');
+    const form = $('xForm'), done = $('xDone');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!pickDay || !pickTime) { showToast('Elige un día y una hora.'); return; }
+      const name = $('xName').value.trim().split(' ')[0];
+      $('xDoneText').textContent = `Gracias, ${name}. ${X.doneLine} el ${pickDay.dataset.full} a las ${pickTime}. Te llamaremos para confirmarlo.`;
+      form.hidden = true; done.hidden = false; done.focus();
+    });
+    $('xAgain').addEventListener('click', () => {
+      form.reset(); select(dayChips, null); pickDay = null; renderTimes('default');
+      done.hidden = true; form.hidden = false;
+    });
+
+    // Any old "send by WhatsApp" button now fills the booking form instead
+    function toBooking(text) {
+      const notes = $('xNotes');
+      // the old WhatsApp messages greet the business ("Hola X, …"); in the visitor's own notes that reads oddly
+      text = (text || '').replace(/^\s*hola[^,]*,\s*/i, '');
+      if (text) text = text.charAt(0).toUpperCase() + text.slice(1);
+      if (text && notes) notes.value = text;
+      $('reserva').scrollIntoView({ behavior: 'smooth' });
+      showToast('Lo hemos añadido a tu solicitud.');
+    }
+    window.xToBooking = toBooking;
+    const nativeOpen = window.open.bind(window);
+    window.open = (url, ...rest) => {
+      if (typeof url === 'string' && url.indexOf('wa.me/') !== -1) {
+        let text = '';
+        try { text = new URL(url).searchParams.get('text') || ''; } catch (err) {}
+        toBooking(text);
+        return null;
+      }
+      return nativeOpen(url, ...rest);
+    };
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href*="wa.me/"]');
+      if (!a) return;
+      e.preventDefault();
+      let text = '';
+      try { text = new URL(a.href).searchParams.get('text') || ''; } catch (err) {}
+      toBooking(text);
+    });
+
+    // Call links: phones dial, computers copy the number
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    document.querySelectorAll('.js-call').forEach(a => a.addEventListener('click', e => {
+      if (isTouch) return;
+      e.preventDefault();
+      const num = a.dataset.number;
+      if (navigator.clipboard) navigator.clipboard.writeText(num).then(() => showToast(`Número copiado: ${num}`), () => showToast(`Llámanos al ${num}`));
+      else showToast(`Llámanos al ${num}`);
+    }));
+  })();
+
+  // · Florist shop: catalogue, occasions, bouquet builder, add-ons, subscription, cart
+  (function () {
+    const PRODUCTS = [{"id": "alba", "name": "Ramo Alba", "desc": "Rosas de jardín y flores de temporada en papel", "price": 39, "cat": "ramos", "occ": ["cumple", "amor", "gracias"], "badge": "Más pedido", "v": [["Rosa", "#E8A3B5", "1523693916903-027d144a2b7d"], ["Lila", "#B9A2D6", "1680563094046-5d846e2c59d1"], ["Rojo", "#B3262E", "1512056495345-913a0c261dc8"]]}, {"id": "pasion", "name": "Rosas rojas", "desc": "12 rosas rojas de tallo largo", "price": 49, "cat": "rosas", "occ": ["amor"], "badge": "", "v": [["Rojo", "#B3262E", "1512056495345-913a0c261dc8"], ["Rojo y blanco", "#E6D6D2", "1599791095997-5cf38bb5ff69"]]}, {"id": "tulipanes", "name": "Tulipanes", "desc": "20 tulipanes recién llegados", "price": 32, "cat": "ramos", "occ": ["cumple", "gracias", "casa"], "badge": "", "v": [["Rosa", "#E05A8C", "1586968295564-92fd7572718b"], ["Blanco", "#F2F0EA", "1589994160839-163cd867cfe8"], ["Mezcla", "#E5833A", "1619962992057-be492a5816f6"]]}, {"id": "peonias", "name": "Peonías", "desc": "Solo en temporada: abril a junio", "price": 55, "cat": "ramos", "occ": ["amor", "nacimiento"], "badge": "Temporada", "v": [["Rosa", "#D99AC4", "1511201173873-c327e63eb6c4"], ["Blanco", "#F4F1E8", "1780580811640-4ec9aa7c027f"]]}, {"id": "sombrerera", "name": "Caja sombrerera", "desc": "Flores en caja redonda, sin agua ni jarrón", "price": 65, "cat": "cajas", "occ": ["cumple", "amor"], "badge": "", "v": [["Pastel", "#F1C6C9", "1660885900184-fe13ca69392c"]]}, {"id": "campestre", "name": "Ramo campestre", "desc": "Silvestre y alegre, como recién cogido", "price": 34, "cat": "ramos", "occ": ["cumple", "gracias", "casa"], "badge": "", "v": [["Colores", "#E7B13B", "1778101410311-6cca527142d6"], ["Kraft", "#C9A27A", "1567696153798-9111f9cd3d0d"]]}, {"id": "seco", "name": "Ramo de flores secas", "desc": "Dura meses sin agua", "price": 29, "cat": "secas", "occ": ["casa", "gracias"], "badge": "Dura meses", "v": [["Melocotón", "#E8C2A8", "1622658641558-235f26dd270b"]]}, {"id": "jardin", "name": "Rosas de jardín", "desc": "Rosas inglesas en tonos suaves", "price": 45, "cat": "rosas", "occ": ["amor", "nacimiento", "condolencias"], "badge": "", "v": [["Melocotón", "#F0A98C", "1772688168418-936b6dc39dba"], ["Mezcla", "#E9B3BF", "1608027790251-5e0c80d043d9"]]}, {"id": "blanco", "name": "Blanco y verde", "desc": "Flores blancas y eucalipto, sereno y elegante", "price": 42, "cat": "ramos", "occ": ["condolencias", "nacimiento"], "badge": "", "v": [["Blanco", "#F4F2EC", "1595467959554-9ffcbf37f10f"], ["Suave", "#EBDCCB", "1561848355-890d054dc55a"]]}, {"id": "planta", "name": "Planta de interior", "desc": "Con maceta y tarjeta de cuidados", "price": 24, "cat": "plantas", "occ": ["casa", "gracias"], "badge": "", "v": [["Pilea", "#6E9B5A", "1609061801093-1b7a8a574c69"], ["Monstera", "#3F6B45", "1762755647813-017e128a4ba0"], ["Sansevieria", "#7C8F55", "1616961002389-504228edfcb7"]]}];
+    const BUILD = {"flowers": [["Rosas rosa", 0, "1772688168418-936b6dc39dba"], ["Rosas blancas", 0, "1570112008549-e4181988109f"], ["Rosas rojas", 4, "1512056495345-913a0c261dc8"], ["Amarillo sol", 0, "1673277848241-86e145cd7112"], ["Campestre", -2, "1561848355-890d054dc55a"]], "sizes": [["Pequeño", 35, 0.82], ["Mediano", 49, 1.0], ["Grande", 69, 1.16]], "papers": [["Kraft", "#C9A27A"], ["Blanco", "#F3F0E8"], ["Rosa palo", "#E9C6C2"], ["Salvia", "#A9B8A0"], ["Negro", "#2B2A28"]], "ribbons": [["Satén blanco", "#FFFFFF"], ["Rojo", "#B3262E"], ["Rosa", "#E79AAE"], ["Dorado", "#C9A34E"], ["Verde", "#4F6B4A"], ["Negro", "#141414"]]};
+    const URL_ = (id, w, h) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&q=78&auto=format&fit=crop`;
+    const $ = id => document.getElementById(id);
+    const toast = msg => window.xShowToast && window.xShowToast(msg);
+
+    // ---------- cart
+    const cart = [];
+    const eur = n => n.toLocaleString('es-ES') + ' €';
+    function renderCart() {
+      const list = $('flCartList');
+      list.innerHTML = cart.map((it, i) => `<li>${it.img ? `<img src="${URL_(it.img, 120, 120)}" alt="">` : `<span class="fl-sw-thumb" style="--sw:${it.sw || '#ccc'}"></span>`}
+        <span><strong>${it.name}</strong><small>${it.detail || ''}</small></span>
+        <span>${eur(it.price)}<br><button type="button" data-rm="${i}">Quitar</button></span></li>`).join('');
+      const sub = cart.reduce((s, it) => s + it.price, 0);
+      const ship = sub === 0 || sub >= 60 ? 0 : 8;
+      $('flShip').textContent = sub === 0 ? '—' : ship ? '8 €' : 'Gratis';
+      $('flTotal').textContent = eur(sub + ship);
+      $('flCartCount').textContent = cart.length;
+      $('flCartEmpty').hidden = cart.length > 0;
+      document.querySelectorAll('.fl-add-mini').forEach(b => b.setAttribute('aria-pressed', String(cart.some(it => it.addon === b.dataset.addon))));
+    }
+    function add(item) {
+      cart.push(item);
+      renderCart();
+      const btn = $('flCartBtn');
+      btn.classList.add('bump');
+      setTimeout(() => btn.classList.remove('bump'), 300);
+      toast(`${item.name} añadido al carrito`);
+    }
+    const cartEl = $('flCart'), cartBtn = $('flCartBtn');
+    function openCart(open) {
+      cartEl.hidden = !open;
+      cartBtn.setAttribute('aria-expanded', String(open));
+      if (open) $('flCartClose').focus();
+    }
+    cartBtn.addEventListener('click', () => openCart(cartEl.hidden));
+    $('flCartClose').addEventListener('click', () => { openCart(false); cartBtn.focus(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !cartEl.hidden) { openCart(false); cartBtn.focus(); } });
+    $('flCartList').addEventListener('click', e => {
+      const b = e.target.closest('[data-rm]'); if (!b) return;
+      cart.splice(Number(b.dataset.rm), 1); renderCart();
+    });
+    $('flCheckout').addEventListener('click', () => {
+      if (!cart.length) { toast('Añade algo al carrito primero.'); return; }
+      openCart(false);
+      const lines = cart.map(it => `${it.name}${it.detail ? ' (' + it.detail + ')' : ''}: ${eur(it.price)}`).join('\n');
+      $('xService').value = 'Pedido de la tienda';
+      window.xToBooking(`Mi pedido:\n${lines}\nTotal con envío: ${$('flTotal').textContent}`);
+    });
+
+    // ---------- catalogue
+    const grid = $('flGrid');
+    grid.innerHTML = PRODUCTS.map(p => `
+      <article class="fl-prod" data-cat="${p.cat}" data-occ="${p.occ.join(' ')}" data-price="${p.price}">
+        <div class="fl-prod-img">${p.badge ? `<span class="fl-badge">${p.badge}</span>` : ''}<img src="${URL_(p.v[0][2], 640, 800)}" alt="${p.name}, ${p.v[0][0].toLowerCase()}" width="640" height="800" loading="lazy" decoding="async"></div>
+        <div><h3>${p.name}</h3><p>${p.desc}</p></div>
+        <div class="fl-prod-row">
+          <div class="fl-dots" role="radiogroup" aria-label="Color de ${p.name}">${p.v.map((v, i) => `<button type="button" role="radio" aria-checked="${i === 0}" aria-label="${v[0]}" data-v="${i}" style="--sw:${v[1]}"></button>`).join('')}</div>
+          <span class="fl-variant">${p.v[0][0]}</span>
+        </div>
+        <div class="fl-prod-row"><span class="fl-price">${p.price} €</span><button type="button" class="fl-add" data-id="${p.id}">Añadir</button></div>
+      </article>`).join('');
+    grid.addEventListener('click', e => {
+      const card = e.target.closest('.fl-prod'); if (!card) return;
+      const p = PRODUCTS.find(x => x.id === card.querySelector('.fl-add').dataset.id);
+      const dot = e.target.closest('.fl-dots button');
+      if (dot) {
+        const v = p.v[Number(dot.dataset.v)];
+        card.querySelectorAll('.fl-dots button').forEach(b => b.setAttribute('aria-checked', String(b === dot)));
+        const im = card.querySelector('.fl-prod-img img');
+        im.style.opacity = 0;
+        setTimeout(() => { im.src = URL_(v[2], 640, 800); im.alt = `${p.name}, ${v[0].toLowerCase()}`; im.onload = () => { im.style.opacity = 1; }; }, 150);
+        card.querySelector('.fl-variant').textContent = v[0];
+      }
+      const addBtn = e.target.closest('.fl-add');
+      if (addBtn) {
+        const i = Number(card.querySelector('.fl-dots [aria-checked="true"]').dataset.v);
+        add({ name: p.name, detail: p.v[i][0], price: p.price, img: p.v[i][2] });
+        addBtn.classList.add('added'); addBtn.textContent = 'Añadido';
+        setTimeout(() => { addBtn.classList.remove('added'); addBtn.textContent = 'Añadir'; }, 1400);
+      }
+    });
+
+    // ---------- filters + occasions
+    const OCC_NAMES = { cumple: 'cumpleaños', amor: 'amor', nacimiento: 'un nacimiento', gracias: 'dar las gracias', condolencias: 'condolencias', casa: 'casa' };
+    function filter(kind, value) {
+      let shown = 0;
+      grid.querySelectorAll('.fl-prod').forEach(c => {
+        const ok = value === 'todo' ? true
+          : kind === 'occ' ? c.dataset.occ.split(' ').includes(value)
+          : value === 'menos35' ? Number(c.dataset.price) < 35
+          : c.dataset.cat === value;
+        c.hidden = !ok; if (ok) shown++;
+      });
+      $('flEmpty').hidden = shown > 0;
+      $('flShopTitle').innerHTML = kind === 'occ' && value !== 'todo' ? `Para <em>${OCC_NAMES[value]}</em>` : 'Las más <em>pedidas</em>';
+      document.querySelectorAll('.fl-cats button').forEach(b => b.setAttribute('aria-pressed', String(kind === 'cat' && b.dataset.cat === value || (kind === 'occ' && false) || (value === 'todo' && b.dataset.cat === 'todo'))));
+      document.querySelectorAll('.fl-occ').forEach(b => b.setAttribute('aria-pressed', String(kind === 'occ' && b.dataset.occ === value)));
+    }
+    document.querySelectorAll('.fl-cats button').forEach(b => b.addEventListener('click', () => filter('cat', b.dataset.cat)));
+    document.querySelectorAll('.fl-occ').forEach(b => b.addEventListener('click', () => {
+      filter('occ', b.dataset.occ);
+      $('tienda').scrollIntoView({ behavior: 'smooth' });
+    }));
+    $('flReset').addEventListener('click', () => filter('cat', 'todo'));
+
+    // ---------- bouquet builder: flowers are drawn (side view) so they match the cone in every combination
+    const PAL = {
+      pink: ['#F7B8C6', '#E8879F', '#C95A7A'], white: ['#FFFDF8', '#EEE6D6', '#CDBFA6'], red: ['#E0414F', '#B21F31', '#7E1020'],
+      yellow: ['#FFDB5C', '#F3B425', '#CF8A08'], peach: ['#FFD0B5', '#F4A27E', '#D9785A']
+    };
+    const MIX = [  // per flower choice: [kind, palette] for each of the 15 blooms (cycled)
+      [['rose', 'pink'], ['rose', 'peach']],
+      [['rose', 'white']],
+      [['rose', 'red']],
+      [['rose', 'yellow']],
+      [['daisy'], ['rose', 'pink'], ['lilac'], ['rose', 'yellow'], ['daisy'], ['rose', 'peach'], ['lilac']]
+    ];
+    const SPOTS = [[180, 92, .62], [146, 104, .66], [214, 104, .66], [112, 128, .78], [180, 124, .8], [248, 128, .78],
+      [86, 160, .86], [146, 154, .9], [214, 154, .9], [274, 160, .86], [80, 200, .8], [280, 200, .8],
+      [116, 190, 1], [180, 186, 1.04], [244, 190, 1]];
+    const LEAVES = [[62, 168], [298, 168], [80, 128], [280, 128], [112, 96], [248, 96], [150, 78], [210, 78], [56, 206], [304, 206], [180, 70]];
+    const rose = (p, rot) => `<g transform="rotate(${rot})">
+      <path d="M-30 -4 C-34 -26 -12 -32 0 -26 C12 -32 34 -26 30 -4 C28 18 14 26 0 26 C-14 26 -28 18 -30 -4Z" fill="${p[1]}"/>
+      <ellipse cx="0" cy="-14" rx="21" ry="9" fill="${p[2]}"/>
+      <path d="M-21 -14 C-15 -27 15 -27 21 -14 C12 -8 -12 -8 -21 -14Z" fill="${p[0]}"/>
+      <path d="M-11 -15 C-5 -23 8 -21 11 -13 C4 -10 -4 -10 -11 -15Z" fill="${p[1]}"/>
+      <path d="M-4 -16 C0 -19 5 -17 4 -14" fill="none" stroke="${p[2]}" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M-27 -2 C-18 8 18 8 27 -2 C24 16 12 24 0 24 C-12 24 -24 16 -27 -2Z" fill="${p[0]}"/>
+      <path d="M-14 6 C-6 12 6 12 14 6" fill="none" stroke="${p[2]}" stroke-width="1.2" opacity=".55"/>
+      <path d="M-30 -4 C-34 -26 -12 -32 0 -26 C12 -32 34 -26 30 -4 C28 18 14 26 0 26 C-14 26 -28 18 -30 -4Z" fill="url(#flBloomShade)"/></g>`;
+    const daisy = rot => `<g transform="rotate(${rot}) scale(1 .72)">${Array.from({ length: 14 }, (_, k) =>
+      `<ellipse cx="0" cy="-17" rx="6" ry="15" fill="#FFFFFF" stroke="#E6DED0" stroke-width=".8" transform="rotate(${k * 360 / 14})"/>`).join('')}
+      <circle r="9" fill="#E9B22A"/><circle r="9" fill="url(#flBloomShade)"/></g>`;
+    const lilac = rot => `<g transform="rotate(${rot})">${[[-14, -6], [0, -14], [14, -6], [-8, 6], [8, 6], [0, -2], [-20, 6], [20, 6], [0, 14]].map(([x, y], k) =>
+      `<circle cx="${x}" cy="${y}" r="7" fill="${k % 2 ? '#B795D8' : '#D3BEEB'}"/>`).join('')}</g>`;
+    const bloom = (kind, pal, rot) => kind === 'daisy' ? daisy(rot) : kind === 'lilac' ? lilac(rot) : rose(PAL[pal], rot);
+    // pointed leaves spreading outward from the heart of the bouquet
+    $('flLeaves').innerHTML = LEAVES.map(([x, y], k) => {
+      const a = Math.atan2(y - 236, x - 180) * 180 / Math.PI + 90;
+      const c = k % 3 === 0 ? '#3F5E3A' : k % 3 === 1 ? '#5E7F52' : '#7E9B73';
+      return `<g transform="translate(${x} ${y}) rotate(${a.toFixed(1)}) scale(${(0.85 + (k % 3) * 0.12).toFixed(2)})">
+        <path d="M0 18 C14 6 16 -28 0 -50 C-16 -28 -14 6 0 18Z" fill="${c}"/>
+        <path d="M0 14 C1 -6 1 -26 0 -44" stroke="rgba(255,255,255,.22)" stroke-width="1.4" fill="none"/></g>`;
+    }).join('');
+    function drawBlooms(fi) {
+      const mix = MIX[fi];
+      $('flBlooms').innerHTML = SPOTS.map(([x, y, s], k) => {
+        const [kind, pal] = mix[k % mix.length];
+        return `<g transform="translate(${x} ${y}) scale(${s})">${bloom(kind, pal, ((k * 37) % 30) - 15)}</g>`;
+      }).join('');
+    }
+    document.querySelectorAll('.fl-photo-sw').forEach((b, i) => {
+      const [kind, pal] = MIX[i][0];
+      b.querySelector('.fl-sw-bloom').innerHTML = bloom(kind, pal, -8);
+    });
+
+    // 3D: tilt toward the pointer; deeper layers move less than front ones
+    const stage = $('flStage');
+    const layers = [...stage.querySelectorAll('.fl-layer')];
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function tilt(nx, ny) {
+      stage.querySelector('.fl-wrap-svg').style.setProperty('--ry', (nx * 14).toFixed(2) + 'deg');
+      stage.querySelector('.fl-wrap-svg').style.setProperty('--rx', (-ny * 9).toFixed(2) + 'deg');
+      layers.forEach(l => { const d = Number(l.dataset.depth); l.style.transform = `translate(${(nx * d).toFixed(1)}px, ${(ny * d * 0.6).toFixed(1)}px)`; });
+    }
+    if (!still) {
+      stage.addEventListener('pointermove', e => {
+        const r = stage.getBoundingClientRect();
+        tilt(Math.max(-1, Math.min(1, (e.clientX - r.left) / r.width * 2 - 1)), Math.max(-1, Math.min(1, (e.clientY - r.top) / r.height * 2 - 1)));
+      });
+      stage.addEventListener('pointerleave', () => tilt(0, 0));
+    } else {
+      $('flBlooms').classList.remove('fl-sway');
+    }
+
+    const st = { f: 0, s: 1, p: 0, r: 2 };
+    const svg = document.querySelector('.fl-wrap-svg');
+    let drawnFlower = -1;
+    function renderBuild() {
+      const f = BUILD.flowers[st.f], s = BUILD.sizes[st.s];
+      if (drawnFlower !== st.f) { drawBlooms(st.f); drawnFlower = st.f; }
+      svg.style.setProperty('--paper', BUILD.papers[st.p][1]);
+      svg.style.setProperty('--ribbon', BUILD.ribbons[st.r][1]);
+      $('flScale').style.transform = `scale(${s[2]})`;
+      $('flPaperName').textContent = BUILD.papers[st.p][0];
+      $('flRibbonName').textContent = BUILD.ribbons[st.r][0];
+      $('flBuildPrice').textContent = (s[1] + f[1]) + ' €';
+    }
+    function radios(selector, key) {
+      const btns = document.querySelectorAll(selector);
+      btns.forEach(b => b.addEventListener('click', () => {
+        st[key] = Number(b.dataset.i);
+        btns.forEach(x => x.setAttribute('aria-checked', String(x === b)));
+        renderBuild();
+      }));
+    }
+    radios('.fl-photo-row .fl-photo-sw', 'f');
+    radios('.fl-sizes button', 's');
+    radios('#flPaperRow .fl-color-sw', 'p');
+    radios('.fl-ribbon-sw', 'r');
+    $('flCard').addEventListener('input', e => { $('flCardOut').textContent = e.target.value.trim() || 'Escribe tu mensaje…'; });
+    $('flBuildAdd').addEventListener('click', () => {
+      const f = BUILD.flowers[st.f], s = BUILD.sizes[st.s];
+      const msg = $('flCard').value.trim();
+      add({ name: 'Ramo a medida', detail: `${f[0]}, ${s[0].toLowerCase()}, papel ${BUILD.papers[st.p][0].toLowerCase()}, lazo ${BUILD.ribbons[st.r][0].toLowerCase()}${msg ? ', tarjeta: «' + msg + '»' : ''}`, price: s[1] + f[1], img: f[2] });
+    });
+    renderBuild();
+
+    // ---------- add-ons
+    document.querySelectorAll('.fl-add-mini').forEach(b => b.addEventListener('click', () => {
+      const i = cart.findIndex(it => it.addon === b.dataset.addon);
+      if (i >= 0) { cart.splice(i, 1); renderCart(); return; }
+      const img = b.closest('.fl-addon').querySelector('img').src.match(/photo-([^?]+)/)[1];
+      add({ name: b.dataset.name, price: Number(b.dataset.price), addon: b.dataset.addon, img });
+    }));
+
+    // ---------- subscription
+    document.querySelectorAll('.fl-plan').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.fl-plan').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      $('xService').value = 'Suscripción semanal';
+      window.xToBooking(`Quiero la suscripción: ${b.dataset.plan}.`);
+    }));
+
+    // ---------- postcode check
+    function cp() {
+      const v = $('flCp').value.trim(), out = $('flCpOut');
+      if (!/^\d{5}$/.test(v)) { out.textContent = 'Escribe un código postal de 5 cifras.'; return; }
+      const n = Number(v);
+      out.textContent = n >= 28001 && n <= 28055 ? 'Sí, llega hoy si pides antes de las 14:00.' : v.startsWith('28') ? 'Llega mañana (envío 12 €).' : 'Fuera de Madrid: envío en 24 h con mensajería.';
+    }
+    $('flCpBtn').addEventListener('click', cp);
+    $('flCp').addEventListener('keydown', e => { if (e.key === 'Enter') cp(); });
+
+    renderCart();
+  })();
+
+  // · Same-day delivery countdown (Madrid time, cut-off 14:00 Monday to Saturday)
+  (function () {
+    const label = document.getElementById('xCutLabel'), time = document.getElementById('xCutTime');
+    function tick() {
+      const p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+      const g = t => p.find(x => x.type === t).value;
+      const wd = g('weekday'), min = Number(g('hour')) * 60 + Number(g('minute')), cut = 14 * 60;
+      if (wd !== 'Sun' && min < cut) {
+        const left = cut - min;
+        label.textContent = 'Para entregar hoy, pide en';
+        time.textContent = `${Math.floor(left / 60)} h ${String(left % 60).padStart(2, '0')} min`;
+      } else {
+        label.textContent = 'Pide ahora y lo entregamos';
+        time.textContent = wd === 'Sat' || wd === 'Sun' ? 'el lunes' : 'mañana';
+      }
+    }
+    tick();
+    setInterval(tick, 30000);
+  })();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+# Only the public demo portfolio is published (kamyarsh10.github.io).
+# Everything else here (leads, research, concept sites for real businesses) stays private.
+/*
+!/.gitignore
+!/index.html
+!/img/
+!/Websites/
+/Websites/concepts/

@@ -332,6 +332,9 @@ body:has(.demo:not([hidden])) .foot{padding-bottom:140px}
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important}
   html{scroll-behavior:auto}
 }
+/* tap targets: comfortable size on phones */
+.lang button{min-width:44px;min-height:40px}
+.demo-x{min-width:40px;min-height:40px}
 </style>
 </head>
 <body>
@@ -574,13 +577,14 @@ body:has(.demo:not([hidden])) .foot{padding-bottom:140px}
   <div class="wrap">
     <a class="logo" href="#inicio">Restaurante &amp; Bar</a>
     <nav aria-label="Pie de página" data-aria-en="Footer">
-      <a href="#">Instagram</a>
+      <a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener">Instagram</a>
       <a href="#carta" data-en="Menu">Carta</a>
       <a href="#reservar" data-en="Bookings">Reservas</a>
       <a href="#visitanos" data-en="Hours and address">Horario y dirección</a>
       <span>© 2026</span>
     </nav>
   </div>
+  <p class="demo-disclaimer" style="margin:24px auto 0;padding:0 20px 8px;max-width:760px;text-align:center;font-size:12px;line-height:1.5;opacity:.65;font-family:inherit;letter-spacing:0;text-transform:none">Diseño de ejemplo. El nombre, la dirección, los precios, las reseñas y los datos de contacto o certificaciones que aparecen son ficticios y solo sirven de muestra.</p>
 </footer>
 
 <!-- floating actions (desktop) -->

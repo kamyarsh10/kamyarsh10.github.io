@@ -75,7 +75,10 @@ p{margin:0}
 .lang button{background:none;border:0;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;cursor:pointer;opacity:.7}
 .lang button:hover{opacity:1}
 .lang button[aria-pressed="true"]{background:var(--oro);color:var(--tinta);opacity:1}
-.top .btn{padding:10px 22px;font-size:14px}
+.top .btn{padding:10px 22px;font-size:14px;white-space:nowrap}
+.nav a,.status{white-space:nowrap}
+@media (max-width:1280px){.top .status{display:none}}
+@media (max-width:640px){.top .btn{display:none}}
 
 /* ---------- FULL-SCREEN LUXURY HERO ---------- */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
@@ -234,6 +237,30 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
   .form,.intro .facts{grid-template-columns:1fr}
   .g1,.g2,.g3,.g4{grid-column:span 12}
 }
+/* tap targets: comfortable size on phones */
+.lang button{min-width:44px;min-height:40px}
+.pick-btn{min-height:44px}
+
+/* ---------- Preview-2 additions ---------- */
+.faq-wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:var(--s6);align-items:start}
+.faq-list{border-top:1px solid rgba(245,240,230,.14)}
+.faq-i{border-bottom:1px solid rgba(245,240,230,.14)}
+.faq-i summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;font-family:var(--serif);font-size:clamp(21px,2vw,26px);font-weight:600}
+.faq-i summary::-webkit-details-marker{display:none}
+.faq-i summary i{position:relative;width:16px;height:16px;flex:none}
+.faq-i summary i::before,.faq-i summary i::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;background:var(--oro);transition:transform .3s var(--ease-out)}
+.faq-i summary i::after{transform:rotate(90deg)}
+.faq-i[open] summary i::after{transform:rotate(0)}
+.faq-i p{color:var(--niebla);padding:0 40px 22px 0;max-width:60ch}
+.book-done h3{font-family:var(--serif);font-size:34px;font-weight:600}
+.book-done p{margin:10px 0 24px}
+.book-done:focus{outline:none}
+.status.closed i{background:var(--rojo)}
+.toast-b{position:fixed;left:50%;bottom:28px;z-index:300;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--club);color:var(--albero);padding:12px 20px;border-radius:999px;font-size:14px;transition:all .35s var(--ease-out);border:1px solid rgba(226,184,87,.3)}
+.toast-b.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:920px){.faq-wrap{grid-template-columns:1fr}.toast-b{bottom:90px}}
+@media (max-width:1100px){.top .nav{display:none}}
+@media (prefers-reduced-motion:reduce){.faq-i summary i::before,.faq-i summary i::after,.toast-b{transition:none}}
 </style>
 </head>
 <body>
@@ -248,7 +275,7 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
       <a href="#opiniones" data-en="Reviews">Opiniones</a>
       <a href="#visitanos" data-en="Location">Salamanca</a>
     </nav>
-    <span class="status open" id="liveStatus"><i></i><span data-en="Open now · Closes 20:30">Abierto ahora · Cierra 20:30</span></span>
+    <span class="status" id="liveStatus"><i></i><span id="liveText">Horario de hoy</span></span>
     <div class="lang">
       <button type="button" data-lang="es" aria-pressed="true">ES</button>
       <button type="button" data-lang="en" aria-pressed="false">EN</button>
@@ -268,7 +295,6 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
   </div>
 
   <div class="wrap hero-body">
-    <span class="hero-kicker" data-en="Claudio Coello 48 · Barrio de Salamanca">Claudio Coello 48 · Barrio de Salamanca</span>
     <h1>
       <span class="w"><span>Sastrería</span></span>
       <span class="w"><span>&amp;</span></span>
@@ -352,7 +378,7 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
     <div class="menu-panel">
       <figure>
         <img id="menuImg" src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1000&q=85&auto=format&fit=crop" alt="">
-        <figcaption id="menuCap">Sillones clásicos de cuero y hierro fundido en nuestro salón de Claudio Coello.</figcaption>
+        <figcaption id="menuCap">Sillones clásicos de cuero y hierro fundido en nuestro salón del barrio de Salamanca.</figcaption>
       </figure>
       <div>
         <ul class="services-list" id="servicesList"></ul>
@@ -417,9 +443,9 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
       <p data-en="Tap any photograph to inspect the craftsmanship in full screen.">Pulsa sobre cualquier fotografía para ampliar los detalles del salón.</p>
     </div>
     <div class="gallery" id="galleryGrid">
-      <button type="button" class="g1" data-src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1800&q=85&auto=format&fit=crop" data-cap="Salón principal en Calle Claudio Coello 48">
+      <button type="button" class="g1" data-src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1800&q=85&auto=format&fit=crop" data-cap="Salón principal">
         <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1000&q=80&auto=format&fit=crop" alt="">
-        <span>Salón Principal · Claudio Coello</span>
+        <span>Salón principal</span>
       </button>
       <button type="button" class="g2" data-src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=1800&q=85&auto=format&fit=crop" data-cap="Afeitado tradicional a navaja con doble toalla de vapor">
         <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=900&q=80&auto=format&fit=crop" alt="">
@@ -473,12 +499,26 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
 </section>
 
 <!-- ================= RESERVATION ================= -->
+<section class="sec" id="preguntas">
+  <div class="wrap faq-wrap">
+    <h2 data-en="Questions">Preguntas frecuentes</h2>
+    <div class="faq-list">
+      <details class="faq-i"><summary><span data-en="Do I need an appointment?">¿Hace falta cita?</span><i aria-hidden="true"></i></summary><p data-en="We recommend it so you don't wait. If a chair is free, we'll take you without one.">Te la recomendamos para no esperar. Si hay un sillón libre, te atendemos sin cita.</p></details>
+      <details class="faq-i"><summary><span data-en="How long does a haircut take?">¿Cuánto dura un corte?</span><i aria-hidden="true"></i></summary><p data-en="About 45 minutes with wash and styling. The full ritual takes 75 minutes.">Unos 45 minutos con lavado y peinado. El ritual completo, 75 minutos.</p></details>
+      <details class="faq-i"><summary><span data-en="Do you cut children's hair?">¿Cortáis el pelo a niños?</span><i aria-hidden="true"></i></summary><p data-en="Yes, from age 6, for €18.">Sí, a partir de 6 años, por 18 €.</p></details>
+      <details class="faq-i"><summary><span data-en="How can I pay?">¿Cómo se paga?</span><i aria-hidden="true"></i></summary><p data-en="Card, cash or Bizum.">Tarjeta, efectivo o Bizum.</p></details>
+      <details class="faq-i"><summary><span data-en="Do you sell products?">¿Vendéis productos?</span><i aria-hidden="true"></i></summary><p data-en="Yes: waxes, beard oils and shampoos we use in the shop.">Sí: ceras, aceites de barba y champús que usamos en el salón.</p></details>
+      <details class="faq-i"><summary><span data-en="Do you sell gift cards?">¿Hacéis tarjetas regalo?</span><i aria-hidden="true"></i></summary><p data-en="Yes, for any service or amount. Ask in the shop or by phone.">Sí, de cualquier servicio o importe. Pídela en el salón o por teléfono.</p></details>
+    </div>
+  </div>
+</section>
+
 <section class="sec sec-oro" id="reservar">
   <div class="wrap resv">
     <div>
       <span class="eyebrow" style="color:var(--tinta)">Cita Previa sin Esperas</span>
       <h2>Reserva tu sillón</h2>
-      <p style="margin-top:16px;font-size:18px;max-width:36ch">Confirmación inmediata por WhatsApp. Si necesitas cambiar tu hora, avísanos con 2 horas de antelación sin ningún coste.</p>
+      <p style="margin-top:16px;font-size:18px;max-width:36ch" data-en="We confirm by call or message. Need to change your time? Let us know 2 hours ahead, free of charge.">Te confirmamos por llamada o mensaje. Si necesitas cambiar tu hora, avísanos con 2 horas de antelación, sin coste.</p>
     </div>
     <div class="card">
       <form class="form" id="bookForm">
@@ -510,13 +550,18 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
           <input type="text" id="fName" placeholder="Ej. Alejandro" required>
         </div>
         <div class="field">
-          <label for="fPhone">Teléfono / WhatsApp</label>
+          <label for="fPhone">Teléfono</label>
           <input type="tel" id="fPhone" placeholder="+34 600 000 000" required>
         </div>
         <div class="field full" style="margin-top:8px">
-          <button type="submit" class="btn btn-ink" style="width:100%;justify-content:center">Confirmar Cita por WhatsApp</button>
+          <button type="submit" class="btn btn-ink" style="width:100%;justify-content:center" data-en="Book my chair">Reservar mi sillón</button>
         </div>
       </form>
+      <div class="book-done" id="bookDone" hidden tabindex="-1">
+        <h3 data-en="Booked!">¡Reserva recibida!</h3>
+        <p id="bookDoneText"></p>
+        <button type="button" class="btn btn-ink" id="bookAgain" data-en="Book another">Hacer otra reserva</button>
+      </div>
     </div>
   </div>
 </section>
@@ -527,20 +572,21 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
     <div>
       <span class="eyebrow">Barrio de Salamanca</span>
       <h2>Visítanos</h2>
-      <p style="color:var(--niebla);margin-top:12px">Calle de Claudio Coello, 48 · 28001 Madrid (Metro Serrano / Velázquez)</p>
+      <p style="color:var(--niebla);margin-top:12px">Calle Ejemplo 48 · 28001 Madrid (Metro Serrano / Velázquez)</p>
       <ul class="hours">
-        <li><span>Lunes a Jueves</span><span>10:00 – 20:30</span></li>
-        <li class="today"><span>Viernes (Horario Club)</span><span>10:00 – 21:30</span></li>
-        <li><span>Sábados</span><span>09:30 – 19:30</span></li>
-        <li><span>Domingos</span><span>Cerrado</span></li>
+        <li data-days="1,2,3,4"><span data-en="Monday to Thursday">Lunes a jueves</span><span>10:00 – 20:30</span></li>
+        <li data-days="5"><span data-en="Friday">Viernes</span><span>10:00 – 21:30</span></li>
+        <li data-days="6"><span data-en="Saturday">Sábados</span><span>09:30 – 19:30</span></li>
+        <li data-days="0"><span data-en="Sunday">Domingos</span><span data-en="Closed">Cerrado</span></li>
       </ul>
       <div style="display:flex;gap:12px;margin-top:28px;flex-wrap:wrap">
-        <a class="btn btn-oro" href="https://wa.me/34600000000" target="_blank" rel="noopener">WhatsApp Directo</a>
-        <a class="btn btn-ghost" href="tel:+34910000000">+34 910 000 000</a>
+        <a class="btn btn-oro" href="https://www.google.com/maps/dir/?api=1&destination=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener" data-en="Get directions">Cómo llegar</a>
+        <a class="btn btn-ghost js-call" href="tel:+34910000000" data-number="+34 910 000 000">+34 910 000 000</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener">Instagram</a>
       </div>
     </div>
     <div class="map">
-      <iframe title="Mapa Calle Claudio Coello 48 Madrid" src="https://www.google.com/maps?q=Calle+de+Claudio+Coello+48,+Madrid&output=embed" loading="lazy"></iframe>
+      <iframe title="Mapa de ubicación en Madrid" src="https://www.google.com/maps?q=Puerta+del+Sol,+Madrid&z=16&output=embed" loading="lazy"></iframe>
     </div>
   </div>
 </section>
@@ -549,13 +595,15 @@ dialog.lb p{color:var(--albero);text-align:center;margin-top:12px;font-family:va
 <footer class="foot">
   <div class="wrap" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px">
     <div class="logo-giant">VÉRTIGO</div>
-    <p style="color:var(--niebla)">© 2026 Vértigo Sastrería Capilar · Salamanca, Madrid</p>
+    <p style="color:var(--niebla)"><a href="https://www.instagram.com/kamyar._.sh/" target="_blank" rel="noopener" style="color:var(--oro)">Instagram</a> · © 2026 Vértigo Sastrería Capilar · Salamanca, Madrid</p>
   </div>
+  <p class="demo-disclaimer" style="margin:24px auto 0;padding:0 20px 8px;max-width:760px;text-align:center;font-size:12px;line-height:1.5;opacity:.65;font-family:inherit;letter-spacing:0;text-transform:none">Diseño de ejemplo. El nombre, la dirección, los precios, las reseñas y los datos de contacto o certificaciones que aparecen son ficticios y solo sirven de muestra.</p>
 </footer>
 
+<div class="toast-b" id="toastB" role="status" aria-live="polite"></div>
 <nav class="bar" aria-label="Acciones rápidas">
-  <a href="tel:+34910000000">Llamar</a>
-  <a href="https://wa.me/34600000000" target="_blank" rel="noopener">WhatsApp</a>
+  <a href="tel:+34910000000" class="js-call" data-number="+34 910 000 000" data-en="Call">Llamar</a>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=Puerta+del+Sol%2C+Madrid" target="_blank" rel="noopener" data-en="Directions">Cómo llegar</a>
   <a class="r" href="#reservar">Reservar</a>
 </nav>
 
@@ -565,7 +613,7 @@ const MOMENTS = {
     title: "01 · Corte de Autor & Tijera",
     desc: "Estudio visagista, lavado botánico y acabado con pomada mate artesanal · 45 min",
     img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1000&q=85&auto=format&fit=crop",
-    cap: "Sillones clásicos Takara Belmont en nuestro salón principal de Claudio Coello.",
+    cap: "Sillones clásicos Takara Belmont en nuestro salón principal.",
     items: [
       { name: "Corte Sastrería a Tijera", price: "28 €", tag: "45 min", desc: "Corte estructurado enteramente a tijera y peine, lavado relajante y acabado natural." },
       { name: "Skin Fade & Contorno a Navaja", price: "29 €", tag: "Favorito", desc: "Degradado limpio desde cero con transición invisible y perfilado con hoja japonesa." },
@@ -725,17 +773,66 @@ document.querySelectorAll('#barberPills button').forEach(b => {
 // Default today date
 document.getElementById('fDate').valueAsDate = new Date();
 
-// Submit to WhatsApp
+// Booking: confirmed on the page (demo, nothing is sent)
+const toastB = document.getElementById('toastB');
+let toastBTimer;
+function showToastB(msg) { toastB.textContent = msg; toastB.classList.add('show'); clearTimeout(toastBTimer); toastBTimer = setTimeout(() => toastB.classList.remove('show'), 2600); }
+const isEn = () => document.querySelector('.lang button[data-lang="en"]').getAttribute('aria-pressed') === 'true';
 document.getElementById('bookForm').addEventListener('submit', e => {
   e.preventDefault();
-  const srv = document.getElementById('fSrv').value;
-  const dt = document.getElementById('fDate').value;
+  const dt = document.getElementById('fDate').valueAsDate;
   const tm = document.getElementById('fTime').value;
-  const nm = document.getElementById('fName').value;
-  const ph = document.getElementById('fPhone').value;
-  const msg = `¡Hola Vértigo Barber Club! 👋\nQuiero reservar un sillón:\n\n✂️ Servicio: ${srv}\n💈 Barbero: ${chosenBarber}\n📅 Fecha: ${dt} a las ${tm}\n👤 Cliente: ${nm} (${ph})\n\n¿Tenéis hueco disponible?`;
-  window.open(`https://wa.me/34600000000?text=${encodeURIComponent(msg)}`, '_blank');
+  const nm = document.getElementById('fName').value.trim().split(' ')[0];
+  const day = dt ? dt.toLocaleDateString(isEn() ? 'en-GB' : 'es-ES', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' }).replace(',', '') : '';
+  document.getElementById('bookDoneText').textContent = isEn()
+    ? `Thanks, ${nm}. ${chosenBarber} is expecting you on ${day} at ${tm}. We'll call to confirm.`
+    : `Gracias, ${nm}. ${chosenBarber} te espera el ${day} a las ${tm}. Te llamaremos para confirmarlo.`;
+  document.getElementById('bookForm').hidden = true;
+  const done = document.getElementById('bookDone');
+  done.hidden = false;
+  done.focus();
 });
+document.getElementById('bookAgain').addEventListener('click', () => {
+  document.getElementById('bookForm').reset();
+  document.getElementById('fDate').valueAsDate = new Date();
+  document.getElementById('bookDone').hidden = true;
+  document.getElementById('bookForm').hidden = false;
+});
+
+// Opening hours in Madrid time: header badge + today's row
+(function () {
+  const HOURS = { 1: [600, 1230], 2: [600, 1230], 3: [600, 1230], 4: [600, 1230], 5: [600, 1290], 6: [570, 1170], 0: null };
+  const fmt = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+  function render() {
+    const p = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+    const g = t => p.find(x => x.type === t).value;
+    const day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(g('weekday'));
+    const min = Number(g('hour')) * 60 + Number(g('minute'));
+    const t = HOURS[day], open = !!t && min >= t[0] && min < t[1];
+    const badge = document.getElementById('liveStatus');
+    badge.classList.toggle('open', open);
+    badge.classList.toggle('closed', !open);
+    document.getElementById('liveText').textContent = open
+      ? (isEn() ? `Open now · Closes ${fmt(t[1])}` : `Abierto ahora · Cierra ${fmt(t[1])}`)
+      : (isEn() ? 'Closed now' : 'Cerrado ahora');
+    document.querySelectorAll('.hours li[data-days]').forEach(li => li.classList.toggle('today', li.dataset.days.split(',').map(Number).includes(day)));
+  }
+  render();
+  setInterval(render, 60000);
+  document.querySelectorAll('.lang button[data-lang]').forEach(b => b.addEventListener('click', () => setTimeout(render, 0)));
+})();
+
+// Call links: phones dial, computers copy the number
+(function () {
+  const touch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  document.querySelectorAll('.js-call').forEach(a => a.addEventListener('click', e => {
+    if (touch) return;
+    e.preventDefault();
+    const num = a.dataset.number;
+    if (navigator.clipboard) navigator.clipboard.writeText(num).then(() => showToastB((isEn() ? 'Number copied: ' : 'Número copiado: ') + num), () => showToastB(num));
+    else showToastB(num);
+  }));
+})();
 
   // Instant Client Mock-Up Personalization via URL Parameters (?nombre=...&ciudad=...)
   (function() {
