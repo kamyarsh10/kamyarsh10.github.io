@@ -94,7 +94,7 @@ h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.03em;line-height:1}
 
 /* ---------- why ---------- */
 .why{padding:clamp(64px,9vw,120px) 0}
-.why h2,.demos h2,.precios h2,.como h2{font-size:clamp(36px,5vw,64px)}
+.why h2,.demos h2,.precios h2,.como h2,.sobre h2{font-size:clamp(36px,5vw,64px)}
 .why-list{list-style:none;margin:44px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,56px)}
 .why-list h3{font-size:clamp(22px,2.2vw,28px);letter-spacing:-.02em;margin-bottom:10px}
 .why-list p{margin:0;color:var(--gris);max-width:34ch}
@@ -137,12 +137,35 @@ h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.03em;line-height:1}
 .extra{margin-top:24px;color:var(--gris);font-size:15px;max-width:62ch}
 
 /* ---------- how it works: a real sequence ---------- */
-.como{padding:0 0 clamp(64px,8vw,112px)}
+.como{padding:0}
+.como h2 .tag{font-size:14px;vertical-align:.45em}
 .pasos{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px;counter-reset:p}
 .pasos li{counter-increment:p;border-top:3px solid var(--tinta);padding-top:18px}
 .pasos li::before{content:counter(p);display:block;font-weight:800;font-size:44px;color:var(--carmin);line-height:1;margin-bottom:12px}
 .pasos h3{font-size:22px;letter-spacing:-.02em;margin-bottom:6px}
 .pasos p{margin:0;color:var(--gris)}
+
+/* ---------- about me: editorial bio ---------- */
+.sobre{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(40px,6vw,96px);align-items:center;padding:clamp(64px,8vw,112px) 0}
+.retrato{position:relative;margin:0;width:100%;max-width:440px}
+.retrato::before{content:"";position:absolute;inset:0;transform:translate(12px,12px);border:1.5px solid var(--tinta);border-radius:20px;pointer-events:none}
+.marco{position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:radial-gradient(120% 80% at 25% 15%,rgba(200,16,46,.38),transparent 60%),var(--noche);display:grid;place-items:center}
+.marco .mono{font-weight:800;font-size:clamp(150px,17vw,240px);line-height:1;letter-spacing:-.06em;color:#fff;opacity:.92}
+.marco .mono b{color:var(--carmin)}
+.marco img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.badge{position:absolute;left:18px;bottom:-18px;background:#fff;color:var(--tinta);font-size:15px;font-weight:600;padding:10px 16px;border-radius:999px;box-shadow:0 10px 30px rgba(22,24,29,.16),0 0 0 1px var(--linea);white-space:nowrap}
+.eyebrow{display:block;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--carmin);margin-bottom:14px}
+.historia{font-size:clamp(18px,1.5vw,20px);margin:26px 0 0;max-width:58ch}
+.valor{margin:22px 0 0;padding-left:18px;border-left:3px solid var(--carmin);color:var(--gris);max-width:58ch}
+.valor strong{color:var(--tinta)}
+.btn-d{border:1.5px solid var(--tinta);color:var(--tinta)}
+.btn-d:hover{background:var(--tinta);color:#fff}
+
+/* ---------- floating WhatsApp pill ---------- */
+.wa-float{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 20px 0 16px;border-radius:999px;background:var(--noche);color:#fff;font-weight:600;font-size:15px;text-decoration:none;border:1px solid rgba(255,255,255,.16);box-shadow:0 14px 34px -10px rgba(14,15,19,.55);transition:transform .35s var(--ease),opacity .25s,visibility .25s}
+.wa-float svg{width:22px;height:22px;flex:none;color:#25D366}
+.wa-float:hover{transform:translateY(-2px)}
+.wa-float.off{opacity:0;visibility:hidden;transform:translateY(12px)}
 
 /* ---------- final ---------- */
 .final{background:var(--noche);color:#fff;padding:clamp(64px,8vw,112px) 0}
@@ -159,6 +182,9 @@ footer{padding:28px 0;font-size:14px;color:var(--gris)}
 @media (max-width:860px){
   .demo,.demo.big{grid-column:span 6}
   .why-list,.pasos{grid-template-columns:1fr;gap:28px}
+  .sobre{grid-template-columns:1fr;gap:56px}
+  .retrato{max-width:min(280px,calc(100% - 12px))}
+  footer{padding-bottom:96px}
 }
 @media (max-width:520px){
   .bar .ig span{display:none}
@@ -177,8 +203,9 @@ footer{padding:28px 0;font-size:14px;color:var(--gris)}
       <a class="me" href="#">Kamyar <b>·</b> Webs</a>
       <nav aria-label="Secciones">
         <a href="#ejemplos" data-en="Examples">Ejemplos</a>
-        <a href="#precios" data-en="Prices">Precios</a>
+        <a href="#sobre-mi" data-en="About me">Sobre mí</a>
         <a href="#como" data-en="How it works">Cómo funciona</a>
+        <a href="#precios" data-en="Prices">Precios</a>
       </nav>
       <div class="tools">
         <div class="lang" role="group" aria-label="Idioma / Language">
@@ -317,7 +344,38 @@ footer{padding:28px 0;font-size:14px;color:var(--gris)}
   </div>
 </section>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wa-ico" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.27-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.9a11.82 11.82 0 0 0-3.48-8.41Z"/></symbol></svg>
+
 <div class="wrap">
+  <section class="sobre" id="sobre-mi">
+    <figure class="retrato">
+      <div class="marco">
+        <span class="mono" aria-hidden="true">K<b>.</b></span>
+        <img src="img/kamyar-portrait.jpg" alt="Retrato de Kamyar" width="800" height="1000" loading="lazy" onerror="this.remove()">
+      </div>
+      <figcaption class="badge" data-en="📍 Madrid · Direct contact">📍 Madrid · Trato directo</figcaption>
+    </figure>
+    <div>
+      <span class="eyebrow" data-en="About me">Sobre mí</span>
+      <h2 data-en="Hi, I'm Kamyar.">Hola, soy Kamyar.</h2>
+      <p class="historia" data-en="I'm a fifth-year dentistry student here in Madrid. Beyond the clinic, I've been passionate about digital design and web development for years. I started this independent studio because I saw that many of Madrid's best businesses have an incredible product and 5-star reviews, but lose customers because they don't have a website to match — or because traditional agencies charge between €1,500 and €3,000.">Soy estudiante de 5º de Odontología aquí en Madrid. Más allá de la clínica, llevo años apasionado por el diseño digital y el desarrollo web. Creé este estudio independiente porque vi que muchos de los mejores negocios de Madrid tienen un producto increíble y reseñas de 5 estrellas, pero pierden clientes por no tener una web a su altura — o porque las agencias tradicionales piden entre 1.500 € y 3.000 €.</p>
+      <p class="valor" data-en="My goal is simple: to design custom websites, fast and with top-tier aesthetics, for local businesses at a fair student price (<strong>from €150 one-off payment</strong>, with no hidden monthly fees or lock-in contracts).">Mi objetivo es simple: diseñar páginas web a medida, rápidas y con estética de primer nivel para negocios locales a un precio justo de estudiante (<strong>desde 150 € pago único</strong>, sin cuotas mensuales ocultas ni permanencias).</p>
+      <div class="ctas" id="sobre-contacto">
+        <a class="btn btn-r" href="https://wa.me/34641629730?text=Hola%20Kamyar,%20he%20visto%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20ver%20un%20boceto%20para%20mi%20negocio" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#wa-ico"/></svg><span data-en="Message me on WhatsApp">Escribirme por WhatsApp</span></a>
+        <a class="btn btn-d" href="https://instagram.com/kamyar._.sh" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>Instagram (@kamyar._.sh)</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="como" id="como">
+    <h2><span data-en="How it works">Cómo funciona</span> <span class="tag" data-en="No commitment">Sin compromiso</span></h2>
+    <ol class="pasos">
+      <li><h3 data-en="Free draft">Boceto gratis</h3><p data-en="Send me your Instagram or your menu and I'll prepare a real preview with your name and your photos at no cost.">Me pasas tu Instagram o tu carta y te preparo una vista previa real con tu nombre y tus fotos sin coste.</p></li>
+      <li><h3 data-en="Tweaks to your taste">Ajustes a tu gusto</h3><p data-en="You try it on your own phone. We change colours, text or sections until it fits you 100%.">La pruebas en tu propio móvil. Cambiamos colores, textos o secciones hasta que te encaje al 100%.</p></li>
+      <li><h3 data-en="Live in days">Publicación en días</h3><p data-en="You only pay if you decide to keep it. We get it ready and connected to your Google Maps and Instagram.">Solo pagas si decides quedártela. La dejamos lista y conectada a tu Google Maps e Instagram.</p></li>
+    </ol>
+  </section>
+
   <section class="precios" id="precios">
     <h2 data-en="Prices">Precios</h2>
     <div class="carta">
@@ -336,15 +394,6 @@ footer{padding:28px 0;font-size:14px;color:var(--gris)}
     </div>
     <p class="extra" data-en="One-off payment. The final price depends on what your business needs, and we agree it together with no commitment. Your own domain (.es or .com) costs about €10–15 a year. Optional maintenance from €15 a month.">Pago único. El precio final depende de lo que necesite tu negocio y lo vemos juntos, sin compromiso. El dominio propio (.es o .com) cuesta unos 10–15 € al año. Mantenimiento opcional desde 15 € al mes.</p>
   </section>
-
-  <section class="como" id="como">
-    <h2 data-en="How it works">Cómo funciona</h2>
-    <ol class="pasos">
-      <li><h3 data-en="I make you a sample">Te preparo una muestra</h3><p data-en="Free and with no commitment, with your name, your services and your Instagram photos.">Gratis y sin compromiso, con tu nombre, tus servicios y las fotos de tu Instagram.</p></li>
-      <li><h3 data-en="We adjust it together">La ajustamos juntos</h3><p data-en="We change whatever you want: colours, text, prices, services or photos.">Cambiamos lo que quieras: colores, textos, tarifas, servicios o fotos.</p></li>
-      <li><h3 data-en="We publish it">La publicamos</h3><p data-en="On your own domain, ready for Google and for sharing on Instagram and WhatsApp.">En tu dominio, lista para Google y para compartir en Instagram y WhatsApp.</p></li>
-    </ol>
-  </section>
 </div>
 
 <section class="final">
@@ -356,6 +405,8 @@ footer{padding:28px 0;font-size:14px;color:var(--gris)}
 </section>
 
 <div class="wrap"><footer>Kamyar · Madrid, 2026</footer></div>
+
+<a class="wa-float" href="https://wa.me/34641629730?text=Hola%20Kamyar,%20he%20visto%20tu%20portfolio%20y%20me%20gustar%C3%ADa%20ver%20un%20boceto%20para%20mi%20negocio" target="_blank" rel="noopener" aria-label="WhatsApp: escribir a Kamyar"><svg aria-hidden="true"><use href="#wa-ico"/></svg>WhatsApp</a>
 
 <script>
 (() => {
@@ -387,6 +438,13 @@ footer{padding:28px 0;font-size:14px;color:var(--gris)}
     filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
     demos.forEach(d => { d.hidden = f !== 'todos' && d.dataset.cat !== f; });
   }));
+
+  // Floating WhatsApp pill steps aside while the bio's own contact buttons are on screen
+  const wa = document.querySelector('.wa-float');
+  const contact = document.getElementById('sobre-contacto');
+  if (wa && contact && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => wa.classList.toggle('off', e.isIntersecting)).observe(contact);
+  }
 })();
 </script>
 </body>
