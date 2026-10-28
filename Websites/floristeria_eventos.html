@@ -957,40 +957,93 @@
   .fl-empty { margin-top: 20px; color: var(--c-muted); }
 
   .fl-builder { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(36px, 5vw, 80px); align-items: center; }
-  .fl-preview { position: relative; text-align: center; }
-  .fl-wrap-svg { width: 100%; max-width: 420px; height: auto; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.35)); }
-  .fl-wrap-svg #flScale { transition: transform 0.45s var(--ease); }
-  .fl-wrap-svg path, .fl-wrap-svg circle { transition: fill 0.35s; }
-  #flPaperBack { fill: var(--paper); filter: brightness(0.86); }
-  #flPaperFront { fill: var(--paper); }
-  #flBow path, #flBow circle { fill: var(--ribbon); stroke: rgba(0, 0, 0, 0.18); stroke-width: 1; }
-  .fl-card-preview { position: relative; margin: -40px auto 0; max-width: 260px; background: #FFFDF8; color: #2B2A28; border-radius: 6px; padding: 16px 18px; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25); transform: rotate(-3deg); text-align: left; }
-  .fl-card-preview span { font: 600 11px/1 var(--sans); color: #8A7A6A; }
-  .fl-card-preview p { font: italic 400 20px/1.25 var(--serif); margin-top: 6px; min-height: 2.5em; word-wrap: break-word; }
-  .fl-step { margin-top: 24px; }
-  .fl-step-t { display: block; font: 600 13px/1 var(--sans); color: var(--c-ink); margin-bottom: 12px; }
-  .fl-step-t span { font-weight: 400; color: var(--c-muted); margin-left: 6px; }
-  .fl-photo-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
-  .fl-photo-sw { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: var(--c-muted); font: 500 12px/1.2 var(--sans); cursor: pointer; }
-  .fl-sw-bloom { width: 100%; max-width: 76px; height: auto; aspect-ratio: 1; border-radius: 50%; background: var(--c-card); border: 3px solid transparent; transition: border-color 0.25s; }
-  .fl-photo-sw[aria-checked="true"] .fl-sw-bloom { border-color: var(--x-accent-on-dark); }
-  /* 3D stage: tilt follows the pointer, layers move by depth, blooms sway while idle */
-  .fl-stage { perspective: 900px; display: inline-block; width: 100%; max-width: 420px; touch-action: pan-y; }
-  .fl-stage .fl-wrap-svg { transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.25s ease-out; transform-style: preserve-3d; }
-  .fl-layer { transition: transform 0.25s ease-out; }
-  .fl-sway { transform-box: fill-box; transform-origin: 50% 100%; animation: flSway 6s ease-in-out infinite; }
-  @keyframes flSway { 0%, 100% { rotate: -1.2deg; } 50% { rotate: 1.2deg; } }
-  .fl-photo-sw[aria-checked="true"] { color: var(--c-ink); }
-  .fl-sizes small { margin-top: 2px; }
-  .fl-color-row { display: flex; flex-wrap: wrap; gap: 10px; }
-  .fl-color-sw { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 62px; padding: 6px 4px; border-radius: 12px; border: 1px solid transparent; background: none; color: var(--c-muted); font: 500 12px/1.2 var(--sans); cursor: pointer; }
-  .fl-color-sw i { width: 40px; height: 40px; border-radius: 10px; background: var(--sw); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: inset 0 -8px 12px rgba(0, 0, 0, 0.12); }
-  .fl-ribbon-sw svg { width: 42px; height: 30px; }
-  .fl-ribbon-sw svg path, .fl-ribbon-sw svg circle { fill: var(--sw); stroke: rgba(255, 255, 255, 0.35); stroke-width: 0.8; }
-  .fl-color-sw[aria-checked="true"] { border-color: var(--x-accent-on-dark); color: var(--c-ink); }
-  .fl-steps textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--c-line); background: var(--c-field); color: var(--c-ink); font: 400 15px/1.4 var(--sans); }
+  .fl-builder { --fl-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .22 0 0 0 0 .14 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    --fl-fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.03 .18' numOctaves='3' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .25 0 0 0 0 .17 0 0 0 0 .1 0 0 0 .5 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"); }
+  .fl-builder button:focus-visible { outline: 2px solid var(--x-accent-on-dark); outline-offset: 3px; }
+  /* the table: bouquet flat on a lit surface, card leaning beside it */
+  .fl-preview { position: relative; }
+  @media (min-width: 901px) { .fl-preview { position: sticky; top: 100px; align-self: start; } }  /* bouquet stays in view while the options scroll */
+  .fl-table { position: relative; aspect-ratio: 4 / 5.2; border-radius: 4px; overflow: hidden; isolation: isolate; touch-action: pan-y;
+    background: radial-gradient(120% 90% at 50% 40%, #2a3a2d 0%, #1a261c 55%, #111a13 100%); }
+  .fl-table::before { content: ""; position: absolute; inset: 0; background: var(--fl-grain); opacity: 0.35; mix-blend-mode: soft-light; z-index: -1; }
+  .fl-table::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, rgba(255, 236, 200, 0.1) 0%, transparent 38%), radial-gradient(60% 40% at 30% 10%, rgba(255, 240, 215, 0.1), transparent 70%); }
+  .fl-bq { position: absolute; left: 50%; top: 4%; width: 76%; aspect-ratio: 3 / 4.3; container-type: inline-size; transform-origin: 50% 70%;
+    transform: translateX(-50%) perspective(1000px) rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg)) scale(var(--k, 1)); transition: transform 0.6s var(--ease); }
+  .fl-bq > * { position: absolute; }
+  .fl-tex::before { content: ""; position: absolute; inset: 0; background: var(--fl-grain), var(--fl-fibre); background-size: 220px, 300px; mix-blend-mode: multiply; opacity: var(--tex, 0.5); }
+  .fl-bq-back { inset: 0; background: var(--paper); clip-path: polygon(2% 26%, 6% 17%, 14% 10%, 26% 5%, 40% 2.5%, 50% 2%, 60% 2.5%, 74% 5%, 86% 10%, 94% 17%, 98% 26%, 56% 86%, 44% 86%); filter: brightness(0.72) saturate(0.9); transition: background-color 0.5s; }
+  /* flowers: soft scalloped top edge, lean back slightly, lower petals sit in the cone's shadow */
+  .fl-bq-head { left: 4%; right: 4%; top: 5%; height: 56%; overflow: hidden; perspective: 700px;
+    --m: radial-gradient(ellipse 48% 40% at 50% 62%, #000 72%, transparent 100%),
+      radial-gradient(ellipse 17% 15% at 26% 30%, #000 55%, transparent 100%), radial-gradient(ellipse 17% 15% at 43% 19%, #000 55%, transparent 100%),
+      radial-gradient(ellipse 16% 14% at 60% 18%, #000 55%, transparent 100%), radial-gradient(ellipse 17% 15% at 76% 29%, #000 55%, transparent 100%),
+      radial-gradient(ellipse 14% 15% at 12% 50%, #000 55%, transparent 100%), radial-gradient(ellipse 14% 15% at 88% 47%, #000 55%, transparent 100%);
+    -webkit-mask: var(--m); mask: var(--m); }
+  .fl-bq-head img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 100%; transform: rotateX(9deg) scale(calc(1.06 * var(--z, 1))); transition: opacity 0.6s var(--ease), transform 1.2s var(--ease); }
+  .fl-bq-head img.out { opacity: 0; transform: rotateX(9deg) scale(calc(1.11 * var(--z, 1))); }
+  .fl-bq-head::after { content: ""; position: absolute; inset: 0; mix-blend-mode: multiply; background: radial-gradient(60% 34% at 50% 100%, rgba(30, 18, 10, 0.85), transparent 100%), linear-gradient(transparent 48%, rgba(40, 24, 14, 0.55) 88%), radial-gradient(90% 70% at 50% 40%, transparent 60%, rgba(20, 14, 10, 0.5)); }
+  .fl-bq-flap { inset: 0; background: var(--paper); transition: background-color 0.5s; filter: drop-shadow(0 -6px 10px rgba(0, 0, 0, 0.42)); }
+  .fl-bq-flap.fl-l { clip-path: polygon(0 37%, 10% 39.5%, 22% 42%, 34% 45.5%, 46% 49.5%, 58% 54%, 53% 93%, 47% 93%); }
+  .fl-bq-flap.fl-r { clip-path: polygon(100% 33%, 90% 35.5%, 78% 39%, 64% 44.5%, 52% 50%, 40% 56%, 47% 93%, 53% 93%); }
+  .fl-bq-flap.fl-l::after { content: ""; position: absolute; inset: 0; background: linear-gradient(72deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.04) 30%, rgba(0, 0, 0, 0.05) 52%, rgba(0, 0, 0, 0.28) 60%); }
+  .fl-bq-flap.fl-r::after { content: ""; position: absolute; inset: 0; background: linear-gradient(-70deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.18) 40%, rgba(255, 255, 255, 0.1) 49%, rgba(0, 0, 0, 0.3) 62%); }
+  .fl-bq-stems { left: 45%; width: 10%; top: 88%; height: 12%; background: repeating-linear-gradient(90deg, #4c6a3f 0 18%, #36502d 18% 26%, #5f7f4c 26% 40%, #2f4527 40% 46%); clip-path: polygon(8% 0, 92% 0, 80% 100%, 20% 100%); }
+  /* satin: --rb is the ribbon colour, --hi / --lo its sheen and shade */
+  .fl-bq-neck { left: 37%; width: 26%; top: 73%; height: 4.2%; border-radius: 40% / 50%; transform: rotate(-4deg); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(180deg, var(--lo) 0%, var(--rb) 20%, var(--hi) 42%, var(--rb) 62%, var(--lo) 100%); }
+  .fl-bq-bow { left: 50%; top: 75%; width: 0; height: 0; filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.4)); }
+  .fl-bq-bow span { position: absolute; display: block; }
+  .fl-loop { width: 17cqw; height: 10cqw; top: -7cqw; }
+  .fl-loop.fl-l { right: 0; border-radius: 85% 15% 30% 70% / 70% 35% 65% 30%; transform: rotate(-12deg); transform-origin: 100% 70%;
+    background: radial-gradient(60% 45% at 62% 52%, color-mix(in srgb, var(--rb) 55%, #000) 0, transparent 70%), linear-gradient(165deg, var(--hi) 0%, var(--rb) 38%, var(--lo) 100%); }
+  .fl-loop.fl-r { left: 0; border-radius: 15% 85% 70% 30% / 35% 70% 30% 65%; transform: rotate(12deg); transform-origin: 0 70%;
+    background: radial-gradient(60% 45% at 38% 52%, color-mix(in srgb, var(--rb) 55%, #000) 0, transparent 70%), linear-gradient(195deg, var(--hi) 0%, var(--rb) 38%, var(--lo) 100%); }
+  .fl-knot { width: 5.5cqw; height: 6.5cqw; left: -2.75cqw; top: -4cqw; border-radius: 35%; background: linear-gradient(90deg, var(--lo), var(--hi) 45%, var(--rb) 70%, var(--lo)); }
+  .fl-tail { width: 4.6cqw; height: 22cqw; top: -1cqw; clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%); transform-origin: 50% 0;
+    background: linear-gradient(90deg, var(--lo) 0%, var(--rb) 25%, var(--hi) 50%, var(--rb) 72%, var(--lo) 100%); }
+  .fl-tail.fl-l { left: -4.6cqw; transform: rotate(16deg); }
+  .fl-tail.fl-r { left: 0; transform: rotate(-11deg); height: 25cqw; }
+  .fl-card-preview { position: absolute; right: 7%; bottom: 13%; width: 30%; aspect-ratio: 1.5; background: #FFFDF7; color: #2B2A28; padding: 4% 4.5%; transform: rotate(6deg); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4); overflow: hidden; }
+  .fl-card-preview span { display: block; font: 600 9px/1 var(--sans); letter-spacing: 0.22em; text-transform: uppercase; color: #8A7666; }
+  .fl-card-preview p { font: italic 400 clamp(14px, 1.3vw, 18px)/1.2 var(--serif); margin-top: 8px; word-wrap: break-word; }
+  .fl-table-tag { position: absolute; left: 24px; right: 24px; bottom: 20px; display: flex; justify-content: space-between; align-items: end; gap: 16px; font-size: 12px; color: var(--c-muted); }
+  .fl-table-tag b { display: block; font: italic 400 22px/1.1 var(--serif); color: var(--c-ink); }
+  /* the controls */
+  .fl-eyebrow { font: 600 11px/1 var(--sans); letter-spacing: 0.26em; text-transform: uppercase; color: var(--x-accent-on-dark); margin-bottom: 16px; }
+  .fl-step { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--c-line); }
+  .fl-step-t { display: flex; align-items: baseline; gap: 12px; font: 600 11px/1.2 var(--sans); letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 14px; }
+  .fl-step-t i { font: italic 400 20px/1 var(--serif); letter-spacing: 0; text-transform: none; color: var(--c-ink); }
+  .fl-photo-row { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .fl-photo-sw { display: block; padding: 0; border: 0; background: none; text-align: left; cursor: pointer; }
+  .fl-sw-bloom { display: block; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 2px; outline: 1px solid var(--c-line); outline-offset: 3px; transition: outline-color 0.3s; }
+  .fl-sw-bloom img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+  .fl-photo-sw:hover .fl-sw-bloom img { transform: scale(1.05); }
+  .fl-photo-sw em { display: block; font: italic 400 16px/1.2 var(--serif); color: var(--c-muted); margin-top: 10px; }
+  .fl-photo-sw[aria-checked="true"] .fl-sw-bloom { outline-color: var(--x-accent-on-dark); }
+  .fl-photo-sw[aria-checked="true"] em { color: var(--c-ink); }
+  .fl-sizes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--c-line); }
+  .fl-sizes button { min-height: 64px; padding: 12px 16px; text-align: left; border: 0; border-left: 1px solid var(--c-line); background: none; color: var(--c-ink); cursor: pointer; transition: background-color 0.3s, color 0.3s; }
+  .fl-sizes button:first-child { border-left: 0; }
+  .fl-sizes b { display: block; font: 500 14px/1.2 var(--sans); }
+  .fl-sizes small { font: italic 400 18px/1.3 var(--serif); color: var(--c-muted); }
+  .fl-sizes [aria-checked="true"] { background: var(--c-ink); color: var(--c-bg); }
+  .fl-sizes [aria-checked="true"] small { color: #3F4A41; }
+  .fl-color-row { display: flex; flex-wrap: wrap; gap: 8px 12px; }
+  .fl-color-sw { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 64px; min-height: 44px; padding: 2px 0 4px; border: 0; background: none; color: var(--c-muted); font: 500 12px/1.2 var(--sans); cursor: pointer; }
+  .fl-color-sw i { display: block; position: relative; width: 48px; height: 48px; transition: transform 0.35s var(--ease); }
+  .fl-color-sw:hover i { transform: translateY(-3px); }
+  .fl-color-sw[aria-checked="true"] { color: var(--c-ink); }
+  .fl-color-sw[aria-checked="true"] span { text-decoration: underline 2px var(--x-accent-on-dark); text-underline-offset: 6px; }
+  /* paper sample: a sheet with one corner folded back */
+  .fl-sheet { background: var(--paper); clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08); }
+  .fl-sheet::before { content: ""; position: absolute; inset: 0; background: var(--fl-grain), var(--fl-fibre); background-size: 110px, 150px; mix-blend-mode: multiply; opacity: var(--tex, 0.5); }
+  .fl-sheet b { position: absolute; right: 0; bottom: 0; width: 28%; height: 28%; background: linear-gradient(135deg, color-mix(in srgb, var(--paper) 70%, #000) 0 50%, transparent 50%); filter: drop-shadow(-2px -2px 2px rgba(0, 0, 0, 0.25)); }
+  /* ribbon sample: a short length of satin with notched ends */
+  .fl-color-sw .fl-rib { width: 56px; height: 26px; margin: 11px 0; clip-path: polygon(0 0, 100% 0, 88% 50%, 100% 100%, 0 100%, 12% 50%); background: linear-gradient(180deg, var(--lo) 0%, var(--rb) 18%, var(--hi) 40%, var(--rb) 58%, var(--lo) 100%); }
+  .fl-steps textarea { width: 100%; min-height: 70px; padding: 14px 16px; border-radius: 2px; border: 1px solid var(--c-line); background: var(--c-field); color: var(--c-ink); font: italic 400 19px/1.3 var(--serif); resize: vertical; }
   .fl-build-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--c-line); }
-  .fl-total { font: 400 40px/1 var(--serif); color: var(--c-ink); }
+  .fl-total { font: 400 46px/1 var(--serif); color: var(--c-ink); font-variant-numeric: tabular-nums; }
+  .fl-total small { display: block; font: 500 12px/1 var(--sans); letter-spacing: 0.04em; color: var(--c-muted); margin-bottom: 8px; }
 
   .fl-addons { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
   .fl-addon { background: var(--c-card); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--c-line); }
@@ -1075,17 +1128,24 @@
     .fl-trust-row { font-size: 13px; padding: 12px 0; }
     .fl-trust-row span:nth-child(n+3) { display: none; }
     .fl-occ span { font-size: 18px; }
-    .fl-photo-row { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
-    .fl-photo-sw { font-size: 10px; }
+    .fl-photo-row { gap: 8px; }
+    .fl-photo-sw em { font-size: 13px; margin-top: 8px; }
+    .fl-card-preview { width: 38%; }
+    .fl-card-preview p { font-size: 13px; margin-top: 5px; }
+    .fl-table-tag { left: 16px; right: 16px; bottom: 14px; }
+    .fl-table-tag b { font-size: 19px; }
+    .fl-sizes button { padding: 10px 12px; }
+    .fl-color-row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 6px; }
+    .fl-color-sw { width: auto; font-size: 11px; }
+    .fl-color-sw .fl-rib { width: 44px; height: 22px; margin: 13px 0; }
+    .fl-color-sw i { width: 42px; height: 42px; }
     .fl-addons { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .fl-mosaic { grid-template-rows: 130px 130px 110px; gap: 8px; }
     .fl-prod h3 { font-size: 20px; }
     .fl-prod-row { flex-wrap: wrap; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .fl-occ img, .fl-prod-img img, .fl-ig-item img, .fl-plan, .fl-cart-btn, .fl-wrap-svg #flScale, .fl-wrap-svg path, .fl-wrap-svg circle { transition: none; }
-    .fl-sway { animation: none; }
-    .fl-stage .fl-wrap-svg, .fl-layer { transition: none; }
+    .fl-occ img, .fl-prod-img img, .fl-ig-item img, .fl-plan, .fl-cart-btn, .fl-bq, .fl-bq-head img, .fl-bq-back, .fl-bq-flap, .fl-sw-bloom img, .fl-color-sw i, .fl-sizes button { transition: none; }
   }
 
   .x-cutoff { margin-top: 0; text-align: center; padding: clamp(26px, 4vw, 44px); }
@@ -1192,57 +1252,48 @@
 <section class="x-sec x-dark-a" id="disena">
   <div class="x-wrap fl-builder">
     <div class="fl-preview">
-      <div class="fl-stage" id="flStage">
-      <svg viewBox="0 0 360 470" class="fl-wrap-svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="flFold" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></linearGradient>
-          <radialGradient id="flBloomShade" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".25"/></radialGradient>
-        </defs>
-        <g id="flScale" style="transform-origin:180px 300px">
-          <!-- drawn in layers so the 3D tilt can move each one by a different amount -->
-          <g class="fl-layer" data-depth="-6"><path id="flPaperBack" d="M40 150 L180 460 L320 150 Z"/></g>
-          <g class="fl-layer" data-depth="-2" id="flLeaves"></g>
-          <g class="fl-layer fl-sway" data-depth="4" id="flBlooms"></g>
-          <g class="fl-layer" data-depth="10">
-            <path id="flPaperFront" d="M58 220 Q180 282 302 220 L180 460 Z"/>
-            <path d="M58 220 Q180 282 302 220 L180 460 Z" fill="url(#flFold)"/>
-            <g id="flBow" transform="translate(180 352)">
-              <path d="M0 0 C-30 -40 -70 -32 -64 -6 C-58 14 -24 12 0 0 Z M0 0 C30 -40 70 -32 64 -6 C58 14 24 12 0 0 Z"/>
-              <path d="M-6 4 L-28 62 L-16 58 L0 10 L16 58 L28 62 L6 4 Z"/>
-              <circle r="9"/>
-            </g>
-          </g>
-        </g>
-      </svg>
+      <div class="fl-table" id="flStage">
+        <!-- the bouquet as it will arrive: real photo for the flowers, coded paper cone and satin ribbon -->
+        <div class="fl-bq" id="flBq" aria-hidden="true">
+          <div class="fl-bq-back fl-tex"></div>
+          <div class="fl-bq-head" id="flHead"></div>
+          <div class="fl-bq-stems"></div>
+          <div class="fl-bq-flap fl-l fl-tex"></div>
+          <div class="fl-bq-flap fl-r fl-tex"></div>
+          <div class="fl-bq-neck"></div>
+          <div class="fl-bq-bow"><span class="fl-tail fl-l"></span><span class="fl-tail fl-r"></span><span class="fl-loop fl-l"></span><span class="fl-loop fl-r"></span><span class="fl-knot"></span></div>
+        </div>
+        <div class="fl-card-preview"><span>Tu tarjeta</span><p id="flCardOut">Escribe tu mensaje…</p></div>
+        <p class="fl-table-tag"><span><b id="flTagName">Rosas rosa</b><span id="flTagDetail">Mediano · papel kraft · lazo rosa</span></span><span>Así llegará</span></p>
       </div>
-      <div class="fl-card-preview"><span>Tu tarjeta</span><p id="flCardOut">Escribe tu mensaje…</p></div>
     </div>
     <div class="fl-steps">
+      <p class="fl-eyebrow">El taller</p>
       <h2 class="x-title">Diseña <em>tu ramo</em></h2>
-      <p class="x-lead">Elige las flores, el tamaño, el papel y el lazo. Lo verás aquí mismo.</p>
-      <div class="fl-step"><p class="fl-step-t">1 · Flores</p><div class="fl-photo-row" role="radiogroup" aria-label="Flores">
-            <button type="button" class="fl-photo-sw" role="radio" aria-checked="true" data-i="0" aria-label="Rosas rosa"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Rosas rosa</span></button>
-            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="1" aria-label="Rosas blancas"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Rosas blancas</span></button>
-            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="2" aria-label="Rosas rojas"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Rosas rojas</span></button>
-            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="3" aria-label="Amarillo sol"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Amarillo sol</span></button>
-            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="4" aria-label="Campestre"><svg viewBox="-44 -44 88 88" class="fl-sw-bloom" aria-hidden="true"></svg><span>Campestre</span></button>
+      <p class="x-lead">Elige flores, tamaño, papel y lazo. Te lo enseñamos tal como llegará, envuelto a mano.</p>
+      <div class="fl-step"><p class="fl-step-t">I · Flores <i id="flFlowerName">Rosas rosa</i></p><div class="fl-photo-row" role="radiogroup" aria-label="Flores">
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="true" data-i="0"><span class="fl-sw-bloom"><img src="https://images.unsplash.com/photo-1727520327526-4b435667860a?w=240&h=320&q=78&auto=format&fit=crop" alt="" width="240" height="320" loading="lazy" decoding="async" /></span><em>Rosas rosa</em></button>
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="1"><span class="fl-sw-bloom"><img src="https://images.unsplash.com/photo-1729151634645-1f4ed2938f0b?w=240&h=320&q=78&auto=format&fit=crop" alt="" width="240" height="320" loading="lazy" decoding="async" /></span><em>Rosas blancas</em></button>
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="2"><span class="fl-sw-bloom"><img src="https://images.unsplash.com/photo-1730749387748-79e6d50a269c?w=240&h=320&q=78&auto=format&fit=crop" alt="" width="240" height="320" loading="lazy" decoding="async" /></span><em>Rosas rojas</em></button>
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="3"><span class="fl-sw-bloom"><img src="https://images.unsplash.com/photo-1712258091854-ac9460506a76?w=240&h=320&q=78&auto=format&fit=crop" alt="" width="240" height="320" loading="lazy" decoding="async" /></span><em>Amarillo sol</em></button>
+            <button type="button" class="fl-photo-sw" role="radio" aria-checked="false" data-i="4"><span class="fl-sw-bloom"><img src="https://images.unsplash.com/photo-1531120364508-a6b656c3e78d?w=240&h=320&q=78&auto=format&fit=crop" alt="" width="240" height="320" loading="lazy" decoding="async" /></span><em>Campestre</em></button>
       </div></div>
-      <div class="fl-step"><p class="fl-step-t">2 · Tamaño</p><div class="x-chips fl-sizes" role="radiogroup" aria-label="Tamaño"><button type="button" role="radio" aria-checked="false" data-i="0">Pequeño<small>35 €</small></button>
-<button type="button" role="radio" aria-checked="true" data-i="1">Mediano<small>49 €</small></button>
-<button type="button" role="radio" aria-checked="false" data-i="2">Grande<small>69 €</small></button></div></div>
-      <div class="fl-step"><p class="fl-step-t">3 · Papel <span id="flPaperName">Kraft</span></p><div class="fl-color-row" id="flPaperRow" role="radiogroup" aria-label="Papel"><button type="button" class="fl-color-sw" role="radio" aria-checked="true" data-i="0" aria-label="Papel Kraft" style="--sw:#C9A27A"><i></i><span>Kraft</span></button>
-<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="1" aria-label="Papel Blanco" style="--sw:#F3F0E8"><i></i><span>Blanco</span></button>
-<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="2" aria-label="Papel Rosa palo" style="--sw:#E9C6C2"><i></i><span>Rosa palo</span></button>
-<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="3" aria-label="Papel Salvia" style="--sw:#A9B8A0"><i></i><span>Salvia</span></button>
-<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="4" aria-label="Papel Negro" style="--sw:#2B2A28"><i></i><span>Negro</span></button></div></div>
-      <div class="fl-step"><p class="fl-step-t">4 · Lazo <span id="flRibbonName">Rosa</span></p><div class="fl-color-row" role="radiogroup" aria-label="Lazo"><button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="0" aria-label="Lazo Satén blanco" style="--sw:#FFFFFF"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Satén blanco</span></button>
-<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="1" aria-label="Lazo Rojo" style="--sw:#B3262E"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Rojo</span></button>
-<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="true" data-i="2" aria-label="Lazo Rosa" style="--sw:#E79AAE"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Rosa</span></button>
-<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="3" aria-label="Lazo Dorado" style="--sw:#C9A34E"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Dorado</span></button>
-<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="4" aria-label="Lazo Verde" style="--sw:#4F6B4A"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Verde</span></button>
-<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="5" aria-label="Lazo Negro" style="--sw:#141414"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M20 14 C12 2 2 4 4 12 C6 18 14 17 20 14 Z M20 14 C28 2 38 4 36 12 C34 18 26 17 20 14 Z"/><path d="M18 15 L12 27 L16 26 L20 16 L24 26 L28 27 L22 15 Z"/><circle cx="20" cy="14" r="3"/></svg><span>Negro</span></button></div></div>
-      <div class="fl-step"><label class="fl-step-t" for="flCard">5 · Tu tarjeta</label><textarea id="flCard" rows="2" maxlength="140" placeholder="Por ejemplo: Feliz cumpleaños, mamá. Te quiero."></textarea></div>
-      <div class="fl-build-foot"><span class="fl-total" id="flBuildPrice">49 €</span><button type="button" class="x-btn" id="flBuildAdd">Añadir al carrito</button></div>
+      <div class="fl-step"><p class="fl-step-t">II · Tamaño</p><div class="fl-sizes" role="radiogroup" aria-label="Tamaño"><button type="button" role="radio" aria-checked="false" data-i="0"><b>Pequeño</b><small>35 €</small></button>
+<button type="button" role="radio" aria-checked="true" data-i="1"><b>Mediano</b><small>49 €</small></button>
+<button type="button" role="radio" aria-checked="false" data-i="2"><b>Grande</b><small>69 €</small></button></div></div>
+      <div class="fl-step"><p class="fl-step-t">III · Papel <i id="flPaperName">Kraft</i></p><div class="fl-color-row" id="flPaperRow" role="radiogroup" aria-label="Papel"><button type="button" class="fl-color-sw" role="radio" aria-checked="true" data-i="0" aria-label="Papel Kraft" style="--paper:#C49A6C;--tex:0.75"><i class="fl-sheet"><b></b></i><span>Kraft</span></button>
+<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="1" aria-label="Papel Blanco" style="--paper:#F3EFE6;--tex:0.35"><i class="fl-sheet"><b></b></i><span>Blanco</span></button>
+<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="2" aria-label="Papel Rosa palo" style="--paper:#E6C3BD;--tex:0.4"><i class="fl-sheet"><b></b></i><span>Rosa palo</span></button>
+<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="3" aria-label="Papel Salvia" style="--paper:#A7B59D;--tex:0.45"><i class="fl-sheet"><b></b></i><span>Salvia</span></button>
+<button type="button" class="fl-color-sw" role="radio" aria-checked="false" data-i="4" aria-label="Papel Negro" style="--paper:#262523;--tex:0.2"><i class="fl-sheet"><b></b></i><span>Negro</span></button></div></div>
+      <div class="fl-step"><p class="fl-step-t">IV · Lazo <i id="flRibbonName">Rosa</i></p><div class="fl-color-row" role="radiogroup" aria-label="Lazo"><button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="0" aria-label="Lazo Satén blanco" style="--rb:#F4F1EA;--hi:color-mix(in srgb, #F4F1EA 52%, #fff);--lo:color-mix(in srgb, #F4F1EA 62%, #000)"><i class="fl-rib"></i><span>Satén blanco</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="1" aria-label="Lazo Rojo" style="--rb:#A3212B;--hi:color-mix(in srgb, #A3212B 52%, #fff);--lo:color-mix(in srgb, #A3212B 62%, #000)"><i class="fl-rib"></i><span>Rojo</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="true" data-i="2" aria-label="Lazo Rosa" style="--rb:#E39AAD;--hi:color-mix(in srgb, #E39AAD 52%, #fff);--lo:color-mix(in srgb, #E39AAD 62%, #000)"><i class="fl-rib"></i><span>Rosa</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="3" aria-label="Lazo Dorado" style="--rb:#C49B45;--hi:color-mix(in srgb, #C49B45 52%, #fff);--lo:color-mix(in srgb, #C49B45 62%, #000)"><i class="fl-rib"></i><span>Dorado</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="4" aria-label="Lazo Verde" style="--rb:#4C6747;--hi:color-mix(in srgb, #4C6747 52%, #fff);--lo:color-mix(in srgb, #4C6747 62%, #000)"><i class="fl-rib"></i><span>Verde</span></button>
+<button type="button" class="fl-color-sw fl-ribbon-sw" role="radio" aria-checked="false" data-i="5" aria-label="Lazo Negro" style="--rb:#1A1A1A;--hi:color-mix(in srgb, #1A1A1A 52%, #fff);--lo:color-mix(in srgb, #1A1A1A 62%, #000)"><i class="fl-rib"></i><span>Negro</span></button></div></div>
+      <div class="fl-step"><label class="fl-step-t" for="flCard">V · Tu tarjeta</label><textarea id="flCard" rows="2" maxlength="140" placeholder="Por ejemplo: Feliz cumpleaños, mamá. Te quiero."></textarea></div>
+      <div class="fl-build-foot"><span class="fl-total"><small>Total</small><span id="flBuildPrice">49 €</span></span><button type="button" class="x-btn" id="flBuildAdd">Añadir al carrito</button></div>
     </div>
   </div>
 </section>
@@ -1839,7 +1890,7 @@
   // · Florist shop: catalogue, occasions, bouquet builder, add-ons, subscription, cart
   (function () {
     const PRODUCTS = [{"id": "alba", "name": "Ramo Alba", "desc": "Rosas de jardín y flores de temporada en papel", "price": 39, "cat": "ramos", "occ": ["cumple", "amor", "gracias"], "badge": "Más pedido", "v": [["Rosa", "#E8A3B5", "1523693916903-027d144a2b7d"], ["Lila", "#B9A2D6", "1680563094046-5d846e2c59d1"], ["Rojo", "#B3262E", "1512056495345-913a0c261dc8"]]}, {"id": "pasion", "name": "Rosas rojas", "desc": "12 rosas rojas de tallo largo", "price": 49, "cat": "rosas", "occ": ["amor"], "badge": "", "v": [["Rojo", "#B3262E", "1512056495345-913a0c261dc8"], ["Rojo y blanco", "#E6D6D2", "1599791095997-5cf38bb5ff69"]]}, {"id": "tulipanes", "name": "Tulipanes", "desc": "20 tulipanes recién llegados", "price": 32, "cat": "ramos", "occ": ["cumple", "gracias", "casa"], "badge": "", "v": [["Rosa", "#E05A8C", "1586968295564-92fd7572718b"], ["Blanco", "#F2F0EA", "1589994160839-163cd867cfe8"], ["Mezcla", "#E5833A", "1619962992057-be492a5816f6"]]}, {"id": "peonias", "name": "Peonías", "desc": "Solo en temporada: abril a junio", "price": 55, "cat": "ramos", "occ": ["amor", "nacimiento"], "badge": "Temporada", "v": [["Rosa", "#D99AC4", "1511201173873-c327e63eb6c4"], ["Blanco", "#F4F1E8", "1780580811640-4ec9aa7c027f"]]}, {"id": "sombrerera", "name": "Caja sombrerera", "desc": "Flores en caja redonda, sin agua ni jarrón", "price": 65, "cat": "cajas", "occ": ["cumple", "amor"], "badge": "", "v": [["Pastel", "#F1C6C9", "1660885900184-fe13ca69392c"]]}, {"id": "campestre", "name": "Ramo campestre", "desc": "Silvestre y alegre, como recién cogido", "price": 34, "cat": "ramos", "occ": ["cumple", "gracias", "casa"], "badge": "", "v": [["Colores", "#E7B13B", "1778101410311-6cca527142d6"], ["Kraft", "#C9A27A", "1567696153798-9111f9cd3d0d"]]}, {"id": "seco", "name": "Ramo de flores secas", "desc": "Dura meses sin agua", "price": 29, "cat": "secas", "occ": ["casa", "gracias"], "badge": "Dura meses", "v": [["Melocotón", "#E8C2A8", "1622658641558-235f26dd270b"]]}, {"id": "jardin", "name": "Rosas de jardín", "desc": "Rosas inglesas en tonos suaves", "price": 45, "cat": "rosas", "occ": ["amor", "nacimiento", "condolencias"], "badge": "", "v": [["Melocotón", "#F0A98C", "1772688168418-936b6dc39dba"], ["Mezcla", "#E9B3BF", "1608027790251-5e0c80d043d9"]]}, {"id": "blanco", "name": "Blanco y verde", "desc": "Flores blancas y eucalipto, sereno y elegante", "price": 42, "cat": "ramos", "occ": ["condolencias", "nacimiento"], "badge": "", "v": [["Blanco", "#F4F2EC", "1595467959554-9ffcbf37f10f"], ["Suave", "#EBDCCB", "1561848355-890d054dc55a"]]}, {"id": "planta", "name": "Planta de interior", "desc": "Con maceta y tarjeta de cuidados", "price": 24, "cat": "plantas", "occ": ["casa", "gracias"], "badge": "", "v": [["Pilea", "#6E9B5A", "1609061801093-1b7a8a574c69"], ["Monstera", "#3F6B45", "1762755647813-017e128a4ba0"], ["Sansevieria", "#7C8F55", "1616961002389-504228edfcb7"]]}];
-    const BUILD = {"flowers": [["Rosas rosa", 0, "1772688168418-936b6dc39dba"], ["Rosas blancas", 0, "1570112008549-e4181988109f"], ["Rosas rojas", 4, "1512056495345-913a0c261dc8"], ["Amarillo sol", 0, "1673277848241-86e145cd7112"], ["Campestre", -2, "1561848355-890d054dc55a"]], "sizes": [["Pequeño", 35, 0.82], ["Mediano", 49, 1.0], ["Grande", 69, 1.16]], "papers": [["Kraft", "#C9A27A"], ["Blanco", "#F3F0E8"], ["Rosa palo", "#E9C6C2"], ["Salvia", "#A9B8A0"], ["Negro", "#2B2A28"]], "ribbons": [["Satén blanco", "#FFFFFF"], ["Rojo", "#B3262E"], ["Rosa", "#E79AAE"], ["Dorado", "#C9A34E"], ["Verde", "#4F6B4A"], ["Negro", "#141414"]]};
+    const BUILD = {"flowers": [["Rosas rosa", 0, "1727520327526-4b435667860a", "50% 30%", 1], ["Rosas blancas", 0, "1729151634645-1f4ed2938f0b", "50% 60%", 1.32], ["Rosas rojas", 4, "1730749387748-79e6d50a269c", "40% 30%", 1], ["Amarillo sol", 0, "1712258091854-ac9460506a76", "50% 35%", 1], ["Campestre", -2, "1531120364508-a6b656c3e78d", "50% 42%", 1.12]], "sizes": [["Pequeño", 35, 0.86], ["Mediano", 49, 1.0], ["Grande", 69, 1.1]], "papers": [["Kraft", "#C49A6C", 0.75], ["Blanco", "#F3EFE6", 0.35], ["Rosa palo", "#E6C3BD", 0.4], ["Salvia", "#A7B59D", 0.45], ["Negro", "#262523", 0.2]], "ribbons": [["Satén blanco", "#F4F1EA"], ["Rojo", "#A3212B"], ["Rosa", "#E39AAD"], ["Dorado", "#C49B45"], ["Verde", "#4C6747"], ["Negro", "#1A1A1A"]]};
     const URL_ = (id, w, h) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&q=78&auto=format&fit=crop`;
     const $ = id => document.getElementById(id);
     const toast = msg => window.xShowToast && window.xShowToast(msg);
@@ -1945,87 +1996,38 @@
     }));
     $('flReset').addEventListener('click', () => filter('cat', 'todo'));
 
-    // ---------- bouquet builder: flowers are drawn (side view) so they match the cone in every combination
-    const PAL = {
-      pink: ['#F7B8C6', '#E8879F', '#C95A7A'], white: ['#FFFDF8', '#EEE6D6', '#CDBFA6'], red: ['#E0414F', '#B21F31', '#7E1020'],
-      yellow: ['#FFDB5C', '#F3B425', '#CF8A08'], peach: ['#FFD0B5', '#F4A27E', '#D9785A']
-    };
-    const MIX = [  // per flower choice: [kind, palette] for each of the 15 blooms (cycled)
-      [['rose', 'pink'], ['rose', 'peach']],
-      [['rose', 'white']],
-      [['rose', 'red']],
-      [['rose', 'yellow']],
-      [['daisy'], ['rose', 'pink'], ['lilac'], ['rose', 'yellow'], ['daisy'], ['rose', 'peach'], ['lilac']]
-    ];
-    const SPOTS = [[180, 92, .62], [146, 104, .66], [214, 104, .66], [112, 128, .78], [180, 124, .8], [248, 128, .78],
-      [86, 160, .86], [146, 154, .9], [214, 154, .9], [274, 160, .86], [80, 200, .8], [280, 200, .8],
-      [116, 190, 1], [180, 186, 1.04], [244, 190, 1]];
-    const LEAVES = [[62, 168], [298, 168], [80, 128], [280, 128], [112, 96], [248, 96], [150, 78], [210, 78], [56, 206], [304, 206], [180, 70]];
-    const rose = (p, rot) => `<g transform="rotate(${rot})">
-      <path d="M-30 -4 C-34 -26 -12 -32 0 -26 C12 -32 34 -26 30 -4 C28 18 14 26 0 26 C-14 26 -28 18 -30 -4Z" fill="${p[1]}"/>
-      <ellipse cx="0" cy="-14" rx="21" ry="9" fill="${p[2]}"/>
-      <path d="M-21 -14 C-15 -27 15 -27 21 -14 C12 -8 -12 -8 -21 -14Z" fill="${p[0]}"/>
-      <path d="M-11 -15 C-5 -23 8 -21 11 -13 C4 -10 -4 -10 -11 -15Z" fill="${p[1]}"/>
-      <path d="M-4 -16 C0 -19 5 -17 4 -14" fill="none" stroke="${p[2]}" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M-27 -2 C-18 8 18 8 27 -2 C24 16 12 24 0 24 C-12 24 -24 16 -27 -2Z" fill="${p[0]}"/>
-      <path d="M-14 6 C-6 12 6 12 14 6" fill="none" stroke="${p[2]}" stroke-width="1.2" opacity=".55"/>
-      <path d="M-30 -4 C-34 -26 -12 -32 0 -26 C12 -32 34 -26 30 -4 C28 18 14 26 0 26 C-14 26 -28 18 -30 -4Z" fill="url(#flBloomShade)"/></g>`;
-    const daisy = rot => `<g transform="rotate(${rot}) scale(1 .72)">${Array.from({ length: 14 }, (_, k) =>
-      `<ellipse cx="0" cy="-17" rx="6" ry="15" fill="#FFFFFF" stroke="#E6DED0" stroke-width=".8" transform="rotate(${k * 360 / 14})"/>`).join('')}
-      <circle r="9" fill="#E9B22A"/><circle r="9" fill="url(#flBloomShade)"/></g>`;
-    const lilac = rot => `<g transform="rotate(${rot})">${[[-14, -6], [0, -14], [14, -6], [-8, 6], [8, 6], [0, -2], [-20, 6], [20, 6], [0, 14]].map(([x, y], k) =>
-      `<circle cx="${x}" cy="${y}" r="7" fill="${k % 2 ? '#B795D8' : '#D3BEEB'}"/>`).join('')}</g>`;
-    const bloom = (kind, pal, rot) => kind === 'daisy' ? daisy(rot) : kind === 'lilac' ? lilac(rot) : rose(PAL[pal], rot);
-    // pointed leaves spreading outward from the heart of the bouquet
-    $('flLeaves').innerHTML = LEAVES.map(([x, y], k) => {
-      const a = Math.atan2(y - 236, x - 180) * 180 / Math.PI + 90;
-      const c = k % 3 === 0 ? '#3F5E3A' : k % 3 === 1 ? '#5E7F52' : '#7E9B73';
-      return `<g transform="translate(${x} ${y}) rotate(${a.toFixed(1)}) scale(${(0.85 + (k % 3) * 0.12).toFixed(2)})">
-        <path d="M0 18 C14 6 16 -28 0 -50 C-16 -28 -14 6 0 18Z" fill="${c}"/>
-        <path d="M0 14 C1 -6 1 -26 0 -44" stroke="rgba(255,255,255,.22)" stroke-width="1.4" fill="none"/></g>`;
-    }).join('');
-    function drawBlooms(fi) {
-      const mix = MIX[fi];
-      $('flBlooms').innerHTML = SPOTS.map(([x, y, s], k) => {
-        const [kind, pal] = mix[k % mix.length];
-        return `<g transform="translate(${x} ${y}) scale(${s})">${bloom(kind, pal, ((k * 37) % 30) - 15)}</g>`;
-      }).join('');
-    }
-    document.querySelectorAll('.fl-photo-sw').forEach((b, i) => {
-      const [kind, pal] = MIX[i][0];
-      b.querySelector('.fl-sw-bloom').innerHTML = bloom(kind, pal, -8);
-    });
-
-    // 3D: tilt toward the pointer; deeper layers move less than front ones
-    const stage = $('flStage');
-    const layers = [...stage.querySelectorAll('.fl-layer')];
+    // ---------- bouquet builder: real photo as the bouquet head, coded paper cone and satin ribbon around it
+    const stage = $('flStage'), bq = $('flBq'), head = $('flHead');
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function tilt(nx, ny) {
-      stage.querySelector('.fl-wrap-svg').style.setProperty('--ry', (nx * 14).toFixed(2) + 'deg');
-      stage.querySelector('.fl-wrap-svg').style.setProperty('--rx', (-ny * 9).toFixed(2) + 'deg');
-      layers.forEach(l => { const d = Number(l.dataset.depth); l.style.transform = `translate(${(nx * d).toFixed(1)}px, ${(ny * d * 0.6).toFixed(1)}px)`; });
-    }
-    if (!still) {
+    if (!still) {  // the bouquet turns a little toward the pointer
       stage.addEventListener('pointermove', e => {
         const r = stage.getBoundingClientRect();
-        tilt(Math.max(-1, Math.min(1, (e.clientX - r.left) / r.width * 2 - 1)), Math.max(-1, Math.min(1, (e.clientY - r.top) / r.height * 2 - 1)));
+        bq.style.setProperty('--ry', (((e.clientX - r.left) / r.width - 0.5) * 10).toFixed(2) + 'deg');
+        bq.style.setProperty('--rx', ((0.5 - (e.clientY - r.top) / r.height) * 6).toFixed(2) + 'deg');
       });
-      stage.addEventListener('pointerleave', () => tilt(0, 0));
-    } else {
-      $('flBlooms').classList.remove('fl-sway');
+      stage.addEventListener('pointerleave', () => { bq.style.setProperty('--ry', '0deg'); bq.style.setProperty('--rx', '0deg'); });
     }
 
     const st = { f: 0, s: 1, p: 0, r: 2 };
-    const svg = document.querySelector('.fl-wrap-svg');
-    let drawnFlower = -1;
+    let shown = -1;
+    function showFlowers(f) {  // crossfade to the new photo
+      const old = head.querySelector('img'), img = new Image();
+      img.alt = ''; img.decoding = 'async'; img.src = URL_(f[2], 900, 1100);
+      img.style.objectPosition = f[3]; img.style.setProperty('--z', f[4]);
+      if (!old || still) { head.replaceChildren(img); return; }
+      img.className = 'out'; head.appendChild(img);
+      requestAnimationFrame(() => requestAnimationFrame(() => img.classList.remove('out')));
+      old.classList.add('out'); setTimeout(() => old.remove(), 700);
+    }
     function renderBuild() {
-      const f = BUILD.flowers[st.f], s = BUILD.sizes[st.s];
-      if (drawnFlower !== st.f) { drawBlooms(st.f); drawnFlower = st.f; }
-      svg.style.setProperty('--paper', BUILD.papers[st.p][1]);
-      svg.style.setProperty('--ribbon', BUILD.ribbons[st.r][1]);
-      $('flScale').style.transform = `scale(${s[2]})`;
-      $('flPaperName').textContent = BUILD.papers[st.p][0];
-      $('flRibbonName').textContent = BUILD.ribbons[st.r][0];
+      const f = BUILD.flowers[st.f], s = BUILD.sizes[st.s], p = BUILD.papers[st.p], r = BUILD.ribbons[st.r];
+      if (shown !== st.f) { showFlowers(f); shown = st.f; }
+      [['--k', s[2]], ['--paper', p[1]], ['--tex', p[2]], ['--rb', r[1]],
+        ['--hi', `color-mix(in srgb, ${r[1]} 52%, #fff)`], ['--lo', `color-mix(in srgb, ${r[1]} 62%, #000)`]].forEach(([k, v]) => bq.style.setProperty(k, v));
+      $('flFlowerName').textContent = $('flTagName').textContent = f[0];
+      $('flPaperName').textContent = p[0];
+      $('flRibbonName').textContent = r[0];
+      $('flTagDetail').textContent = `${s[0]} · papel ${p[0].toLowerCase()} · lazo ${r[0].toLowerCase()}`;
       $('flBuildPrice').textContent = (s[1] + f[1]) + ' €';
     }
     function radios(selector, key) {
