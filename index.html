@@ -1203,5 +1203,107 @@ footer a:hover{color:var(--fg)}
   if (saved === 'en') setLang('en');
 })();
 </script>
+<script>
+/* Madrid Outreach CRM · Portfolio Tracker for kamyarsh10.github.io
+   Paste it right before </body>. Add ?notrack=1 to the URL on your devices to exclude yourself (?notrack=0 reverts it). */
+(function () {
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzBAMHf2G7Cf6ofUXkqllp5Vw98uTvmh7fdwSjUUaR3nxqnHuLrce5Q8X3WGn5jQQQ/exec';
+  if (ENDPOINT.indexOf('https://script.google.com/') !== 0) return;
+
+  function store(kind) {
+    try { var s = window[kind]; s.setItem('__mo', '1'); s.removeItem('__mo'); return s; } catch (e) { return null; }
+  }
+  var ls = store('localStorage'), ss = store('sessionStorage');
+  function get(s, k) { try { return s ? s.getItem(k) : null; } catch (e) { return null; } }
+  function set(s, k, v) { try { if (s) s.setItem(k, v); } catch (e) {} }
+
+  var params = new URLSearchParams(location.search);
+  if (params.get('notrack') === '1') set(ls, 'mo_optout', '1');
+  if (params.get('notrack') === '0') { try { ls && ls.removeItem('mo_optout'); } catch (e) {} }
+  if (get(ls, 'mo_optout') === '1') return;
+
+  // Lead: ?lead=Name (remembered on this device for later visits)
+  var lead = (params.get('lead') || '').trim().slice(0, 120);
+  if (lead) set(ls, 'mo_lead', lead); else lead = get(ls, 'mo_lead') || '';
+
+  // Stable device fingerprint (cyrb53 of browser traits + canvas)
+  function hash(str) {
+    var h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+    for (var i = 0, ch; i < str.length; i++) {
+      ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return ('00000000' + (h2 >>> 0).toString(16)).slice(-8) + ('00000000' + (h1 >>> 0).toString(16)).slice(-8);
+  }
+  function canvasSig() {
+    try {
+      var c = document.createElement('canvas'); c.width = 220; c.height = 30;
+      var x = c.getContext('2d');
+      x.textBaseline = 'top'; x.font = '14px Arial';
+      x.fillStyle = '#f60'; x.fillRect(100, 1, 62, 20);
+      x.fillStyle = '#069'; x.fillText('Madrid CRM 2026', 2, 2);
+      x.fillStyle = 'rgba(102,204,0,0.7)'; x.fillText('Madrid CRM 2026', 4, 4);
+      return c.toDataURL();
+    } catch (e) { return 'nocanvas'; }
+  }
+  var fp = get(ls, 'mo_fp');
+  if (!fp) {
+    var n = navigator, sc = window.screen || {}, tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) {}
+    fp = 'fp_' + hash([n.userAgent, n.language, (n.languages || []).join(','), n.platform, n.hardwareConcurrency,
+      n.deviceMemory, n.maxTouchPoints, sc.width + 'x' + sc.height, sc.colorDepth, window.devicePixelRatio, tz, canvasSig()].join('|'));
+    set(ls, 'mo_fp', fp);
+  }
+
+  // One session per tab: a refresh continues the same session and its timer
+  var sid = get(ss, 'mo_sid');
+  if (!sid) { sid = 's_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); set(ss, 'mo_sid', sid); }
+  var active = Number(get(ss, 'mo_active')) || 0;
+  var since = document.visibilityState === 'visible' ? Date.now() : 0;
+  function checkpoint() {
+    if (since) { var t = Date.now(); active += t - since; since = t; }
+    set(ss, 'mo_active', String(active));
+  }
+
+  function device() {
+    var ua = navigator.userAgent, os = 'Other', br = 'Browser';
+    if (/iPhone/.test(ua)) os = 'iPhone'; else if (/iPad/.test(ua)) os = 'iPad';
+    else if (/Android/.test(ua)) os = 'Android'; else if (/Mac OS X/.test(ua)) os = 'Mac';
+    else if (/Windows/.test(ua)) os = 'Windows'; else if (/Linux/.test(ua)) os = 'Linux';
+    if (/Edg\//.test(ua)) br = 'Edge'; else if (/OPR\//.test(ua)) br = 'Opera';
+    else if (/Firefox\//.test(ua)) br = 'Firefox'; else if (/Chrome\//.test(ua)) br = 'Chrome';
+    else if (/Safari\//.test(ua)) br = 'Safari';
+    if (/Instagram/.test(ua)) br = 'Instagram'; else if (/Telegram/.test(ua)) br = 'Telegram';
+    return os + ' · ' + br;
+  }
+
+  function send(action, useBeacon) {
+    checkpoint();
+    var body = JSON.stringify({
+      action: action, sessionId: sid, fingerprint: fp, lead: lead,
+      durationSec: Math.round(active / 1000), page: location.pathname,
+      referrer: document.referrer ? document.referrer.slice(0, 200) : '',
+      device: device(), lang: navigator.language || ''
+    });
+    if (useBeacon && navigator.sendBeacon) {
+      if (navigator.sendBeacon(ENDPOINT, new Blob([body], { type: 'text/plain;charset=UTF-8' }))) return;
+    }
+    try {
+      fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: body });
+    } catch (e) {}
+  }
+
+  send('visit');
+  setInterval(function () { if (document.visibilityState === 'visible') send('ping'); }, 20000);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') { send('end', true); since = 0; }
+    else { since = Date.now(); send('ping'); }
+  });
+  window.addEventListener('pagehide', function () { send('end', true); });
+})();
+</script>
 </body>
 </html>
