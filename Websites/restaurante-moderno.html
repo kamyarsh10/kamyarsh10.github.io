@@ -46,7 +46,7 @@ h1,h2,h3,.lede,.verdict{text-wrap:balance}
 .notice p{display:inline-flex;align-items:baseline;gap:.55rem;text-wrap:balance}
 .notice p::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--yellow);transform:translateY(-1px)}
 .notice b{font-weight:700;color:var(--yellow)}
-.demo-x{flex:none;display:grid;place-items:center;width:36px;height:36px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:transparent;color:#fff;font:400 1.35rem/1 var(--body);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.demo-x{flex:none;display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:transparent;color:#fff;font:400 1.35rem/1 var(--body);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
 .demo-x:hover{background:#fff;color:var(--ink);border-color:#fff}
 @media (max-width:599px){.notice{justify-content:space-between;text-align:left;font-size:.8125rem}}
 .wrap{max-width:1200px;margin:0 auto;padding-inline:var(--g)}
@@ -76,7 +76,7 @@ a{text-decoration:none}
 /* Header */
 .top{position:sticky;top:0;z-index:40;height:var(--hh);background:var(--ink);color:#fff;display:flex;align-items:center;gap:.75rem;padding:0 max(var(--g),calc((100% - 1200px)/2 + var(--g)));--hb:#fff;--hf:var(--ink)}
 .top::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:calc(var(--sp,0)*100%);background:var(--sky)}
-.top .sundot{position:absolute;left:calc(var(--sp,0)*100%);bottom:-5px;width:11px;height:11px;margin-left:-5px;border-radius:50%;background:var(--yellow);pointer-events:none}
+.top .sundot{position:absolute;left:calc(var(--sp,0)*(100% - 11px));bottom:-5px;width:11px;height:11px;border-radius:50%;background:var(--yellow);pointer-events:none}
 .brand{font:800 1.9rem/1 var(--display);font-stretch:88%;letter-spacing:-.04em;text-decoration:none;min-height:44px;display:inline-flex;align-items:center;margin-right:auto}
 .mnav{display:flex;gap:1rem;align-items:center;margin-right:.5rem}
 .mnav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:0 .3rem;font-weight:500}

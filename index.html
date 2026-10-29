@@ -29,7 +29,6 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
-html.snap{scroll-snap-type:y proximity}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.55 "Archivo",system-ui,sans-serif;font-stretch:100%;-webkit-font-smoothing:antialiased;overflow-x:clip}
 a{color:inherit}
 img{display:block;max-width:100%;height:auto}
@@ -153,7 +152,7 @@ h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.025em;line-height:.95}
 .why-list h3{font-size:clamp(26px,2.6vw,40px);font-stretch:86%;letter-spacing:-.02em;line-height:1}
 .why-list p{margin:0;color:var(--ink-2);max-width:48ch}
 
-/* ---------- examples: a held stage that deals the demos one by one ---------- */
+/* ---------- examples: a grid; on phones a native swipe row ---------- */
 .reel-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4.5vw,88px);align-items:end;margin-bottom:clamp(32px,4vw,56px)}
 .reel-head p{margin:0 0 14px;color:var(--ink-2);max-width:46ch;font-size:18px}
 .h2 sup{font-size:.26em;font-stretch:100%;font-weight:600;color:var(--cobalt);vertical-align:top;margin-left:.15em;letter-spacing:0}
@@ -169,32 +168,14 @@ h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.025em;line-height:.95}
 .demo .go{font-weight:600;font-size:15px;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
 .demo:hover .go{color:var(--cobalt);text-decoration-thickness:2px}
 
-.reel-track{position:relative;display:none}
-.reel.pin .reel-grid{display:none}
-.reel.pin .reel-track{display:block}
-.reel-stage{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);grid-template-rows:minmax(0,1fr) auto;gap:20px clamp(28px,4vw,72px);align-items:center;padding:clamp(20px,3vh,40px) var(--m);max-width:1440px;margin:0 auto}
-.snap-pt{position:absolute;left:0;width:1px;height:1px;scroll-snap-align:start}
-.info{display:grid;gap:18px;align-content:center;min-width:0}
-.count{font-size:15px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:10px;overflow:clip}
-.count b{display:block;font-size:clamp(40px,4.4vw,72px);font-weight:800;font-stretch:72%;color:var(--cobalt);line-height:.9;letter-spacing:-.02em}
-.info-cat{font-size:15px;color:var(--ink-2)}
-.info-name{font-size:clamp(38px,4.4vw,76px);font-weight:800;font-stretch:78%;letter-spacing:-.025em;line-height:.92;min-height:1.9em;display:flex;align-items:flex-end;overflow:clip;padding-bottom:.06em}
-.info-name span{display:block}
-.info-ds{margin:0;color:var(--ink-2);max-width:40ch;min-height:3.1em}
-.deck-wrap{display:grid;place-items:center;min-height:0;height:100%}
-.deck{position:relative;width:min(100%,calc((100svh - 190px) * 1.6));perspective:1600px}
-.deck .win-bar{position:relative;z-index:30;border-radius:14px 14px 0 0}
-.cards{position:relative;aspect-ratio:16/10}
-.card{position:absolute;inset:0;border-radius:0 0 14px 14px;overflow:hidden;background:var(--paper-2);transform-origin:50% 0;box-shadow:0 50px 90px -40px rgba(11,18,38,.45)}
-.card img{width:100%;height:100%;object-fit:cover;object-position:top}
-.card.next,.card.past{opacity:0}
-.card.on{z-index:20}.card.prev{z-index:10;opacity:0}
-.strip{grid-column:1/-1;position:relative;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:6px 4px 4px;margin:0;list-style:none}
-.strip::-webkit-scrollbar{display:none}
-.strip button{flex:0 0 auto;width:76px;height:48px;padding:0;border:0;border-radius:8px;overflow:hidden;cursor:pointer;background:var(--paper-2);opacity:.5;transition:opacity .3s,transform .4s var(--ease),box-shadow .3s}
-.strip button img{width:100%;height:100%;object-fit:cover;object-position:top}
-.strip button:hover{opacity:.85}
-.strip button[aria-current="true"]{opacity:1;transform:translateY(-4px);box-shadow:0 0 0 2.5px var(--cobalt)}
+.reel-nav{display:none}
+.reel-count{margin:0;font-size:15px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.reel-count b{color:var(--ink)}
+.reel-arrows{display:flex;gap:8px}
+.reel-arrows button{width:48px;height:48px;border-radius:50%;border:0;background:rgba(11,18,38,.06);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background-color .2s,color .2s,opacity .2s}
+.reel-arrows button:hover{background:var(--ink);color:var(--paper)}
+.reel-arrows button:disabled{opacity:.35;cursor:default;background:rgba(11,18,38,.06);color:var(--ink)}
+.reel-arrows svg{width:20px;height:20px}
 
 /* ---------- about ---------- */
 .sobre{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(40px,5vw,96px);align-items:start}
@@ -258,13 +239,28 @@ h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.025em;line-height:.95}
 
 /* ---------- prices ---------- */
 .precios-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,4.5vw,88px)}
-.plato{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:8px 24px;padding:clamp(22px,2.4vw,34px) 0;border-bottom:1.5px solid rgba(11,18,38,.12)}
+/* each plan is a WhatsApp link; on hover an ink layer wipes in and the consult tag shows (all space reserved, so nothing reflows) */
+.plato{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:8px 24px;padding:clamp(22px,2.4vw,34px) 0;border-bottom:1.5px solid rgba(11,18,38,.12);text-decoration:none;cursor:pointer}
 .plato:first-child{border-top:1.5px solid rgba(11,18,38,.12)}
-.plato h3{font-size:clamp(30px,3.4vw,52px);font-stretch:80%;letter-spacing:-.02em}
+.plato::before{content:"";position:absolute;z-index:-1;inset:-1.5px -20px;border-radius:20px;background:var(--ink);clip-path:inset(0 100% 0 0 round 20px);transition:clip-path .7s var(--ease)}
+.plato h3{font-size:clamp(30px,3.4vw,52px);font-stretch:80%;letter-spacing:-.02em;transition:color .35s}
 .plato .tag{margin-left:14px;vertical-align:.4em}
-.plato .p{font-weight:800;font-size:clamp(34px,4.4vw,72px);font-stretch:76%;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.02em;line-height:1}
-.plato p{grid-column:1/-1;margin:0;color:var(--ink-2);max-width:62ch}
+.plato .p{font-weight:800;font-size:clamp(34px,4.4vw,72px);font-stretch:76%;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.02em;line-height:1;justify-self:end;transition:color .35s}
+.plato p{grid-column:1;margin:0;color:var(--ink-2);max-width:62ch;transition:color .35s}
 .plato.rec .p{color:var(--cobalt)}
+.consult{grid-column:2;align-self:end;justify-self:end;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--paper);font-weight:600;font-size:15px;white-space:nowrap;transition:opacity .35s,transform .5s var(--ease),background-color .35s,color .35s}
+.consult svg{width:18px;height:18px;flex:none}
+.consult .wa-g{color:#4ADE80}
+@media (hover:hover) and (pointer:fine){
+  .consult{opacity:0;transform:translateX(-14px)}
+  .plato:hover::before,.plato:focus-visible::before{clip-path:inset(0 0 0 0 round 20px)}
+  .plato:hover h3,.plato:focus-visible h3{color:var(--on-night)}
+  .plato:hover p,.plato:focus-visible p{color:var(--on-night-2)}
+  .plato:hover .p,.plato:focus-visible .p{color:#FFC97A}
+  .plato:hover .consult,.plato:focus-visible .consult{opacity:1;transform:none;background:var(--on-night);color:var(--night)}
+  .plato:hover .consult .wa-g,.plato:focus-visible .consult .wa-g{color:#1FAF5A}
+  .plato:focus-visible{outline:none}
+}
 html[lang="es"] .cur-pre,html[lang="en"] .cur-post{display:none}
 .extra{margin-top:28px;color:var(--ink-2);font-size:16px;max-width:64ch}
 .precios-side{position:sticky;top:48px;align-self:start}
@@ -274,7 +270,7 @@ html[lang="es"] .cur-pre,html[lang="en"] .cur-post{display:none}
 .final{position:relative;background:var(--night);color:var(--on-night);padding:clamp(100px,12vw,200px) 0 32px;overflow:clip;isolation:isolate}
 .final h2{font-size:clamp(46px,8.4vw,150px);font-weight:800;font-stretch:82%;line-height:.9;letter-spacing:-.025em;max-width:13ch;min-height:1.8em}
 .final h2 .wd{display:inline-block;white-space:nowrap}
-.final h2 .ch{display:inline-block;font-variation-settings:"wght" var(--wg,800),"wdth" var(--wd,82)}
+.final h2 .ch{display:inline-block;color:var(--cc,var(--on-night));transition:color .35s ease-out}
 .final p{color:var(--on-night-2);max-width:46ch;margin:28px 0 34px;font-size:19px}
 .final .ctas{margin-top:0}
 .final-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,4vw,72px);align-items:center}
@@ -320,19 +316,26 @@ footer a:hover{color:var(--on-night)}
   .js .rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform 1.1s var(--ease)}
   .js .rv.in{opacity:1;transform:none}
   .js .rv.d1{transition-delay:.08s}.js .rv.d2{transition-delay:.16s}.js .rv.d3{transition-delay:.24s}
-  /* the deck: the next card rises in and tilts flat, the current one sinks back */
-  .card{transition:transform 1s var(--ease),opacity .7s var(--ease),clip-path 1s var(--ease-io),filter 1s var(--ease)}
-  .card.next{transform:translateY(22%) rotateX(-14deg) scale(1.02);clip-path:inset(40% 0 0 0 round 0 0 14px 14px)}
-  .card.on{transform:none;clip-path:inset(0 round 0 0 14px 14px)}
-  .card.prev{transform:translateY(-5%) scale(.9);opacity:.35;filter:blur(3px) brightness(.8)}
-  .card.past{transform:translateY(-9%) scale(.82)}
-  .info-name span.in{animation:nameIn .7s var(--ease) both}
-  .info-ds.in,.info-cat.in{animation:fadeIn .6s .1s var(--ease) both}
-  .count b.in{animation:nameIn .6s var(--ease) both}
-  @keyframes nameIn{from{transform:translateY(100%)}to{transform:none}}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  /* the why-icons draw themselves in as their row arrives */
+  .js .why-list .dot svg>*{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.4s .35s var(--ease)}
+  .js .why-list li.in .dot svg>*{stroke-dashoffset:0}
+  .js .why-list .dot{transform:scale(.6) rotate(-12deg);transition:transform .9s .15s var(--ease)}
+  .js .why-list li.in .dot{transform:none}
+  /* example screenshots wipe open from the bottom as they scroll in */
+  .js .reel-grid>li .shot{clip-path:inset(100% 0 0 0 round 12px);transition:clip-path 1.1s var(--ease-io)}
+  .js .reel-grid>li.in .shot{clip-path:inset(0 0 0 0 round 12px)}
 }
-.card.on{opacity:1}
+@media (prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
+  /* example cards tilt toward the cursor and catch a moving light */
+  .demo{perspective:900px}
+  .js .reel-grid .demo .shot{position:relative;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .6s var(--ease),box-shadow .6s var(--ease),clip-path 1.1s var(--ease-io)}
+  .demo .shot::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;background:radial-gradient(420px circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.38),transparent 55%);mix-blend-mode:soft-light}
+  .demo:hover .shot{box-shadow:0 40px 60px -30px rgba(11,18,38,.55)}
+  .demo:hover .shot::after{opacity:1}
+  .js .reel-grid .demo.tilting .shot{transition:transform .12s linear,box-shadow .6s var(--ease),clip-path 1.1s var(--ease-io)}
+  /* main buttons lean toward the cursor */
+  .btn{translate:var(--bx,0) var(--by,0);transition:transform .35s var(--ease),translate .5s var(--ease),background-color .2s,color .2s,box-shadow .25s}
+}
 
 /* ---------- responsive ---------- */
 @media (max-width:1100px){
@@ -343,22 +346,17 @@ footer a:hover{color:var(--on-night)}
   .precios-side{position:static}
   .fan{height:clamp(300px,90vw,460px);max-width:520px;width:100%;margin:24px auto 0}
   .reel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .reel-stage{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto;align-content:center;gap:16px}
-  .deck-wrap{height:auto;order:-1}
-  .deck{width:min(100%,calc((100svh - 330px) * 1.6))}
-  .info{gap:10px}
-  .info-name{font-size:clamp(34px,8vw,56px);min-height:0}
-  .info-ds{min-height:0}
-  .count b{font-size:40px}
   .retrato{position:relative;top:0;max-width:min(380px,100%)}
   .trades{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 calc(var(--m) * -1);padding:2px var(--m)}
   .trades::-webkit-scrollbar{display:none}
   .how-vis{max-width:640px}
 }
 @media (max-width:640px){
-  .reel-grid{grid-template-columns:minmax(0,1fr)}
+  .reel-grid{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--m);overscroll-behavior-x:contain;scrollbar-width:none;margin:0 calc(var(--m) * -1);padding:0 var(--m) 6px}
+  .reel-grid::-webkit-scrollbar{display:none}
+  .reel-grid>li{flex:0 0 86%;min-width:0;scroll-snap-align:start}
+  .reel-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px}
   .links{grid-template-columns:minmax(0,1fr)}
-  .info .btn{width:100%}
 }
 @media (max-width:560px){
   .bar .pill span{display:none}
@@ -367,6 +365,8 @@ footer a:hover{color:var(--on-night)}
   .name-field .hint{display:none}
   .name-field input{padding-right:20px}
   .url{max-width:78%;font-size:12px}
+  .plato p,.consult{grid-column:1/-1}
+  .consult{justify-self:start;margin-top:6px}
   .wa-float span{display:none}
   .wa-float{padding:0 15px}
   /* the preview turns into a phone-shaped site */
@@ -509,23 +509,12 @@ footer a:hover{color:var(--on-night)}
       <li data-cat="tienda"><a class="demo" href="Websites/inmobiliaria_lujo.html"><div class="shot"><img src="img/inmobiliaria_lujo.jpg" alt="Captura del ejemplo Inmobiliaria" width="1200" height="750" loading="lazy"></div><div><h3 data-en="Estate agent">Inmobiliaria</h3><p data-en="Listings filtered by area, mortgage calculator and viewings.">Pisos por zona, hipoteca y visitas.</p></div><span class="go" data-en="Open example">Abrir ejemplo</span></a></li>
       <li data-cat="tienda"><a class="demo" href="Websites/detailing_coches.html"><div class="shot"><img src="img/detailing_coches.jpg" alt="Captura del ejemplo Detailing de coches" width="1200" height="750" loading="lazy"></div><div><h3 data-en="Car detailing">Detailing de coches</h3><p data-en="Price calculator by car type and booking.">Calculadora por tipo de coche y reserva.</p></div><span class="go" data-en="Open example">Abrir ejemplo</span></a></li>
     </ul>
-  </div>
-  <div class="reel-track">
-    <div class="reel-stage">
-      <div class="info">
-        <div class="count" aria-hidden="true"><b class="cnum">01</b><span class="ctot">/ 15</span></div>
-        <div class="info-cat"></div>
-        <h3 class="info-name" aria-live="polite"><span></span></h3>
-        <p class="info-ds"></p>
-        <div><a class="btn btn-k info-go" href="#"><span data-en="Open example">Abrir ejemplo</span></a></div>
+    <div class="reel-nav">
+      <p class="reel-count" aria-live="polite"><b class="reel-now">01</b> / <span class="reel-tot">15</span></p>
+      <div class="reel-arrows">
+        <button type="button" data-d="-1" aria-label="Ejemplo anterior"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" data-d="1" aria-label="Ejemplo siguiente"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </div>
-      <div class="deck-wrap">
-        <div class="deck">
-          <div class="win-bar" aria-hidden="true"><i></i><i></i><i></i><span class="url"><span class="deck-url"></span></span></div>
-          <div class="cards"></div>
-        </div>
-      </div>
-      <ul class="strip" aria-label="Ir a un ejemplo"></ul>
     </div>
   </div>
 </section>
@@ -547,12 +536,12 @@ footer a:hover{color:var(--on-night)}
       </div>
       <div class="proof">
         <h3 class="rv" data-en="Verify who I am">Verifica quién soy</h3>
-        <p class="rv" data-en="My university, CEU San Pablo, has published my story. Both links are official university channels.">Mi universidad, la CEU San Pablo, ha publicado mi historia. Los dos enlaces son canales oficiales de la universidad.</p>
+        <p class="rv" data-en="My university, CEU San Pablo, has published my story. All the links are official university channels.">Mi universidad, la CEU San Pablo, ha publicado mi historia. Todos los enlaces son canales oficiales de la universidad.</p>
         <ul class="links">
-          <li class="rv"><a href="https://blogs.uspceu.com/internacional/alumno-internacional/" target="_blank" rel="noopener"><span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#doc-ico"/></svg></span><b data-en="“Far from home: my experience as an international student”">«Lejos de casa: mi experiencia como alumno internacional»</b><small data-en="CEU San Pablo blog, 25 Feb 2025">Blog de la Universidad CEU San Pablo, 25 feb 2025</small><svg class="arr" aria-hidden="true" viewBox="0 0 24 24"><use href="#arr-ico"/></svg></a></li>
-          <li class="rv d1" hidden data-pending="ig-ceu"><a href="#" target="_blank" rel="noopener"><span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#ig-ico"/></svg></span><b data-en="“My time at CEU San Pablo”">«Mi paso por la Universidad CEU San Pablo»</b><small>Instagram, @universidad_ceu_sanpablo</small><svg class="arr" aria-hidden="true" viewBox="0 0 24 24"><use href="#arr-ico"/></svg></a></li>
-          <li class="rv d2" hidden data-pending="x-ceu"><a href="#" target="_blank" rel="noopener"><span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#x-ico"/></svg></span><b data-en="“My time at CEU San Pablo”">«Mi paso por la Universidad CEU San Pablo»</b><small>X, @USPCEU</small><svg class="arr" aria-hidden="true" viewBox="0 0 24 24"><use href="#arr-ico"/></svg></a></li>
-          <li class="rv d3" hidden data-pending="ig-salud-oral"><a href="#" target="_blank" rel="noopener"><span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#ig-ico"/></svg></span><b data-en="Oral Health Days, poster contest">Jornadas de Salud Oral, concurso de pósteres</b><small data-en="Instagram, CEU Faculty of Medicine">Instagram, Facultad de Medicina CEU</small><svg class="arr" aria-hidden="true" viewBox="0 0 24 24"><use href="#arr-ico"/></svg></a></li>
+          <li class="rv"><a href="https://blogs.uspceu.com/internacional/alumno-internacional/" target="_blank" rel="noopener"><span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#doc-ico"/></svg></span><b data-en="CEU blog">Blog de la CEU</b><small data-en="Article about me, Feb 2025">Artículo sobre mí, feb 2025</small><svg class="arr" aria-hidden="true" viewBox="0 0 24 24"><use href="#arr-ico"/></svg></a></li>
+          <li class="rv d1" hidden data-pending="ig-ceu"><a href="#" target="_blank" rel="noopener"><span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#ig-ico"/></svg></span><b data-en="CEU Instagram">Instagram de la CEU</b><small data-en="Post about me">Publicación sobre mí</small><svg class="arr" aria-hidden="true" viewBox="0 0 24 24"><use href="#arr-ico"/></svg></a></li>
+          <li class="rv d2" hidden data-pending="x-ceu"><a href="#" target="_blank" rel="noopener"><span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#x-ico"/></svg></span><b data-en="CEU on X">X de la CEU</b><small data-en="Post about me">Publicación sobre mí</small><svg class="arr" aria-hidden="true" viewBox="0 0 24 24"><use href="#arr-ico"/></svg></a></li>
+          <li class="rv d3" hidden data-pending="ig-salud-oral"><a href="#" target="_blank" rel="noopener"><span class="ico"><svg aria-hidden="true" viewBox="0 0 24 24"><use href="#ig-ico"/></svg></span><b data-en="Oral Health Days">Jornadas de Salud Oral</b><small data-en="Poster contest, Instagram">Concurso de pósteres, Instagram</small><svg class="arr" aria-hidden="true" viewBox="0 0 24 24"><use href="#arr-ico"/></svg></a></li>
         </ul>
       </div>
     </div>
@@ -591,18 +580,18 @@ footer a:hover{color:var(--on-night)}
     </div>
     <div>
       <div class="carta">
-        <div class="plato rv">
+        <a class="plato rv" data-plan="Básica" data-plan-en="Basic" data-price="150" target="_blank" rel="noopener" href="https://wa.me/34641629730">
           <h3 data-en="Basic">Básica</h3><span class="p"><span class="cur-pre">€</span><span data-n="150">150</span><span class="cur-post">&nbsp;€</span></span>
-          <p data-en="One page with your name, photos, services or menu, opening hours, map and call and WhatsApp buttons.">Una página con vuestro nombre, fotos, servicios o carta, horario, mapa y botones de llamar y WhatsApp.</p>
-        </div>
-        <div class="plato rec rv">
+          <p data-en="One page with your name, photos, services or menu, opening hours, map and call and WhatsApp buttons.">Una página con tu nombre, fotos, servicios o carta, horario, mapa y botones de llamar y WhatsApp.</p><span class="consult"><svg class="wa-g" aria-hidden="true" viewBox="0 0 24 24"><use href="#wa-ico"/></svg><span data-en="Ask about this plan">Pedir consulta</span></span>
+        </a>
+        <a class="plato rec rv" data-plan="Completa" data-plan-en="Complete" data-price="150–300" target="_blank" rel="noopener" href="https://wa.me/34641629730">
           <h3><span data-en="Complete">Completa</span><span class="tag" data-en="Recommended">Recomendada</span></h3><span class="p"><span class="cur-pre">€</span><span data-n="150">150</span>–<span data-n="300">300</span><span class="cur-post">&nbsp;€</span></span>
-          <p data-en="Everything in Basic, plus a booking or appointment form, gallery, reviews and an English version.">Todo lo de la Básica, más formulario de reservas o citas, galería, opiniones y versión en inglés.</p>
-        </div>
-        <div class="plato rv">
+          <p data-en="Everything in Basic, plus a booking or appointment form, gallery, reviews and an English version.">Todo lo de la Básica, más formulario de reservas o citas, galería, opiniones y versión en inglés.</p><span class="consult"><svg class="wa-g" aria-hidden="true" viewBox="0 0 24 24"><use href="#wa-ico"/></svg><span data-en="Ask about this plan">Pedir consulta</span></span>
+        </a>
+        <a class="plato rv" data-plan="Premium" data-plan-en="Premium" data-price="300–500" target="_blank" rel="noopener" href="https://wa.me/34641629730">
           <h3>Premium</h3><span class="p"><span class="cur-pre">€</span><span data-n="300">300</span>–<span data-n="500">500</span><span class="cur-post">&nbsp;€</span></span>
-          <p data-en="Custom design for your brand, interactive tools or several pages, Google profile ready and three months of changes included.">Diseño a medida de vuestra marca, herramientas interactivas o varias páginas, ficha de Google lista y tres meses de cambios incluidos.</p>
-        </div>
+          <p data-en="Custom design for your brand, interactive tools or several pages, Google profile ready and three months of changes included.">Diseño a medida de tu marca, herramientas interactivas o varias páginas, ficha de Google lista y tres meses de cambios incluidos.</p><span class="consult"><svg class="wa-g" aria-hidden="true" viewBox="0 0 24 24"><use href="#wa-ico"/></svg><span data-en="Ask about this plan">Pedir consulta</span></span>
+        </a>
       </div>
       <p class="extra rv" data-en="One-off payment. The final price depends on what your business needs, and we agree it together with no commitment. Your own domain (.es or .com) costs about €10–15 a year. Optional maintenance from €15 a month.">Pago único. El precio final depende de lo que necesite tu negocio y lo vemos juntos, sin compromiso. El dominio propio (.es o .com) cuesta unos 10–15 € al año. Mantenimiento opcional desde 15 € al mes.</p>
     </div>
@@ -677,7 +666,7 @@ footer a:hover{color:var(--on-night)}
     biz.placeholder = l === 'en' ? biz.dataset.phEn : phEs;
     langBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
     try { localStorage.setItem('lang', l); } catch (e) {}
-    buildTrades(); renderStudio(false); personalise(); reel.render(true); ticker.build(); ink.split(); onScroll();
+    buildTrades(); renderStudio(false); personalise(); ticker.build(); ink.split(); onScroll();
   }
   langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
 
@@ -734,6 +723,14 @@ footer a:hover{color:var(--on-night)}
       ? (lang === 'en' ? `Hi Kamyar, I saw your portfolio and I'd like to see a draft for ${n}` : `Hola Kamyar, he visto tu portfolio y me gustaría ver un boceto para ${n}`)
       : (lang === 'en' ? "Hi Kamyar, I saw your portfolio and I'd like to see a draft for my business" : 'Hola Kamyar, he visto tu portfolio y me gustaría ver un boceto para mi negocio');
     document.querySelectorAll('#final-wa, #precios-wa, .wa-float').forEach(a => { a.href = WA + encodeURIComponent(msg); });
+    // each price row asks for a consultation about that plan
+    document.querySelectorAll('.plato').forEach(a => {
+      const p = a.dataset.price;
+      const m = lang === 'en'
+        ? `Hi Kamyar, I'm interested in the ${a.dataset.planEn} website (€${p}) for ${n || 'my business'}. Could we have a quick consultation?`
+        : `Hola Kamyar, me interesa la web ${a.dataset.plan} (${p} €) para ${n || 'mi negocio'}. ¿Podemos hablar para una consulta?`;
+      a.href = WA + encodeURIComponent(m);
+    });
     finalH.build();
   }
   biz.addEventListener('input', () => { typed = biz.value; renderStudio(false); personalise(); });
@@ -766,79 +763,39 @@ footer a:hover{color:var(--on-night)}
     };
   })();
 
-  // ---------- examples: a held stage that deals the demos one by one ----------
+  // ---------- examples: filters; on phones the grid becomes a native swipe row with a counter ----------
   const reel = (() => {
     const sec = document.querySelector('.reel');
-    const track = sec.querySelector('.reel-track');
-    const cards = sec.querySelector('.cards');
-    const strip = sec.querySelector('.strip');
-    const nameEl = sec.querySelector('.info-name span');
-    const catEl = sec.querySelector('.info-cat'), dsEl = sec.querySelector('.info-ds');
-    const goEl = sec.querySelector('.info-go'), urlEl = sec.querySelector('.deck-url');
-    const cnum = sec.querySelector('.cnum'), ctot = sec.querySelector('.ctot');
-    const lis = [...sec.querySelectorAll('.reel-grid li')];
-    const CAT = {comer:{es:'Comer y beber', en:'Food & drink'}, cuidado:{es:'Salud y belleza', en:'Health & beauty'}, tienda:{es:'Tiendas y servicios', en:'Shops & services'}};
-    let set = lis, shown = 0, target = 0, timer = 0, seg = 1, pinned = false;
-    const data = (li) => ({href: li.querySelector('a').getAttribute('href'), img: li.querySelector('img').getAttribute('src'), name: li.querySelector('h3').textContent, ds: li.querySelector('p').textContent, cat: li.dataset.cat});
+    const grid = sec.querySelector('.reel-grid');
+    const lis = [...grid.children];
+    const now = sec.querySelector('.reel-now'), tot = sec.querySelector('.reel-tot');
+    const arrows = [...sec.querySelectorAll('.reel-arrows button')];
     const pad = (n) => String(n).padStart(2, '0');
-    function build() {
-      cards.innerHTML = set.map((li, j) => `<div class="card next"><img src="${data(li).img}" alt="" width="1200" height="750" ${j > 2 ? 'loading="lazy"' : ''}></div>`).join('');
-      strip.innerHTML = set.map((li, j) => `<li><button type="button" data-j="${j}" aria-label="${esc(data(li).name)}"><img src="${data(li).img}" alt="" width="1200" height="750" loading="lazy"></button></li>`).join('');
-      track.querySelectorAll('.snap-pt').forEach(s => s.remove());
-      set.forEach(() => { const s = document.createElement('div'); s.className = 'snap-pt'; track.appendChild(s); });
-      layout();
+    let set = lis;
+    const gap = () => set.length > 1 ? set[1].offsetLeft - set[0].offsetLeft : 1;
+    function at() {
+      if (grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 4) return set.length - 1;
+      return clamp(Math.round(grid.scrollLeft / gap()), 0, set.length - 1);
     }
-    function layout() {
-      pinned = !reduce.matches && innerHeight >= 560;
-      sec.classList.toggle('pin', pinned);
-      root.classList.toggle('snap', pinned && fine.matches);
-      seg = Math.round(innerHeight * (innerWidth < 700 ? .62 : .72));
-      track.style.height = pinned ? `${innerHeight + (set.length - 1) * seg + Math.round(seg * .5)}px` : '';
-      track.querySelectorAll('.snap-pt').forEach((s, j) => { s.style.top = j * seg + 'px'; });
+    function count() {
+      const i = at();
+      now.textContent = pad(i + 1); tot.textContent = pad(set.length);
+      arrows[0].disabled = i === 0; arrows[1].disabled = i === set.length - 1;
     }
-    function render(textOnly) {
-      if (!set.length) return;
-      const d = data(set[shown]);
-      [...cards.children].forEach((c, j) => { c.className = 'card ' + (j === shown ? 'on' : j === shown - 1 ? 'prev' : j < shown ? 'past' : 'next'); });
-      strip.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', String(j === shown)));
-      const changed = nameEl.textContent !== d.name;
-      nameEl.textContent = d.name; dsEl.textContent = d.ds; catEl.textContent = T(CAT[d.cat]);
-      cnum.textContent = pad(shown + 1); ctot.textContent = '/ ' + pad(set.length);
-      goEl.href = d.href; urlEl.textContent = 'kamyarsh10.github.io/' + d.href.replace('.html', '');
-      if (changed && !textOnly) [nameEl, dsEl, catEl, cnum].forEach(el => { el.classList.remove('in'); void el.offsetWidth; el.classList.add('in'); });
-      const li = strip.children[shown]; if (li && pinned) strip.scrollTo({left: li.offsetLeft - strip.clientWidth / 2 + 38, behavior: reduce.matches ? 'auto' : 'smooth'});
-    }
-    // step one card at a time, quicker when far behind, so a fast scroll still shows every demo flick past
-    function step() {
-      if (timer || shown === target) return;
-      shown += Math.sign(target - shown);
-      render();
-      const left = Math.abs(target - shown);
-      if (left) timer = setTimeout(() => { timer = 0; step(); }, left > 3 ? 110 : 190);
-    }
-    strip.addEventListener('click', (e) => {
-      const b = e.target.closest('button'); if (!b) return;
-      scrollTo({top: track.getBoundingClientRect().top + scrollY + (+b.dataset.j) * seg + 2, behavior: reduce.matches ? 'auto' : 'smooth'});
-    });
+    grid.addEventListener('scroll', count, {passive: true});
+    arrows.forEach(b => b.addEventListener('click', () => {
+      const i = clamp(at() + (+b.dataset.d), 0, set.length - 1);
+      grid.scrollTo({left: set[i].offsetLeft - set[0].offsetLeft, behavior: reduce.matches ? 'auto' : 'smooth'});
+    }));
     const filterBtns = sec.querySelectorAll('.filters button');
     filterBtns.forEach(btn => btn.addEventListener('click', () => {
       const f = btn.dataset.filter;
       filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
       lis.forEach(li => { li.hidden = f !== 'todos' && li.dataset.cat !== f; });
       set = lis.filter(li => !li.hidden);
-      clearTimeout(timer); timer = 0; shown = target = 0;
-      build(); render(true);
-      if (pinned) { const top = track.getBoundingClientRect().top + scrollY; if (scrollY > top) scrollTo({top, behavior: 'auto'}); }
+      grid.scrollLeft = 0; count();
     }));
-    return {
-      build, layout, render,
-      update() {
-        if (!pinned) return;
-        const r = track.getBoundingClientRect();
-        target = clamp(Math.floor((-r.top + seg * .5) / seg), 0, set.length - 1);
-        step();
-      }
-    };
+    return {count};
   })();
 
   // ---------- about: the statement fills with ink as it rises ----------
@@ -898,7 +855,7 @@ footer a:hover{color:var(--on-night)}
     requestAnimationFrame(tick);
   }
 
-  // ---------- closing headline: letters swell toward the cursor ----------
+  // ---------- closing headline: letters warm to marigold toward the cursor (colour only, so the lines never reflow) ----------
   const finalH = (() => {
     const h = document.getElementById('final-h');
     let chars = [], rects = [];
@@ -919,8 +876,8 @@ footer a:hover{color:var(--on-night)}
         if (!rects.length) rects = chars.map(c => { const r = c.getBoundingClientRect(); return [r.left + r.width / 2 - hr.left, r.top + r.height / 2 - hr.top]; });
         chars.forEach((c, i) => {
           const k = clamp(1 - Math.hypot(rects[i][0] + hr.left - x, rects[i][1] + hr.top - y) / 260, 0, 1);
-          c.style.setProperty('--wg', Math.round(800 - 420 * k));
-          c.style.setProperty('--wd', Math.round(82 + 30 * k));
+          // #F3F5F9 (on-night) -> #FFC97A (marigold, the complement of the cobalt background)
+          c.style.setProperty('--cc', k ? `rgb(${Math.round(243 + 12 * k)},${Math.round(245 - 44 * k)},${Math.round(249 - 127 * k)})` : '');
         });
       },
       reset() { rects = []; }
@@ -981,8 +938,36 @@ footer a:hover{color:var(--on-night)}
       e.target.classList.add('in'); io.unobserve(e.target);
       if (e.target.classList.contains('plato') && !reduce.matches) e.target.querySelectorAll('[data-n]').forEach(roll);
     }), {rootMargin: '0px 0px -12% 0px'});
-    document.querySelectorAll('.rv').forEach(el => io.observe(el));
-  } else document.querySelectorAll('.rv').forEach(el => el.classList.add('in'));
+    document.querySelectorAll('.rv, .reel-grid>li').forEach(el => io.observe(el));
+  } else document.querySelectorAll('.rv, .reel-grid>li').forEach(el => el.classList.add('in'));
+  // the why-icons draw as a single stroke
+  document.querySelectorAll('.why-list .dot svg>*').forEach(s => s.setAttribute('pathLength', '1'));
+
+  // ---------- example cards tilt toward the cursor; main buttons lean toward it ----------
+  const live = () => fine.matches && !reduce.matches;
+  document.querySelectorAll('.demo').forEach(d => {
+    const shot = d.querySelector('.shot');
+    d.addEventListener('pointermove', (e) => {
+      if (!live()) return;
+      const r = shot.getBoundingClientRect();
+      const x = clamp((e.clientX - r.left) / r.width, 0, 1), y = clamp((e.clientY - r.top) / r.height, 0, 1);
+      d.classList.add('tilting');
+      shot.style.setProperty('--ry', ((x - .5) * 10).toFixed(2) + 'deg');
+      shot.style.setProperty('--rx', ((.5 - y) * 8).toFixed(2) + 'deg');
+      shot.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+      shot.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+    });
+    d.addEventListener('pointerleave', () => { d.classList.remove('tilting'); shot.style.setProperty('--rx', '0deg'); shot.style.setProperty('--ry', '0deg'); });
+  });
+  document.querySelectorAll('.btn').forEach(b => {
+    b.addEventListener('pointermove', (e) => {
+      if (!live()) return;
+      const r = b.getBoundingClientRect();
+      b.style.setProperty('--bx', clamp((e.clientX - r.left - r.width / 2) * .12, -8, 8).toFixed(1) + 'px');
+      b.style.setProperty('--by', clamp((e.clientY - r.top - r.height / 2) * .25, -5, 5).toFixed(1) + 'px');
+    });
+    b.addEventListener('pointerleave', () => { b.style.removeProperty('--bx'); b.style.removeProperty('--by'); });
+  });
 
   // ---------- floating WhatsApp steps aside while another WhatsApp button is on screen ----------
   const wa = document.querySelector('.wa-float');
@@ -996,14 +981,14 @@ footer a:hover{color:var(--on-night)}
   function onScroll() {
     sq = false;
     bar.style.setProperty('--p', (scrollY / Math.max(1, root.scrollHeight - innerHeight)).toFixed(4));
-    ticker.update(); reel.update(); how.update(); ink.update(); drift(); finalH.reset();
+    ticker.update(); how.update(); ink.update(); drift(); finalH.reset();
   }
   addEventListener('scroll', () => { if (!sq) { sq = true; requestAnimationFrame(onScroll); } }, {passive: true});
-  addEventListener('resize', () => { reel.layout(); how.layout(); finalH.reset(); onScroll(); });
-  reduce.addEventListener('change', () => { reel.layout(); how.layout(); ticker.build(); onScroll(); });
+  addEventListener('resize', () => { reel.count(); how.layout(); finalH.reset(); onScroll(); });
+  reduce.addEventListener('change', () => { how.layout(); ticker.build(); onScroll(); });
 
-  buildTrades(); renderStudio(false); ticker.build(); ink.split(); finalH.build();
-  reel.build(); reel.render(true); how.layout(); onScroll();
+  buildTrades(); renderStudio(false); ticker.build(); ink.split(); personalise();
+  reel.count(); how.layout(); onScroll();
   let saved = null;
   try { saved = localStorage.getItem('lang'); } catch (e) {}
   if (saved === 'en') setLang('en');

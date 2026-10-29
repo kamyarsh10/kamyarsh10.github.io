@@ -75,7 +75,7 @@ p{margin:0}
 .lang button:hover{opacity:1}
 .lang button[aria-pressed="true"]{background:var(--cal);color:var(--tinta);opacity:1}
 .top .btn{padding:10px 20px;font-size:15px}
-.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer;margin-left:auto}
+.burger{display:none;flex:none;background:none;border:0;width:44px;height:44px;cursor:pointer;margin-left:auto}
 .burger span{display:block;width:22px;height:2px;background:var(--cal);margin:5px auto;transition:transform .3s var(--ease-out),opacity .2s}
 .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
@@ -107,7 +107,7 @@ p{margin:0}
 .day-moment strong{font-family:var(--serif);font-weight:400;font-size:22px}
 .day-moment span{color:var(--niebla);font-size:15px}
 .ruler{position:relative;display:flex;border-top:1px solid rgba(244,242,236,.35)}
-.ruler button{position:relative;flex:var(--w) 1 0;min-width:0;background:none;border:0;border-left:1px solid rgba(244,242,236,.35);padding:14px 12px 4px;text-align:left;cursor:pointer;color:var(--niebla);transition:color .25s}
+.ruler button{position:relative;flex:var(--w) 1 0;min-width:0;min-height:44px;background:none;border:0;border-left:1px solid rgba(244,242,236,.35);padding:14px 12px 4px;text-align:left;cursor:pointer;color:var(--niebla);transition:color .25s}
 .ruler button:last-child{border-right:1px solid rgba(244,242,236,.35)}
 .ruler button::before{content:"";position:absolute;left:-1px;right:0;top:-1px;height:3px;background:var(--albero);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease-out)}
 .ruler button:hover{color:var(--cal)}
@@ -194,7 +194,7 @@ dialog.lb p{color:var(--cal);text-align:center;margin-top:12px;font-size:15px}
 .arrows{display:flex;gap:var(--s2)}
 .arrows button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(20,26,46,.3);background:none;cursor:pointer;font-size:20px;transition:background-color .2s,color .2s}
 .arrows button:hover{background:var(--tinta);color:var(--cal)}
-.link{font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.link{font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;display:inline-flex;align-items:center;min-height:44px}
 .link:hover{text-decoration-thickness:2px}
 
 /* ---------- reservation ---------- */
@@ -240,6 +240,7 @@ dialog.lb p{color:var(--cal);text-align:center;margin-top:12px;font-size:15px}
 .hours li.today span:first-child::after{content:attr(data-today);margin-left:10px;font-size:12px;font-weight:600;background:var(--albero);color:var(--tinta);padding:2px 8px;border-radius:999px}
 .contact{margin-top:var(--s5);display:grid;gap:var(--s3)}
 .contact a,.contact p{display:flex;gap:14px;align-items:flex-start;text-decoration:none;font-size:17px}
+.contact a{min-height:44px;align-items:center}.contact a svg{margin-top:0}
 .contact a:hover{color:var(--albero)}
 .contact svg{width:20px;height:20px;flex:none;margin-top:5px;color:var(--albero)}
 .map{position:relative;border-radius:10px;overflow:hidden;min-height:460px;box-shadow:var(--shadow-float);background:var(--anil)}
@@ -254,7 +255,7 @@ dialog.lb p{color:var(--cal);text-align:center;margin-top:12px;font-size:15px}
 .foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--s4);align-items:flex-end}
 .foot .logo{font-size:clamp(44px,8vw,104px);line-height:.95;letter-spacing:-.04em;white-space:normal}
 .foot nav{display:flex;gap:var(--s4);flex-wrap:wrap;font-size:15px;color:var(--niebla)}
-.foot nav a{text-decoration:none}
+.foot nav{align-items:center}.foot nav a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
 .foot nav a:hover{color:var(--cal)}
 
 /* ---------- floating actions ---------- */

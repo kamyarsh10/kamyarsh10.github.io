@@ -138,7 +138,8 @@ a{color:inherit}
 .rail-nav button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line-l);display:grid;place-items:center;transition:background-color .2s,color .2s}
 .rail-nav button:hover{background:var(--text-l);color:var(--paper)}
 .rail-nav svg{width:18px;height:18px}
-@media (min-width:760px){.rail-nav{display:flex}.flash .rail{grid-auto-columns:280px;margin-right:calc(50% - 50vw)}}
+@media (min-width:760px){.rail-nav{display:flex}.flash .rail{grid-auto-columns:280px;margin-right:calc(50% - 50vw)}
+.flash{overflow-x:clip}}
 .fcard{background:var(--card);border-radius:4px;padding:12px 12px 16px;box-shadow:0 1px 0 rgba(26,23,20,.06),0 18px 40px -26px rgba(26,23,20,.45);display:flex;flex-direction:column}
 .fcard[hidden]{display:none}
 .fcard .crop{aspect-ratio:4/5;border-radius:2px}
@@ -509,7 +510,7 @@ details p{color:var(--mute-l);padding:0 0 20px;max-width:40em}
     <div class="style-wrap">
       <div class="style-pick" id="stylePick" role="tablist" aria-label="Estilos de tatuaje"></div>
       <div class="style-view" id="styleView" role="tabpanel" aria-live="polite">
-        <div class="style-photo"><img id="stImg" src="" alt="" width="900" height="1125"></div>
+        <div class="style-photo"><img id="stImg" alt="" width="900" height="1125"></div>
         <div class="style-info">
           <h3 id="stName"></h3>
           <p id="stText"></p>
@@ -729,7 +730,7 @@ details p{color:var(--mute-l);padding:0 0 20px;max-width:40em}
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <dialog class="lb" id="lb" aria-label="Foto ampliada">
   <button class="x" id="lbClose" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-  <img id="lbImg" src="" alt="">
+  <img id="lbImg" alt="">
   <p id="lbCap"></p>
 </dialog>
 <script>
