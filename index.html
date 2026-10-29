@@ -5,9 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kamyar · Webs para negocios, estudios y restaurantes de Madrid</title>
 <meta name="description" content="Diseño páginas web para negocios, clínicas, estudios, bares y restaurantes de Madrid. Muestra gratis con tu nombre antes de pagar. Desde 150 €.">
-<meta property="og:title" content="Webs para negocios, estudios y restaurantes de Madrid">
-<meta property="og:description" content="Muestra gratis con tu nombre antes de pagar. Desde 150 €. Mira los ejemplos.">
-<meta property="og:image" content="img/hero-laptop-restaurante-bar.jpg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kamyarsh10.github.io/">
+<meta property="og:site_name" content="Kamyar">
+<meta property="og:title" content="Kamyar · Webs para cualquier negocio">
+<meta property="og:description" content="Webs a medida desde 150 €. Te preparo una muestra gratis con tu nombre antes de pagar.">
+<meta property="og:image" content="https://kamyarsh10.github.io/img/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Webs para cualquier negocio, desde 150 €, muestra gratis">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='3' y='3' width='26' height='26' rx='5' fill='%238FA6FF'/%3E%3Cpath d='M11 8v16M11 16l9-8M14 13l7 11' stroke='%23000' stroke-width='3.4' fill='none'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -393,8 +400,10 @@ footer a:hover{color:var(--fg)}
 }
 @media (max-width:1000px){
   .why-grid,.try-grid,.sobre,.how-stage,.precios-grid,.final-grid{grid-template-columns:minmax(0,1fr)}
-  .why-side{position:static;height:auto;padding-top:0}
-  .why-flow{padding:48px 0 0;gap:72px}
+  .why-side{position:static;height:auto;padding-top:clamp(64px,14vw,110px)}
+  .why-grid{row-gap:32px}
+  .why-flow{padding:0;gap:72px}
+  .why-flow .kicker{margin-top:0}
   .why-list{gap:64px}
   .precios-side{position:static}
   .fan{height:clamp(300px,90vw,460px);max-width:520px;width:100%;margin:24px auto 0}
