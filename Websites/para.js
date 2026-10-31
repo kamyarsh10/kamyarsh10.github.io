@@ -10,7 +10,7 @@
   // Fictional brand of each demo (matched case- and accent-insensitively in visible text)
   var BRANDS = {
     'barberia': ['Vértigo'], 'cerveceria': ['Dos Dedos'], 'churreria': [],
-    'clinica_dental': ['AUREA'], 'clinica_estetica': ['LUMA'], 'detailing_coches': ['KRONOS'],
+    'clinica_dental': ['AUREA'], 'clinica_dental_nacar': ['Nácar'], 'clinica_estetica': ['LUMA'], 'detailing_coches': ['KRONOS'],
     'estudio_interiorismo': ['Atelier Véra'], 'estudio_tatuajes': ['Atelier Noir'],
     'estudio_yoga_pilates': ['CALMA'], 'floristeria_eventos': ['Botánica Real'],
     'inmobiliaria_lujo': ['Valmont & Co.', 'Valmont'], 'joyeria_relojeria': ['Maison Alba'],
