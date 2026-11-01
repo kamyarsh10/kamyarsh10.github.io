@@ -978,15 +978,20 @@ float cone(vec3 p,vec3 a,vec3 b,float r1,float r2){
 }
 float map(vec3 p){
   p.xz*=rot(S+M.x*.9);p.yz*=rot(-.14+M.y*.4);
-  p*=1.2;p.y+=.03;
-  // crown: a round bulb that pinches in at the neck, four soft cusps on top, two tapering roots
-  vec3 q=p-vec3(0.,.48,0.);q.xz*=1.+.45*smoothstep(.35,-.35,q.y);
-  float d=(length(q/vec3(.8,.48,.66))-1.)*.42;
+  p*=1.15;p.y+=.02;
+  // crown: a wide, full bulb (between round and square), easing in only right at the neck
+  vec3 q=p-vec3(0.,.36,0.);q.xz*=1.+.32*smoothstep(.05,-.75,q.y);
+  vec3 e=abs(q)/vec3(.9,.62,.78);
+  float d=(pow(e.x*e.x*e.x+e.y*e.y*e.y+e.z*e.z*e.z,1./3.)-1.)*.55;
+  // four low lobes around a soft central dip
   vec3 c=vec3(abs(p.x),p.y,abs(p.z));
-  d=smin(d,length(c-vec3(.32,.8,.26))-.27,.14);
-  d=smin(d,cone(vec3(abs(p.x),p.y,p.z),vec3(.25,.12,0.),vec3(.34,-1.05,.02),.31,.09),.2);
-  d+=.008*sin(9.*p.y+T*1.2+4.*p.x);
-  return d/1.2*.7;
+  d=smin(d,length(c-vec3(.38,.84,.32))-.24,.2);
+  float pit=length(p-vec3(0.,1.02,0.))-.26,h=clamp(.5-.5*(d+pit)/.2,0.,1.);d=mix(d,-pit,h)+.2*h*(1.-h);
+  // roots: two at the front, one behind, short and thick with rounded tips and an arch between
+  d=smin(d,cone(vec3(abs(p.x),p.y,p.z),vec3(.34,-.18,.08),vec3(.44,-1.05,.14),.32,.14),.36);
+  d=smin(d,cone(p,vec3(0.,-.18,-.26),vec3(0.,-.98,-.42),.32,.14),.36);
+  d+=.004*sin(9.*p.y+T*1.2+4.*p.x);
+  return d/1.15*.7;
 }
 vec3 nor(vec3 p){vec2 e=vec2(.002,0.);return normalize(vec3(map(p+e.xyy)-map(p-e.xyy),map(p+e.yxy)-map(p-e.yxy),map(p+e.yyx)-map(p-e.yyx)));}
 vec3 iri(float t){return .58+.42*cos(6.2831*(t+vec3(0.,.2,.43)));}
@@ -1007,11 +1012,14 @@ void main(){
     vec3 p=ro+rd*t,n=nor(p),v=-rd;a=1.;
     float nv=max(dot(n,v),0.),fr=pow(1.-nv,2.4);
     vec3 film=iri(nv*1.25+.16*sin(p.y*3.+T*.4)+T*.03);
-    vec3 base=mix(vec3(.95,.94,.97),film,.16+.5*fr);
-    vec3 l=normalize(vec3(-.5,.8,.6));
-    float dif=.5+.5*max(dot(n,l),0.);
-    col=base*dif*.9+env(reflect(rd,n))*(.1+.5*fr)*mix(vec3(1.),film,.6)+pow(max(dot(reflect(-l,n),v),0.),70.)*1.2;
-    col+=vec3(.95,.9,1.)*pow(max(dot(reflect(-normalize(vec3(.7,-.3,.6)),n),v),0.),24.)*.25;
+    // glossy ivory enamel with only a breath of nacre at the edges
+    vec3 base=mix(vec3(.93,.9,.84),film,.04+.14*fr);
+    vec3 l=normalize(vec3(-.55,.75,.6));
+    float dif=pow(.5+.5*dot(n,l),1.3);
+    float shade=mix(.64,1.,smoothstep(-1.,.35,p.y));
+    col=base*(.16+.84*dif)*shade+env(reflect(rd,n))*(.05+.45*fr)*.75*shade;
+    col+=pow(max(dot(reflect(-l,n),v),0.),90.)*1.3+vec3(1.,.97,.92)*pow(max(dot(reflect(-l,n),v),0.),14.)*.12;
+    col+=vec3(.9,.9,1.)*pow(max(dot(reflect(-normalize(vec3(.7,-.2,.6)),n),v),0.),40.)*.3;
   }
   gl_FragColor=vec4(col,a);
 }`;
@@ -1042,7 +1050,7 @@ void main(){
       spin += dt; turn += dt * boost;
       if (boost < .4) turn = lerp(turn, Math.round(turn / 6.2832) * 6.2832, 1 - Math.exp(-dt * 2.5));
       const phone = cv.clientWidth < 760;
-      const rpx = phone ? Math.min(W * .3, H * .15) : Math.min(H * .27, W * .2);
+      const rpx = phone ? Math.min(W * .27, H * .135) : Math.min(H * .27, W * .2);
       const cx = phone ? W * .62 : W * .67, cy = phone ? H * .77 : H * .54;
       gl.uniform2f(U.R, W, H); gl.uniform1f(U.T, reduce.matches ? 4 : t);
       gl.uniform2f(U.M, mx, my); gl.uniform1f(U.S, reduce.matches ? .35 : Math.sin(spin * .45) * .75 + turn);
