@@ -406,9 +406,11 @@ h1,h2,h3,p{margin:0}
 @media (max-width:760px){
   body{font-size:16px}
   .hero{min-height:600px}
-  .tooth{left:62%;top:24%;height:min(33vh,62vw)}
+  /* phones: the tooth gets its own space under the header and the text starts below it; the hero grows if the screen is short */
+  .hero{height:auto;min-height:100svh;--th:clamp(150px,29svh,250px)}
+  .hero-in{position:relative;inset:auto;min-height:100svh;padding-top:calc(var(--th) + 112px)}
+  .tooth{left:50%;top:90px;height:var(--th);translate:-50% 0}
   .hero::before{width:100%;background:linear-gradient(rgba(28,29,33,0) 40%,rgba(28,29,33,.75) 75%)}
-  .hero-in{padding-top:96px}
   .hero-copy{align-self:end;margin-bottom:28px;gap:20px}
   .mark-row{flex-direction:column;align-items:flex-start;gap:12px}
   .mark{font-size:29vw}
