@@ -957,7 +957,7 @@ h1,h2,h3,p{margin:0}
     const li = $(`#hoursList li[data-d="${d}"]`); if (li) li.classList.add('today');
   })();
 
-  // ---------- HERO: a pearl of nacre, ray-marched in WebGL ----------
+  // ---------- HERO: a molar made of nacre, ray-marched in WebGL; tilts to the pointer, spins on swipe and tap ----------
   const pearl = (() => {
     const cv = $('#pearl'), hero = cv.parentElement;
     const gl = cv.getContext('webgl', {antialias: false, alpha: true, premultipliedAlpha: true, powerPreference: 'high-performance'});
@@ -965,14 +965,27 @@ h1,h2,h3,p{margin:0}
     if (!gl) { root.classList.add('no-gl'); return none; }
     const VS = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
     const FS = `precision highp float;
-uniform vec2 R;uniform float T;uniform vec2 M;uniform vec2 C;uniform float Z;
+uniform vec2 R;uniform float T;uniform vec2 M;uniform vec2 C;uniform float Z;uniform float S;
 mat2 rot(float a){float c=cos(a),s=sin(a);return mat2(c,-s,s,c);}
+float smin(float a,float b,float k){float h=clamp(.5+.5*(b-a)/k,0.,1.);return mix(b,a,h)-k*h*(1.-h);}
+float cone(vec3 p,vec3 a,vec3 b,float r1,float r2){
+  vec3 ba=b-a;float l2=dot(ba,ba),rr=r1-r2,a2=l2-rr*rr,il2=1./l2;
+  vec3 pa=p-a;float y=dot(pa,ba),z=y-l2;vec3 xv=pa*l2-ba*y;float x2=dot(xv,xv),y2=y*y*l2,z2=z*z*l2;
+  float k=sign(rr)*rr*rr*x2;
+  if(sign(z)*a2*z2>k)return sqrt(x2+z2)*il2-r2;
+  if(sign(y)*a2*y2<k)return sqrt(x2+y2)*il2-r1;
+  return (sqrt(x2*a2*il2)+y*rr)*il2-r1;
+}
 float map(vec3 p){
-  p.xz*=rot(T*.11+M.x*.7);p.yz*=rot(M.y*.45);
-  float d=length(p)-1.;
-  d+=.075*sin(2.6*p.x+T*.8)*sin(2.9*p.y+T*.6)*sin(2.4*p.z+T*.7);
-  d+=.022*sin(6.*p.y+T*1.1+3.*p.x);
-  return d*.8;
+  p.xz*=rot(S+M.x*.9);p.yz*=rot(-.3+M.y*.5);
+  p*=1.2;p.y-=.05;
+  vec3 q=abs(p-vec3(0.,.42,0.))/vec3(.84,.5,.7);q*=q;
+  float d=(pow(dot(q,q),.25)-1.)*.5;
+  vec3 c=vec3(abs(p.x),p.y,abs(p.z));
+  d=smin(d,length(c-vec3(.36,.84,.3))-.2,.2);
+  d=smin(d,cone(vec3(abs(p.x),p.y,p.z),vec3(.32,.05,0.),vec3(.44,-1.2,.02),.36,.1),.22);
+  d+=.008*sin(9.*p.y+T*1.2+4.*p.x);
+  return d/1.2*.7;
 }
 vec3 nor(vec3 p){vec2 e=vec2(.002,0.);return normalize(vec3(map(p+e.xyy)-map(p-e.xyy),map(p+e.yxy)-map(p-e.yxy),map(p+e.yyx)-map(p-e.yyx)));}
 vec3 iri(float t){return .58+.42*cos(6.2831*(t+vec3(0.,.2,.43)));}
@@ -986,7 +999,7 @@ void main(){
   vec2 uv=(gl_FragCoord.xy-C)/R.y/Z;
   vec3 ro=vec3(0.,0.,3.4),rd=normalize(vec3(uv,-1.9));
   float t=0.,d=1.;bool hit=false;
-  for(int i=0;i<72;i++){d=map(ro+rd*t);if(d<.001){hit=true;break;}t+=d;if(t>6.)break;}
+  for(int i=0;i<120;i++){d=map(ro+rd*t);if(d<.001){hit=true;break;}t+=d;if(t>6.)break;}
   float r=length(uv),a=0.;
   vec3 col=vec3(.42,.38,.75)*.22*exp(-4.*max(r-.5,0.))*Z*1.8;
   if(hit){
@@ -1009,8 +1022,8 @@ void main(){
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
     const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    const U = {}; ['R', 'T', 'M', 'C', 'Z'].forEach((k) => { U[k] = gl.getUniformLocation(pr, k); });
-    let W = 0, H = 0, q = 1, raf = 0, born = 0, mx = 0, my = 0, tx = 0, ty = 0, visible = true;
+    const U = {}; ['R', 'T', 'M', 'C', 'Z', 'S'].forEach((k) => { U[k] = gl.getUniformLocation(pr, k); });
+    let W = 0, H = 0, q = 1, raf = 0, born = 0, mx = 0, my = 0, tx = 0, ty = 0, visible = true, spin = 0, turn = 0, boost = 0, pulse = 0, last = 0, lx = null;
     const t0 = performance.now();
     const size = () => {
       q = Math.min(devicePixelRatio || 1, 1.5) * (innerWidth < 760 ? .75 : .8);
@@ -1022,18 +1035,29 @@ void main(){
       const t = (now - t0) / 1000;
       const k = reduce.matches ? 1 : ease(clamp((now - born) / 2200, 0, 1));
       mx = lerp(mx, tx, .04); my = lerp(my, ty, .04);
+      const dt = last ? Math.min((now - last) / 1000, .05) : 0; last = now;
+      boost *= Math.exp(-dt * 1.4); pulse *= Math.exp(-dt * 5);
+      // sways around a front view; a flick adds whole turns that ease back to facing front
+      spin += dt; turn += dt * boost;
+      if (boost < .4) turn = lerp(turn, Math.round(turn / 6.2832) * 6.2832, 1 - Math.exp(-dt * 2.5));
       const phone = cv.clientWidth < 760;
       const rpx = phone ? Math.min(W * .3, H * .15) : Math.min(H * .27, W * .2);
       const cx = phone ? W * .62 : W * .67, cy = phone ? H * .77 : H * .54;
       gl.uniform2f(U.R, W, H); gl.uniform1f(U.T, reduce.matches ? 4 : t);
-      gl.uniform2f(U.M, mx, my);
+      gl.uniform2f(U.M, mx, my); gl.uniform1f(U.S, reduce.matches ? .35 : Math.sin(spin * .45) * .75 + turn);
       hero.style.setProperty('--hx', mx.toFixed(3)); hero.style.setProperty('--hy', my.toFixed(3));
       gl.uniform2f(U.C, cx + mx * 14 * q, cy + my * 10 * q);
-      gl.uniform1f(U.Z, Math.max(rpx / (.56 * H), .001) * (.35 + .65 * k));
+      gl.uniform1f(U.Z, Math.max(rpx / (.56 * H), .001) * (.35 + .65 * k) * (1 + .07 * Math.sin(pulse * 9) * pulse));
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
     const loop = (now) => { draw(now); raf = requestAnimationFrame(loop); };
-    addEventListener('pointermove', (e) => { tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1; }, {passive: true});
+    addEventListener('pointermove', (e) => {
+      tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1;
+      if (lx !== null && e.pointerType === 'mouse') boost = Math.min(boost + Math.abs(e.clientX - lx) * .003, 3);
+      lx = e.clientX;
+    }, {passive: true});
+    // a tap anywhere on the hero that is not a link or button flicks the tooth round
+    hero.addEventListener('pointerdown', (e) => { if (e.target.closest('a,button')) return; boost = Math.min(boost + 6, 9); pulse = 1; });
     new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? api.start() : api.stop(); }).observe(cv);
     const api = {
       size,
