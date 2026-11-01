@@ -977,13 +977,14 @@ float cone(vec3 p,vec3 a,vec3 b,float r1,float r2){
   return (sqrt(x2*a2*il2)+y*rr)*il2-r1;
 }
 float map(vec3 p){
-  p.xz*=rot(S+M.x*.9);p.yz*=rot(-.3+M.y*.5);
-  p*=1.2;p.y-=.05;
-  vec3 q=abs(p-vec3(0.,.42,0.))/vec3(.84,.5,.7);q*=q;
-  float d=(pow(dot(q,q),.25)-1.)*.5;
+  p.xz*=rot(S+M.x*.9);p.yz*=rot(-.14+M.y*.4);
+  p*=1.2;p.y+=.03;
+  // crown: a round bulb that pinches in at the neck, four soft cusps on top, two tapering roots
+  vec3 q=p-vec3(0.,.48,0.);q.xz*=1.+.45*smoothstep(.35,-.35,q.y);
+  float d=(length(q/vec3(.8,.48,.66))-1.)*.42;
   vec3 c=vec3(abs(p.x),p.y,abs(p.z));
-  d=smin(d,length(c-vec3(.36,.84,.3))-.2,.2);
-  d=smin(d,cone(vec3(abs(p.x),p.y,p.z),vec3(.32,.05,0.),vec3(.44,-1.2,.02),.36,.1),.22);
+  d=smin(d,length(c-vec3(.32,.8,.26))-.27,.14);
+  d=smin(d,cone(vec3(abs(p.x),p.y,p.z),vec3(.25,.12,0.),vec3(.34,-1.05,.02),.31,.09),.2);
   d+=.008*sin(9.*p.y+T*1.2+4.*p.x);
   return d/1.2*.7;
 }
