@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>K Streams · App demo by Kamyar</title>
+<meta name="description" content="Portfolio demo of K Streams, a dark-mode media discovery app by Kamyar. Browse titles and watch official trailers.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%238FA6FF%27/%3E%3Ctext x=%2716%27 y=%2724%27 font-family=%27Arial Black,Arial%27 font-weight=%27900%27 font-size=%2722%27 text-anchor=%27middle%27%3EK%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://image.tmdb.org">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--acc:#8FA6FF;--card:#0A0D19;--fg:#F3F5F9;--fg2:#A7B1C6;--glow:#5F7DFF;--ease:cubic-bezier(.16,1,.3,1);--g:1rem;--tap:2.75rem}
+@media (min-width:640px){:root{--g:2rem}}
+@media (min-width:1024px){:root{--g:3rem}}
+*{box-sizing:border-box}
+html{background:var(--bg);color-scheme:dark;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--fg);font-family:Archivo,ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--glow);outline-offset:3px;border-radius:.75rem}
+::selection{background:var(--acc);color:#000}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.gut{padding-inline:var(--g)}
+#stars{position:fixed;inset:0;z-index:-1;width:100%;height:100%}
+.glass{background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);border:1px solid rgba(255,255,255,.1)}
+.btn{min-height:var(--tap);min-width:var(--tap);display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:0 20px;font-size:14px;font-weight:500;border:1px solid transparent;cursor:pointer;text-decoration:none;transition:transform .2s,background-color .2s,border-color .2s,box-shadow .2s}
+.btn:active{transform:scale(.97)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-p{background:var(--acc);color:#000;font-weight:600}
+.btn-p:hover{background:#fff}
+.btn-g{background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-color:rgba(255,255,255,.12)}
+.btn-g:hover,.btn-g:focus-visible,.btn-g[aria-pressed="true"]{background:rgba(255,255,255,.12);border-color:var(--glow);box-shadow:0 0 0 1px rgba(95,125,255,.55),0 0 18px rgba(95,125,255,.4)}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);padding:4px 10px;font-size:12px;color:rgba(255,255,255,.75)}
+.pill.r{border-color:rgba(143,166,255,.4);background:rgba(143,166,255,.1);color:var(--acc)}
+.pill svg{width:12px;height:12px;fill:var(--acc)}
+/* demo ribbon */
+.ribbon{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:999px;font-size:12.5px;color:var(--fg2);white-space:nowrap}
+.ribbon b{color:var(--fg);font-weight:600}
+.ribbon a{min-height:36px;padding:0 14px;font-size:12.5px}
+@media (max-width:520px){.ribbon .long{display:none}}
+/* nav */
+header{position:fixed;inset:0 0 auto;z-index:50;padding-top:env(safe-area-inset-top);border-bottom:1px solid transparent;background:linear-gradient(to bottom,rgba(0,0,0,.7),transparent);transition:background-color .5s,border-color .5s}
+header.on{background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);border-bottom-color:rgba(255,255,255,.1)}
+nav{height:64px;display:flex;align-items:center;gap:4px}
+.brand{display:flex;align-items:center;gap:8px;margin-inline-end:12px;text-decoration:none;min-height:var(--tap)}
+.logo{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:5.4px;background:var(--acc);color:#000;font-weight:900;font-stretch:62%;font-size:20px;line-height:1}
+.brand span:not(.logo){font-size:18px;font-weight:900;font-stretch:75%;letter-spacing:-.01em}
+@media (max-width:419px){.brand span:not(.logo){display:none}}
+.tab{min-height:var(--tap);min-width:var(--tap);display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:0 14px;font-size:14px;color:rgba(255,255,255,.6);background:none;border:1px solid transparent;cursor:pointer;transition:color .2s,background-color .2s}
+.tab:hover{color:#fff}
+.tab[aria-current="true"]{background:rgba(255,255,255,.1);color:#fff}
+.tab svg{width:19px;height:19px;display:none}
+@media (max-width:639px){.tab{padding:0 8px}.tab svg{display:block}.tab .t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+.nav-end{margin-inline-start:auto;display:flex;gap:8px}
+.search-btn{padding:0 14px;color:rgba(255,255,255,.8)}
+@media (min-width:640px){.search-btn{min-width:11rem;justify-content:space-between}}
+.search-btn kbd{border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:2px 6px;font:11px Archivo,sans-serif;color:rgba(255,255,255,.5)}
+@media (max-width:767px){.search-btn kbd{display:none}}
+@media (max-width:639px){.search-btn .t{display:none}}
+/* hero */
+.hero{position:relative;height:82svh;min-height:540px;max-height:900px;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s var(--ease)}
+.slide.on{opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover;object-position:60% 20%;transform:scale(1.07)}
+.slide.on img{transform:scale(1);transition:transform 9s linear}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 72% 28%,transparent 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.96) 100%)}
+.vig2{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,rgba(0,0,0,.85),rgba(0,0,0,.2) 50%,transparent)}
+.vig3{position:absolute;inset:auto 0 0;height:40%;pointer-events:none;background:linear-gradient(to top,#000,transparent)}
+.hero-copy{position:absolute;inset:auto 0 0;padding-bottom:80px}
+.hero-copy>div{max-width:36rem}
+.hero-copy.swap>div{animation:rise .7s var(--ease)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+.hlogo{max-height:128px;width:auto;max-width:80%;object-fit:contain;object-position:left;filter:drop-shadow(0 4px 24px rgba(0,0,0,.6))}
+@media (max-width:639px){.hlogo{max-height:96px}}
+.htitle{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:clamp(48px,7vw,72px);line-height:.95;filter:drop-shadow(0 4px 24px rgba(0,0,0,.6))}
+.pills{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.hdesc{margin:16px 0 0;max-width:32rem;font-size:15px;line-height:1.55;color:rgba(255,255,255,.75);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.acts{margin-top:24px;display:flex;flex-wrap:wrap;gap:12px}
+.dots{position:absolute;inset:auto 0 12px;display:flex;justify-content:flex-end}
+.dots button{width:28px;height:44px;display:grid;place-items:center;background:none;border:0;cursor:pointer;padding:0}
+.dots i{display:block;height:6px;width:6px;border-radius:999px;background:rgba(255,255,255,.35);transition:width .5s,background-color .5s}
+.dots [aria-selected="true"] i{width:24px;background:var(--acc)}
+/* rows */
+main{position:relative;z-index:2;margin-top:-56px;padding-bottom:96px}
+.row{position:relative;padding:12px 0}
+.row h2{margin:0 0 12px;font-size:clamp(18px,1.6vw,20px);font-weight:600;letter-spacing:-.01em}
+.track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-inline:var(--g);padding-top:4px;padding-bottom:8px;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.arr{position:absolute;top:42%;z-index:3;width:44px;height:44px;border-radius:50%;display:none;place-items:center;opacity:0;cursor:pointer;transition:opacity .2s}
+.arr svg{width:20px;height:20px}
+.arr.l{left:12px}.arr.r{right:12px}
+@media (min-width:768px) and (pointer:fine){.arr{display:grid}.row:hover .arr,.arr:focus-visible{opacity:1}}
+.card{position:relative;flex:none;width:9.25rem;scroll-snap-align:start;transition:transform .35s var(--ease)}
+@media (min-width:640px){.card{width:11rem}}
+@media (min-width:1024px){.card{width:12rem}}
+.card:hover{transform:translateY(-4px)}
+.card>button{display:block;width:100%;padding:0;border:0;background:none;text-align:left;cursor:pointer;border-radius:12px}
+.poster{position:relative;aspect-ratio:2/3;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);transition:border-color .2s,box-shadow .2s}
+.card:hover .poster,.card>button:focus-visible .poster{border-color:var(--glow);box-shadow:0 0 0 1px rgba(95,125,255,.55),0 0 20px rgba(95,125,255,.4)}
+.poster img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .poster img{transform:scale(1.05)}
+.poster::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent 50%);opacity:0;transition:opacity .3s}
+.card:hover .poster::after{opacity:1}
+.play{position:absolute;inset:0;z-index:1;display:grid;place-items:center;opacity:0;transition:opacity .3s}
+.play span{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:rgba(143,166,255,.92);color:#000;transform:scale(.85);transition:transform .35s var(--ease)}
+.play svg{width:20px;height:20px;margin-left:3px}
+.card:hover .play{opacity:1}.card:hover .play span{transform:none}
+.rate{position:absolute;left:8px;bottom:8px;z-index:2;display:flex;align-items:center;gap:4px;border-radius:999px;background:rgba(0,0,0,.6);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);padding:2px 8px;font-size:11px;font-weight:500}
+.rate svg{width:11px;height:11px;fill:var(--acc)}
+.meta{margin-top:8px;padding:0 2px}
+.meta p{margin:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:14px;font-weight:500;color:rgba(255,255,255,.9)}
+.meta small{font-size:12px;color:rgba(255,255,255,.45)}
+.save{position:absolute;right:8px;top:8px;z-index:3;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .2s}
+.save svg{width:16px;height:16px}
+.card:hover .save,.save:focus-visible,.save[aria-pressed="true"]{opacity:1}
+@media (pointer:coarse){.save{width:44px;height:44px;opacity:1}}
+.empty{color:var(--fg2);font-size:15px;padding:120px 0 40px}
+.page-head{padding-top:110px;padding-bottom:8px}
+.page-head h1{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:clamp(40px,6vw,64px);line-height:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(9.25rem,1fr));gap:20px 12px;padding-top:12px}
+@media (min-width:640px){.grid{grid-template-columns:repeat(auto-fill,minmax(11rem,1fr))}}
+.grid .card{width:auto}
+/* modal */
+dialog{padding:0;border:0;background:transparent;color:var(--fg);max-width:none;max-height:none;width:100%;height:100%}
+dialog::backdrop{background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.sheet{position:relative;margin:max(68px,6vh) auto 40px;width:min(960px,calc(100% - 24px));border-radius:18px;overflow:hidden;background:rgba(10,13,25,.92);border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px -20px rgba(0,0,0,.9)}
+dialog[open] .sheet{animation:pop .5s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.98)}}
+.screen{position:relative;aspect-ratio:16/9;background:#000}
+.screen iframe,.screen img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
+.screen .vig3{height:30%}
+.x{position:fixed;right:max(12px,env(safe-area-inset-right));top:max(12px,env(safe-area-inset-top));z-index:5;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer}
+.x svg{width:18px;height:18px}
+.info{padding:22px clamp(18px,3vw,32px) 28px}
+.info h3{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:clamp(32px,4vw,44px);line-height:1}
+.info p{margin:14px 0 0;color:rgba(255,255,255,.75);font-size:15px;line-height:1.6;max-width:62ch}
+.note{margin-top:18px;font-size:12.5px;color:var(--fg2)}
+/* search */
+.sbox{margin:12vh auto 0;width:min(640px,calc(100% - 24px));border-radius:18px;padding:12px;background:rgba(10,13,25,.92);border:1px solid rgba(255,255,255,.1)}
+.sbox input{width:100%;min-height:52px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;padding:0 16px;font:16px Archivo,sans-serif;outline:none}
+.sbox input:focus{border-color:var(--glow)}
+.res{list-style:none;margin:8px 0 0;padding:0;max-height:56vh;overflow:auto}
+.res button{width:100%;display:flex;align-items:center;gap:12px;padding:8px;border:0;border-radius:10px;background:none;cursor:pointer;text-align:left}
+.res button:hover,.res button:focus-visible{background:rgba(255,255,255,.07)}
+.res img{width:40px;height:60px;border-radius:6px;object-fit:cover;flex:none}
+.res small{display:block;color:rgba(255,255,255,.45);font-size:12px;margin-top:2px}
+.res .none{padding:16px 8px;color:var(--fg2);font-size:14px}
+/* footer */
+footer{overflow:hidden;padding-top:96px;padding-bottom:110px}
+.big{display:flex;justify-content:space-between;text-transform:uppercase;color:var(--acc);font-weight:900;font-stretch:62%;font-size:min(29vw,480px);line-height:.78;letter-spacing:-.01em;user-select:none}
+.big span{display:block;padding-top:.04em;clip-path:inset(0 -30% 0 -30%)}
+.big i{display:block;font-style:normal;transform:translateY(105%);transition:transform 1.1s var(--ease)}
+.big.in i{transform:none}
+.foot{margin-top:16px;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;font-size:12px;color:var(--fg2)}
+.foot strong{font-weight:900;text-transform:uppercase;font-stretch:125%;font-size:clamp(20px,4.2vw,60px);line-height:1;color:var(--fg)}
+.tmdb{margin-top:20px;font-size:11.5px;color:rgba(255,255,255,.4)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.slide img{transform:none!important}}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.4-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2.5 2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8Z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-marked" viewBox="0 0 24 24"><path d="M6 3.5h12v17l-6-4-6 4Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-l" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-r" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-film" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9h18M7 5l2 4M12 5l2 4M17 5l2 4"/></g></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="m8 3 4 4 4-4"/></g></symbol>
+</svg>
+
+<header id="top">
+  <nav class="gut" aria-label="Main">
+    <a class="brand" href="#" data-view="home" aria-label="K Streams home"><span class="logo" aria-hidden="true">K</span><span>Streams</span></a>
+    <button class="tab" type="button" data-view="home" aria-current="true"><svg aria-hidden="true"><use href="#i-home"/></svg><span class="t">Home</span></button>
+    <button class="tab" type="button" data-view="movie"><svg aria-hidden="true"><use href="#i-film"/></svg><span class="t">Movies</span></button>
+    <button class="tab" type="button" data-view="tv"><svg aria-hidden="true"><use href="#i-tv"/></svg><span class="t">Series</span></button>
+    <button class="tab" type="button" data-view="list"><svg aria-hidden="true"><use href="#i-mark"/></svg><span class="t">My List</span></button>
+    <div class="nav-end">
+      <button class="btn btn-g search-btn" type="button" id="open-search" aria-label="Search"><span style="display:flex;align-items:center;gap:8px"><svg aria-hidden="true"><use href="#i-search"/></svg><span class="t">Search</span></span><kbd>Ctrl K</kbd></button>
+    </div>
+  </nav>
+</header>
+
+<div id="view"></div>
+
+<footer class="gut">
+  <div class="big" id="big" aria-hidden="true"></div>
+  <div class="foot"><span>Kamyar Shahrizad · Madrid, 2026 · App design and build</span><strong>Streams</strong></div>
+  <p class="tmdb">Titles, images and trailer links come from TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB. Trailers play from YouTube.</p>
+</footer>
+
+<div class="ribbon glass" role="note"><span><b>Portfolio demo</b><span class="long"> · trailers only</span></span><a class="btn btn-p" href="https://kamyarsh10.github.io/">Kamyar ↗</a></div>
+
+<dialog id="detail" aria-labelledby="d-title">
+  <button class="x btn-g" type="button" data-close aria-label="Close"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+  <div class="sheet">
+    <div class="screen" id="d-screen"></div>
+    <div class="info">
+      <h3 id="d-title"></h3>
+      <div class="pills" id="d-pills"></div>
+      <p id="d-over"></p>
+      <div class="acts"><button class="btn btn-p" type="button" id="d-play"><svg aria-hidden="true"><use href="#i-play"/></svg>Play trailer</button><button class="btn btn-g" type="button" id="d-save" aria-pressed="false"></button></div>
+      <p class="note">Demo build: this version only plays official trailers.</p>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="search" aria-label="Search titles">
+  <div class="sbox">
+    <label class="sr" for="q">Search titles</label>
+    <input id="q" type="search" placeholder="Search movies and series" autocomplete="off" spellcheck="false">
+    <ul class="res" id="res"></ul>
+  </div>
+</dialog>
+
+<script>
+const DATA = {"rows":[{"title":"Trending Movies","ids":["movie1368337","movie1300968","movie1003596","movie1400837","movie1185344","movie1131943","movie1551025","movie1567605","movie1423191","movie969681","movie1381071","movie1263337","movie1616687","movie1170608"]},{"title":"Trending Series","ids":["tv84773","tv213375","tv291507","tv254630","tv279246","tv247718","tv1489","tv259909","tv293610","tv307853","tv85077","tv131488","tv249565","tv303745"]},{"title":"Top Rated Crime & Thrillers","ids":["movie278","movie238","movie240","movie155","movie497","movie496243","movie680","movie769","movie550","movie598","movie539","movie807","movie244786","movie27205"]},{"title":"Action & Sci-Fi","ids":["movie1368337","movie1423191","movie969681","movie1058424","movie687163","movie299534","movie940721","movie755898","movie1288445","movie1101383","movie1384216","movie155","movie1148365","movie157336"]}],"hero":["movie1368337","movie1300968","movie1003596","tv84773","tv213375","tv291507"],"items":{"movie1368337":{"id":"movie1368337","type":"movie","title":"The Odyssey","year":"2026","rating":8,"genres":["Adventure","Action","Fantasy"],"overview":"Odysseus, the legendary King of Ithaca, embarks on a long and perilous journey home following the Trojan War. Throughout his voyage, he is forced to confront the whims of gods, mythological monsters, and trials that stretch both his cunning and his humanity to the breaking point.","poster":"/zG7hzAyqa9KIjM0Yse0bxty4Cq8.jpg","backdrop":"/c7btGYblBnfAaw713WvFM0Kimc7.jpg","logo":"/kX6ZX4GL7km04332caiOVapR2lb.png","runtime":173,"seasons":null,"trailer":"AyIZ9tiiN8I"},"movie1300968":{"id":"movie1300968","type":"movie","title":"The Hunger Games: Sunrise on the Reaping","year":"2026","rating":8.2,"genres":["Science Fiction","Action","Adventure"],"overview":"Return to the world of Panem 24 years before the events of The Hunger Games, starting on the morning of the reaping of the 50th Hunger Games, also known as the Second Quarter Quell.","poster":"/j1MNyNNgNQL6f27cb3m3uKaPKd6.jpg","backdrop":"/aqFZcr2dxSZ2UwWSo1WC6C0rwDf.jpg","logo":"/saubzsVS7BhgYx67CasOAl4r83t.png","runtime":159,"seasons":null,"trailer":"Dr060OLTodE"},"movie1003596":{"id":"movie1003596","type":"movie","title":"Avengers: Doomsday","year":"2026","rating":null,"genres":["Science Fiction","Action","Adventure"],"overview":"Beloved heroes from three distinct universes are set on a deadly collision course and face an existential threat unlike anything they've ever encountered.","poster":"/1zqWkLwC1zLBBBtIWzmkmWeMWnT.jpg","backdrop":"/rObL4of4eFA8yWaN9pRFo9aOVNi.jpg","logo":"/ggTGX5lMwzoSbm2WmlAFBK0EQdO.png","runtime":165,"seasons":null,"trailer":"X1aFkAkFASk"},"movie1400837":{"id":"movie1400837","type":"movie","title":"Other Mommy","year":"2026","rating":6.4,"genres":["Horror"],"overview":"Young Bela forms a relationship with a sinister entity in her home that looks uncannily like her own mother, drawing her into a terrifying and increasingly dark world.","poster":"/fGRNCssTRrhYZxNzykGGCoMsAVq.jpg","backdrop":"/smZ8BT4Vzw4iCEppTLCnN8jNYtn.jpg","logo":"/ucJJl3ddTi83DqXgGEoblci3uBg.png","runtime":93,"seasons":null,"trailer":"-mnTITqqiT0"},"movie1185344":{"id":"movie1185344","type":"movie","title":"The Beast","year":"2026","rating":5.2,"genres":["Action","Thriller"],"overview":"When a militia of unidentified hostiles coordinates a coup against the United States, the president must fight back by utilizing the highly classified offensive capabilities of his armored limousine, nicknamed The Beast.","poster":"/ocg5JfJP19fodcv5uQUApkmZMdI.jpg","backdrop":"/r5RYEmZzm1Z6imS7XfiKPnMlyc7.jpg","logo":"/8cnahr30h0364ghPi5WooumtpTe.png","runtime":99,"seasons":null,"trailer":"5ckqV_uf8E0"},"movie1131943":{"id":"movie1131943","type":"movie","title":"Madden","year":"2026","rating":null,"genres":["Drama","History"],"overview":"Chronicles John Madden's incredible journey alongside best friend and true original Al Davis—from a Super Bowl-winning partnership with the Raiders, to becoming football’s most recognizable voice, to building the worldwide Madden NFL video game.","poster":"/bRa83oPFFPqaAF3wrpVWPqqfFel.jpg","backdrop":"/iNKyRudHcd2oXV5eaWE0LbixkX3.jpg","logo":"/jNbyhCjMpaTuofzIGiUvsjJs2eI.png","runtime":110,"seasons":null,"trailer":"xzh7HzLXXpk"},"movie1551025":{"id":"movie1551025","type":"movie","title":"Guarding Stars","year":"2026","rating":5.7,"genres":["Comedy","Romance"],"overview":"When a no-nonsense bodyguard is assigned to protect a charming action star over the holidays, sparks fly, secrets unravel, and Christmas gets a whole lot more complicated.","poster":"/wWNizZ4IcSld3xXH1WEXziJiNJN.jpg","backdrop":"/qHvap0vpfTBIbv7cnR0OyBRqQHG.jpg","logo":"/5yB5ISzk2PaRGgE0JL2Hpt7ZgA3.png","runtime":109,"seasons":null,"trailer":"mFvtVPMa5ak"},"movie1567605":{"id":"movie1567605","type":"movie","title":"Ebenezer","year":"2026","rating":7.6,"genres":["Fantasy","Comedy","Horror"],"overview":"An elderly miser embarks on a supernatural journey after visits from the ghost of his former business partner and the Spirits of Christmas Past, Present, and Yet to Come force him to confront his past and fight for a second chance at happiness.","poster":"/6H2N59jJW1hZEzn2ZdrMvJw5vNI.jpg","backdrop":"/fdOVxyNNL95SuI8BGaN6vudEuYX.jpg","logo":"/aHgQzaMPhqSzXgwft1PQNEnZSPY.svg","runtime":115,"seasons":null,"trailer":"D-n-lqKVr78"},"movie1423191":{"id":"movie1423191","type":"movie","title":"Resident Evil","year":"2026","rating":7.5,"genres":["Horror","Science Fiction","Adventure"],"overview":"Medical courier Bryan unwittingly finds himself fighting for survival as one fateful, horrifying night collapses around him in chaos.","poster":"/gAgWJhUSQWCgtKR8170nMkYlBda.jpg","backdrop":"/3icyRAqgakNcQn6aDVz9libFmBA.jpg","logo":"/vMIJP6pOvzh6vZQ8SNSM4q4LlVA.png","runtime":94,"seasons":null,"trailer":"mNd1gb19A-c"},"movie969681":{"id":"movie969681","type":"movie","title":"Spider-Man: Brand New Day","year":"2026","rating":8.5,"genres":["Science Fiction","Action","Adventure"],"overview":"Fighting crime full-time as Spider-Man in a world that doesn't remember him—and the pressure of seeing his old friends move on without him—sparks a change in Peter Parker he may not have the power to control. But that transformation might also be the only thing that can stop a shocking new threat to the city and those he loves - a powerful villain no one can even see.","poster":"/bjiS5ipwxb9JFy3XRRN4OAilSeX.jpg","backdrop":"/subj7knTn4DeS6KS7qI66EQKe9i.jpg","logo":"/dGMb0iSnNp7UMAHkKX63Kh6AJvy.png","runtime":145,"seasons":null,"trailer":"P3uI5sLosKU"},"movie1381071":{"id":"movie1381071","type":"movie","title":"Godzilla Minus Zero","year":"2026","rating":7.7,"genres":["Science Fiction","Horror","Action"],"overview":"War reduced Japan to zero, and Godzilla plunged it into minus. Two years have passed since then, and the country has faced agonizing struggles to achieve recovery and finally reclaim its daily life. Just as humanity managed to cling to a hard-won peace, a new threat strikes, crushing hope in an instant. There is no third time. Everything ends here.","poster":"/hSmIJluOJmTWvJs4d7kHRxjc8s8.jpg","backdrop":"/oqrYIDH4tvfEzPe1yqT4jzmAWHQ.jpg","logo":"/o8kz8hW4HYbCy9jfleVD4mRYQla.png","runtime":135,"seasons":null,"trailer":"Pu0pH5BuCPM"},"movie1263337":{"id":"movie1263337","type":"movie","title":"Heart of the Beast","year":"2026","rating":7.7,"genres":["Adventure","Thriller"],"overview":"After a harrowing plane crash, Special Forces officer James Belmont and his combat dog, Odin, find themselves stranded deep in the Alaskan wilderness. Together, they are forced into a brutal fight for survival against the elements.","poster":"/6sYemVUn79UPKz1ZsSG6kPU4RVy.jpg","backdrop":"/yE766yhgg98tKwTKd8CyNvAtmn6.jpg","logo":"/zJ3jZa2gJzEQ8KWRxMYRox3qr2O.png","runtime":101,"seasons":null,"trailer":"UkMuGKqAux4"},"movie1616687":{"id":"movie1616687","type":"movie","title":"Never Surrender","year":"2026","rating":7.1,"genres":["Action","Crime","Thriller"],"overview":"When a deadly gang descends on his remote home, a guilt-ridden veteran and the estranged grandchildren he barely knows must unite to survive.","poster":"/hKROmLddpzpjkxKKVFYFRAOXX1b.jpg","backdrop":"/umxN2kMcUm6VoxSOdcEcQoXuC4q.jpg","logo":"/u1mJlxIpce2Bc2wVOlenGfwOEYt.png","runtime":140,"seasons":null,"trailer":"o0d1IA85D9o"},"movie1170608":{"id":"movie1170608","type":"movie","title":"Dune: Part Three","year":"2026","rating":null,"genres":["Science Fiction","Adventure"],"overview":"Nearly two decades after he seized control of the Imperium, Paul Atreides is now a ruthless Emperor, and must face the consequences of his reign as old allies return, terrifying new threats emerge, and betrayal lurks in every shadow. Haunted by visions of Imperial collapse and the reappearance of his long-lost love, Paul is drawn into a sweeping conspiracy, with Chani at the heart of its unfolding mystery. As enemies close in, Paul must confront the true cost of power and the fate of those he loves the most.","poster":"/d43fvHQsIMa4kpyhKXw0haEJIvI.jpg","backdrop":"/i5E9H7Ik0u61ylDDTbmUpTL3Yw.jpg","logo":"/oMAcqZReIpMm5SIH02bNuIdyIU0.png","runtime":150,"seasons":null,"trailer":"uJqaGLmZpGo"},"movie1518204":{"id":"movie1518204","type":"movie","title":"Allen","year":"2026","rating":6.6,"genres":["Science Fiction","Adventure","Comedy"],"overview":"20 years after his encounter with an alien, Petey never moved on. Now his old friend has returned, and the reason why is complicated — and unexpected.","poster":"/alhhrpj1PSAn5bfz4Os1k7Bweoj.jpg","backdrop":"/51fGmBW7WjyJouP9TjIcxRpCUNk.jpg","logo":"/nc5MVDGX2TOBRSYNYNhxUeULrQv.png","runtime":107,"seasons":null,"trailer":"P8G5Y25W3eA"},"movie1543469":{"id":"movie1543469","type":"movie","title":"Heartland","year":"2026","rating":6.3,"genres":["Thriller","Mystery"],"overview":"Former country music legend Misty Jones returns to Nashville to unravel the truth behind her rising-star niece's disappearance.","poster":"/zhxlzxBlO1sWB1rPn7RmAoeQ2na.jpg","backdrop":"/psTMZj8gvsfYVfvd7FZCHH4xL6P.jpg","logo":"/rKJfXPDkWPsGRuk3axzTAdANZdn.png","runtime":114,"seasons":null,"trailer":"ziIz59enN1c"},"tv84773":{"id":"tv84773","type":"tv","title":"The Lord of the Rings: The Rings of Power","year":"2022","rating":7.2,"genres":["Action & Adventure","Sci-Fi & Fantasy"],"overview":"Beginning in a time of relative peace, we follow an ensemble cast of characters as they confront the re-emergence of evil to Middle-earth. From the darkest depths of the Misty Mountains, to the majestic forests of Lindon, to the breathtaking island kingdom of Númenor, to the furthest reaches of the map, these kingdoms and characters will carve out legacies that live on long after they are gone.","poster":"/bMXWXKM9ydUmMTNvDnYo9QtCBRt.jpg","backdrop":"/uVOcz7JBOuZxsx9IYpx6Ah174LX.jpg","logo":"/fA1eS6rfYjS9W8AZbBVG0fpxXn1.png","runtime":null,"seasons":3,"trailer":"x8UAUAuKNcU"},"tv213375":{"id":"tv213375","type":"tv","title":"VisionQuest","year":"2026","rating":8.3,"genres":["Sci-Fi & Fantasy","Drama"],"overview":"With a bounty on his head, Vision must confront his nature and resist Ultron's influence to survive.","poster":"/WGyAyBPncfuu8MZhLY9RtfZPM0.jpg","backdrop":"/uoXXbN2PrOxH6UKyP7kYwmGpAAP.jpg","logo":"/skoYQABun0gdw4VpN85ZbTIclmT.png","runtime":null,"seasons":1,"trailer":"sXKnmgmbkoE"},"tv291507":{"id":"tv291507","type":"tv","title":"The Body","year":"2026","rating":7.8,"genres":["Mystery","Drama"],"overview":"On Halloween night, an all-girls dance squad tumbles into Catholic guilt, unholy desires and ghostly visions when an initiation goes to hell.","poster":"/zleCYDRbW5mKwgZwVK4SNIrKXWx.jpg","backdrop":"/hYJqUoXRZnodGxgVZTM8uwr5kbC.jpg","logo":"/c7PCh5wDlXODksBXElQHiotV9M5.png","runtime":null,"seasons":1,"trailer":"wl7uj7n7DoY"},"tv254630":{"id":"tv254630","type":"tv","title":"12 12 12","year":"2026","rating":6.4,"genres":["Action & Adventure","Crime","Drama"],"overview":"A heist takes 12 months to plan, 12 hours to execute—and a thief not caught within 12 days won't be caught at all. Across three pulse-pounding timelines, an FBI agent and a career criminal face off in a deadly game of cat and mouse through Europe.","poster":"/8q6BvFQuKM1Rud4E9NQDaMGy9EL.jpg","backdrop":"/tjy25xpiFeo2gahl7N0hoxbRtG7.jpg","logo":"/pczEboTXvQhnOo0VCAFJrd2Y8E2.png","runtime":null,"seasons":1,"trailer":"pWdt8WMCqnc"},"tv279246":{"id":"tv279246","type":"tv","title":"The Remarried Empress","year":"2026","rating":8.7,"genres":["Drama","Sci-Fi & Fantasy"],"overview":"Beloved Empress Navier rules the Eastern Empire alongside Emperor Sovieshu. But when Sovieshu falls for a runaway slave and demands a divorce, Navier will agree on one condition: that she's given approval to remarry rival Prince Heinrey of the Western Kingdom.","poster":"/zn3IXZzGavH3qle3o3g1r32eXDy.jpg","backdrop":"/fNcpHmuZLKoyhNMBEzdqzX8iIvg.jpg","logo":"/cR7DBBRMFLAwQR4A1FOMcUEe5Hp.png","runtime":null,"seasons":1,"trailer":"aScUjuKvHSo"},"tv247718":{"id":"tv247718","type":"tv","title":"MobLand","year":"2025","rating":8.7,"genres":["Crime","Drama"],"overview":"Two mob families clash in a war that threatens to topple empires and lives.","poster":"/5Xc7WpWsgflfgEMoBlf9TmWhfbH.jpg","backdrop":"/h0OC7ouop8YLwbAVfS3UUE2Lw4T.jpg","logo":"/fh6N94BUPuLPN70WpbM0OEgOJbc.png","runtime":null,"seasons":2,"trailer":"qKGgw7Ob5f4"},"tv1489":{"id":"tv1489","type":"tv","title":"Jimmy Kimmel Live!","year":"2003","rating":5.3,"genres":["Talk","Comedy"],"overview":"Jimmy Kimmel Live! is an American late-night talk show, created and hosted by Jimmy Kimmel and broadcast on ABC.","poster":"/bGB6bEbG4qL22C1SFupkdAxYC9i.jpg","backdrop":"/taqVKvEmMlI2hs2g364fXWzv0ia.jpg","logo":"/xiYj5NlGEYglNfG2Wytbd6hvZtB.png","runtime":null,"seasons":25,"trailer":"2kqZi3RoA5I"},"tv259909":{"id":"tv259909","type":"tv","title":"Dexter: Resurrection","year":"2025","rating":8.5,"genres":["Crime","Drama","Mystery"],"overview":"Set 10 weeks after Dexter: New Blood, Dexter Morgan chases a missing Harrison to New York City, where Captain Angel Batista is hot on their trail from way down in Miami.","poster":"/o2Oyi3boT100bY5kCP4MBiTeetO.jpg","backdrop":"/vcpj6rRDS93ImHCLPY8bwBuFGjR.jpg","logo":"/zmSrXguBz56KTnCR7Tvi5vLjjI1.png","runtime":null,"seasons":2,"trailer":"84o1Q6fB20k"},"tv293610":{"id":"tv293610","type":"tv","title":"Doctor X: Mafia in White","year":"2026","rating":8.6,"genres":["Mystery","Drama","Crime"],"overview":"In a hospital dominated by ego and corruption, an enigmatic but brilliant surgeon arrives — taking on seemingly impossible cases amid fierce opposition.","poster":"/nDDVzQfv95PGwj9nV2fJvUrkcvU.jpg","backdrop":"/mDYIV71RL3mkaW8IfSGNthuVB7l.jpg","logo":"/sU3HlqW8J1rtLigitz2rBiTLTUC.png","runtime":null,"seasons":1,"trailer":"v6KNnhkLnnY"},"tv307853":{"id":"tv307853","type":"tv","title":"Sunshine through the Rain","year":"2026","rating":8.5,"genres":["Drama"],"overview":"Two struggling biology students, initially rivals for a scholarship, find mutual support and solace, transforming their relationship from competition to companionship.","poster":"/pG00jI2UCm0Q6U9SDonIlvy3M3i.jpg","backdrop":"/9LtN1ac91JAqXMke8CAJ6BiBSLS.jpg","logo":"/yfBDoZ0WO4nTZM9hr9vJZcxmM9B.png","runtime":null,"seasons":1,"trailer":"W71Q5mz69uA"},"tv85077":{"id":"tv85077","type":"tv","title":"The Chosen","year":"2019","rating":8.9,"genres":["Action & Adventure","Family","Drama"],"overview":"The life of Christ through the eyes of those who encountered him.","poster":"/nr0r7YTn1l84KLG1iCSO5ofHTvO.jpg","backdrop":"/2YQFwn9aF7huTFHxn9lFTAn14F.jpg","logo":"/kYW1RHKIlvFSn5QRc0kPQ5eRZ1s.png","runtime":60,"seasons":6,"trailer":"5CVj41dtkIA"},"tv131488":{"id":"tv131488","type":"tv","title":"The Empress","year":"2022","rating":7.7,"genres":["Drama"],"overview":"When rebellious Elisabeth falls for Emperor Franz and becomes his unlikely bride, she enters a world of tension and intrigue at the Viennese court.","poster":"/9AWkNkZHwNLuM6H5u6dToioHMAI.jpg","backdrop":"/lnPf1rCmSgcowbhMPH4M1avSApm.jpg","logo":"/cVOLijE5KNsqslU3ACDA1Ozj7cm.png","runtime":null,"seasons":3,"trailer":"KfySe96FPr8"},"tv249565":{"id":"tv249565","type":"tv","title":"The Good Daughter","year":"2026","rating":7.9,"genres":["Drama","Mystery"],"overview":"Sisters Charlotte and Samantha Quinn have spent the last twenty-eight years trying to piece together the lives that were fractured by a single night of violence. When another attack splinters the small town of Pikeville, Charlotte is the first witness on the scene. Now a lawyer like her father, she’s forced to confront her own demons as the case twists through one shocking revelation after another. In the end, both she and Samantha find themselves wondering if the price of being the good daughter was worth it after all.","poster":"/qJPvyo9Pxz3MQndd3tKSocLz1Nt.jpg","backdrop":"/nDU6mUk4wVU1EkDkDvcLvT2UWdy.jpg","logo":"/ghwfKIgkBKTUBlFHzEtm04LVQgz.png","runtime":null,"seasons":1,"trailer":"Kjwbn5AF_3E"},"tv303745":{"id":"tv303745","type":"tv","title":"Love in Disguise","year":"2026","rating":9.1,"genres":["Comedy","Drama","Crime"],"overview":"Taekang Group's successor, Yoon Yi-jun, is the prime suspect of a shocking murder. To uncover the truth, Kang Jae-hee goes undercover as a male secretary to keep an eye on Yi-jun. The closer they get to what really happened, the closer Yi-jun and Jae-hee become. Will Jae-hee, who is hiding her identity, and Yi-jun, who is hiding a secret, be able to let their true feelings be known to one another?","poster":"/c9DEtqCDZBPL9i06WmbDrcndrBy.jpg","backdrop":"/ob7m6JqZ7jSOocR3VL73VxRC6Is.jpg","logo":"/e4PFz0r4GlFX4WOhFm0RpI9CgdM.png","runtime":null,"seasons":1,"trailer":"Q7Xj7sASXSU"},"tv292741":{"id":"tv292741","type":"tv","title":"Nocturne","year":"2026","rating":7.6,"genres":["Crime","Drama","Mystery"],"overview":"When a victim of notorious serial killer Jurek Walter unexpectedly turns up alive, detective Jonah Lynn races against time to find the one person still missing, while his protégé Saga Bauer goes undercover to get answers from the killer himself.","poster":"/nyvXVcPnHEwVmqCdzjjCsu1jqhm.jpg","backdrop":"/614k6C9doThoMe6GyH0nTnGgLXt.jpg","logo":"/nB5lOt3DlBdgJVziuOFCIGAkzjF.png","runtime":null,"seasons":1,"trailer":"AaEy1f2Dgys"},"movie278":{"id":"movie278","type":"movie","title":"The Shawshank Redemption","year":"1994","rating":8.7,"genres":["Drama","Crime"],"overview":"Imprisoned in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.","poster":"/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg","backdrop":"/pNjh59JSxChQktamG3LMp9ZoQzp.jpg","logo":"/1K53E8WXQW76Scg8upBObXSrbgN.png","runtime":142,"seasons":null,"trailer":"PLl99DlL6b4"},"movie238":{"id":"movie238","type":"movie","title":"The Godfather","year":"1972","rating":8.7,"genres":["Drama","Crime"],"overview":"Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.","poster":"/3bhkrj58Vtu7enYsRolD1fZdja1.jpg","backdrop":"/tSPT36ZKlP2WVHJLM4cQPLSzv3b.jpg","logo":"/kysDTCloxUPJ1BILI4f8gs74fcr.png","runtime":175,"seasons":null,"trailer":"Ew9ngL1GZvs"},"movie240":{"id":"movie240","type":"movie","title":"The Godfather Part II","year":"1974","rating":8.6,"genres":["Drama","Crime"],"overview":"In the continuing saga of the Corleone crime family, a young Vito Corleone grows up in Sicily and in 1910s New York. In the 1950s, Michael Corleone attempts to expand the family business into Las Vegas, Hollywood and Cuba.","poster":"/8a1lJs7mFyGhGhZZDT1azJUoQiZ.jpg","backdrop":"/pGzqRKrYeK4LogoysNro0vG8d8N.jpg","logo":"/gEfwCTLbcX7jvIHLTXfVW1idZby.png","runtime":202,"seasons":null,"trailer":"9O1Iy9od7-A"},"movie155":{"id":"movie155","type":"movie","title":"The Dark Knight","year":"2008","rating":8.5,"genres":["Action","Thriller","Crime"],"overview":"Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.","poster":"/qJ2tW6WMUDux911r6m7haRef0WH.jpg","backdrop":"/cfT29Im5VDvjE0RpyKOSdCKZal7.jpg","logo":"/nO5Uix3Qr4WjOyU1BMPv0okyNWm.png","runtime":152,"seasons":null,"trailer":"_PZpmTj1Q8Q"},"movie497":{"id":"movie497","type":"movie","title":"The Green Mile","year":"1999","rating":8.5,"genres":["Fantasy","Drama","Crime"],"overview":"A supernatural tale set on death row in a Southern prison, where gentle giant John Coffey possesses the mysterious power to heal people's ailments. When the cell block's head guard, Paul Edgecomb, recognizes Coffey's miraculous gift, he tries desperately to help stave off the condemned man's execution.","poster":"/8VG8fDNiy50H4FedGwdSVUPoaJe.jpg","backdrop":"/amZavErrjrdgDwhsIdpWxHNenIx.jpg","logo":"/zvl6GTeDHTpA3VQfaJH3Pw5MUjC.png","runtime":189,"seasons":null,"trailer":"Bg7epsq0OIQ"},"movie496243":{"id":"movie496243","type":"movie","title":"Parasite","year":"2019","rating":8.5,"genres":["Comedy","Thriller","Drama"],"overview":"All unemployed, Ki-taek's family takes peculiar interest in the wealthy and glamorous Parks for their livelihood until they get entangled in an unexpected incident.","poster":"/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg","backdrop":"/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg","logo":"/eEGZWCv0OYbMLCaNsDl1cgrvnWR.png","runtime":133,"seasons":null,"trailer":"bM9QabAojCg"},"movie680":{"id":"movie680","type":"movie","title":"Pulp Fiction","year":"1994","rating":8.5,"genres":["Thriller","Crime","Comedy"],"overview":"A burger-loving hit man, his philosophical partner, a drug-addled gangster's moll and a washed-up boxer converge in this sprawling, comedic crime caper. Their adventures unfurl in three stories that ingeniously trip back and forth in time.","poster":"/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg","backdrop":"/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg","logo":"/kpuNKsIzVbK3LDVo4iOJDAY0y7d.png","runtime":154,"seasons":null,"trailer":"tGpTpVyI_OQ"},"movie769":{"id":"movie769","type":"movie","title":"GoodFellas","year":"1990","rating":8.5,"genres":["Drama","Crime"],"overview":"The true story of Henry Hill, a half-Irish, half-Sicilian Brooklyn kid who is adopted by neighbourhood gangsters at an early age and climbs the ranks of a Mafia family under the guidance of Jimmy Conway.","poster":"/9OkCLM73MIU2CrKZbqiT8Ln1wY2.jpg","backdrop":"/6qgSKYgkHLL0vAVbsqRfo8KmZgL.jpg","logo":"/jsRyKKKYLPU4vUmlRJPlRFrKNN0.png","runtime":145,"seasons":null,"trailer":"PTBRNXGQR9Q"},"movie550":{"id":"movie550","type":"movie","title":"Fight Club","year":"1999","rating":8.4,"genres":["Drama","Thriller"],"overview":"A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.","poster":"/jSziioSwPVrOy9Yow3XhWIBDjq1.jpg","backdrop":"/c6OLXfKAk5BKeR6broC8pYiCquX.jpg","logo":"/7Uqhv24pGJs4Ns31NoOPWFJGWNG.png","runtime":139,"seasons":null,"trailer":"dfeUzm6KF4g"},"movie598":{"id":"movie598","type":"movie","title":"City of God","year":"2002","rating":8.4,"genres":["Drama","Crime"],"overview":"In the poverty-stricken favelas of Rio de Janeiro in the 1970s, two young men choose different paths. Rocket is a budding photographer who documents the increasing drug-related violence of his neighborhood, while José “Zé” Pequeno is an ambitious drug dealer diving into a dangerous life of crime.","poster":"/k7eYdWvhYQyRQoU2TB2A2Xu2TfD.jpg","backdrop":"/uvitbjFU4JqvMwIkMWHp69bmUzG.jpg","logo":"/jTgUNDqwWIpzqqLliFENRRKLHRp.png","runtime":129,"seasons":null,"trailer":"dcUOO4Itgmw"},"movie539":{"id":"movie539","type":"movie","title":"Psycho","year":"1960","rating":8.4,"genres":["Horror","Thriller","Mystery"],"overview":"When larcenous real estate clerk Marion Crane goes on the lam with a wad of cash and hopes of starting a new life, she ends up at the notorious Bates Motel, where manager Norman Bates cares for his housebound mother.","poster":"/yz4QVqPx3h1hD1DfqqQkCq3rmxW.jpg","backdrop":"/mufF1aYvwdpKerhq5R1YrVcbJLY.jpg","logo":"/3TLppfrmhnuldfXozpCmUIK6iXV.png","runtime":109,"seasons":null,"trailer":"D90QhegiVvo"},"movie807":{"id":"movie807","type":"movie","title":"Se7en","year":"1995","rating":8.4,"genres":["Crime","Mystery","Thriller"],"overview":"Two homicide detectives are on a desperate hunt for a serial killer whose crimes are based on the \"seven deadly sins\" in this dark and haunting film that takes viewers from the tortured remains of one victim to the next. The seasoned Det. Somerset researches each sin in an effort to get inside the killer's mind, while his novice partner, Mills, scoffs at his efforts to unravel the case.","poster":"/191nKfP0ehp3uIvWqgPbFmI4lv9.jpg","backdrop":"/jwBs4djVIe9Kz3Vu9rsI9aEEKWU.jpg","logo":"/zVyZvT1zVO7GIk65RlcOx5KdAN.png","runtime":127,"seasons":null,"trailer":"KPOuJGkpblk"},"movie244786":{"id":"movie244786","type":"movie","title":"Whiplash","year":"2014","rating":8.4,"genres":["Drama","Music","Thriller"],"overview":"Under the direction of a ruthless instructor, a talented young drummer begins to pursue perfection at any cost, even his humanity.","poster":"/7fn624j5lj3xTme2SgiLCeuedmO.jpg","backdrop":"/fRGxZuo7jJUWQsVg9PREb98Aclp.jpg","logo":"/kTmh3W4iWQnNUcnYNgxgOVhpzCe.png","runtime":107,"seasons":null,"trailer":"Q7kZy3T6vRM"},"movie27205":{"id":"movie27205","type":"movie","title":"Inception","year":"2010","rating":8.4,"genres":["Action","Science Fiction","Crime"],"overview":"Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.","poster":"/xlaY2zyzMfkhk0HSC5VUwzoZPU1.jpg","backdrop":"/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg","logo":"/eS5TjZsO30LTfZISyBbPiXshAKd.png","runtime":148,"seasons":null,"trailer":"JE9z-gy4De4"},"movie311":{"id":"movie311","type":"movie","title":"Once Upon a Time in America","year":"1984","rating":8.4,"genres":["Drama","Crime"],"overview":"A former Prohibition-era Jewish gangster returns to the Lower East Side of Manhattan over thirty years later, where he once again must confront the ghosts and regrets of his old life.","poster":"/i0enkzsL5dPeneWnjl1fCWm6L7k.jpg","backdrop":"/xlDUjb0Q5Dv6jPQRF5VE4IMjIy.jpg","logo":"/c76kuxURRnxS57zECKpzc9ByR5t.svg","runtime":139,"seasons":null,"trailer":"5vrbUpDihxs"},"movie274":{"id":"movie274","type":"movie","title":"The Silence of the Lambs","year":"1991","rating":8.3,"genres":["Crime","Thriller","Drama"],"overview":"Clarice Starling is a top student at the FBI's training academy.  Jack Crawford wants Clarice to interview Dr. Hannibal Lecter, a brilliant psychiatrist who is also a violent psychopath, serving life behind bars for various acts of murder and cannibalism.  Crawford believes that Lecter may have insight into a case and that Starling, as an attractive young woman, may be just the bait to draw him out.","poster":"/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg","backdrop":"/mbOx1wxMLikzwWUO9TKAcFIy6op.jpg","logo":"/zeU4G9ka63bOx8eti3XG9186qqm.svg","runtime":119,"seasons":null,"trailer":"6iB21hsprAQ"},"movie1058424":{"id":"movie1058424","type":"movie","title":"Hope","year":"2026","rating":6.8,"genres":["Science Fiction","Mystery","Action"],"overview":"In the remote South Korean village of Hope Harbor, police chief Bum-seok and officer Sung-ae are called to investigate a mysterious creature wreaking havoc on the community. But all is not as it seems, and perceptions can be misleading. What begins as ignorance plants the seed of disaster, escalating through human conflict into a tragedy of cosmic proportions.","poster":"/6VY1ZKgpsc8CfGsQcCGiYEgHdH0.jpg","backdrop":"/qqHFLg90IUSoTmSMpKOOW5RyqN3.jpg","logo":"/hJG3cSi9z40smOi4Fac07xIlAqZ.png","runtime":157,"seasons":null,"trailer":"OFaJzL83y0Q"},"movie687163":{"id":"movie687163","type":"movie","title":"Project Hail Mary","year":"2026","rating":8.6,"genres":["Science Fiction","Adventure"],"overview":"Science teacher Ryland Grace wakes up on a spaceship light years from home with no recollection of who he is or how he got there. As his memory returns, he begins to uncover his mission: solve the riddle of the mysterious substance causing the sun to die out. He must call on his scientific knowledge and unorthodox ideas to save everything on Earth from extinction.","poster":"/iOb2fjXLbpJgyQXe46n1WtGCnaa.jpg","backdrop":"/8Tfys3mDZVp4tNoH2ktm06a0Tau.jpg","logo":"/JYigeoTgWK9WCbaYqYYp22Fg5W.png","runtime":157,"seasons":null,"trailer":"NKYea63tQmI"},"movie299534":{"id":"movie299534","type":"movie","title":"Avengers: Endgame","year":"2019","rating":8.2,"genres":["Adventure","Science Fiction","Action"],"overview":"After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.","poster":"/jtDv3lCnST0fZRvdYFwR5CVwK2x.jpg","backdrop":"/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg","logo":"/gvGe333uy5FynrYAtGuQwlzzxku.png","runtime":181,"seasons":null,"trailer":"L2NAh3CIdig"},"movie940721":{"id":"movie940721","type":"movie","title":"Godzilla Minus One","year":"2023","rating":7.6,"genres":["Science Fiction","Horror","Action"],"overview":"In postwar Japan, Godzilla brings new devastation to an already scorched landscape. With no military intervention or government help in sight, the survivors must join together in the face of despair and fight back against an unrelenting horror.","poster":"/2E2WTX0TJEflAged6kzErwqX1kt.jpg","backdrop":"/oHBhHoNe59VH6bUMazDtJmWOFSS.jpg","logo":"/9Y0clwfVxHg3Z96tK0xEY2e8uRz.png","runtime":125,"seasons":null,"trailer":"MSp68m8OJus"},"movie755898":{"id":"movie755898","type":"movie","title":"War of the Worlds","year":"2025","rating":4,"genres":["Science Fiction","Thriller"],"overview":"Will Radford is a top analyst for Homeland Security who tracks potential threats through a mass surveillance program, until one day an attack by an unknown entity leads him to question whether the government is hiding something from him... and from the rest of the world.","poster":"/yvirUYrva23IudARHn3mMGVxWqM.jpg","backdrop":"/iZLqwEwUViJdSkGVjePGhxYzbDb.jpg","logo":"/1XURF3Uwy70KBjYDG1qD1kBQaui.png","runtime":91,"seasons":null,"trailer":"d9erkpdh5o0"},"movie1288445":{"id":"movie1288445","type":"movie","title":"Mutiny","year":"2026","rating":7.6,"genres":["Action","Thriller"],"overview":"After witnessing his billionaire boss' murder and being framed for the crime, Cole Reed boards a cargo ship on a one-man crusade to avenge his boss' death only to discover an international conspiracy.","poster":"/pu2VxGlpGwffOx292w18b1tv96j.jpg","backdrop":"/qDa0fqDqIBCovRp975RvtGPcuN3.jpg","logo":"/2fwrh0FgcOXDqQtcWNb21uNhak6.png","runtime":96,"seasons":null,"trailer":"2Iqvbe98Gb4"},"movie1101383":{"id":"movie1101383","type":"movie","title":"The End of Oak Street","year":"2026","rating":7,"genres":["Science Fiction","Mystery","Thriller"],"overview":"After a mysterious cosmic event rips Oak Street from suburbia and transports their neighborhood to someplace unknown, the Platt family soon discovers that their very survival depends on them sticking together as they navigate their now unrecognizable surroundings.","poster":"/7DmtuAK5gYGlMFA45Oxkl1bEpIC.jpg","backdrop":"/wnR8pwWtoL3TFwP41mLCt91ReCt.jpg","logo":"/xm5OF5LINmyJLV7Cvq1UHxWeJHM.png","runtime":100,"seasons":null,"trailer":"u4tgctWuHc0"},"movie1384216":{"id":"movie1384216","type":"movie","title":"The Dog Stars","year":"2026","rating":7.2,"genres":["Action","Thriller","Science Fiction"],"overview":"After the world's population has been ravaged by a pandemic, a man lives a lonesome existence in a Colorado airplane hangar with his dog and a dour gunman he has befriended. When a mysterious transmission comes through on the radio while he’s flying his old Cessna, it sparks a hunt for the provenance of the sound.","poster":"/5O616X9vmRzQdB68PHzBewPittd.jpg","backdrop":"/3k7GzxOdLZkN3eZsuhLi2eRzkXO.jpg","logo":"/mk9IHaDuNrhF9hf5LNYFLsyrfUb.png","runtime":119,"seasons":null,"trailer":"-xSxaE1ClEE"},"movie1148365":{"id":"movie1148365","type":"movie","title":"Matchbox the Movie","year":"2026","rating":7.5,"genres":["Action","Comedy","Adventure"],"overview":"When a group of former childhood friends reconnect, their reunion takes a wild turn as they stumble upon a dangerous international plot—and must save the world.","poster":"/aHhHRz6nOpwkqJs5ASeRGAdK2dt.jpg","backdrop":"/jdJsnhHfkIi3J7jwfiCFT4gXNx5.jpg","logo":"/m68Dkn7fNnhgsvV9VhzxfLFbQMe.png","runtime":127,"seasons":null,"trailer":"7xfqITrMDcI"},"movie157336":{"id":"movie157336","type":"movie","title":"Interstellar","year":"2014","rating":8.5,"genres":["Adventure","Drama","Science Fiction"],"overview":"The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.","poster":"/yQvGrMoipbRoddT0ZR8tPoR7NfX.jpg","backdrop":"/8sNiAPPYU14PUepFNeSNGUTiHW.jpg","logo":"/4Hu4w5p0mwL2Wvyk3gqu2JRDGHl.png","runtime":169,"seasons":null,"trailer":"LY19rHKAaAg"},"movie1375646":{"id":"movie1375646","type":"movie","title":"Colony","year":"2026","rating":8.2,"genres":["Horror","Action","Science Fiction"],"overview":"Professor Se-jeong is thrust into a bloody nightmare when a rapidly mutating virus is released during a biotech conference causing authorities to seal the facility. Trapped inside with no escape, Se-jeong along with a small group of survivors must fight to stay alive while the infected undergo horrific transformations.","poster":"/enz3WLx5QU1FUyhXZld04QWIc6N.jpg","backdrop":"/iGViga8sDCET1S6GfwOlAbuhSGQ.jpg","logo":"/hCK5tVvTG2c0SrOaPCWMlbMj69A.png","runtime":123,"seasons":null,"trailer":"LW6dpj1uCK8"},"movie1377237":{"id":"movie1377237","type":"movie","title":"Runner","year":"2026","rating":8.2,"genres":["Action","Comedy","Thriller"],"overview":"A former soldier is thrown into a brutal race against time when a critical medical delivery makes him and his unlikely partner the targets of a ruthless cartel. As the mission spirals into a deadly manhunt, every detour, delay, and bullet pushes them closer to failure. With betrayal closing in from every side, they must survive the chase and deliver their cargo to save the life of a little girl.","poster":"/vJk2TW1QZAmBiD7oj9ZF9EPTYY1.jpg","backdrop":"/npXZNWjOEYrqdMDPQ11SGBrXqAG.jpg","logo":"/pAnbApoi6DHwXzoKBfQU4M5Wr8t.png","runtime":98,"seasons":null,"trailer":"B6Z9MM1LhEA"}}};
+(() => {
+  const IMG = 'https://image.tmdb.org/t/p/';
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const all = Object.values(DATA.items);
+  const it = (id) => DATA.items[id];
+  const kind = (m) => m.type === 'tv' ? 'Series' : 'Movie';
+  const svg = (id) => `<svg aria-hidden="true"><use href="#${id}"/></svg>`;
+
+  // watchlist: per-viewer convenience only
+  let list = [];
+  try { list = JSON.parse(localStorage.getItem('ks-demo-list') || '[]'); } catch (e) { list = []; }
+  const saved = (id) => list.includes(id);
+  function toggle(id) {
+    list = saved(id) ? list.filter(x => x !== id) : [id, ...list];
+    try { localStorage.setItem('ks-demo-list', JSON.stringify(list)); } catch (e) {}
+    document.querySelectorAll(`[data-save="${id}"]`).forEach(paintSave);
+    if (view === 'list') render();
+  }
+  function paintSave(b) {
+    const on = saved(b.dataset.save), m = it(b.dataset.save);
+    b.setAttribute('aria-pressed', String(on));
+    if (b.classList.contains('save')) { b.innerHTML = svg(on ? 'i-marked' : 'i-mark'); b.setAttribute('aria-label', `${on ? 'Remove' : 'Add'} ${m.title} ${on ? 'from' : 'to'} My List`); }
+    else b.innerHTML = `${svg(on ? 'i-check' : 'i-plus')}${on ? 'In My List' : 'My List'}`;
+  }
+
+  const card = (m) => `<div class="card"><button type="button" data-open="${m.id}" aria-label="${esc(m.title)}, ${kind(m).toLowerCase()}, play trailer"><div class="poster"><img src="${IMG}w342${m.poster}" alt="" loading="lazy" decoding="async" draggable="false"><span class="play" aria-hidden="true"><span>${svg('i-play')}</span></span>${m.rating ? `<span class="rate">${svg('i-star')}${m.rating.toFixed(1)}</span>` : ''}</div><div class="meta"><p>${esc(m.title)}</p><small>${[m.year, kind(m)].filter(Boolean).join(' · ')}</small></div></button><button type="button" class="save glass" data-save="${m.id}"></button></div>`;
+  const row = (title, items) => items.length ? `<section class="row" aria-label="${esc(title)}"><h2 class="gut">${esc(title)}</h2><button type="button" class="arr l glass" data-dir="-1" aria-label="Scroll left">${svg('i-l')}</button><button type="button" class="arr r glass" data-dir="1" aria-label="Scroll right">${svg('i-r')}</button><div class="track gut">${items.map(card).join('')}</div></section>` : '';
+
+  // views
+  const host = $('#view');
+  let view = 'home', heroTimer = 0, hi = 0;
+  function render() {
+    clearTimeout(heroTimer);
+    document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-current', String(t.dataset.view === view)));
+    if (view === 'home') {
+      const hero = DATA.hero.map(it);
+      host.innerHTML = `<section class="hero" aria-roledescription="carousel" aria-label="Trending today">${hero.map((m, k) => `<div class="slide${k ? '' : ' on'}"><img src="${IMG}w1280${m.backdrop}" alt="" ${k ? 'loading="lazy"' : 'fetchpriority="high"'} draggable="false"></div>`).join('')}<div class="vig"></div><div class="vig2"></div><div class="vig3"></div><div class="hero-copy gut" id="hcopy" aria-live="polite"></div><div class="dots gut" role="tablist" aria-label="Choose slide">${hero.map((m, k) => `<button type="button" role="tab" aria-selected="${!k}" aria-label="Show ${esc(m.title)}" data-slide="${k}"><i></i></button>`).join('')}</div></section><main>${DATA.rows.map(r => row(r.title, r.ids.map(it))).join('')}</main>`;
+      hi = 0; heroCopy(); heroPlay();
+      const h = $('.hero');
+      h.addEventListener('mouseenter', () => clearTimeout(heroTimer));
+      h.addEventListener('mouseleave', heroPlay);
+      h.addEventListener('focusin', () => clearTimeout(heroTimer));
+    } else {
+      const items = view === 'list' ? list.map(it).filter(Boolean) : all.filter(m => m.type === view).sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      const title = view === 'list' ? 'My List' : view === 'tv' ? 'Series' : 'Movies';
+      host.innerHTML = `<section class="gut page-head"><h1>${title}</h1>${items.length ? `<div class="grid">${items.map(card).join('')}</div>` : `<p class="empty">Nothing saved yet. Tap the bookmark on any poster to keep it here.</p>`}</section>`;
+    }
+    host.querySelectorAll('[data-save]').forEach(paintSave);
+  }
+  function heroCopy() {
+    const m = it(DATA.hero[hi]), c = $('#hcopy');
+    c.classList.remove('swap'); void c.offsetWidth; c.classList.add('swap');
+    c.innerHTML = `<div>${m.logo ? `<img class="hlogo" src="${IMG}w500${m.logo}" alt="${esc(m.title)}">` : `<h1 class="htitle">${esc(m.title)}</h1>`}<div class="pills">${m.rating ? `<span class="pill r">${svg('i-star')}${m.rating.toFixed(1)}</span>` : ''}<span class="pill">${kind(m)}</span>${m.year ? `<span class="pill">${m.year}</span>` : ''}${m.genres.map(g => `<span class="pill">${esc(g)}</span>`).join('')}</div><p class="hdesc">${esc(m.overview)}</p><div class="acts"><button class="btn btn-p" type="button" data-open="${m.id}" data-autoplay>${svg('i-play')}Watch trailer</button><button class="btn btn-g" type="button" data-save="${m.id}"></button></div></div>`;
+    paintSave(c.querySelector('[data-save]'));
+    document.querySelectorAll('.slide').forEach((s, k) => s.classList.toggle('on', k === hi));
+    document.querySelectorAll('[data-slide]').forEach((b, k) => b.setAttribute('aria-selected', String(k === hi)));
+  }
+  function heroPlay() { clearTimeout(heroTimer); if (!reduce.matches && view === 'home') heroTimer = setTimeout(() => { hi = (hi + 1) % DATA.hero.length; heroCopy(); heroPlay(); }, 8000); }
+
+  // detail + trailer
+  const dlg = $('#detail'), screen = $('#d-screen');
+  let cur = null, opener = null;
+  function poster(m) { screen.innerHTML = `<img src="${IMG}w1280${m.backdrop}" alt=""><div class="vig3"></div>`; }
+  function playTrailer() { screen.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(cur.trailer)}?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="${esc(cur.title)} trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>`; }
+  function open(id, auto) {
+    cur = it(id); if (!cur) return;
+    opener = document.activeElement;
+    $('#d-title').textContent = cur.title;
+    $('#d-pills').innerHTML = `${cur.rating ? `<span class="pill r">${svg('i-star')}${cur.rating.toFixed(1)}</span>` : ''}<span class="pill">${kind(cur)}</span>${cur.year ? `<span class="pill">${cur.year}</span>` : ''}${cur.runtime && cur.type === 'movie' ? `<span class="pill">${Math.floor(cur.runtime / 60)}h ${cur.runtime % 60}m</span>` : ''}${cur.seasons ? `<span class="pill">${cur.seasons} season${cur.seasons > 1 ? 's' : ''}</span>` : ''}${cur.genres.map(g => `<span class="pill">${esc(g)}</span>`).join('')}`;
+    $('#d-over').textContent = cur.overview;
+    const s = $('#d-save'); s.dataset.save = cur.id; paintSave(s);
+    auto ? playTrailer() : poster(cur);
+    clearTimeout(heroTimer);
+    dlg.showModal();
+    (auto ? $('.x', dlg) : $('#d-play')).focus();
+  }
+  function close() { screen.innerHTML = ''; if (dlg.open) dlg.close(); }
+  dlg.addEventListener('close', () => { screen.innerHTML = ''; heroPlay(); opener && opener.focus && opener.focus(); });
+  dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-close]')) close(); });
+  $('#d-play').addEventListener('click', playTrailer);
+
+  // search
+  const sd = $('#search'), q = $('#q'), res = $('#res');
+  function find() {
+    const v = q.value.trim().toLowerCase();
+    const hits = v ? all.filter(m => m.title.toLowerCase().includes(v) || m.genres.some(g => g.toLowerCase().includes(v))).slice(0, 12) : all.slice(0, 8);
+    res.innerHTML = hits.length ? hits.map(m => `<li><button type="button" data-open="${m.id}"><img src="${IMG}w92${m.poster}" alt="" loading="lazy"><span>${esc(m.title)}<small>${[m.year, kind(m), m.genres[0]].filter(Boolean).join(' · ')}</small></span></button></li>`).join('') : `<li class="none">No titles match "${esc(q.value)}" in this demo.</li>`;
+  }
+  function openSearch() { q.value = ''; find(); sd.showModal(); q.focus(); }
+  $('#open-search').addEventListener('click', openSearch);
+  q.addEventListener('input', find);
+  sd.addEventListener('click', (e) => { if (e.target === sd) sd.close(); });
+  addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); sd.open ? sd.close() : openSearch(); } });
+
+  // one click handler for the whole page
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-open],[data-save],[data-view],[data-slide],[data-dir]');
+    if (!t) return;
+    if (t.dataset.save) return toggle(t.dataset.save);
+    if (t.dataset.open) { if (sd.open) sd.close(); return open(t.dataset.open, t.hasAttribute('data-autoplay') || !t.closest('.sheet')); }
+    if (t.dataset.view) { e.preventDefault(); view = t.dataset.view; render(); scrollTo({top: 0}); return; }
+    if (t.dataset.slide) { hi = +t.dataset.slide; heroCopy(); heroPlay(); return; }
+    if (t.dataset.dir) { const tr = t.parentElement.querySelector('.track'); tr.scrollBy({left: +t.dataset.dir * tr.clientWidth * .85, behavior: reduce.matches ? 'auto' : 'smooth'}); }
+  });
+
+  // header glass on scroll
+  const head = $('#top');
+  const onScroll = () => head.classList.toggle('on', scrollY > 24);
+  addEventListener('scroll', onScroll, {passive: true}); onScroll();
+
+  // footer wordmark
+  const big = $('#big');
+  big.innerHTML = 'KAMYAR'.split('').map((c, i) => `<span><i style="transition-delay:${i * 60}ms">${c}</i></span>`).join('');
+  if ('IntersectionObserver' in window) new IntersectionObserver(([en], io) => { if (en.isIntersecting) { big.classList.add('in'); io.disconnect(); } }, {threshold: .25}).observe(big);
+  else big.classList.add('in');
+
+  // starfield
+  const cv = $('#stars'), g = cv.getContext('2d');
+  let W = 0, H = 0, S = [], raf = 0;
+  function size() { const d = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; g.setTransform(d, 0, 0, d, 0, 0); S = Array.from({length: Math.round(W * H / 9000)}, () => ({x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.1 + .3, v: Math.random() * .15 + .03, t: Math.random() * 7})); draw(false); }
+  function draw(move) { g.clearRect(0, 0, W, H); S.forEach(s => { if (move) { s.y -= s.v; s.t += .02; if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; } } g.fillStyle = `rgba(200,210,255,${(.25 + .3 * Math.sin(s.t)).toFixed(3)})`; g.beginPath(); g.arc(s.x, s.y, s.r, 0, 7); g.fill(); }); }
+  const loop = () => { draw(true); raf = requestAnimationFrame(loop); };
+  const sky = () => { cancelAnimationFrame(raf); if (!reduce.matches && !document.hidden) loop(); };
+  addEventListener('resize', size); document.addEventListener('visibilitychange', sky); reduce.addEventListener('change', () => { sky(); heroPlay(); });
+  size(); sky();
+
+  render();
+})();
+</script>
+</body>
+</html>

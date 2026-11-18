@@ -219,6 +219,12 @@ main,.final{position:relative;z-index:1}
 .h2 sup{font-size:.22em;font-stretch:125%;font-weight:800;color:var(--acc);vertical-align:top;margin-left:.12em;letter-spacing:0}
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
 .reel-hint{display:none}
+.reel-more{margin-top:4px}
+.reel-end-btns{display:flex;flex-wrap:wrap;gap:10px}
+.reel-end .btn-ow{background:transparent}
+.reel-end .btn-ow:hover{background:var(--fg);color:#000}
+.reel.open .reel-more,.reel-grid>li[hidden]{display:none}
+.demo .tag{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:999px;background:rgba(243,245,249,.1);color:var(--fg-2);font-size:12px;font-weight:600;letter-spacing:.04em;vertical-align:middle}
 .reel-grid{list-style:none;margin:0;padding:0 var(--m) 6px;display:flex;gap:clamp(16px,2.4vw,40px);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--m);overscroll-behavior-x:contain;scrollbar-width:none}
 .reel-grid::-webkit-scrollbar{display:none}
 .reel-grid>li{flex:0 0 clamp(270px,34vw,560px);min-width:0;scroll-snap-align:start}
@@ -591,38 +597,37 @@ footer a:hover{color:var(--fg)}
   <div class="reel-pin">
     <div class="reel-track">
       <div class="reel-head">
-        <h2 class="h2"><span data-en="Examples">Ejemplos</span><sup>16</sup></h2>
-        <p data-en="Sample designs. Each one can carry your business name, your services or menu and your photos.">Diseños de muestra. Cada uno puede llevar el nombre, los servicios o la carta y las fotos de tu negocio.</p>
-        <ul class="filters" aria-label="Ir a una categoría">
-          <li><button class="chip" type="button" data-filter="comer" aria-pressed="false" data-en="Restaurants &amp; cafés">Restaurantes y cafés</button></li>
-          <li><button class="chip" type="button" data-filter="cuidado" aria-pressed="false" data-en="Health &amp; beauty">Salud y belleza</button></li>
-          <li><button class="chip" type="button" data-filter="tienda" aria-pressed="false" data-en="Shops &amp; services">Tiendas y servicios</button></li>
-        </ul>
+        <h2 class="h2"><span data-en="Examples">Ejemplos</span><sup class="reel-sup">03</sup></h2>
+        <p data-en="Recent work, live online. Open one and look around.">Trabajos recientes, en directo. Abre uno y échale un vistazo.</p>
+        <button class="btn btn-w reel-more" type="button" data-en="View more examples">Ver más ejemplos</button>
         <p class="reel-hint" aria-hidden="true"><i></i><span data-en="Scroll to watch them live">Desliza para verlos en directo</span></p>
       </div>
       <ul class="reel-grid">
-      <li data-cat="comer"><a class="demo" href="Websites/restaurante-bar.html"><div class="shot"><img src="img/restaurante-bar.jpg" alt="Captura del ejemplo Restaurante y bar" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3>Restaurante &amp; bar</h3><p data-en="Menu by time of day, bookings, live opening hours, Spanish and English.">Carta por momentos del día, reservas, horario en directo, español e inglés.</p></div></a></li>
-      <li data-cat="comer"><a class="demo" href="Websites/cerveceria.html"><div class="shot"><img src="img/cerveceria.jpg" alt="Captura del ejemplo Cervecería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Beer hall">Cervecería</h3><p data-en="Live tap list, flavour finder, seafood by weight and table booking.">Grifos en directo, buscador de cerveza, marisco al peso y reservas.</p></div></a></li>
-      <li data-cat="comer"><a class="demo" href="Websites/restaurante-moderno.html"><div class="shot"><img src="img/restaurante-moderno.jpg" alt="Captura del ejemplo Restaurante moderno" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Modern restaurant">Restaurante moderno</h3><p data-en="Mediterranean food, tapas and bookings.">Cocina mediterránea, tapas y reservas.</p></div></a></li>
-      <li data-cat="comer"><a class="demo" href="Websites/restaurante-clasico.html"><div class="shot"><img src="img/restaurante-clasico.jpg" alt="Captura del ejemplo Restaurante clásico" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Classic restaurant">Restaurante clásico</h3><p data-en="Traditional Spanish cooking and grills.">Casas de comidas y cocina tradicional.</p></div></a></li>
-      <li data-cat="comer"><a class="demo" href="Websites/churreria.html"><div class="shot"><img src="img/churreria.jpg" alt="Captura del ejemplo Churrería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Churros &amp; café">Churrería y cafetería</h3><p data-en="Breakfast, afternoon snacks and brunch.">Desayunos, meriendas y brunch.</p></div></a></li>
-      <li data-cat="cuidado"><a class="demo" href="Websites/barberia.html"><div class="shot"><img src="img/barberia.jpg" alt="Captura del ejemplo Barbería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Barber shop">Barbería</h3><p data-en="Price list, service builder and chair booking.">Carta de servicios, configurador y reserva de sillón.</p></div></a></li>
-      <li data-cat="cuidado"><a class="demo" href="Websites/clinica_dental.html"><div class="shot"><img src="img/clinica_dental.jpg" alt="Captura del ejemplo Clínica dental" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Dental clinic">Clínica dental</h3><p data-en="Before/after smiles, whitening simulator, payment plans and booking.">Antes y después, simulador de blanqueamiento, financiación y citas.</p></div></a></li>
-      <li data-cat="cuidado"><a class="demo" href="Websites/clinica_dental_nacar.html"><div class="shot"><img src="img/clinica_dental_nacar.jpg" alt="Captura del ejemplo Estudio dental de lujo" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Luxury dental studio">Estudio dental de lujo</h3><p data-en="Living 3D pearl, whitening shade guide, 3D scan, breathing guide and booking.">Perla 3D en vivo, guía de tonos, escáner 3D, respiración guiada y citas.</p></div></a></li>
-      <li data-cat="cuidado"><a class="demo" href="Websites/estudio_yoga_pilates.html"><div class="shot"><img src="img/estudio_yoga_pilates.jpg" alt="Captura del ejemplo Estudio de Pilates y Yoga" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Pilates &amp; yoga studio">Pilates y yoga</h3><p data-en="Class timetable, disciplines and class booking.">Horario de clases, disciplinas y reserva.</p></div></a></li>
-      <li data-cat="cuidado"><a class="demo" href="Websites/clinica_estetica.html"><div class="shot"><img src="img/clinica_estetica.jpg" alt="Captura del ejemplo Clínica de medicina estética" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Aesthetic clinic">Medicina estética</h3><p data-en="Treatments by facial zone and medical booking.">Tratamientos por zona y cita médica.</p></div></a></li>
-      <li data-cat="cuidado"><a class="demo" href="Websites/estudio_tatuajes.html"><div class="shot"><img src="img/estudio_tatuajes.jpg" alt="Captura del ejemplo Estudio de tatuaje" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Tattoo &amp; piercing">Tatuaje y piercing</h3><p data-en="Flash wall, size and price calculator, healing timeline and booking.">Pared de flash, calculadora de precio, cuidados día a día y cita.</p></div></a></li>
-      <li data-cat="tienda"><a class="demo" href="Websites/floristeria_eventos.html"><div class="shot"><img src="img/floristeria_eventos.jpg" alt="Captura del ejemplo Floristería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Florist &amp; events">Floristería y eventos</h3><p data-en="Bouquet builder with gift message and wedding decor.">Ramos a medida con dedicatoria y bodas.</p></div></a></li>
-      <li data-cat="tienda"><a class="demo" href="Websites/joyeria_relojeria.html"><div class="shot"><img src="img/joyeria_relojeria.jpg" alt="Captura del ejemplo Joyería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Jewellery &amp; watches">Joyería y relojería</h3><p data-en="Custom ring builder and in-store appointments.">Anillos a medida y cita en tienda.</p></div></a></li>
-      <li data-cat="tienda"><a class="demo" href="Websites/estudio_interiorismo.html"><div class="shot"><img src="img/estudio_interiorismo.jpg" alt="Captura del ejemplo Interiorismo y reformas" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Interiors &amp; renovations">Interiorismo y reformas</h3><p data-en="Renovation calculator and before/after.">Calculadora de reforma y antes y después.</p></div></a></li>
-      <li data-cat="tienda"><a class="demo" href="Websites/inmobiliaria_lujo.html"><div class="shot"><img src="img/inmobiliaria_lujo.jpg" alt="Captura del ejemplo Inmobiliaria" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Estate agent">Inmobiliaria</h3><p data-en="Listings filtered by area, mortgage calculator and viewings.">Pisos por zona, hipoteca y visitas.</p></div></a></li>
-      <li data-cat="tienda"><a class="demo" href="Websites/detailing_coches.html"><div class="shot"><img src="img/detailing_coches.jpg" alt="Captura del ejemplo Detailing de coches" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Car detailing">Detailing de coches</h3><p data-en="Price calculator by car type and booking.">Calculadora por tipo de coche y reserva.</p></div></a></li>
+      <li data-cat="work"><a class="demo" href="https://kamyarsh10.github.io/kamyar-clinic-preview/en.html" target="_blank" rel="noopener" data-shot="kamyar-clinic"><div class="shot"><img src="img/kamyar-clinic.jpg" alt="Captura de la web de Kamyar Dental Clinic" width="1200" height="750" loading="lazy"><span class="go" data-en="Open site ↗">Abrir web ↗</span></div><div><h3>Kamyar Dental Clinic</h3><p data-en="Dental clinic in Tehran: implant explainer, real cases, breathing exercise.">Clínica dental en Teherán: implantes, casos reales y respiración guiada.</p></div></a></li>
+      <li data-cat="work"><a class="demo" href="https://novarexium.com/en/" target="_blank" rel="noopener" data-shot="novarexium"><div class="shot"><img src="img/novarexium.jpg" alt="Captura de la web de Novarexium Group" width="1200" height="750" loading="lazy"><span class="go" data-en="Open site ↗">Abrir web ↗</span></div><div><h3>Novarexium Group</h3><p data-en="Relocation to Madrid: homes, residency, study and business.">Mudarse a Madrid: vivienda, residencia, estudios y empresa.</p></div></a></li>
+      <li data-cat="work"><a class="demo" href="apps/streamos/" data-shot="streamos"><div class="shot"><img src="img/streamos.jpg" alt="Captura de la app K Streams" width="1200" height="750" loading="lazy"><span class="go" data-en="Open app ↗">Abrir app ↗</span></div><div><h3>K Streams <span class="tag">App</span></h3><p data-en="Movie and series app: live carousel, search, my list and trailers.">App de cine y series: carrusel, búsqueda, mi lista y tráilers.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="comer"><a class="demo" href="Websites/restaurante-bar.html"><div class="shot"><img src="img/restaurante-bar.jpg" alt="Captura del ejemplo Restaurante y bar" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3>Restaurante &amp; bar</h3><p data-en="Menu by time of day, bookings, live opening hours, Spanish and English.">Carta por momentos del día, reservas, horario en directo, español e inglés.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="comer"><a class="demo" href="Websites/cerveceria.html"><div class="shot"><img src="img/cerveceria.jpg" alt="Captura del ejemplo Cervecería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Beer hall">Cervecería</h3><p data-en="Live tap list, flavour finder, seafood by weight and table booking.">Grifos en directo, buscador de cerveza, marisco al peso y reservas.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="cuidado"><a class="demo" href="Websites/clinica_dental_nacar.html"><div class="shot"><img src="img/clinica_dental_nacar.jpg" alt="Captura del ejemplo Estudio dental de lujo" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Luxury dental studio">Estudio dental de lujo</h3><p data-en="Living 3D pearl, whitening shade guide, 3D scan, breathing guide and booking.">Perla 3D en vivo, guía de tonos, escáner 3D, respiración guiada y citas.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="comer"><a class="demo" href="Websites/restaurante-clasico.html"><div class="shot"><img src="img/restaurante-clasico.jpg" alt="Captura del ejemplo Restaurante clásico" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Classic restaurant">Restaurante clásico</h3><p data-en="Traditional Spanish cooking and grills.">Casas de comidas y cocina tradicional.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="comer"><a class="demo" href="Websites/churreria.html"><div class="shot"><img src="img/churreria.jpg" alt="Captura del ejemplo Churrería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Churros &amp; café">Churrería y cafetería</h3><p data-en="Breakfast, afternoon snacks and brunch.">Desayunos, meriendas y brunch.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="comer"><a class="demo" href="Websites/restaurante-moderno.html"><div class="shot"><img src="img/restaurante-moderno.jpg" alt="Captura del ejemplo Restaurante moderno" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Modern restaurant">Restaurante moderno</h3><p data-en="Mediterranean food, tapas and bookings.">Cocina mediterránea, tapas y reservas.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="cuidado"><a class="demo" href="Websites/estudio_tatuajes.html"><div class="shot"><img src="img/estudio_tatuajes.jpg" alt="Captura del ejemplo Estudio de tatuaje" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Tattoo &amp; piercing">Tatuaje y piercing</h3><p data-en="Flash wall, size and price calculator, healing timeline and booking.">Pared de flash, calculadora de precio, cuidados día a día y cita.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="tienda"><a class="demo" href="Websites/floristeria_eventos.html"><div class="shot"><img src="img/floristeria_eventos.jpg" alt="Captura del ejemplo Floristería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Florist &amp; events">Floristería y eventos</h3><p data-en="Bouquet builder with gift message and wedding decor.">Ramos a medida con dedicatoria y bodas.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="tienda"><a class="demo" href="Websites/joyeria_relojeria.html"><div class="shot"><img src="img/joyeria_relojeria.jpg" alt="Captura del ejemplo Joyería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Jewellery &amp; watches">Joyería y relojería</h3><p data-en="Custom ring builder and in-store appointments.">Anillos a medida y cita en tienda.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="tienda"><a class="demo" href="Websites/estudio_interiorismo.html"><div class="shot"><img src="img/estudio_interiorismo.jpg" alt="Captura del ejemplo Interiorismo y reformas" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Interiors &amp; renovations">Interiorismo y reformas</h3><p data-en="Renovation calculator and before/after.">Calculadora de reforma y antes y después.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="tienda"><a class="demo" href="Websites/inmobiliaria_lujo.html"><div class="shot"><img src="img/inmobiliaria_lujo.jpg" alt="Captura del ejemplo Inmobiliaria" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Estate agent">Inmobiliaria</h3><p data-en="Listings filtered by area, mortgage calculator and viewings.">Pisos por zona, hipoteca y visitas.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="tienda"><a class="demo" href="Websites/detailing_coches.html"><div class="shot"><img src="img/detailing_coches.jpg" alt="Captura del ejemplo Detailing de coches" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Car detailing">Detailing de coches</h3><p data-en="Price calculator by car type and booking.">Calculadora por tipo de coche y reserva.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="cuidado"><a class="demo" href="Websites/clinica_estetica.html"><div class="shot"><img src="img/clinica_estetica.jpg" alt="Captura del ejemplo Clínica de medicina estética" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Aesthetic clinic">Medicina estética</h3><p data-en="Treatments by facial zone and medical booking.">Tratamientos por zona y cita médica.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="cuidado"><a class="demo" href="Websites/estudio_yoga_pilates.html"><div class="shot"><img src="img/estudio_yoga_pilates.jpg" alt="Captura del ejemplo Estudio de Pilates y Yoga" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Pilates &amp; yoga studio">Pilates y yoga</h3><p data-en="Class timetable, disciplines and class booking.">Horario de clases, disciplinas y reserva.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="cuidado"><a class="demo" href="Websites/clinica_dental.html"><div class="shot"><img src="img/clinica_dental.jpg" alt="Captura del ejemplo Clínica dental" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Dental clinic">Clínica dental</h3><p data-en="Before/after smiles, whitening simulator, payment plans and booking.">Antes y después, simulador de blanqueamiento, financiación y citas.</p></div></a></li>
+      <li class="reel-x" hidden data-cat="cuidado"><a class="demo" href="Websites/barberia.html"><div class="shot"><img src="img/barberia.jpg" alt="Captura del ejemplo Barbería" width="1200" height="750" loading="lazy"><span class="go" data-en="Open example ↗">Abrir ejemplo ↗</span></div><div><h3 data-en="Barber shop">Barbería</h3><p data-en="Price list, service builder and chair booking.">Carta de servicios, configurador y reserva de sillón.</p></div></a></li>
       </ul>
-      <div class="reel-end"><p data-en="See yours? I'll adapt it to your business.">¿Ves el tuyo? Lo adapto a tu negocio.</p><a class="btn btn-w" href="#contacto" data-en="Ask for mine">Pedir el mío</a></div>
+      <div class="reel-end"><p data-en="See yours? I'll adapt it to your business.">¿Ves el tuyo? Lo adapto a tu negocio.</p><div class="reel-end-btns"><a class="btn btn-w" href="#contacto" data-en="Ask for mine">Pedir el mío</a><button class="btn btn-ow reel-more" type="button" data-en="View more examples">Ver más ejemplos</button></div></div>
     </div>
-    <div class="reel-bar" aria-hidden="true"><span><b class="reel-bar-now">01</b> / 16</span><span class="reel-bar-name"></span><span class="line"><i></i></span></div>
+    <div class="reel-bar" aria-hidden="true"><span><b class="reel-bar-now">01</b> / <span class="reel-bar-tot">03</span></span><span class="reel-bar-name"></span><span class="line"><i></i></span></div>
     <div class="reel-nav">
-      <p class="reel-count" aria-live="polite"><b class="reel-now">01</b> / <span class="reel-tot">16</span></p>
+      <p class="reel-count" aria-live="polite"><b class="reel-now">01</b> / <span class="reel-tot">03</span></p>
       <div class="reel-arrows">
         <button type="button" data-d="-1" aria-label="Ejemplo anterior"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
         <button type="button" data-d="1" aria-label="Ejemplo siguiente"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
@@ -722,9 +727,9 @@ footer a:hover{color:var(--fg)}
     </div>
     </div>
     <div class="fan">
-      <a href="Websites/barberia.html"><img src="img/phone/barberia.jpg" alt="Ejemplo de barbería en el móvil" width="375" height="844" loading="lazy"></a>
-      <a href="Websites/floristeria_eventos.html"><img src="img/phone/floristeria_eventos.jpg" alt="Ejemplo de floristería en el móvil" width="375" height="844" loading="lazy"></a>
-      <a href="Websites/churreria.html"><img src="img/phone/churreria.jpg" alt="Ejemplo de churrería en el móvil" width="375" height="844" loading="lazy"></a>
+      <a href="https://kamyarsh10.github.io/kamyar-clinic-preview/en.html" target="_blank" rel="noopener"><img src="img/phone/kamyar-clinic.jpg" alt="Kamyar Dental Clinic en el móvil" width="375" height="844" loading="lazy"></a>
+      <a href="https://novarexium.com/en/" target="_blank" rel="noopener"><img src="img/phone/novarexium.jpg" alt="Novarexium Group en el móvil" width="375" height="844" loading="lazy"></a>
+      <a href="apps/streamos/"><img src="img/phone/streamos.jpg" alt="La app K Streams en el móvil" width="375" height="844" loading="lazy"></a>
     </div>
     </div>
     <footer><span>Kamyar Shahrizad · Madrid, 2026</span><a href="#inicio" data-en="Back to top">Volver arriba</a></footer>
@@ -946,16 +951,18 @@ footer a:hover{color:var(--fg)}
   const reel = (() => {
     const sec = document.querySelector('.reel');
     const track = sec.querySelector('.reel-track'), grid = sec.querySelector('.reel-grid');
-    const lis = [...grid.children];
+    const all = [...grid.children];
+    let lis = all.filter(li => !li.hidden);
+    const sup = sec.querySelector('.reel-sup'), btot = sec.querySelector('.reel-bar-tot');
     const now = sec.querySelector('.reel-now'), tot = sec.querySelector('.reel-tot');
     const bnow = sec.querySelector('.reel-bar-now'), bname = sec.querySelector('.reel-bar-name'), fill = sec.querySelector('.reel-bar .line i');
     const arrows = [...sec.querySelectorAll('.reel-arrows button')];
     const filterBtns = [...sec.querySelectorAll('.filters button')];
     const pad = (n) => String(n).padStart(2, '0');
-    const cards = lis.map(li => {
+    const cards = all.map(li => {
       const a = li.querySelector('.demo'), shot = li.querySelector('.shot'), img = document.createElement('img');
       img.className = 'strip'; img.alt = ''; img.decoding = 'async'; img.width = 1000;
-      img.dataset.src = `img/scroll/${a.getAttribute('href').replace(/^Websites\/|\.html$/g, '')}.jpg`;
+      img.dataset.src = `img/scroll/${a.dataset.shot || a.getAttribute('href').replace(/^Websites\/|\.html$/g, '')}.jpg`;
       shot.prepend(img);
       return {li, a, shot, img, y: 0, hold: 70, hover: false};
     });
@@ -968,7 +975,7 @@ footer a:hover{color:var(--fg)}
     }
     function count() {
       const i = at();
-      now.textContent = bnow.textContent = pad(i + 1); tot.textContent = pad(lis.length);
+      now.textContent = bnow.textContent = pad(i + 1); tot.textContent = sup.textContent = btot.textContent = pad(lis.length);
       bname.textContent = lis[i].querySelector('h3').textContent;
       fill.style.transform = `scaleX(${(i + 1) / lis.length})`;
       arrows[0].disabled = i === 0; arrows[1].disabled = i === lis.length - 1;
@@ -982,6 +989,13 @@ footer a:hover{color:var(--fg)}
     grid.addEventListener('scroll', () => { if (!pinned) count(); }, {passive: true});
     arrows.forEach(b => b.addEventListener('click', () => go(clamp(at() + (+b.dataset.d), 0, lis.length - 1))));
     filterBtns.forEach(b => b.addEventListener('click', () => go(lis.findIndex(li => li.dataset.cat === b.dataset.filter))));
+    sec.querySelectorAll('.reel-more').forEach(b => b.addEventListener('click', () => {
+      const first = lis.length;
+      all.forEach(li => { li.hidden = false; });
+      lis = all; sec.classList.add('open');
+      dispatchEvent(new Event('resize'));
+      requestAnimationFrame(() => go(first));
+    }));
     cards.forEach(c => { c.a.addEventListener('mouseenter', () => { c.hover = true; }); c.a.addEventListener('mouseleave', () => { c.hover = false; }); });
 
     // the row's position comes straight from the scroll position the smooth scroll just set, in the same frame
@@ -1010,8 +1024,8 @@ footer a:hover{color:var(--fg)}
       const mid = innerWidth / 2; let best = 0, bd = Infinity;
       cards.forEach((c, i) => {
         const b = c.shot.getBoundingClientRect();
-        if (pinned) { const d = Math.abs(b.left + b.width / 2 - mid); if (d < bd) { bd = d; best = i; } }
-        if (b.right > -innerWidth * .3 && b.left < innerWidth * 1.3 && b.bottom > 0 && b.top < innerHeight) play(c);
+        if (pinned && !c.li.hidden) { const d = Math.abs(b.left + b.width / 2 - mid); if (d < bd) { bd = d; best = i; } }
+        if (!c.li.hidden && b.right > -innerWidth * .3 && b.left < innerWidth * 1.3 && b.bottom > 0 && b.top < innerHeight) play(c);
       });
       if (pinned && best !== cur) { cur = best; count(); }
       if (inView && !reduce.matches) raf = requestAnimationFrame(frame);
@@ -1036,7 +1050,7 @@ footer a:hover{color:var(--fg)}
   const phone = (() => {
     const a = document.getElementById('phone'), body = a.querySelector('.phone-spin'), strip = a.querySelector('.phone-strip');
     const num = a.querySelector('.ph-n'), nm = a.querySelector('.ph-name');
-    const demos = [...document.querySelectorAll('.reel-grid .demo')];
+    const demos = [...document.querySelectorAll('.reel-grid .demo[href^="Websites/"]')];
     const file = (d) => d.getAttribute('href').replace(/^Websites\/|\.html$/g, '');
     strip.innerHTML = demos.concat(demos[0]).map((d, k) => `<img src="img/phone/${file(d)}.jpg" alt="" width="375" height="844"${k < 2 ? '' : ' loading="lazy"'} decoding="async">`).join('');
     const imgs = [...strip.children];
