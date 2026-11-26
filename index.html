@@ -480,7 +480,7 @@ footer a:hover{color:var(--fg)}
 .retrato{position:relative}
 #sobre-mi{overflow:clip}
 #about3d{position:absolute;left:-26%;top:-8%;width:152%;height:116%;z-index:4;pointer-events:none}
-@media (max-width:760px){#about3d{left:-8%;width:116%}}
+@media (max-width:760px){#about3d{left:-8%;width:116%}#sobre-mi{overflow:hidden}}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
@@ -1536,7 +1536,7 @@ function perioProbe() {
 
 /* ---------- stage: one transparent canvas with floating items ---------- */
 function stage(canvas, cfg) {
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !small(), powerPreference: 'high-performance' });
   renderer.setClearColor(0, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -1562,7 +1562,7 @@ function stage(canvas, cfg) {
   let aspect = 1;
   function resize() {
     const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1;
-    renderer.setPixelRatio(Math.min(devicePixelRatio, small() ? 1.5 : 2));
+    renderer.setPixelRatio(Math.min(devicePixelRatio, small() ? 1.25 : 2));
     renderer.setSize(w, h, false);
     aspect = w / h;
     camera.aspect = aspect;
@@ -1571,7 +1571,7 @@ function stage(canvas, cfg) {
   }
 
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
-  addEventListener('pointermove', e => { pointer.tx = e.clientX / innerWidth * 2 - 1; pointer.ty = e.clientY / innerHeight * 2 - 1; }, { passive: true });
+  addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') return; pointer.tx = e.clientX / innerWidth * 2 - 1; pointer.ty = e.clientY / innerHeight * 2 - 1; }, { passive: true });
 
   const born = performance.now();
   function draw(now) {
@@ -1652,7 +1652,7 @@ stage(about, {
     { make: dentalMirror, x: .6, y: .36, s: .62, r: [.15, -.4, -.52], fly: 3, depth: .8, m: { x: .68, y: .42, s: .56 } },
     { make: explorer, x: .58, y: -.5, s: .56, r: [.1, .5, -.95], fly: 3, depth: 1, m: { x: .68, y: -.44, s: .54 } },
     { make: perioProbe,   x: -.7, y: -.34, s: .6, r: [.1,  -.3,  .5],  fly: 3, depth: .9, m: { x: -.68, y: -.42, s: .52 } },
-    { make: tooth,        x: -.66, y:  .62, s: .4, r: [.1,   .45, -.2], fly: 3, depth: 1.4 },
+    { make: tooth,        x: -.66, y:  .62, s: .4, r: [.1,   .45, -.2], fly: 3, depth: 1.4, m: { x: -.68, y: .44, s: .4 } },
   ],
 });
 </script>
